@@ -12,6 +12,8 @@
 #include "uevr/adapters/re7/HorrorVROptimizer.hpp"
 #include "uevr/adapters/re7/CameraMatrixExtractor.hpp"
 #include "uevr/adapters/re7/REEngineUIAdapter.hpp"
+#include "uevr/vr/FullAestheticCollisionEngine.hpp"
+#include "uevr/vr/FullPhysicsIntegration.hpp"
 #include <spdlog/spdlog.h>
 #include <d3d11.h>
 #include <dxgi.h>

@@ -114,6 +114,22 @@ else()
     message(STATUS "nlohmann_json found: ${nlohmann_json_DIR}")
 endif()
 
+# GLM - Mathematics library
+find_package(glm QUIET)
+if(NOT glm_FOUND)
+    message(STATUS "GLM not found, fetching from source...")
+    FetchContent_Declare(
+        glm
+        GIT_REPOSITORY https://github.com/g-truc/glm.git
+        GIT_TAG 0.9.9.8
+        GIT_SHALLOW TRUE
+    )
+    FetchContent_MakeAvailable(glm)
+    message(STATUS "GLM fetched successfully")
+else()
+    message(STATUS "GLM found: ${glm_DIR}")
+endif()
+
 # Google Test for testing (if enabled)
 if(BUILD_TESTS)
     find_package(GTest QUIET)

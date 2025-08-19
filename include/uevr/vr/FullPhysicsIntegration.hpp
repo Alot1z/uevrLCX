@@ -14,21 +14,46 @@
 #include <vector>
 #include <string>
 #include <cstdint>
+#include <glm/glm.hpp>
+#include "uevr/vr/FullAestheticCollisionEngine.hpp"
 
 namespace uevr {
 namespace vr {
 
-// Forward declarations
-class ObjectID;
-class HandType;
-class CollisionType;
-class PhysicsType;
-class Vector3;
-class ForceType;
-class GravityType;
-class CollisionResult;
-class PhysicsPerformance;
-class InteractionResult;
+// Shared types come from FullAestheticCollisionEngine.hpp
+// Provide a local alias for vector type used by physics implementation
+using Vector3 = glm::vec3;
+
+// Additional enums used by physics system
+enum class ForceType {
+    LINEAR,
+    ANGULAR,
+    IMPULSE
+};
+
+enum class GravityType {
+    EARTH,
+    ZERO,
+    CUSTOM
+};
+
+// Minimal performance and interaction structs
+struct PhysicsPerformance {
+    uint64_t collision_checks = 0;
+    uint64_t physics_updates = 0;
+    uint64_t force_applications = 0;
+    uint64_t constraint_solves = 0;
+    float total_simulation_time = 0.0f;
+    float average_frame_time = 0.0f;
+    uint64_t total_frames = 0;
+};
+
+struct InteractionResult {
+    bool success = false;
+    uevr::vr::ObjectID object = 0;
+    uevr::vr::HandType hand = uevr::vr::HandType::NONE;
+    std::string description;
+};
 
 /**
  * @brief Full Physics Integration - Universal physics system for all game engines
@@ -566,6 +591,9 @@ public:
      */
     virtual std::string getObjectPhysicsDebug(ObjectID object) const = 0;
 };
+
+// Factory for obtaining a concrete implementation
+std::unique_ptr<FullPhysicsIntegration> createFullPhysicsIntegration();
 
 } // namespace vr
 } // namespace uevr
