@@ -10,191 +10,192 @@
 
 #pragma once
 
-#include <memory>
 #include <vector>
+#include <memory>
 #include <unordered_map>
 #include <string>
-#include <glm/glm.hpp>
+// GLM temporarily disabled - using basic types instead
 
-namespace uevr {
-namespace vr {
+namespace uevr::vr {
 
 // Forward declarations
-class CollisionResult;
-class PhysicsType;
-class HapticType;
-class CollisionType;
-class HandType;
-class ObjectID;
+class FullPhysicsIntegration;
 
-// Collision result structure
+// Basic types
+using ObjectID = uint64_t;
+using CollisionID = uint64_t;
+
+// Basic math types (replacing GLM temporarily)
+struct Vec3 {
+    float x, y, z;
+    Vec3() : x(0), y(0), z(0) {}
+    Vec3(float x, float y, float z) : x(x), y(y), z(z) {}
+};
+
+struct Quat {
+    float x, y, z, w;
+    Quat() : x(0), y(0), z(0), w(1) {}
+    Quat(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
+};
+
+// Enums
+enum class CollisionType {
+    NONE = 0,
+    TOUCH,
+    GRAB,
+    PUSH,
+    PULL,
+    COLLIDE
+};
+
+enum class PhysicsType {
+    STATIC = 0,
+    DYNAMIC,
+    KINEMATIC,
+    TRIGGER
+};
+
+enum class HapticType {
+    NONE = 0,
+    LIGHT,
+    MEDIUM,
+    HEAVY,
+    CUSTOM
+};
+
+enum class HandType {
+    NONE = 0,
+    LEFT,
+    RIGHT,
+    BOTH
+};
+
+// Structs
 struct CollisionResult {
-    bool collision_detected;
-    float collision_distance;
-    glm::vec3 collision_point;
-    glm::vec3 collision_normal;
     ObjectID colliding_object;
     CollisionType collision_type;
-    float collision_intensity;
-    
-    CollisionResult() : collision_detected(false), collision_distance(0.0f), 
-                       collision_intensity(0.0f) {}
+    Vec3 contact_point;
+    Vec3 contact_normal;
+    float penetration_depth;
+    bool is_valid;
 };
 
-// Physics types for different objects
-enum class PhysicsType {
-    STATIC,         // Immovable objects (walls, floors)
-    DYNAMIC,        // Movable objects (boxes, items)
-    KINEMATIC,      // Scripted movement (doors, elevators)
-    RAGDOLL,        // Character physics (NPCs, monsters)
-    FLUID,          // Liquid simulation
-    PARTICLE,       // Particle systems
-    VEHICLE,        // Vehicle physics
-    WEAPON,         // Weapon handling
-    ENVIRONMENTAL   // Environmental objects
+struct PhysicsObject {
+    ObjectID id;
+    PhysicsType type;
+    Vec3 position;
+    Quat rotation;
+    Vec3 scale;
+    Vec3 velocity;
+    Vec3 angular_velocity;
+    float mass;
+    float friction;
+    float restitution;
 };
 
-// Haptic feedback types
-enum class HapticType {
-    NONE,           // No haptic feedback
-    LIGHT,          // Light touch
-    MEDIUM,         // Medium impact
-    HEAVY,          // Heavy impact
-    VIBRATION,      // Continuous vibration
-    PULSE,          // Pulsing feedback
-    BUZZ,           // Buzzing sensation
-    TAP,            // Tap feedback
-    GRAB,           // Grab feedback
-    RELEASE         // Release feedback
+struct HapticFeedback {
+    HandType hand;
+    HapticType type;
+    float intensity;
+    float duration;
+    Vec3 position;
+    bool is_active;
 };
 
-// Collision types
-enum class CollisionType {
-    NONE,           // No collision
-    TOUCH,          // Light touch
-    GRAB,           // Object grabbing
-    PUSH,           // Pushing objects
-    PULL,           // Pulling objects
-    THROW,          // Throwing objects
-    BREAK,          // Breaking objects
-    INTERACT,       // Interaction (buttons, switches)
-    DAMAGE,         // Damage collision
-    TRIGGER         // Trigger zones
+struct VisualFeedback {
+    ObjectID object_id;
+    Vec3 highlight_color;
+    float intensity;
+    bool is_active;
 };
-
-// Hand types for VR controllers
-enum class HandType {
-    LEFT,           // Left hand
-    RIGHT,          // Right hand
-    BOTH,           // Both hands
-    NONE            // No hand
-};
-
-// Object ID type
-using ObjectID = uint64_t;
 
 // Main collision engine class
 class FullAestheticCollisionEngine {
 public:
     FullAestheticCollisionEngine();
     virtual ~FullAestheticCollisionEngine();
-    
-    // Initialize full collision system
-    virtual bool initializeFullCollision();
-    
-    // Shutdown collision system
-    virtual void shutdownCollision();
-    
-    // Detect ALL types of collisions
-    virtual CollisionResult detectFullCollision(ObjectID object, HandType hand, CollisionType type);
-    
-    // Physics simulation for ALL objects
-    virtual void simulateFullPhysics(ObjectID object, PhysicsType physics_type);
-    
-    // Haptic feedback for ALL interactions
-    virtual void provideFullHapticFeedback(HandType hand, float intensity, HapticType haptic_type);
-    
-    // Visual feedback for ALL collisions
-    virtual void showFullCollisionHighlight(ObjectID object, CollisionType collision_type);
-    
-    // Door handle grabbing system
-    virtual bool enableDoorHandleGrabbing(ObjectID door, HandType hand);
-    
-    // Weapon interaction system
-    virtual bool enableWeaponInteraction(ObjectID weapon, HandType hand);
-    
-    // Environmental object interaction
-    virtual bool enableEnvironmentalInteraction(ObjectID env_object, HandType hand);
-    
-    // NPC interaction system
-    virtual bool enableNPCInteraction(ObjectID npc, HandType hand);
-    
-    // Vehicle interaction system
-    virtual bool enableVehicleInteraction(ObjectID vehicle, HandType hand);
-    
-    // Puzzle object interaction
-    virtual bool enablePuzzleInteraction(ObjectID puzzle, HandType hand);
-    
-    // Inventory manipulation
-    virtual bool enableInventoryManipulation(ObjectID item, HandType hand);
-    
-    // Register object for collision detection
-    virtual bool registerObject(ObjectID object, PhysicsType physics_type, const glm::vec3& position, const glm::vec3& size);
-    
-    // Unregister object from collision detection
-    virtual bool unregisterObject(ObjectID object);
-    
-    // Update object position and state
-    virtual void updateObject(ObjectID object, const glm::vec3& position, const glm::vec3& velocity);
-    
-    // Set collision response for object type
-    virtual void setCollisionResponse(ObjectID object, CollisionType type, float response_intensity);
-    
-    // Enable/disable collision for specific object
-    virtual void setCollisionEnabled(ObjectID object, bool enabled);
-    
-    // Get collision statistics
-    virtual struct CollisionStats {
-        uint64_t total_collisions;
-        uint64_t successful_interactions;
-        uint64_t failed_interactions;
-        float average_response_time;
-    } getCollisionStats() const;
+
+    // Initialization and shutdown
+    bool initialize();
+    void shutdown();
+
+    // Core collision detection
+    virtual std::vector<CollisionResult> detectCollisions(const Vec3& position, float radius);
+    virtual bool checkCollision(ObjectID obj1, ObjectID obj2);
+    virtual CollisionResult getCollisionResult(ObjectID obj1, ObjectID obj2);
+
+    // Object management
+    virtual ObjectID addObject(const PhysicsObject& obj);
+    virtual void removeObject(ObjectID id);
+    virtual void updateObject(ObjectID id, const PhysicsObject& obj);
+    virtual PhysicsObject getObject(ObjectID id) const;
+
+    // Physics integration
+    virtual void setPhysicsIntegration(FullPhysicsIntegration* physics);
+    virtual void updatePhysicsSimulation(float delta_time);
+
+    // Haptic and visual feedback
+    virtual void addHapticFeedback(const HapticFeedback& feedback);
+    virtual void addVisualFeedback(const VisualFeedback& feedback);
+    virtual void clearHapticFeedback(HandType hand);
+    virtual void clearVisualFeedback(ObjectID id);
+
+    // Game-specific interactions
+    virtual bool handleDoorInteraction(ObjectID door_id, HandType hand);
+    virtual bool handleWeaponInteraction(ObjectID weapon_id, HandType hand);
+    virtual bool handleVehicleInteraction(ObjectID vehicle_id, HandType hand);
+    virtual bool handleNPCInteraction(ObjectID npc_id, HandType hand);
+    virtual bool handleEnvironmentInteraction(ObjectID env_id, HandType hand);
+    virtual bool handleInventoryInteraction(ObjectID item_id, HandType hand);
+
+    // Configuration
+    virtual void setCollisionLayers(uint32_t layers);
+    virtual void setCollisionMask(uint32_t mask);
+    virtual void setMaxCollisions(size_t max);
+    virtual void setCollisionTolerance(float tolerance);
+
+    // Performance and debugging
+    virtual size_t getActiveCollisionCount() const;
+    virtual float getLastUpdateTime() const;
+    virtual void resetPerformanceMetrics();
 
 protected:
-    // Internal collision detection methods
-    virtual bool checkCollisionBounds(ObjectID object1, ObjectID object2);
-    virtual glm::vec3 calculateCollisionPoint(ObjectID object1, ObjectID object2);
-    virtual glm::vec3 calculateCollisionNormal(ObjectID object1, ObjectID object2);
-    
-    // Physics simulation helpers
-    virtual void applyPhysics(ObjectID object, const glm::vec3& force);
-    virtual void updatePhysics(ObjectID object, float delta_time);
-    
-    // Haptic feedback implementation
-    virtual void sendHapticFeedback(HandType hand, float intensity, HapticType type);
-    
-    // Visual feedback implementation
-    virtual void renderCollisionHighlight(ObjectID object, CollisionType type);
-
-private:
-    // Internal state
-    bool m_initialized;
-    std::unordered_map<ObjectID, struct ObjectData> m_objects;
-    CollisionStats m_stats;
-    
-    // Object data structure
+    // Internal data structures
     struct ObjectData {
+        PhysicsObject physics_data;
         PhysicsType physics_type;
-        glm::vec3 position;
-        glm::vec3 velocity;
-        glm::vec3 size;
-        bool collision_enabled;
-        std::unordered_map<CollisionType, float> collision_responses;
-        
-        ObjectData() : physics_type(PhysicsType::STATIC), collision_enabled(true) {}
+        uint32_t collision_layers;
+        uint32_t collision_mask;
+        bool is_active;
+        bool is_static;
     };
+
+    struct CollisionPair {
+        ObjectID obj1;
+        ObjectID obj2;
+        CollisionResult result;
+        bool is_active;
+    };
+
+    // Member variables
+    std::unordered_map<ObjectID, ObjectData> m_objects;
+    std::vector<CollisionPair> m_active_collisions;
+    std::vector<HapticFeedback> m_haptic_queue;
+    std::vector<VisualFeedback> m_visual_queue;
+    
+    FullPhysicsIntegration* m_physics_integration;
+    uint32_t m_collision_layers;
+    uint32_t m_collision_mask;
+    size_t m_max_collisions;
+    float m_collision_tolerance;
+    
+    ObjectID m_next_object_id;
+    CollisionID m_next_collision_id;
+    
+    // Performance metrics
+    float m_last_update_time;
+    size_t m_collision_checks_per_frame;
+    float m_average_collision_time;
 };
 
-} // namespace vr
-} // namespace uevr
+} // namespace uevr::vr

@@ -19,6 +19,7 @@
 #include <dxgi.h>
 #include <chrono>
 #include <thread>
+#include <cmath>
 
 namespace uevr {
 namespace adapters {
@@ -87,6 +88,20 @@ bool RE7Adapter::initialize() {
         m_ui_adapter = std::make_unique<REEngineUIAdapter>();
         if (!m_ui_adapter->initialize()) {
             spdlog::error("[RE7] Failed to initialize UI adapter");
+            return false;
+        }
+        
+        // Initialize collision engine for RE7
+        m_collision_engine = std::make_unique<uevr::vr::FullAestheticCollisionEngine>();
+        if (!m_collision_engine->initializeFullCollision()) {
+            spdlog::error("[RE7] Failed to initialize collision engine");
+            return false;
+        }
+        
+        // Initialize physics engine for RE7
+        m_physics_engine = std::make_unique<uevr::vr::FullPhysicsIntegration>();
+        if (!m_physics_engine->initializeFullPhysics()) {
+            spdlog::error("[RE7] Failed to initialize physics engine");
             return false;
         }
         
@@ -557,7 +572,11 @@ bool RE7Adapter::detectDiscomfort() {
     // Check for rapid camera movements
     if (m_camera_extractor) {
         auto camera_velocity = m_camera_extractor->getCameraVelocity();
-        if (glm::length(camera_velocity) > m_comfort_settings.max_camera_velocity) {
+        // Simple vector length calculation without GLM
+        float velocity_length = std::sqrt(camera_velocity.x * camera_velocity.x + 
+                                        camera_velocity.y * camera_velocity.y + 
+                                        camera_velocity.z * camera_velocity.z);
+        if (velocity_length > m_comfort_settings.max_camera_velocity) {
             return true;
         }
     }
