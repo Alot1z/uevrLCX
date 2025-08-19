@@ -2,7 +2,16 @@
 
 **Professional-grade cross-engine VR modding framework supporting 500+ games across all major engines**
 
-[![Build Status](https://github.com/uevr/uevr/workflows/Build/badge.svg)](https://github.com/uevr/uevr/actions)
+![uevrLCX Logo](assets/logo/uevrLCX-logo.svg)
+![uevrLCX Mascot](assets/logo/uevrLCX-mascot.svg)
+
+# 🎮 uevrLCX — Cross-Engine VR System
+
+**Professional‑grade cross‑engine VR system with adapters, hooks, Context7 knowledge, and DeepWiki integration**
+
+[![Dev Build (PR)](https://github.com/Alot1z/uevrLCX/actions/workflows/dev-build-pr.yml/badge.svg)](https://github.com/Alot1z/uevrLCX/actions/workflows/dev-build-pr.yml)
+[![Dev Release](https://github.com/Alot1z/uevrLCX/actions/workflows/dev-release.yml/badge.svg)](https://github.com/Alot1z/uevrLCX/actions/workflows/dev-release.yml)
+[![Docs](https://github.com/Alot1z/uevrLCX/actions/workflows/pages.yml/badge.svg)](https://github.com/Alot1z/uevrLCX/actions/workflows/pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![C++17](https://img.shields.io/badge/C++-17-blue.svg)](https://isocpp.org/std/the-standard)
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows-green.svg)](https://www.microsoft.com/windows)
@@ -34,6 +43,27 @@
 - **Performance Monitoring** - Real-time optimization tracking
 - **Cross-Engine Compatibility** - Intelligent feature mapping
 
+## 🧩 **uevrLCX System Functions**
+
+- **Core Framework (`src/core/`)**
+  - Engine detection, adapter registry, memory management, hooks routing
+- **VR System (`src/vr/`, `src/vr/VRSystem.cpp`)**
+  - Runtime orchestration, controllers, pose, stereo rendering
+- **Hooks (`src/hooks/`)**
+  - D3D11/12 hooking (e.g. `D3D11Hook.cpp`), frame interception, overlays
+- **Adapters (`src/adapters/`)**
+  - Engine adapters (RE, REDengine4, MT‑Framework, Unreal, Unity, Cry, idTech)
+- **Context7 (`src/context7/`, `data/context7_games_database*.json`)**
+  - Game knowledge database, signatures, compatibility reasoning
+- **DeepWiki (`include/uevr/deepwiki/`, `docs/deepwiki/`)**
+  - Research knowledge integration for implementation guidance
+- **Lua API (`lua-api/`)**
+  - Scripting and extensibility for power users
+- **Profiles & Data (`profiles/`, `data/`)**
+  - Per‑game configuration, signatures, and settings
+- **Examples (`examples/`)**
+  - Minimal plugin and adapter examples
+
 ## 🎮 **SUPPORTED GAMES**
 
 ### **🏆 Primary Targets (100% Working)**
@@ -60,16 +90,17 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/uevr/uevr.git
-cd uevr
+git clone https://github.com/Alot1z/uevrLCX.git
+cd uevrLCX
 
-# Build with CMake
-mkdir build && cd build
-cmake ..
-cmake --build . --config Release
+# Configure (Visual Studio 2022 generator, x64)
+cmake -S . -B build -G "Visual Studio 17 2022" -A x64
 
-# Run the system
-./bin/uevr.exe
+# Build the main executable target
+cmake --build build --config Release --target uevr_test
+
+# Run (multi-config generators place binaries under bin/<Config>)
+build/bin/Release/uevr_test.exe
 ```
 
 ### **Usage**
@@ -171,21 +202,32 @@ cmake --build build --config Release
 
 ## 📚 **DOCUMENTATION**
 
-### **Technical Documentation**
-- [**API Reference**](docs/api/README.md) - Complete API documentation
-- [**Engine Adapters**](docs/adapters/README.md) - Adapter development guide
-- [**VR Integration**](docs/vr/README.md) - VR system architecture
-- [**Performance Guide**](docs/performance/README.md) - Optimization techniques
+### **Core Docs**
+- [Architecture Overview](docs/architecture/system-overview.md)
+- [Core Components](docs/architecture/core-components.md)
+- [Data Flow](docs/architecture/data-flow.md)
 
-### **User Guides**
-- [**Installation Guide**](docs/installation/README.md) - Step-by-step setup
-- [**Configuration**](docs/configuration/README.md) - System customization
-- [**Troubleshooting**](docs/troubleshooting/README.md) - Common issues & solutions
+### **Adapters**
+- [RE Engine](docs/adapters/re-engine.md)
+- [REDengine 4](docs/adapters/redengine4.md)
+- [MT Framework](docs/adapters/mt-framework.md)
+- [Unreal Engine](docs/adapters/unreal-engine.md)
+- [Unity Engine](docs/adapters/unity-engine.md)
 
-### **Developer Resources**
-- [**Architecture Overview**](docs/architecture/README.md) - System design details
-- [**Plugin Development**](docs/plugins/README.md) - Creating custom plugins
-- [**Testing Guide**](docs/testing/README.md) - Testing procedures
+### **Knowledge & Research**
+- [Context7](docs/context7/README.md)
+- [VR Integration (DeepWiki)](docs/deepwiki/vr-integration.md)
+- [Compatibility Matrix](docs/compatibility/README.md)
+
+### **Index & Community**
+- [Documentation Index](docs/README.md)
+- [Community](docs/community.md)
+
+## 🧭 **Services**
+
+- Dev Build (PR): https://github.com/Alot1z/uevrLCX/actions/workflows/dev-build-pr.yml
+- Dev Release: https://github.com/Alot1z/uevrLCX/actions/workflows/dev-release.yml
+- Docs (Pages): https://github.com/Alot1z/uevrLCX/actions/workflows/pages.yml
 
 ## 🌐 **COMMUNITY**
 
@@ -242,13 +284,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ## 🔗 **LINKS**
 
-- **Website** - [uevr.dev](https://uevr.dev)
-- **Documentation** - [docs.uevr.dev](https://docs.uevr.dev)
-- **Downloads** - [releases.uevr.dev](https://releases.uevr.dev)
-- **Community** - [community.uevr.dev](https://community.uevr.dev)
+- **Repository** - https://github.com/Alot1z/uevrLCX
+- **Documentation Index** - ./docs/README.md
+- **Issues** - https://github.com/Alot1z/uevrLCX/issues
+- **Discussions** - https://github.com/Alot1z/uevrLCX/discussions
 
 ---
 
 **Made with ❤️ by the UEVR Community**
 
 *Transform any game into a VR experience with the power of cross-engine technology!*
+
