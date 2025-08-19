@@ -18,6 +18,39 @@
 #include <unordered_map>
 #include <string>
 #include <functional>
+#include <chrono>
+#include <filesystem>
+#include <mutex>
+#include <spdlog/spdlog.h>
+
+// Forward declarations for UEVR systems
+namespace uevr {
+    class VRSystem;
+    class GraphicsSystem;
+    class CPUMonitor;
+    class MemoryMonitor;
+    class PerformanceMonitor;
+    class CrossEngineAdapter;
+    class PluginManager;
+    class InputSystem;
+    class AudioSystem;
+    class NetworkMonitor;
+    class FileSystem;
+    class ConfigManager;
+    class LoggingSystem;
+}
+
+// Forward declarations for resource types
+namespace uevr {
+    class RenderTarget;
+    class Shader;
+    class Texture;
+    class Buffer;
+    class AudioBuffer;
+    class AudioStream;
+    class NetworkConnection;
+    class NetworkBuffer;
+}
 
 namespace uevr_common {
 
@@ -68,6 +101,74 @@ public:
         float vram_usage = 0.0f;
         UINT dropped_frames = 0;
         UINT total_frames = 0;
+        
+        // Enhanced VR metrics
+        float vr_fps = 0.0f;
+        float vr_frame_time = 0.0f;
+        float vr_dropped_frames = 0.0f;
+        float vr_reprojection_ratio = 0.0f;
+        float vr_compositor_latency = 0.0f;
+        std::string vr_performance_grade;
+        bool vr_optimization_needed = false;
+        
+        // Enhanced GPU metrics
+        float gpu_temperature = 0.0f;
+        float gpu_memory_usage = 0.0f;
+        float gpu_memory_total = 0.0f;
+        float gpu_clock_speed = 0.0f;
+        float gpu_power_consumption = 0.0f;
+        UINT active_render_targets = 0;
+        float render_target_memory = 0.0f;
+        
+        // Enhanced CPU metrics
+        float cpu_temperature = 0.0f;
+        float cpu_clock_speed = 0.0f;
+        float cpu_power_consumption = 0.0f;
+        UINT cpu_thread_count = 0;
+        float cpu_cache_miss_rate = 0.0f;
+        
+        // Enhanced memory metrics
+        float memory_available = 0.0f;
+        float memory_total = 0.0f;
+        float page_file_usage = 0.0f;
+        float memory_fragmentation = 0.0f;
+        float memory_pressure = 0.0f;
+        
+        // Enhanced frame metrics
+        float frame_time_99th_percentile = 0.0f;
+        float frame_time_variance = 0.0f;
+        float frame_time_stability = 0.0f;
+        
+        // Cross-engine adapter metrics
+        float adapter_processing_time = 0.0f;
+        float adapter_memory_usage = 0.0f;
+        UINT adapter_hook_count = 0;
+        std::string adapter_optimization_level;
+        
+        // Plugin system metrics
+        UINT active_plugins = 0;
+        float plugin_memory_usage = 0.0f;
+        float plugin_processing_time = 0.0f;
+        UINT plugin_error_count = 0;
+        
+        // Input system metrics
+        float input_latency = 0.0f;
+        float input_update_rate = 0.0f;
+        UINT input_device_count = 0;
+        
+        // Audio system metrics
+        float audio_latency = 0.0f;
+        UINT audio_buffer_underruns = 0;
+        UINT audio_sample_rate = 0;
+        
+        // Network metrics
+        float network_latency = 0.0f;
+        float network_bandwidth = 0.0f;
+        float network_packet_loss = 0.0f;
+        
+        // Overall performance
+        float overall_performance_score = 0.0f;
+        std::vector<std::string> performance_recommendations;
     };
 
     // Test suite
@@ -115,6 +216,65 @@ private:
     std::vector<TestSuite> m_test_suites;
     std::unordered_map<std::string, size_t> m_test_suite_map;
     
+    // System integration pointers
+    std::shared_ptr<uevr::VRSystem> m_vr_system;
+    std::shared_ptr<uevr::GraphicsSystem> m_graphics_system;
+    std::shared_ptr<uevr::CPUMonitor> m_cpu_monitor;
+    std::shared_ptr<uevr::MemoryMonitor> m_memory_monitor;
+    std::shared_ptr<uevr::PerformanceMonitor> m_performance_monitor;
+    std::shared_ptr<uevr::CrossEngineAdapter> m_cross_engine_adapter;
+    std::shared_ptr<uevr::PluginManager> m_plugin_manager;
+    std::shared_ptr<uevr::InputSystem> m_input_system;
+    std::shared_ptr<uevr::AudioSystem> m_audio_system;
+    std::shared_ptr<uevr::NetworkMonitor> m_network_monitor;
+    std::shared_ptr<uevr::FileSystem> m_file_system;
+    std::shared_ptr<uevr::ConfigManager> m_config_manager;
+    std::shared_ptr<uevr::LoggingSystem> m_logging_system;
+    
+    // Test resource management
+    std::vector<std::shared_ptr<uevr::RenderTarget>> m_vr_render_targets;
+    std::vector<std::shared_ptr<uevr::Texture>> m_vr_test_textures;
+    std::vector<std::shared_ptr<uevr::RenderTarget>> m_test_render_targets;
+    std::vector<std::shared_ptr<uevr::Shader>> m_test_shaders;
+    std::vector<std::shared_ptr<uevr::Texture>> m_test_textures;
+    std::vector<std::shared_ptr<uevr::Buffer>> m_test_buffers;
+    std::vector<std::string> m_test_game_profiles;
+    std::vector<std::string> m_test_adapter_configs;
+    std::vector<std::shared_ptr<void>> m_test_plugins;
+    std::vector<std::string> m_test_plugin_configs;
+    std::vector<std::shared_ptr<void>> m_test_input_devices;
+    std::vector<std::string> m_test_input_mappings;
+    std::vector<std::shared_ptr<uevr::AudioBuffer>> m_test_audio_buffers;
+    std::vector<std::shared_ptr<uevr::AudioStream>> m_test_audio_streams;
+    std::vector<std::shared_ptr<void>> m_test_memory_allocations;
+    std::vector<std::string> m_test_memory_pools;
+    std::vector<std::string> m_test_performance_data;
+    std::vector<std::shared_ptr<uevr::NetworkConnection>> m_test_network_connections;
+    std::vector<std::shared_ptr<uevr::NetworkBuffer>> m_test_network_buffers;
+    std::vector<std::filesystem::path> m_test_files;
+    std::vector<std::filesystem::path> m_test_directories;
+    std::vector<std::string> m_test_configurations;
+    
+    // Test state management
+    bool m_test_in_progress = false;
+    std::chrono::steady_clock::time_point m_test_start_time;
+    std::chrono::steady_clock::time_point m_test_end_time;
+    std::vector<PerformanceMetrics> m_test_metrics_history;
+    std::vector<std::string> m_test_error_logs;
+    std::vector<std::string> m_test_warning_logs;
+    std::vector<std::string> m_test_debug_logs;
+    
+    // Test phase tracking
+    enum class TestPhase {
+        None,
+        Initialization,
+        Execution,
+        Monitoring,
+        Cleanup,
+        Reporting
+    };
+    TestPhase m_current_test_phase = TestPhase::None;
+    
     // Internal testing helpers
     TestResult run_performance_test();
     TestResult run_compatibility_test();
@@ -127,6 +287,24 @@ private:
     
     PerformanceMetrics collect_performance_metrics();
     void cleanup_test_resources();
+    
+    // Helper functions for performance metrics
+    std::string calculateVRPerformanceGrade(float fps, float frame_time);
+    bool needsVROptimization(float fps, float dropped_frames);
+    float calculateMemoryPressure(float physical_usage, float page_file_usage);
+    float calculateFrameTimeStability(float variance, float fps);
+    float calculateOverallPerformanceScore(float fps, float cpu, float gpu, float memory, float stability);
+    std::vector<std::string> generatePerformanceRecommendations(const PerformanceMetrics& metrics);
+    void updatePerformanceHistory(const PerformanceMetrics& metrics);
+    PerformanceMetrics getFallbackPerformanceMetrics();
+    
+    // Helper functions for resource cleanup
+    bool verifyCleanupSuccess();
+    void emergencyCleanup();
+    
+    // System integration helpers
+    void initializeSystemIntegrations();
+    void releaseSystemIntegrations();
 };
 
 /**

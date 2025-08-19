@@ -1,0 +1,8 @@
+# Keep this local-only folder clean. Ignore script and docs here.
+*.ps1
+*.bat
+*.cmd
+*.psm1
+*.psd1
+*.ps1xml
+*.md

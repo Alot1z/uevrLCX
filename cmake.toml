@@ -13,6 +13,13 @@ add_compile_options("$<$<CONFIG:Release>:/Zi>")
 add_link_options("$<$<CONFIG:Release>:/DEBUG>")
 add_link_options("$<$<CONFIG:Release>:/OPT:REF>")
 add_link_options("$<$<CONFIG:Release>:/OPT:ICF>")
+
+# Cross-Engine VR System Configuration
+option(uevr_BUILD_CROSS_ENGINE "Build Cross-Engine VR Adapters" ON)
+option(uevr_BUILD_RE_ENGINE_ADAPTER "Build RE Engine Adapter (RE7 + RE8)" ON)
+option(uevr_BUILD_REDENGINE4_ADAPTER "Build REDengine 4 Adapter (Cyberpunk 2077)" ON)
+option(uevr_BUILD_MT_FRAMEWORK_ADAPTER "Build MT Framework Adapter (Monster Hunter World)" ON)
+option(uevr_BUILD_ALL_ADAPTERS "Build All Cross-Engine Adapters" ON)
 """
 cmake-after = """
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} /MP")
@@ -36,6 +43,7 @@ endif()
 set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
 
 add_subdirectory(dependencies/submodules/UESDK)
+add_subdirectory(src/adapters)
 """
 
 [target.spdlog]
@@ -272,7 +280,11 @@ ARCHIVE_OUTPUT_DIRECTORY_RELWITHDEBINFO = "${CMAKE_BINARY_DIR}/lib/${CMKR_TARGET
 type="ue4template"
 link-libraries = [
     "kananlib",
-    "uesdk"
+    "uesdk",
+    "uevr_re_engine_adapter",
+    "uevr_redengine4_adapter", 
+    "uevr_mt_framework_adapter",
+    "uevr_context7_database"
 ]
 cmake-after="""
 add_custom_command(
@@ -290,4 +302,184 @@ add_custom_command(
     TARGET uevr POST_BUILD
     COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:openvr> $<TARGET_FILE_DIR:uevr>)
 
+# Cross-Engine VR System Post-Build Integration
+if(uevr_BUILD_CROSS_ENGINE)
+    add_custom_command(
+        TARGET uevr POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E echo "Integrating Cross-Engine VR Adapters..."
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:uevr_re_engine_adapter> $<TARGET_FILE_DIR:uevr>
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:uevr_redengine4_adapter> $<TARGET_FILE_DIR:uevr>
+        COMMAND ${CMAKE_COMMAND} -E copy_if_different $<TARGET_FILE:uevr_mt_framework_adapter> $<TARGET_FILE_DIR:uevr>
+    )
+    
+    # Copy cross-engine profiles and configurations
+    add_custom_command(
+        TARGET uevr POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/profiles $<TARGET_FILE_DIR:uevr>/profiles
+        COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/docs/cross-engine $<TARGET_FILE_DIR:uevr>/docs/cross-engine
+    )
+endif()
 """
+
+# Cross-Engine VR System Targets
+[target.uevr_cross_engine_framework]
+type = "static"
+sources = [
+    "src/adapters/common/*.cpp",
+    "src/adapters/common/*.c"
+]
+headers = [
+    "src/adapters/common/*.hpp", 
+    "src/adapters/common/*.h"
+]
+include-directories = [
+    "include/",
+    "src/adapters/common",
+    "src/adapters/re-engine",
+    "src/adapters/redengine4", 
+    "src/adapters/mt-framework"
+]
+compile-features = ["cxx_std_23"]
+compile-options = ["/bigobj", "/EHa", "/MP"]
+link-libraries = [
+    "kananlib",
+    "glm",
+    "nlohmann_json",
+    "spdlog"
+]
+
+[target.uevr_re_engine_adapter]
+type = "shared"
+sources = [
+    "src/adapters/re-engine/*.cpp",
+    "src/adapters/re-engine/*.c"
+]
+headers = [
+    "src/adapters/re-engine/*.hpp",
+    "src/adapters/re-engine/*.h"
+]
+include-directories = [
+    "include/",
+    "src/adapters/common",
+    "src/adapters/re-engine"
+]
+compile-features = ["cxx_std_23"]
+compile-options = ["/bigobj", "/EHa", "/MP"]
+link-libraries = [
+    "uevr_cross_engine_framework",
+    "kananlib",
+    "glm",
+    "nlohmann_json",
+    "spdlog"
+]
+cmake-after="""
+set_target_properties(uevr_re_engine_adapter PROPERTIES
+    OUTPUT_NAME "uevr_re_engine_adapter"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/bin"
+)
+"""
+
+[target.uevr_redengine4_adapter]
+type = "shared"
+sources = [
+    "src/adapters/redengine4/*.cpp",
+    "src/adapters/redengine4/*.c"
+]
+headers = [
+    "src/adapters/redengine4/*.hpp",
+    "src/adapters/redengine4/*.h"
+]
+include-directories = [
+    "include/",
+    "src/adapters/common",
+    "src/adapters/redengine4"
+]
+compile-features = ["cxx_std_23"]
+compile-options = ["/bigobj", "/EHa", "/MP"]
+link-libraries = [
+    "uevr_cross_engine_framework",
+    "kananlib",
+    "glm",
+    "nlohmann_json",
+    "spdlog"
+]
+cmake-after="""
+set_target_properties(uevr_redengine4_adapter PROPERTIES
+    OUTPUT_NAME "uevr_redengine4_adapter"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/bin"
+)
+"""
+
+[target.uevr_mt_framework_adapter]
+type = "shared"
+sources = [
+    "src/adapters/mt-framework/*.cpp",
+    "src/adapters/mt-framework/*.c"
+]
+headers = [
+    "src/adapters/mt-framework/*.hpp",
+    "src/adapters/mt-framework/*.h"
+]
+include-directories = [
+    "include/",
+    "src/adapters/common",
+    "src/adapters/mt-framework"
+]
+compile-features = ["cxx_std_23"]
+compile-options = ["/bigobj", "/EHa", "/MP"]
+link-libraries = [
+    "uevr_cross_engine_framework",
+    "kananlib",
+    "glm",
+    "nlohmann_json",
+    "spdlog"
+]
+cmake-after="""
+set_target_properties(uevr_mt_framework_adapter PROPERTIES
+    OUTPUT_NAME "uevr_mt_framework_adapter"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/bin"
+)
+"""
+
+# Cross-Engine Testing Framework
+[target.uevr_cross_engine_tests]
+type = "shared"
+sources = [
+    "src/adapters/common/testing_framework.cpp"
+]
+headers = [
+    "src/adapters/common/testing_framework.hpp"
+]
+include-directories = [
+    "include/",
+    "src/adapters/common"
+]
+compile-features = ["cxx_std_23"]
+compile-options = ["/bigobj", "/EHa", "/MP"]
+link-libraries = [
+    "uevr_cross_engine_framework",
+    "spdlog"
+]
+cmake-after="""
+set_target_properties(uevr_cross_engine_tests PROPERTIES
+    OUTPUT_NAME "uevr_cross_engine_tests"
+    RUNTIME_OUTPUT_DIRECTORY_RELEASE "${CMAKE_BINARY_DIR}/bin"
+    RUNTIME_OUTPUT_DIRECTORY_RELWITHDEBINFO "${CMAKE_BINARY_DIR}/bin"
+)
+"""
+
+# Cross-Engine VR System Integration
+option(uevr_BUILD_CROSS_ENGINE "Build Cross-Engine VR System" ON)
+option(uevr_BUILD_ALL_ADAPTERS "Build All Cross-Engine Adapters" ON)
+option(uevr_BUILD_RE_ENGINE_ADAPTER "Build RE Engine Adapter" ON)
+option(uevr_BUILD_REDENGINE4_ADAPTER "Build REDengine 4 Adapter" ON)
+option(uevr_BUILD_MT_FRAMEWORK_ADAPTER "Build MT Framework Adapter" ON)
+option(uevr_BUILD_UNREAL_ENGINE_ADAPTER "Build Unreal Engine Adapter" ON)
+option(uevr_BUILD_UNITY_ENGINE_ADAPTER "Build Unity Engine Adapter" ON)
+
+# Context7 Database Integration
+option(uevr_BUILD_CONTEXT7_DATABASE "Build Context7 Database System" ON)
+option(uevr_ENABLE_AI_ANALYSIS "Enable AI-powered VR Analysis" ON)

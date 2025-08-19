@@ -1131,6 +1131,15 @@ private:
     bool m_disable_view_matrix_override{false};
     bool m_disable_backbuffer_size_override{false};
 
+    // HMD velocity tracking for OpenXR
+    std::optional<Vector3f> m_last_hmd_position{};
+    std::optional<Vector3f> m_last_hmd_orientation{};
+    std::chrono::high_resolution_clock::time_point m_last_hmd_update{};
+    std::chrono::high_resolution_clock::time_point m_last_hmd_angular_update{};
+    
+    // Action state update timing for AFR optimization
+    std::chrono::steady_clock::time_point m_last_action_update{};
+
     uint32_t m_present_thread_id{};
 
     struct XInputContext {

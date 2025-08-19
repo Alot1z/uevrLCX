@@ -1,0 +1,31 @@
+{
+  "name": "context7-vr-analysis",
+  "version": "2.0.0",
+  "description": "Context7 AI-Powered VR Compatibility Analysis System",
+  "main": "index.js",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --ext .js,.vue,.ts",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "vue": "^3.3.4",
+    "vue-router": "^4.2.4",
+    "axios": "^1.5.0",
+    "chart.js": "^4.4.0",
+    "vue-chartjs": "^5.2.0",
+    "three": "^0.155.0",
+    "@fortawesome/fontawesome-free": "^6.4.2",
+    "fuse.js": "^6.6.2"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^4.3.4",
+    "vite": "^4.4.9",
+    "eslint": "^8.48.0",
+    "eslint-plugin-vue": "^9.17.0",
+    "prettier": "^3.0.3",
+    "sass": "^1.66.1"
+  }
+}

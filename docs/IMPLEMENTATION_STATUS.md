@@ -76,24 +76,24 @@ uevr/
 - ✅ migrate_to_new_structure.ps1
 - ✅ update_include_paths.ps1
 
-#### **Dokumentation**
+#### **Documentation**
 - ✅ STRUCTURE_DOCUMENTATION.md
 - ✅ TECHNICAL_IMPLEMENTATION.md
 - ✅ IMPLEMENTATION_STATUS.md
 - ✅ STRUCTURE_README.md
 - ✅ MIGRATION_GUIDE.md
 
-### **🔄 I GANG**
+### **🔄 IN PROGRESS**
 
-#### **Fil Migration**
-- ✅ MT-Framework filer flyttet til `src/adapters/mt-framework/`
-- ✅ RE-Engine filer flyttet til `src/adapters/re-engine/`
-- ✅ REDengine4 filer flyttet til `src/adapters/redengine4/`
-- ✅ Core source filer flyttet til `src/core/`
-- 🔄 Include paths skal opdateres
-- 🔄 Namespace strukturer skal rettes
+#### **File Migration**
+- ✅ MT-Framework files moved to `src/adapters/mt-framework/`
+- ✅ RE-Engine files moved to `src/adapters/re-engine/`
+- ✅ REDengine4 files moved to `src/adapters/redengine4/`
+- ✅ Core source files moved to `src/core/`
+- 🔄 Include paths need to be updated
+- 🔄 Namespace structures need to be fixed
 
-#### **Placeholder Filer**
+#### **Placeholder Files**
 - ✅ src/main.cpp
 - ✅ src/Plugin.cpp
 - ✅ src/hooks/DirectXHooks.cpp
@@ -104,9 +104,9 @@ uevr/
 - ✅ tests/unit/core_tests.cpp
 - ✅ examples/basic_plugin/basic_plugin.cpp
 
-### **❌ MANGENDE IMPLEMENTERING**
+### **❌ MISSING IMPLEMENTATION**
 
-#### **Header Filer**
+#### **Header Files**
 - ❌ include/uevr/Framework.hpp
 - ❌ include/uevr/Plugin.hpp
 - ❌ include/uevr/hooks/VulkanHooks.hpp
@@ -115,54 +115,54 @@ uevr/
 - ❌ include/uevr/adapters/common/CrossEngineAdapter.hpp
 - ❌ include/uevr/adapters/common/AdapterFactory.hpp
 
-#### **Source Filer**
-- ❌ src/core/utility/ (alle utility filer)
-- ❌ src/mods/ (alle mod filer)
-- ❌ src/adapters/common/ (alle common adapter filer)
+#### **Source Files**
+- ❌ src/core/utility/ (all utility files)
+- ❌ src/mods/ (all mod files)
+- ❌ src/adapters/common/ (all common adapter files)
 
-#### **Test Filer**
+#### **Test Files**
 - ❌ tests/unit/adapter_tests.cpp
 - ❌ tests/unit/hook_tests.cpp
 - ❌ tests/integration/re_engine_tests.cpp
 - ❌ tests/integration/redengine4_tests.cpp
 
-## 🚨 **KRITISKE OPGAVER**
+## 🚨 **CRITICAL TASKS**
 
-### **Høj Prioritet**
-1. **Opret manglende header filer** - Kræves for kompilering
-2. **Implementer common adapter kode** - Kræves for adapter system
-3. **Opdater alle include paths** - Kræves for build success
-4. **Test CMake konfiguration** - Kræves for validering
+### **High Priority**
+1. **Create missing header files** - Required for compilation
+2. **Implement common adapter code** - Required for adapter system
+3. **Update all include paths** - Required for build success
+4. **Test CMake configuration** - Required for validation
 
-### **Medium Prioritet**
-1. **Implementer utility funktioner** - Kræves for core funktionalitet
-2. **Implementer mod system** - Kræves for VR funktionalitet
-3. **Opret test filer** - Kræves for kvalitetssikring
+### **Medium Priority**
+1. **Implement utility functions** - Required for core functionality
+2. **Implement mod system** - Required for VR functionality
+3. **Create test files** - Required for quality assurance
 
-### **Lav Prioritet**
-1. **Performance optimering** - Kan gøres senere
-2. **Advanced features** - Kan implementeres iterativt
-3. **CI/CD pipeline** - Kan opsættes efter stabil build
+### **Low Priority**
+1. **Performance optimization** - Can be done later
+2. **Advanced features** - Can be implemented iteratively
+3. **CI/CD pipeline** - Can be set up after stable build
 
-## 🔧 **NÆSTE SKRIDT**
+## 🔧 **NEXT STEPS**
 
-### **Uge 1: Header og Common Implementation**
-- [ ] Opret alle manglende header filer
-- [ ] Implementer common adapter kode
-- [ ] Implementer utility funktioner
+### **Week 1: Header and Common Implementation**
+- [ ] Create all missing header files
+- [ ] Implement common adapter code
+- [ ] Implement utility functions
 
-### **Uge 2: Build System Validering**
-- [ ] Test CMake konfiguration
+### **Week 2: Build System Validation**
+- [ ] Test CMake configuration
 - [ ] Fix dependency issues
-- [ ] Valider build process
+- [ ] Validate build process
 
-### **Uge 3: Testing og Validering**
-- [ ] Implementer test filer
-- [ ] Kør unit tests
-- [ ] Valider funktionalitet
+### **Week 3: Testing and Validation**
+- [ ] Implement test files
+- [ ] Run unit tests
+- [ ] Validate functionality
 
-### **Uge 4: Dokumentation og Release**
-- [ ] Opdater alle dokumenter
+### **Week 4: Documentation and Release**
+- [ ] Update all documents
 - [ ] Performance testing
 - [ ] Release preparation
 
