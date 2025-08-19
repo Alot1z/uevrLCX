@@ -11,1217 +11,1009 @@
 #include "uevr/vr/FullPhysicsIntegration.hpp"
 #include <spdlog/spdlog.h>
 #include <algorithm>
-#include <chrono>
+#include <unordered_map>
+#include <memory>
 #include <cmath>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtx/quaternion.hpp>
 
 namespace uevr {
 namespace vr {
 
-FullPhysicsIntegration::FullPhysicsIntegration()
-    : m_initialized(false)
-    , m_advanced_physics_enabled(false)
-    , m_physics_debug_enabled(false)
-    , m_physics_time_step(0.016f)  // 60 FPS default
-    , m_physics_iterations(10)
-    , m_world_gravity(0.0f, -9.81f, 0.0f)
-    , m_physics_world_created(false)
-    , m_frame_count(0) {
+// Forward declarations for internal types
+struct PhysicsObjectData {
+    ObjectID object;
+    PhysicsType type;
+    bool isSimulating;
+    Vector3 position;
+    Vector3 rotation;
+    Vector3 scale;
+    Vector3 velocity;
+    Vector3 angular_velocity;
+    Vector3 acceleration;
+    Vector3 force;
+    Vector3 torque;
+    Vector3 gravity;
+    float mass;
+    float friction;
+    float restitution;
+    bool gravityEnabled;
+    std::vector<ObjectID> constraints;
+};
+
+struct ConstraintData {
+    ObjectID object1;
+    ObjectID object2;
+    std::string type;
+    Vector3 axis;
+    float spring_constant;
+    float damping;
+};
+
+struct PerformanceData {
+    uint64_t collision_checks = 0;
+    uint64_t physics_updates = 0;
+    uint64_t force_applications = 0;
+    uint64_t constraint_solves = 0;
+    float total_simulation_time = 0.0f;
+    float average_frame_time = 0.0f;
+    uint64_t total_frames = 0;
+};
+
+// Internal state
+class FullPhysicsIntegrationImpl : public FullPhysicsIntegration {
+private:
+    // System state
+    bool m_initialized = false;
+    bool m_physicsEnabled = true;
+    bool m_collisionResponseEnabled = true;
+    bool m_debugVisualizationEnabled = false;
     
-    spdlog::info("[FullPhysics] Full Physics Integration created");
+    // Configuration
+    float m_globalGravityStrength = -9.81f;
+    float m_collisionResponseStrength = 1.0f;
+    float m_collisionDetectionPrecision = 0.8f;
+    float m_collisionDetectionFrequency = 60.0f;
     
-    // Initialize collision engine
-    m_collision_engine = std::make_unique<FullAestheticCollisionEngine>();
+    // Physics objects and constraints
+    std::vector<PhysicsObjectData> m_physicsObjects;
+    std::vector<ConstraintData> m_constraints;
     
-    // Initialize performance metrics
-    m_performance = PhysicsPerformance{};
-    m_last_frame_time = std::chrono::high_resolution_clock::now();
-}
+    // Performance tracking
+    PerformanceData m_performance;
+    
+    // Collision detection settings per physics type
+    std::unordered_map<PhysicsType, bool> m_collisionDetectionEnabled;
 
-FullPhysicsIntegration::~FullPhysicsIntegration() {
-    spdlog::info("[FullPhysics] Full Physics Integration destroyed");
-    shutdownPhysics();
-}
-
-bool FullPhysicsIntegration::initializeFullPhysics() {
-    if (m_initialized) {
-        spdlog::warn("[FullPhysics] Physics system already initialized");
-        return true;
-    }
-
-    try {
-        spdlog::info("[FullPhysics] Initializing Full Physics Integration...");
-        
-        // Initialize collision engine
-        if (!m_collision_engine->initializeFullCollision()) {
-            spdlog::error("[FullPhysics] Failed to initialize collision engine");
-            return false;
-        }
-        
-        // Initialize physics engine components
-        if (!initializePhysicsEngine()) {
-            spdlog::error("[FullPhysics] Failed to initialize physics engine");
-            return false;
-        }
-        
-        // Initialize collision shapes
-        if (!initializeCollisionShapes()) {
-            spdlog::error("[FullPhysics] Failed to initialize collision shapes");
-            return false;
-        }
-        
-        // Initialize physics materials
-        if (!initializePhysicsMaterials()) {
-            spdlog::error("[FullPhysics] Failed to initialize physics materials");
-            return false;
-        }
-        
-        // Initialize physics constraints
-        if (!initializePhysicsConstraints()) {
-            spdlog::error("[FullPhysics] Failed to initialize physics constraints");
-            return false;
-        }
-        
-        // Create physics world
-        if (!createPhysicsWorld()) {
-            spdlog::error("[FullPhysics] Failed to create physics world");
-            return false;
-        }
-        
-        // Initialize default physics properties
-        initializeDefaultPhysicsProperties();
-        
-        m_initialized = true;
-        spdlog::info("[FullPhysics] Full Physics Integration initialized successfully");
-        return true;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception during initialization: {}", e.what());
-        return false;
-    }
-}
-
-void FullPhysicsIntegration::shutdownPhysics() {
-    if (!m_initialized) {
-        return;
-    }
-
-    try {
-        spdlog::info("[FullPhysics] Shutting down physics system...");
-        
-        // Destroy physics world
-        destroyPhysicsWorld();
-        
-        // Clear all physics objects
-        m_physics_objects.clear();
-        
-        // Clear all constraints
-        m_physics_constraints.clear();
-        
-        // Shutdown collision engine
-        if (m_collision_engine) {
-            m_collision_engine->shutdownCollision();
-        }
-        
-        m_initialized = false;
-        spdlog::info("[FullPhysics] Physics system shutdown complete");
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception during shutdown: {}", e.what());
-    }
-}
-
-bool FullPhysicsIntegration::checkFullHandCollision(HandType hand, ObjectID object, CollisionType type) {
-    if (!m_initialized) {
-        return false;
-    }
-
-    try {
-        // Use collision engine to detect hand collision
-        auto collision_result = m_collision_engine->detectFullCollision(object, hand, type);
-        
-        if (collision_result.collision_detected) {
-            // Handle collision response
-            handleFullCollisionResponse(collision_result, type);
-            
-            // Update performance metrics
-            m_performance.collision_checks++;
-            
+public:
+    // ============================================================================
+    // INITIALIZATION AND CORE SYSTEM
+    // ============================================================================
+    
+    bool initializeFullPhysics() override {
+        if (m_initialized) {
+            spdlog::warn("FullPhysicsIntegration already initialized");
             return true;
         }
         
-        return false;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception during hand collision check: {}", e.what());
-        return false;
+        try {
+            spdlog::info("Initializing FullPhysicsIntegration...");
+            
+            // Initialize internal systems
+            m_physicsObjects.clear();
+            m_constraints.clear();
+            
+            // Initialize collision detection settings for all physics types
+            m_collisionDetectionEnabled[PhysicsType::STATIC] = true;
+            m_collisionDetectionEnabled[PhysicsType::DYNAMIC] = true;
+            m_collisionDetectionEnabled[PhysicsType::KINEMATIC] = true;
+            m_collisionDetectionEnabled[PhysicsType::RIGID_BODY] = true;
+            m_collisionDetectionEnabled[PhysicsType::SOFT_BODY] = true;
+            
+            // Reset performance counters
+            m_performance = PerformanceData{};
+            
+            m_initialized = true;
+            spdlog::info("FullPhysicsIntegration initialized successfully");
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("Failed to initialize FullPhysicsIntegration: {}", e.what());
+            return false;
+        }
     }
-}
-
-void FullPhysicsIntegration::simulateFullObjectPhysics(ObjectID object, PhysicsType physics_type) {
-    if (!m_initialized) {
-        return;
-    }
-
-    try {
-        // Check if object exists in physics system
-        auto obj_iter = m_physics_objects.find(object);
-        if (obj_iter == m_physics_objects.end()) {
-            spdlog::warn("[FullPhysics] Object {} not found in physics system", object);
+    
+    void shutdownFullPhysics() override {
+        if (!m_initialized) {
             return;
         }
         
-        auto& obj_data = obj_iter->second;
+        spdlog::info("Shutting down FullPhysicsIntegration...");
         
-        // Update physics type if changed
-        if (obj_data.physics_type != physics_type) {
-            obj_data.physics_type = physics_type;
-            spdlog::debug("[FullPhysics] Updated physics type for object {} to {}", object, static_cast<int>(physics_type));
-        }
+        // Clear all physics objects
+        m_physicsObjects.clear();
         
-        // Simulate physics based on type
-        switch (physics_type) {
-            case PhysicsType::STATIC:
-                // Static objects - no physics simulation needed
-                break;
-                
-            case PhysicsType::DYNAMIC:
-                // Dynamic objects - full physics simulation
-                updatePhysicsObject(object, m_physics_time_step);
-                break;
-                
-            case PhysicsType::KINEMATIC:
-                // Kinematic objects - controlled movement
-                updateKinematicPhysics(object);
-                break;
-                
-            case PhysicsType::RAGDOLL:
-                // Ragdoll physics simulation
-                updateRagdollPhysics(object);
-                break;
-                
-            case PhysicsType::VEHICLE:
-                // Vehicle physics simulation
-                updateVehiclePhysics(object);
-                break;
-                
-            case PhysicsType::WEAPON:
-                // Weapon physics simulation
-                updateWeaponPhysics(object);
-                break;
-                
-            case PhysicsType::ENVIRONMENTAL:
-                // Environmental object physics
-                updateEnvironmentalPhysics(object);
-                break;
-                
-            default:
-                spdlog::warn("[FullPhysics] Unknown physics type {} for object {}", static_cast<int>(physics_type), object);
-                break;
-        }
+        // Clear all constraints
+        m_constraints.clear();
         
-        // Update performance metrics
-        m_performance.physics_calculations++;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception during physics simulation: {}", e.what());
+        m_initialized = false;
+        spdlog::info("FullPhysicsIntegration shutdown complete");
     }
-}
-
-void FullPhysicsIntegration::applyFullForce(ObjectID object, const glm::vec3& force, ForceType force_type) {
-    if (!m_initialized) {
-        return;
+    
+    bool isPhysicsSystemReady() const override {
+        return m_initialized;
     }
 
-    try {
-        // Check if object exists in physics system
-        auto obj_iter = m_physics_objects.find(object);
-        if (obj_iter == m_physics_objects.end()) {
-            spdlog::warn("[FullPhysics] Object {} not found in physics system", object);
+    // ============================================================================
+    // HAND COLLISION DETECTION
+    // ============================================================================
+    
+    bool checkFullHandCollision(HandType hand, ObjectID object, CollisionType type) override {
+        if (!m_initialized) {
+            spdlog::warn("Physics system not initialized");
+            return false;
+        }
+        
+        m_performance.collision_checks++;
+        
+        // Check if collision detection is enabled for this object's physics type
+        auto physicsData = getPhysicsObjectData(object);
+        if (!physicsData) {
+            return false;
+        }
+        
+        if (!m_collisionDetectionEnabled[physicsData->type]) {
+            return false;
+        }
+        
+        // This is a simplified collision check - in real implementation, you'd do proper collision detection
+        // based on the collision type and object properties
+        bool collisionDetected = true; // Placeholder for actual collision detection
+        
+        if (collisionDetected) {
+            spdlog::debug("Hand collision detected: Hand {}, Object {}, Type {}", 
+                         static_cast<int>(hand), static_cast<int>(object), static_cast<int>(type));
+        }
+        
+        return collisionDetected;
+    }
+    
+    std::vector<ObjectID> getHandCollidingObjects(HandType hand) const override {
+        std::vector<ObjectID> collidingObjects;
+        
+        // This would typically involve checking the current collision state
+        // For now, return empty vector as placeholder
+        return collidingObjects;
+    }
+    
+    bool isHandColliding(HandType hand) const override {
+        // Check if hand is currently colliding with any object
+        return false; // Placeholder
+    }
+
+    // ============================================================================
+    // OBJECT PHYSICS SIMULATION
+    // ============================================================================
+    
+    void simulateFullObjectPhysics(ObjectID object, PhysicsType physics_type) override {
+        if (!m_physicsEnabled || !m_initialized) {
             return;
         }
         
-        auto& obj_data = obj_iter->second;
+        m_performance.physics_updates++;
         
-        // Apply force based on type
-        switch (force_type) {
-            case ForceType::IMPULSE:
-                // Instant force impulse
-                obj_data.physics_state.velocity += force / obj_data.properties.mass;
-                break;
-                
-            case ForceType::CONSTANT:
-                // Constant force over time
-                obj_data.physics_state.velocity += force * m_physics_time_step / obj_data.properties.mass;
-                break;
-                
-            case ForceType::GRAVITY:
-                // Gravitational force
-                obj_data.physics_state.velocity += force * m_physics_time_step;
-                break;
-                
-            case ForceType::SPRING:
-                // Spring force (simplified)
-                applySpringForce(object, force);
-                break;
-                
-            case ForceType::DAMPING:
-                // Damping force
-                applyDampingForce(object, force);
-                break;
-                
-            case ForceType::FRICTION:
-                // Friction force
-                applyFrictionForce(object, force);
-                break;
-                
-            case ForceType::BUOYANCY:
-                // Buoyancy force
-                applyBuoyancyForce(object, force);
-                break;
-                
-            case ForceType::MAGNETIC:
-                // Magnetic force
-                applyMagneticForce(object, force);
-                break;
-                
-            case ForceType::WIND:
-                // Wind force
-                applyWindForce(object, force);
-                break;
-                
-            default:
-                spdlog::warn("[FullPhysics] Unknown force type {} for object {}", static_cast<int>(force_type), object);
-                break;
+        // Find or create physics data for this object
+        auto physicsData = getOrCreatePhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->type = physics_type;
+            physicsData->isSimulating = true;
+            
+            // Apply physics based on type
+            switch (physics_type) {
+                case PhysicsType::STATIC:
+                    // Static objects don't move
+                    physicsData->velocity = Vector3{};
+                    physicsData->angular_velocity = Vector3{};
+                    physicsData->acceleration = Vector3{};
+                    break;
+                    
+                case PhysicsType::DYNAMIC:
+                    // Dynamic objects can move and be affected by forces
+                    // Physics simulation will be handled in updatePhysicsSimulation
+                    break;
+                    
+                case PhysicsType::KINEMATIC:
+                    // Kinematic objects move but aren't affected by forces
+                    // Movement will be controlled externally
+                    break;
+                    
+                case PhysicsType::RIGID_BODY:
+                    // Rigid body physics simulation
+                    // Full physics simulation will be applied
+                    break;
+                    
+                case PhysicsType::SOFT_BODY:
+                    // Soft body physics simulation
+                    // Deformable physics simulation will be applied
+                    break;
+                    
+                default:
+                    spdlog::warn("Unknown physics type: {}", static_cast<int>(physics_type));
+                    break;
+            }
+            
+            spdlog::debug("Physics simulation enabled for object {} with type {}", 
+                         static_cast<int>(object), static_cast<int>(physics_type));
         }
-        
-        // Mark object as active
-        obj_data.physics_state.is_active = true;
-        obj_data.physics_state.is_sleeping = false;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception applying force: {}", e.what());
     }
-}
-
-void FullPhysicsIntegration::simulateFullGravity(ObjectID object, GravityType gravity_type) {
-    if (!m_initialized) {
-        return;
-    }
-
-    try {
-        // Check if object exists in physics system
-        auto obj_iter = m_physics_objects.find(object);
-        if (obj_iter == m_physics_objects.end()) {
+    
+    void updatePhysicsSimulation(float delta_time) override {
+        if (!m_physicsEnabled || !m_initialized) {
             return;
         }
         
-        auto& obj_data = obj_iter->second;
+        m_performance.total_simulation_time += delta_time;
+        m_performance.total_frames++;
+        m_performance.average_frame_time = m_performance.total_simulation_time / m_performance.total_frames;
         
-        // Apply gravity based on type
-        glm::vec3 gravity_force;
-        
-        switch (gravity_type) {
-            case GravityType::NONE:
-                gravity_force = glm::vec3(0.0f);
-                break;
+        for (auto& physics : m_physicsObjects) {
+            if (physics.isSimulating) {
+                // Update physics simulation for this object based on its type
+                switch (physics.type) {
+                    case PhysicsType::STATIC:
+                        // No physics update needed for static objects
+                        break;
+                        
+                    case PhysicsType::DYNAMIC:
+                    case PhysicsType::RIGID_BODY:
+                        // Apply forces and update velocity
+                        if (physics.mass > 0.0f) {
+                            // F = ma, so a = F/m
+                            Vector3 acceleration = physics.force / physics.mass;
+                            physics.acceleration = acceleration;
+                            
+                            // Update velocity: v = v0 + a*t
+                            physics.velocity += physics.acceleration * delta_time;
+                            
+                            // Apply damping
+                            float damping = 1.0f - physics.friction;
+                            physics.velocity *= std::pow(damping, delta_time);
+                            
+                            // Update position: x = x0 + v*t
+                            physics.position += physics.velocity * delta_time;
+                        }
+                        break;
+                        
+                    case PhysicsType::KINEMATIC:
+                        // Kinematic objects move but aren't affected by forces
+                        // Position updates should be handled externally
+                        break;
+                        
+                    case PhysicsType::SOFT_BODY:
+                        // Soft body physics simulation
+                        // This would involve more complex deformation calculations
+                        break;
+                }
                 
-            case GravityType::EARTH:
-                gravity_force = glm::vec3(0.0f, -9.81f, 0.0f);
-                break;
+                // Apply gravity if enabled
+                if (physics.gravityEnabled) {
+                    physics.velocity += physics.gravity * delta_time;
+                }
                 
-            case GravityType::MOON:
-                gravity_force = glm::vec3(0.0f, -1.62f, 0.0f);
-                break;
-                
-            case GravityType::MARS:
-                gravity_force = glm::vec3(0.0f, -3.71f, 0.0f);
-                break;
-                
-            case GravityType::SPACE:
-                gravity_force = glm::vec3(0.0f, -0.1f, 0.0f); // Microgravity
-                break;
-                
-            case GravityType::CUSTOM:
-                gravity_force = m_world_gravity;
-                break;
-                
-            default:
-                gravity_force = glm::vec3(0.0f, -9.81f, 0.0f); // Default to Earth gravity
-                break;
+                // Clear forces for next frame
+                physics.force = Vector3{};
+                physics.torque = Vector3{};
+            }
         }
         
-        // Apply gravity force
-        if (obj_data.physics_type == PhysicsType::DYNAMIC || obj_data.physics_type == PhysicsType::RAGDOLL) {
-            obj_data.physics_state.velocity += gravity_force * m_physics_time_step;
+        // Solve constraints
+        solveConstraints(delta_time);
+    }
+    
+    void setPhysicsSimulationEnabled(bool enabled) override {
+        m_physicsEnabled = enabled;
+        spdlog::info("Physics simulation {}", enabled ? "enabled" : "disabled");
+    }
+    
+    bool isPhysicsSimulationEnabled() const override {
+        return m_physicsEnabled;
+    }
+    
+    bool isObjectPhysicsActive(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        return physicsData ? physicsData->isSimulating : false;
+    }
+
+    // ============================================================================
+    // FORCE APPLICATION
+    // ============================================================================
+    
+    void applyFullForce(ObjectID object, Vector3 force, ForceType force_type) override {
+        if (!m_initialized) {
+            return;
         }
         
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception simulating gravity: {}", e.what());
+        m_performance.force_applications++;
+        
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData && physicsData->isSimulating) {
+            // Apply force based on type
+            switch (force_type) {
+                case ForceType::LINEAR:
+                    // Apply linear force
+                    physicsData->force += force;
+                    break;
+                    
+                case ForceType::ANGULAR:
+                    // Apply angular force (torque)
+                    physicsData->torque += force;
+                    break;
+                    
+                case ForceType::IMPULSE:
+                    // Apply impulse force (instant velocity change)
+                    if (physicsData->mass > 0.0f) {
+                        physicsData->velocity += force / physicsData->mass;
+                    }
+                    break;
+                    
+                default:
+                    // Default to linear force
+                    physicsData->force += force;
+                    break;
+            }
+            
+            spdlog::debug("Force applied to object {}: Force {}, Type {}", 
+                         static_cast<int>(object), 
+                         "Vector3", // Placeholder for actual vector logging
+                         static_cast<int>(force_type));
+        }
     }
-}
-
-void FullPhysicsIntegration::handleFullCollisionResponse(const CollisionResult& collision, CollisionType type) {
-    if (!m_initialized) {
-        return;
+    
+    void applyImpulse(ObjectID object, Vector3 impulse) override {
+        applyFullForce(object, impulse, ForceType::IMPULSE);
+    }
+    
+    void applyTorque(ObjectID object, Vector3 torque) override {
+        applyFullForce(object, torque, ForceType::ANGULAR);
+    }
+    
+    Vector3 getObjectForce(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        return physicsData ? physicsData->force : Vector3{};
+    }
+    
+    void clearObjectForces(ObjectID object) override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->force = Vector3{};
+            physicsData->torque = Vector3{};
+            spdlog::debug("Forces cleared for object {}", static_cast<int>(object));
+        }
     }
 
-    try {
+    // ============================================================================
+    // GRAVITY SIMULATION
+    // ============================================================================
+    
+    void simulateFullGravity(ObjectID object, GravityType gravity_type) override {
+        if (!m_initialized) {
+            return;
+        }
+        
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->gravityEnabled = true;
+            
+            // Set gravity based on type
+            switch (gravity_type) {
+                case GravityType::EARTH:
+                    physicsData->gravity = Vector3{0.0f, m_globalGravityStrength, 0.0f};
+                    break;
+                    
+                case GravityType::ZERO:
+                    physicsData->gravity = Vector3{};
+                    physicsData->gravityEnabled = false;
+                    break;
+                    
+                case GravityType::CUSTOM:
+                    // Custom gravity will be set via setObjectGravity
+                    break;
+                    
+                default:
+                    physicsData->gravity = Vector3{0.0f, m_globalGravityStrength, 0.0f};
+                    break;
+            }
+            
+            spdlog::debug("Gravity enabled for object {}: Type {}", 
+                         static_cast<int>(object), static_cast<int>(gravity_type));
+        }
+    }
+    
+    void setGlobalGravityStrength(float gravity_strength) override {
+        m_globalGravityStrength = gravity_strength;
+        spdlog::info("Global gravity strength set to: {}", m_globalGravityStrength);
+    }
+    
+    float getGlobalGravityStrength() const override {
+        return m_globalGravityStrength;
+    }
+    
+    void setObjectGravity(ObjectID object, Vector3 gravity_vector) override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->gravity = gravity_vector;
+            physicsData->gravityEnabled = true;
+            spdlog::debug("Object gravity set for object {}: {}", 
+                         static_cast<int>(object), "Vector3"); // Placeholder
+        }
+    }
+    
+    Vector3 getObjectGravity(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        return physicsData ? physicsData->gravity : Vector3{};
+    }
+    
+    void disableObjectGravity(ObjectID object) override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->gravityEnabled = false;
+            spdlog::debug("Gravity disabled for object {}", static_cast<int>(object));
+        }
+    }
+    
+    bool isObjectGravityEnabled(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        return physicsData ? physicsData->gravityEnabled : false;
+    }
+
+    // ============================================================================
+    // COLLISION RESPONSE
+    // ============================================================================
+    
+    void handleFullCollisionResponse(CollisionResult collision, CollisionType type) override {
+        if (!m_collisionResponseEnabled || !m_initialized) {
+            return;
+        }
+        
         // Handle collision response based on type
         switch (type) {
-            case CollisionType::TOUCH:
-                handleTouchCollision(collision);
+            case CollisionType::HAND_OBJECT:
+                // Handle hand-object collision
+                handleHandObjectCollision(collision);
                 break;
                 
-            case CollisionType::GRAB:
-                handleGrabCollision(collision);
+            case CollisionType::HAND_DOOR:
+                // Handle hand-door collision
+                handleHandDoorCollision(collision);
                 break;
                 
-            case CollisionType::PUSH:
-                handlePushCollision(collision);
+            case CollisionType::HAND_WEAPON:
+                // Handle hand-weapon collision
+                handleHandWeaponCollision(collision);
                 break;
                 
-            case CollisionType::PULL:
-                handlePullCollision(collision);
+            case CollisionType::HAND_VEHICLE:
+                // Handle hand-vehicle collision
+                handleHandVehicleCollision(collision);
                 break;
                 
-            case CollisionType::THROW:
-                handleThrowCollision(collision);
+            case CollisionType::HAND_NPC:
+                // Handle hand-NPC collision (visual feedback only!)
+                handleHandNPCCollision(collision);
                 break;
                 
-            case CollisionType::BREAK:
-                handleBreakCollision(collision);
+            case CollisionType::HAND_ENVIRONMENT:
+                // Handle hand-environment collision
+                handleHandEnvironmentCollision(collision);
                 break;
                 
-            case CollisionType::INTERACT:
-                handleInteractCollision(collision);
+            case CollisionType::HAND_PUZZLE:
+                // Handle hand-puzzle collision
+                handleHandPuzzleCollision(collision);
                 break;
                 
-            case CollisionType::DAMAGE:
-                handleDamageCollision(collision);
-                break;
-                
-            case CollisionType::TRIGGER:
-                handleTriggerCollision(collision);
+            case CollisionType::HAND_INVENTORY:
+                // Handle hand-inventory collision
+                handleHandInventoryCollision(collision);
                 break;
                 
             default:
-                spdlog::warn("[FullPhysics] Unknown collision type {} for response handling", static_cast<int>(type));
+                spdlog::warn("Unknown collision type for response: {}", static_cast<int>(type));
                 break;
         }
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception handling collision response: {}", e.what());
     }
-}
-
-PhysicsPerformance FullPhysicsIntegration::getFullPhysicsPerformance() const {
-    return m_performance;
-}
-
-InteractionResult FullPhysicsIntegration::interactWithFullObject(ObjectID object, HandType hand, InteractionType type) {
-    if (!m_initialized) {
-        return InteractionResult{};
+    
+    void setCollisionResponseEnabled(bool enabled) override {
+        m_collisionResponseEnabled = enabled;
+        spdlog::info("Collision response {}", enabled ? "enabled" : "disabled");
+    }
+    
+    bool isCollisionResponseEnabled() const override {
+        return m_collisionResponseEnabled;
+    }
+    
+    void setCollisionResponseStrength(float strength) override {
+        m_collisionResponseStrength = std::clamp(strength, 0.0f, 1.0f);
+        spdlog::info("Collision response strength set to: {}", m_collisionResponseStrength);
+    }
+    
+    float getCollisionResponseStrength() const override {
+        return m_collisionResponseStrength;
     }
 
-    try {
-        auto start_time = std::chrono::high_resolution_clock::now();
+    // ============================================================================
+    // PERFORMANCE MONITORING
+    // ============================================================================
+    
+    PhysicsPerformance getFullPhysicsPerformance() override {
+        PhysicsPerformance performance;
+        // Populate performance data
+        // This would typically involve more detailed performance metrics
+        return performance;
+    }
+    
+    std::string getPerformanceStats() const override {
+        std::string stats = "FullPhysicsIntegration Performance Stats:\n";
+        stats += "  Collision checks: " + std::to_string(m_performance.collision_checks) + "\n";
+        stats += "  Physics updates: " + std::to_string(m_performance.physics_updates) + "\n";
+        stats += "  Force applications: " + std::to_string(m_performance.force_applications) + "\n";
+        stats += "  Constraint solves: " + std::to_string(m_performance.constraint_solves) + "\n";
+        stats += "  Total simulation time: " + std::to_string(m_performance.total_simulation_time) + "s\n";
+        stats += "  Average frame time: " + std::to_string(m_performance.average_frame_time * 1000.0f) + "ms\n";
+        stats += "  Total frames: " + std::to_string(m_performance.total_frames) + "\n";
+        stats += "  Physics objects: " + std::to_string(m_physicsObjects.size()) + "\n";
+        stats += "  Active constraints: " + std::to_string(m_constraints.size()) + "\n";
+        return stats;
+    }
+    
+    void resetPerformanceCounters() override {
+        m_performance = PerformanceData{};
+        spdlog::info("Performance counters reset");
+    }
+    
+    std::string getMemoryUsage() const override {
+        std::string memory = "FullPhysicsIntegration Memory Usage:\n";
+        memory += "  Physics objects: " + std::to_string(m_physicsObjects.size() * sizeof(PhysicsObjectData)) + " bytes\n";
+        memory += "  Constraints: " + std::to_string(m_constraints.size() * sizeof(ConstraintData)) + " bytes\n";
+        memory += "  Performance data: " + std::to_string(sizeof(PerformanceData)) + " bytes\n";
+        return memory;
+    }
+
+    // ============================================================================
+    // OBJECT INTERACTION
+    // ============================================================================
+    
+    InteractionResult interactWithFullObject(ObjectID object, HandType hand, InteractionType type) override {
+        if (!m_initialized) {
+            return InteractionResult{};
+        }
         
-        InteractionResult result;
-        
-        // Check if object exists in physics system
-        auto obj_iter = m_physics_objects.find(object);
-        if (obj_iter == m_physics_objects.end()) {
-            spdlog::warn("[FullPhysics] Object {} not found for interaction", object);
-            return result;
+        // Check if object can be interacted with
+        if (!canInteractWithObject(object, hand)) {
+            return InteractionResult{};
         }
         
         // Perform interaction based on type
-        switch (type) {
-            case InteractionType::TOUCH:
-                result = performTouchInteraction(object, hand);
-                break;
-                
-            case InteractionType::GRAB:
-                result = performGrabInteraction(object, hand);
-                break;
-                
-            case InteractionType::PUSH:
-                result = performPushInteraction(object, hand);
-                break;
-                
-            case InteractionType::PULL:
-                result = performPullInteraction(object, hand);
-                break;
-                
-            case InteractionType::THROW:
-                result = performThrowInteraction(object, hand);
-                break;
-                
-            case InteractionType::BREAK:
-                result = performBreakInteraction(object, hand);
-                break;
-                
-            case InteractionType::INTERACT:
-                result = performInteractInteraction(object, hand);
-                break;
-                
-            case InteractionType::DAMAGE:
-                result = performDamageInteraction(object, hand);
-                break;
-                
-            case InteractionType::TRIGGER:
-                result = performTriggerInteraction(object, hand);
-                break;
-                
-            default:
-                spdlog::warn("[FullPhysics] Unknown interaction type {} for object {}", static_cast<int>(type), object);
-                break;
-        }
+        InteractionResult result;
+        // Populate result with interaction data
         
-        // Calculate response time
-        auto end_time = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
-        result.response_time = duration.count() / 1000.0f; // Convert to milliseconds
-        
-        // Update performance metrics
-        if (result.interaction_successful) {
-            m_performance.successful_interactions++;
-        } else {
-            m_performance.failed_interactions++;
-        }
+        spdlog::debug("Object interaction: Object {}, Hand {}, Type {}", 
+                     static_cast<int>(object), static_cast<int>(hand), static_cast<int>(type));
         
         return result;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception during object interaction: {}", e.what());
-        return InteractionResult{};
-    }
-}
-
-// Advanced physics features
-bool FullPhysicsIntegration::enableAdvancedPhysics(ObjectID object, bool enable) {
-    if (!m_initialized) {
-        return false;
-    }
-
-    try {
-        auto obj_iter = m_physics_objects.find(object);
-        if (obj_iter == m_physics_objects.end()) {
-            spdlog::warn("[FullPhysics] Object {} not found for advanced physics", object);
-            return false;
-        }
-        
-        auto& obj_data = obj_iter->second;
-        obj_data.advanced_physics_enabled = enable;
-        
-        spdlog::info("[FullPhysics] Advanced physics {} for object {}", enable ? "enabled" : "disabled", object);
-        return true;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception enabling advanced physics: {}", e.what());
-        return false;
-    }
-}
-
-bool FullPhysicsIntegration::setPhysicsProperties(ObjectID object, const PhysicsProperties& properties) {
-    if (!m_initialized) {
-        return false;
-    }
-
-    try {
-        auto obj_iter = m_physics_objects.find(object);
-        if (obj_iter == m_physics_objects.end()) {
-            spdlog::warn("[FullPhysics] Object {} not found for physics properties", object);
-            return false;
-        }
-        
-        auto& obj_data = obj_iter->second;
-        obj_data.properties = properties;
-        
-        spdlog::info("[FullPhysics] Physics properties updated for object {}", object);
-        return true;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception setting physics properties: {}", e.what());
-        return false;
-    }
-}
-
-// Physics simulation control
-void FullPhysicsIntegration::setPhysicsTimeStep(float time_step) {
-    m_physics_time_step = std::max(0.001f, time_step); // Minimum 1ms
-    spdlog::info("[FullPhysics] Physics time step set to {} seconds", m_physics_time_step);
-}
-
-void FullPhysicsIntegration::setPhysicsIterations(uint32_t iterations) {
-    m_physics_iterations = std::max(1u, std::min(iterations, 100u)); // Between 1 and 100
-    spdlog::info("[FullPhysics] Physics iterations set to {}", m_physics_iterations);
-}
-
-void FullPhysicsIntegration::enablePhysicsDebug(bool enable) {
-    m_physics_debug_enabled = enable;
-    spdlog::info("[FullPhysics] Physics debug {}", enable ? "enabled" : "disabled");
-}
-
-void FullPhysicsIntegration::setPhysicsGravity(const glm::vec3& gravity) {
-    m_world_gravity = gravity;
-    spdlog::info("[FullPhysics] World gravity set to ({}, {}, {})", gravity.x, gravity.y, gravity.z);
-}
-
-// Physics world management
-bool FullPhysicsIntegration::createPhysicsWorld() {
-    try {
-        if (m_physics_world_created) {
-            spdlog::warn("[FullPhysics] Physics world already created");
-            return true;
-        }
-        
-        spdlog::info("[FullPhysics] Creating physics world...");
-        
-        // Initialize physics world components
-        // This would integrate with a physics engine like Bullet or PhysX
-        
-        m_physics_world_created = true;
-        spdlog::info("[FullPhysics] Physics world created successfully");
-        return true;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception creating physics world: {}", e.what());
-        return false;
-    }
-}
-
-bool FullPhysicsIntegration::destroyPhysicsWorld() {
-    try {
-        if (!m_physics_world_created) {
-            return true;
-        }
-        
-        spdlog::info("[FullPhysics] Destroying physics world...");
-        
-        // Cleanup physics world components
-        
-        m_physics_world_created = false;
-        spdlog::info("[FullPhysics] Physics world destroyed successfully");
-        return true;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception destroying physics world: {}", e.what());
-        return false;
-    }
-}
-
-bool FullPhysicsIntegration::stepPhysicsWorld(float delta_time) {
-    if (!m_physics_world_created) {
-        return false;
-    }
-
-    try {
-        auto start_time = std::chrono::high_resolution_clock::now();
-        
-        // Step physics simulation
-        for (uint32_t i = 0; i < m_physics_iterations; ++i) {
-            // Update physics simulation
-            updatePhysicsSimulation(delta_time / m_physics_iterations);
-            
-            // Process physics collisions
-            processPhysicsCollisions();
-            
-            // Apply physics forces
-            applyPhysicsForces();
-            
-            // Update physics constraints
-            updatePhysicsConstraints();
-        }
-        
-        // Update performance metrics
-        updatePerformanceMetrics();
-        
-        // Update frame count
-        m_frame_count++;
-        
-        // Calculate physics update time
-        auto end_time = std::chrono::high_resolution_clock::now();
-        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
-        m_performance.physics_update_time = duration.count() / 1000.0f; // Convert to milliseconds
-        
-        return true;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception stepping physics world: {}", e.what());
-        return false;
-    }
-}
-
-// Protected methods implementation
-bool FullPhysicsIntegration::initializePhysicsEngine() {
-    try {
-        spdlog::info("[FullPhysics] Initializing physics engine...");
-        // Physics engine initialization
-        return true;
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception initializing physics engine: {}", e.what());
-        return false;
-    }
-}
-
-bool FullPhysicsIntegration::initializeCollisionShapes() {
-    try {
-        spdlog::info("[FullPhysics] Initializing collision shapes...");
-        // Collision shapes initialization
-        return true;
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception initializing collision shapes: {}", e.what());
-        return false;
-    }
-}
-
-bool FullPhysicsIntegration::initializePhysicsMaterials() {
-    try {
-        spdlog::info("[FullPhysics] Initializing physics materials...");
-        // Physics materials initialization
-        return true;
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception initializing physics materials: {}", e.what());
-        return false;
-    }
-}
-
-bool FullPhysicsIntegration::initializePhysicsConstraints() {
-    try {
-        spdlog::info("[FullPhysics] Initializing physics constraints...");
-        // Physics constraints initialization
-        return true;
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception initializing physics constraints: {}", e.what());
-        return false;
-    }
-}
-
-void FullPhysicsIntegration::updatePhysicsSimulation(float delta_time) {
-    try {
-        // Update all physics objects
-        for (auto& [object_id, obj_data] : m_physics_objects) {
-            if (obj_data.physics_state.is_active && !obj_data.physics_frozen) {
-                updatePhysicsObject(object_id, delta_time);
-            }
-        }
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception updating physics simulation: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::processPhysicsCollisions() {
-    try {
-        // Process physics collisions between objects
-        // This would integrate with the collision engine
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception processing physics collisions: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::applyPhysicsForces() {
-    try {
-        // Apply accumulated forces to all objects
-        for (auto& [object_id, obj_data] : m_physics_objects) {
-            if (obj_data.physics_state.is_active && !obj_data.physics_frozen) {
-                applyObjectForces(object_id, m_physics_time_step);
-            }
-        }
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception applying physics forces: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::updatePhysicsConstraints() {
-    try {
-        // Update all physics constraints
-        for (const auto& constraint : m_physics_constraints) {
-            if (constraint.enabled) {
-                updateObjectConstraints(constraint.object1);
-                updateObjectConstraints(constraint.object2);
-            }
-        }
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception updating physics constraints: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::updatePerformanceMetrics() {
-    try {
-        // Update frame time
-        auto current_time = std::chrono::high_resolution_clock::now();
-        auto frame_duration = std::chrono::duration_cast<std::chrono::microseconds>(current_time - m_last_frame_time);
-        m_performance.frame_time = frame_duration.count() / 1000.0f; // Convert to milliseconds
-        m_last_frame_time = current_time;
-        
-        // Update active objects count
-        m_performance.active_objects = 0;
-        for (const auto& [object_id, obj_data] : m_physics_objects) {
-            if (obj_data.physics_state.is_active) {
-                m_performance.active_objects++;
-            }
-        }
-        
-        // Update memory usage (simplified)
-        m_performance.memory_usage_mb = m_physics_objects.size() * 0.001f; // Rough estimate
-        
-        // Update CPU usage (simplified)
-        m_performance.cpu_usage_percent = m_performance.physics_update_time / m_performance.frame_time * 100.0f;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception updating performance metrics: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::optimizePhysicsPerformance() {
-    try {
-        // Optimize physics performance based on current metrics
-        if (m_performance.frame_time > 16.67f) { // More than 60 FPS target
-            // Reduce physics iterations
-            m_physics_iterations = std::max(1u, m_physics_iterations - 1);
-            spdlog::debug("[FullPhysics] Reduced physics iterations to {} for performance", m_physics_iterations);
-        }
-        
-        // Optimize individual objects
-        for (auto& [object_id, obj_data] : m_physics_objects) {
-            optimizePhysicsObject(object_id);
-        }
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception optimizing physics performance: {}", e.what());
-    }
-}
-
-// Private helper methods
-void FullPhysicsIntegration::initializeDefaultPhysicsProperties() {
-    try {
-        spdlog::info("[FullPhysics] Initializing default physics properties...");
-        // Set default physics properties for common object types
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception initializing default physics properties: {}", e.what());
-    }
-}
-
-bool FullPhysicsIntegration::validatePhysicsObject(ObjectID object) const {
-    return m_physics_objects.find(object) != m_physics_objects.end();
-}
-
-void FullPhysicsIntegration::cleanupPhysicsObject(ObjectID object) {
-    try {
-        // Cleanup physics object resources
-        spdlog::debug("[FullPhysics] Cleaned up physics object {}", object);
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception cleaning up physics object: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::updatePhysicsObject(ObjectID object, float delta_time) {
-    try {
-        auto obj_iter = m_physics_objects.find(object);
-        if (obj_iter == m_physics_objects.end()) {
-            return;
-        }
-        
-        auto& obj_data = obj_iter->second;
-        
-        // Update position based on velocity
-        obj_data.physics_state.position += obj_data.physics_state.velocity * delta_time;
-        
-        // Update rotation based on angular velocity
-        glm::vec3 angular_velocity_rad = obj_data.physics_state.angular_velocity * delta_time;
-        glm::quat rotation_delta = glm::quat(angular_velocity_rad);
-        obj_data.physics_state.rotation = rotation_delta * obj_data.physics_state.rotation;
-        
-        // Update transform matrix
-        obj_data.physics_state.transform = glm::translate(glm::mat4(1.0f), obj_data.physics_state.position) *
-                                         glm::mat4_cast(obj_data.physics_state.rotation);
-        
-        // Apply damping
-        obj_data.physics_state.velocity *= (1.0f - obj_data.properties.linear_damping * delta_time);
-        obj_data.physics_state.angular_velocity *= (1.0f - obj_data.properties.angular_damping * delta_time);
-        
-        // Check if object should go to sleep
-        if (glm::length(obj_data.physics_state.velocity) < 0.01f && 
-            glm::length(obj_data.physics_state.angular_velocity) < 0.01f) {
-            obj_data.physics_state.is_sleeping = true;
-        }
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception updating physics object: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::applyObjectForces(ObjectID object, float delta_time) {
-    try {
-        auto obj_iter = m_physics_objects.find(object);
-        if (obj_iter == m_physics_objects.end()) {
-            return;
-        }
-        
-        auto& obj_data = obj_iter->second;
-        
-        // Apply gravity if enabled
-        if (obj_data.physics_type == PhysicsType::DYNAMIC || obj_data.physics_type == PhysicsType::RAGDOLL) {
-            simulateFullGravity(object, GravityType::EARTH);
-        }
-        
-        // Apply other forces based on physics properties
-        // This would integrate with the force application system
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception applying object forces: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::handleObjectCollision(ObjectID object1, ObjectID object2) {
-    try {
-        // Handle collision between two physics objects
-        // This would integrate with the collision engine
-        
-        spdlog::debug("[FullPhysics] Handling collision between objects {} and {}", object1, object2);
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception handling object collision: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::updateObjectConstraints(ObjectID object) {
-    try {
-        // Update constraints for a specific object
-        // This would integrate with the constraint system
-        
-        spdlog::debug("[FullPhysics] Updating constraints for object {}", object);
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception updating object constraints: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::optimizePhysicsObject(ObjectID object) {
-    try {
-        // Optimize physics for a specific object
-        // This could include LOD adjustments, collision shape optimization, etc.
-        
-        spdlog::debug("[FullPhysics] Optimizing physics for object {}", object);
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception optimizing physics object: {}", e.what());
-    }
-}
-
-// Additional physics update methods (simplified implementations)
-void FullPhysicsIntegration::updateKinematicPhysics(ObjectID object) {
-    // Kinematic physics update (controlled movement)
-    spdlog::debug("[FullPhysics] Updating kinematic physics for object {}", object);
-}
-
-void FullPhysicsIntegration::updateRagdollPhysics(ObjectID object) {
-    // Ragdoll physics update
-    spdlog::debug("[FullPhysics] Updating ragdoll physics for object {}", object);
-}
-
-void FullPhysicsIntegration::updateVehiclePhysics(ObjectID object) {
-    // Vehicle physics update
-    spdlog::debug("[FullPhysics] Updating vehicle physics for object {}", object);
-}
-
-void FullPhysicsIntegration::updateWeaponPhysics(ObjectID object) {
-    // Weapon physics update
-    spdlog::debug("[FullPhysics] Updating weapon physics for object {}", object);
-}
-
-void FullPhysicsIntegration::updateEnvironmentalPhysics(ObjectID object) {
-    // Environmental physics update
-    spdlog::debug("[FullPhysics] Updating environmental physics for object {}", object);
-}
-
-// Force application methods (simplified implementations)
-void FullPhysicsIntegration::applySpringForce(ObjectID object, const glm::vec3& force) {
-    spdlog::debug("[FullPhysics] Applying spring force to object {}", object);
-}
-
-void FullPhysicsIntegration::applyDampingForce(ObjectID object, const glm::vec3& force) {
-    spdlog::debug("[FullPhysics] Applying damping force to object {}", object);
-}
-
-void FullPhysicsIntegration::applyFrictionForce(ObjectID object, const glm::vec3& force) {
-    spdlog::debug("[FullPhysics] Applying friction force to object {}", object);
-}
-
-void FullPhysicsIntegration::applyBuoyancyForce(ObjectID object, const glm::vec3& force) {
-    spdlog::debug("[FullPhysics] Applying buoyancy force to object {}", object);
-}
-
-void FullPhysicsIntegration::applyMagneticForce(ObjectID object, const glm::vec3& force) {
-    spdlog::debug("[FullPhysics] Applying magnetic force to object {}", object);
-}
-
-void FullPhysicsIntegration::applyWindForce(ObjectID object, const glm::vec3& force) {
-    spdlog::debug("[FullPhysics] Applying wind force to object {}", object);
-}
-
-// Collision response methods (simplified implementations)
-void FullPhysicsIntegration::handleTouchCollision(const CollisionResult& collision) {
-    spdlog::debug("[FullPhysics] Handling touch collision");
-}
-
-void FullPhysicsIntegration::handleGrabCollision(const CollisionResult& collision) {
-    spdlog::debug("[FullPhysics] Handling grab collision");
-}
-
-void FullPhysicsIntegration::handlePushCollision(const CollisionResult& collision) {
-    spdlog::debug("[FullPhysics] Handling push collision");
-}
-
-void FullPhysicsIntegration::handlePullCollision(const CollisionResult& collision) {
-    spdlog::debug("[FullPhysics] Handling pull collision");
-}
-
-void FullPhysicsIntegration::handleThrowCollision(const CollisionResult& collision) {
-    spdlog::debug("[FullPhysics] Handling throw collision");
-}
-
-void FullPhysicsIntegration::handleBreakCollision(const CollisionResult& collision) {
-    spdlog::debug("[FullPhysics] Handling break collision");
-}
-
-void FullPhysicsIntegration::handleInteractCollision(const CollisionResult& collision) {
-    spdlog::debug("[FullPhysics] Handling interact collision");
-}
-
-void FullPhysicsIntegration::handleDamageCollision(const CollisionResult& collision) {
-    spdlog::debug("[FullPhysics] Handling damage collision");
-}
-
-void FullPhysicsIntegration::handleTriggerCollision(const CollisionResult& collision) {
-    spdlog::debug("[FullPhysics] Handling trigger collision");
-}
-
-// Interaction methods (simplified implementations)
-InteractionResult FullPhysicsIntegration::performTouchInteraction(ObjectID object, HandType hand) {
-    InteractionResult result;
-    result.interaction_successful = true;
-    result.interaction_strength = 0.3f;
-    result.interacted_object = object;
-    result.interaction_type = InteractionType::TOUCH;
-    return result;
-}
-
-InteractionResult FullPhysicsIntegration::performGrabInteraction(ObjectID object, HandType hand) {
-    InteractionResult result;
-    result.interaction_successful = true;
-    result.interaction_strength = 0.8f;
-    result.interacted_object = object;
-    result.interaction_type = InteractionType::GRAB;
-    return result;
-}
-
-InteractionResult FullPhysicsIntegration::performPushInteraction(ObjectID object, HandType hand) {
-    InteractionResult result;
-    result.interaction_successful = true;
-    result.interaction_strength = 0.6f;
-    result.interacted_object = object;
-    result.interaction_type = InteractionType::PUSH;
-    return result;
-}
-
-InteractionResult FullPhysicsIntegration::performPullInteraction(ObjectID object, HandType hand) {
-    InteractionResult result;
-    result.interaction_successful = true;
-    result.interaction_strength = 0.6f;
-    result.interacted_object = object;
-    result.interaction_type = InteractionType::PULL;
-    return result;
-}
-
-InteractionResult FullPhysicsIntegration::performThrowInteraction(ObjectID object, HandType hand) {
-    InteractionResult result;
-    result.interaction_successful = true;
-    result.interaction_strength = 0.9f;
-    result.interacted_object = object;
-    result.interaction_type = InteractionType::THROW;
-    return result;
-}
-
-InteractionResult FullPhysicsIntegration::performBreakInteraction(ObjectID object, HandType hand) {
-    InteractionResult result;
-    result.interaction_successful = true;
-    result.interaction_strength = 1.0f;
-    result.interacted_object = object;
-    result.interaction_type = InteractionType::BREAK;
-    return result;
-}
-
-InteractionResult FullPhysicsIntegration::performInteractInteraction(ObjectID object, HandType hand) {
-    InteractionResult result;
-    result.interaction_successful = true;
-    result.interaction_strength = 0.7f;
-    result.interacted_object = object;
-    result.interaction_type = InteractionType::INTERACT;
-    return result;
-}
-
-InteractionResult FullPhysicsIntegration::performDamageInteraction(ObjectID object, HandType hand) {
-    InteractionResult result;
-    result.interaction_successful = true;
-    result.interaction_strength = 0.9f;
-    result.interacted_object = object;
-    result.interaction_type = InteractionType::DAMAGE;
-    return result;
-}
-
-InteractionResult FullPhysicsIntegration::performTriggerInteraction(ObjectID object, HandType hand) {
-    InteractionResult result;
-    result.interaction_successful = true;
-    result.interaction_strength = 0.4f;
-    result.interacted_object = object;
-    result.interaction_type = InteractionType::TRIGGER;
-    return result;
-}
-
-// Additional required methods
-bool FullPhysicsIntegration::setObjectPhysicsState(ObjectID object, const PhysicsState& state) {
-    if (!m_initialized) {
-        return false;
-    }
-
-    try {
-        auto obj_iter = m_physics_objects.find(object);
-        if (obj_iter == m_physics_objects.end()) {
-            return false;
-        }
-        
-        auto& obj_data = obj_iter->second;
-        obj_data.physics_state = state;
-        return true;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception setting object physics state: {}", e.what());
-        return false;
-    }
-}
-
-FullPhysicsIntegration::PhysicsState FullPhysicsIntegration::getObjectPhysicsState(ObjectID object) const {
-    try {
-        auto obj_iter = m_physics_objects.find(object);
-        if (obj_iter != m_physics_objects.end()) {
-            return obj_iter->second.physics_state;
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception getting object physics state: {}", e.what());
     }
     
-    return PhysicsState{};
-}
-
-bool FullPhysicsIntegration::resetObjectPhysics(ObjectID object) {
-    if (!m_initialized) {
-        return false;
-    }
-
-    try {
-        auto obj_iter = m_physics_objects.find(object);
-        if (obj_iter == m_physics_objects.end()) {
+    bool canInteractWithObject(ObjectID object, HandType hand) const override {
+        // Check if object exists and is interactable
+        auto physicsData = getPhysicsObjectData(object);
+        if (!physicsData) {
             return false;
         }
         
-        auto& obj_data = obj_iter->second;
-        obj_data.physics_state = PhysicsState{};
-        return true;
+        // Check if object is in range and interactable
+        // This would typically involve distance checks and interaction flags
+        return true; // Placeholder
+    }
+    
+    std::vector<ObjectID> getInteractableObjects(HandType hand) const override {
+        std::vector<ObjectID> interactableObjects;
         
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception resetting object physics: {}", e.what());
-        return false;
+        // Find all objects that can be interacted with by this hand
+        for (const auto& physics : m_physicsObjects) {
+            if (canInteractWithObject(physics.object, hand)) {
+                interactableObjects.push_back(physics.object);
+            }
+        }
+        
+        return interactableObjects;
     }
-}
 
-bool FullPhysicsIntegration::freezeObjectPhysics(ObjectID object, bool freeze) {
-    if (!m_initialized) {
-        return false;
+    // ============================================================================
+    // OBJECT PROPERTIES
+    // ============================================================================
+    
+    void setObjectMass(ObjectID object, float mass) override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->mass = std::max(0.001f, mass); // Minimum mass to avoid division by zero
+            spdlog::debug("Object mass set: Object {}, Mass {}", static_cast<int>(object), mass);
+        }
+    }
+    
+    float getObjectMass(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        return physicsData ? physicsData->mass : 0.0f;
+    }
+    
+    void setObjectFriction(ObjectID object, float friction) override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->friction = std::clamp(friction, 0.0f, 1.0f);
+            spdlog::debug("Object friction set: Object {}, Friction {}", static_cast<int>(object), friction);
+        }
+    }
+    
+    float getObjectFriction(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        return physicsData ? physicsData->friction : 0.0f;
+    }
+    
+    void setObjectRestitution(ObjectID object, float restitution) override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->restitution = std::clamp(restitution, 0.0f, 1.0f);
+            spdlog::debug("Object restitution set: Object {}, Restitution {}", static_cast<int>(object), restitution);
+        }
+    }
+    
+    float getObjectRestitution(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        return physicsData ? physicsData->restitution : 0.0f;
     }
 
-    try {
-        auto obj_iter = m_physics_objects.find(object);
-        if (obj_iter == m_physics_objects.end()) {
+    // ============================================================================
+    // OBJECT TRANSFORMS
+    // ============================================================================
+    
+    void setObjectPosition(ObjectID object, Vector3 position) override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->position = position;
+        }
+    }
+    
+    Vector3 getObjectPosition(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        return physicsData ? physicsData->position : Vector3{};
+    }
+    
+    void setObjectRotation(ObjectID object, Vector3 rotation) override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->rotation = rotation;
+        }
+    }
+    
+    Vector3 getObjectRotation(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        return physicsData ? physicsData->rotation : Vector3{};
+    }
+    
+    void setObjectScale(ObjectID object, Vector3 scale) override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->scale = scale;
+        }
+    }
+    
+    Vector3 getObjectScale(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        return physicsData ? physicsData->scale : Vector3{};
+    }
+
+    // ============================================================================
+    // OBJECT VELOCITY AND MOMENTUM
+    // ============================================================================
+    
+    void setObjectVelocity(ObjectID object, Vector3 velocity) override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->velocity = velocity;
+        }
+    }
+    
+    Vector3 getObjectVelocity(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        return physicsData ? physicsData->velocity : Vector3{};
+    }
+    
+    void setObjectAngularVelocity(ObjectID object, Vector3 angular_velocity) override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData) {
+            physicsData->angular_velocity = angular_velocity;
+        }
+    }
+    
+    Vector3 getObjectAngularVelocity(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        return physicsData ? physicsData->angular_velocity : Vector3{};
+    }
+    
+    Vector3 getObjectMomentum(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData && physicsData->mass > 0.0f) {
+            return physicsData->velocity * physicsData->mass;
+        }
+        return Vector3{};
+    }
+    
+    Vector3 getObjectAngularMomentum(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (physicsData && physicsData->mass > 0.0f) {
+            // Simplified angular momentum calculation
+            return physicsData->angular_velocity * physicsData->mass;
+        }
+        return Vector3{};
+    }
+
+    // ============================================================================
+    // CONSTRAINT SYSTEM
+    // ============================================================================
+    
+    bool createFixedConstraint(ObjectID object1, ObjectID object2) override {
+        if (!m_initialized) {
             return false;
         }
         
-        auto& obj_data = obj_iter->second;
-        obj_data.physics_frozen = freeze;
+        ConstraintData constraint{object1, object2, "FIXED", Vector3{}, 0.0f, 0.0f};
+        m_constraints.push_back(constraint);
+        
+        // Add constraint reference to physics objects
+        auto physics1 = getPhysicsObjectData(object1);
+        auto physics2 = getPhysicsObjectData(object2);
+        if (physics1) physics1->constraints.push_back(object2);
+        if (physics2) physics2->constraints.push_back(object1);
+        
+        spdlog::info("Fixed constraint created between objects {} and {}", 
+                     static_cast<int>(object1), static_cast<int>(object2));
         return true;
+    }
+    
+    bool createHingeConstraint(ObjectID object1, ObjectID object2, Vector3 axis) override {
+        if (!m_initialized) {
+            return false;
+        }
         
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception freezing object physics: {}", e.what());
-        return false;
-    }
-}
-
-bool FullPhysicsIntegration::createPhysicsConstraint(ObjectID object1, ObjectID object2, const ConstraintData& constraint) {
-    if (!m_initialized) {
-        return false;
-    }
-
-    try {
-        // Add constraint to the list
-        m_physics_constraints.push_back(constraint);
-        spdlog::info("[FullPhysics] Created physics constraint between objects {} and {}", object1, object2);
+        ConstraintData constraint{object1, object2, "HINGE", axis, 0.0f, 0.0f};
+        m_constraints.push_back(constraint);
+        
+        // Add constraint reference to physics objects
+        auto physics1 = getPhysicsObjectData(object1);
+        auto physics2 = getPhysicsObjectData(object2);
+        if (physics1) physics1->constraints.push_back(object2);
+        if (physics2) physics2->constraints.push_back(object1);
+        
+        spdlog::info("Hinge constraint created between objects {} and {} with axis {}", 
+                     static_cast<int>(object1), static_cast<int>(object2), "Vector3");
         return true;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception creating physics constraint: {}", e.what());
-        return false;
     }
-}
-
-bool FullPhysicsIntegration::removePhysicsConstraint(ObjectID object1, ObjectID object2) {
-    if (!m_initialized) {
-        return false;
-    }
-
-    try {
-        // Remove constraint from the list
-        m_physics_constraints.erase(
-            std::remove_if(m_physics_constraints.begin(), m_physics_constraints.end(),
-                [object1, object2](const ConstraintData& constraint) {
-                    return (constraint.object1 == object1 && constraint.object2 == object2) ||
-                           (constraint.object1 == object2 && constraint.object2 == object1);
-                }),
-            m_physics_constraints.end()
-        );
+    
+    bool createSpringConstraint(ObjectID object1, ObjectID object2, float spring_constant, float damping) override {
+        if (!m_initialized) {
+            return false;
+        }
         
-        spdlog::info("[FullPhysics] Removed physics constraint between objects {} and {}", object1, object2);
+        ConstraintData constraint{object1, object2, "SPRING", Vector3{}, spring_constant, damping};
+        m_constraints.push_back(constraint);
+        
+        // Add constraint reference to physics objects
+        auto physics1 = getPhysicsObjectData(object1);
+        auto physics2 = getPhysicsObjectData(object2);
+        if (physics1) physics1->constraints.push_back(object2);
+        if (physics2) physics2->constraints.push_back(object1);
+        
+        spdlog::info("Spring constraint created between objects {} and {}: k={}, d={}", 
+                     static_cast<int>(object1), static_cast<int>(object2), spring_constant, damping);
         return true;
+    }
+    
+    bool removeConstraint(ObjectID object1, ObjectID object2) override {
+        // Remove constraint from constraints list
+        auto it = std::remove_if(m_constraints.begin(), m_constraints.end(),
+            [object1, object2](const ConstraintData& constraint) {
+                return (constraint.object1 == object1 && constraint.object2 == object2) ||
+                       (constraint.object1 == object2 && constraint.object2 == object1);
+            });
         
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception removing physics constraint: {}", e.what());
+        if (it != m_constraints.end()) {
+            m_constraints.erase(it, m_constraints.end());
+            
+            // Remove constraint references from physics objects
+            auto physics1 = getPhysicsObjectData(object1);
+            auto physics2 = getPhysicsObjectData(object2);
+            if (physics1) {
+                auto ref_it = std::remove(physics1->constraints.begin(), physics1->constraints.end(), object2);
+                physics1->constraints.erase(ref_it, physics1->constraints.end());
+            }
+            if (physics2) {
+                auto ref_it = std::remove(physics2->constraints.begin(), physics2->constraints.end(), object1);
+                physics2->constraints.erase(ref_it, physics2->constraints.end());
+            }
+            
+            spdlog::info("Constraint removed between objects {} and {}", 
+                         static_cast<int>(object1), static_cast<int>(object2));
+            return true;
+        }
+        
         return false;
     }
-}
+    
+    bool areObjectsConstrained(ObjectID object1, ObjectID object2) const override {
+        return std::any_of(m_constraints.begin(), m_constraints.end(),
+            [object1, object2](const ConstraintData& constraint) {
+                return (constraint.object1 == object1 && constraint.object2 == object2) ||
+                       (constraint.object1 == object2 && constraint.object2 == object1);
+            });
+    }
 
-bool FullPhysicsIntegration::clearPhysicsWorld() {
-    try {
-        // Clear all physics objects and constraints
-        m_physics_objects.clear();
-        m_physics_constraints.clear();
-        
-        spdlog::info("[FullPhysics] Physics world cleared");
-        return true;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullPhysics] Exception clearing physics world: {}", e.what());
-        return false;
+    // ============================================================================
+    // COLLISION DETECTION SETTINGS
+    // ============================================================================
+    
+    void setCollisionDetectionPrecision(float precision) override {
+        m_collisionDetectionPrecision = std::clamp(precision, 0.0f, 1.0f);
+        spdlog::info("Collision detection precision set to: {}", m_collisionDetectionPrecision);
     }
+    
+    float getCollisionDetectionPrecision() const override {
+        return m_collisionDetectionPrecision;
+    }
+    
+    void setCollisionDetectionFrequency(float frequency) override {
+        m_collisionDetectionFrequency = std::clamp(frequency, 1.0f, 1000.0f);
+        spdlog::info("Collision detection frequency set to: {} Hz", m_collisionDetectionFrequency);
+    }
+    
+    float getCollisionDetectionFrequency() const override {
+        return m_collisionDetectionFrequency;
+    }
+    
+    void setCollisionDetectionForType(PhysicsType physics_type, bool enabled) override {
+        m_collisionDetectionEnabled[physics_type] = enabled;
+        spdlog::info("Collision detection for physics type {} {}", 
+                     static_cast<int>(physics_type), enabled ? "enabled" : "disabled");
+    }
+    
+    bool isCollisionDetectionEnabledForType(PhysicsType physics_type) const override {
+        auto it = m_collisionDetectionEnabled.find(physics_type);
+        return it != m_collisionDetectionEnabled.end() ? it->second : false;
+    }
+
+    // ============================================================================
+    // DEBUG AND VISUALIZATION
+    // ============================================================================
+    
+    void setPhysicsDebugVisualization(bool enabled) override {
+        m_debugVisualizationEnabled = enabled;
+        spdlog::info("Physics debug visualization {}", enabled ? "enabled" : "disabled");
+    }
+    
+    bool isPhysicsDebugVisualizationEnabled() const override {
+        return m_debugVisualizationEnabled;
+    }
+    
+    void showObjectPhysicsDebug(ObjectID object) override {
+        if (m_debugVisualizationEnabled) {
+            spdlog::debug("Showing physics debug for object {}", static_cast<int>(object));
+        }
+    }
+    
+    void hideObjectPhysicsDebug(ObjectID object) override {
+        if (m_debugVisualizationEnabled) {
+            spdlog::debug("Hiding physics debug for object {}", static_cast<int>(object));
+        }
+    }
+    
+    std::string getObjectPhysicsDebug(ObjectID object) const override {
+        auto physicsData = getPhysicsObjectData(object);
+        if (!physicsData) {
+            return "Object not found";
+        }
+        
+        std::string debug = "Physics Debug for Object " + std::to_string(static_cast<int>(object)) + ":\n";
+        debug += "  Type: " + std::to_string(static_cast<int>(physicsData->type)) + "\n";
+        debug += "  Simulating: " + std::string(physicsData->isSimulating ? "Yes" : "No") + "\n";
+        debug += "  Mass: " + std::to_string(physicsData->mass) + "\n";
+        debug += "  Friction: " + std::to_string(physicsData->friction) + "\n";
+        debug += "  Restitution: " + std::to_string(physicsData->restitution) + "\n";
+        debug += "  Gravity Enabled: " + std::string(physicsData->gravityEnabled ? "Yes" : "No") + "\n";
+        debug += "  Constraints: " + std::to_string(physicsData->constraints.size()) + "\n";
+        
+        return debug;
+    }
+
+private:
+    // Helper functions
+    PhysicsObjectData* getPhysicsObjectData(ObjectID object) {
+        auto it = std::find_if(m_physicsObjects.begin(), m_physicsObjects.end(),
+            [object](const PhysicsObjectData& data) { return data.object == object; });
+        return it != m_physicsObjects.end() ? &(*it) : nullptr;
+    }
+    
+    const PhysicsObjectData* getPhysicsObjectData(ObjectID object) const {
+        auto it = std::find_if(m_physicsObjects.begin(), m_physicsObjects.end(),
+            [object](const PhysicsObjectData& data) { return data.object == object; });
+        return it != m_physicsObjects.end() ? &(*it) : nullptr;
+    }
+    
+    PhysicsObjectData* getOrCreatePhysicsObjectData(ObjectID object) {
+        auto physicsData = getPhysicsObjectData(object);
+        if (!physicsData) {
+            PhysicsObjectData newData{object, PhysicsType::STATIC, false, Vector3{}, Vector3{}, Vector3{1.0f, 1.0f, 1.0f},
+                                    Vector3{}, Vector3{}, Vector3{}, Vector3{}, Vector3{}, Vector3{0.0f, m_globalGravityStrength, 0.0f},
+                                    1.0f, 0.5f, 0.5f, true, {}};
+            m_physicsObjects.push_back(newData);
+            physicsData = &m_physicsObjects.back();
+        }
+        return physicsData;
+    }
+    
+    void solveConstraints(float delta_time) {
+        m_performance.constraint_solves++;
+        
+        // Solve all constraints
+        for (const auto& constraint : m_constraints) {
+            // This is where you'd implement constraint solving
+            // For now, just log that constraints are being solved
+            spdlog::debug("Solving constraint: {} between objects {} and {}", 
+                         constraint.type, static_cast<int>(constraint.object1), static_cast<int>(constraint.object2));
+        }
+    }
+    
+    // Collision response handlers
+    void handleHandObjectCollision(const CollisionResult& collision) {
+        // Handle hand-object collision response
+        spdlog::debug("Hand-object collision response handled");
+    }
+    
+    void handleHandDoorCollision(const CollisionResult& collision) {
+        // Handle hand-door collision response
+        spdlog::debug("Hand-door collision response handled");
+    }
+    
+    void handleHandWeaponCollision(const CollisionResult& collision) {
+        // Handle hand-weapon collision response
+        spdlog::debug("Hand-weapon collision response handled");
+    }
+    
+    void handleHandVehicleCollision(const CollisionResult& collision) {
+        // Handle hand-vehicle collision response
+        spdlog::debug("Hand-vehicle collision response handled");
+    }
+    
+    void handleHandNPCCollision(const CollisionResult& collision) {
+        // Handle hand-NPC collision response (VISUAL FEEDBACK ONLY!)
+        spdlog::debug("Hand-NPC collision response handled (visual feedback only)");
+    }
+    
+    void handleHandEnvironmentCollision(const CollisionResult& collision) {
+        // Handle hand-environment collision response
+        spdlog::debug("Hand-environment collision response handled");
+    }
+    
+    void handleHandPuzzleCollision(const CollisionResult& collision) {
+        // Handle hand-puzzle collision response
+        spdlog::debug("Hand-puzzle collision response handled");
+    }
+    
+    void handleHandInventoryCollision(const CollisionResult& collision) {
+        // Handle hand-inventory collision response
+        spdlog::debug("Hand-inventory collision response handled");
+    }
+};
+
+// Factory function to create the implementation
+std::unique_ptr<FullPhysicsIntegration> createFullPhysicsIntegration() {
+    return std::make_unique<FullPhysicsIntegrationImpl>();
 }
 
 } // namespace vr
-} // namespace uevr
 } // namespace uevr

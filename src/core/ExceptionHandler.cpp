@@ -1,23 +1,14 @@
-#ifdef _WIN32
-#include <windows.h>
-#include "uevr/ExceptionHandler.hpp"
-
-LONG WINAPI framework::global_exception_handler(struct _EXCEPTION_POINTERS* ei) {
-    // Simple exception handler for minimal build
-    return EXCEPTION_CONTINUE_SEARCH;
-}
-
-void framework::setup_exception_handler() {
-    SetUnhandledExceptionFilter(global_exception_handler);
-}
-<<<<<<< Current (Your changes)
-=======
-#else
 #include "ExceptionHandler.hpp"
+#include <spdlog/spdlog.h>
 
-// Non-Windows platforms: no-op implementation
-namespace framework {
-void setup_exception_handler() {}
+void uevr::handleException(const std::exception& e) {
+    spdlog::error("Exception caught: {}", e.what());
 }
-#endif
->>>>>>> Incoming (Background Agent changes)
+
+void uevr::handleException(const std::string& message) {
+    spdlog::error("Exception caught: {}", message);
+}
+
+void uevr::handleException(const char* message) {
+    spdlog::error("Exception caught: {}", message);
+}

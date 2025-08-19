@@ -5,15 +5,9 @@
 add_library(uevr_vr STATIC
     VRSystem.cpp
     UniversalVRSystem.cpp
-    VRSystem.cpp
     FullAestheticCollisionEngine.cpp
     FullPhysicsIntegration.cpp
     EngineAgnosticRenderer.cpp
-<<<<<<< Current (Your changes)
-    FullAestheticCollisionEngine.cpp
-    FullPhysicsIntegration.cpp
-=======
->>>>>>> Incoming (Background Agent changes)
     OpenXRIntegration.cpp
 )
 
