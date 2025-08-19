@@ -153,14 +153,10 @@ set(VR_LIBRARIES "")
 
 # OpenVR (if enabled)
 if(uevr_ENABLE_OPENVR)
-    find_package(OpenVR QUIET)
-    if(OpenVR_FOUND)
-        message(STATUS "OpenVR found: ${OpenVR_DIR}")
-        list(APPEND VR_LIBRARIES OpenVR::OpenVR)
-    else()
-        message(STATUS "OpenVR not found, will use headers-only integration")
-        # OpenVR can be integrated as headers + dynamic loading
-    endif()
+    # Use local OpenVR from dependencies
+    add_subdirectory(dependencies/openvr)
+    list(APPEND VR_LIBRARIES openvr_api)
+    message(STATUS "OpenVR enabled from local dependencies")
 endif()
 
 # OpenXR (if enabled)
