@@ -1,14 +1,21 @@
+#ifdef _WIN32
+#include <windows.h>
 #include "ExceptionHandler.hpp"
-#include <spdlog/spdlog.h>
 
-void uevr::handleException(const std::exception& e) {
-    spdlog::error("Exception caught: {}", e.what());
+LONG WINAPI framework::global_exception_handler(struct _EXCEPTION_POINTERS* ei) {
+    // Simple exception handler for minimal build
+    (void)ei; // Suppress unused parameter warning
+    return EXCEPTION_CONTINUE_SEARCH;
 }
 
-void uevr::handleException(const std::string& message) {
-    spdlog::error("Exception caught: {}", message);
+void framework::setup_exception_handler() {
+    SetUnhandledExceptionFilter(global_exception_handler);
 }
+#else
+#include "ExceptionHandler.hpp"
 
-void uevr::handleException(const char* message) {
-    spdlog::error("Exception caught: {}", message);
+// Non-Windows platforms: no-op implementation
+namespace framework {
+void setup_exception_handler() {}
 }
+#endif
