@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- uevrLCX Mascot: "The Injector" - unique original vector art (docs copy) -->
+<svg width="1400" height="500" viewBox="0 0 1400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="neon" x1="0" y1="0" x2="1400" y2="500" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#00E5FF"/>
+      <stop offset="0.5" stop-color="#7A5CFF"/>
+      <stop offset="1" stop-color="#FF2BD1"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#7A5CFF"/>
+    </linearGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="g"/>
+      <feMerge>
+        <feMergeNode in="g"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style><![CDATA[
+      .matrix { opacity: .22 }
+      .digit { font: 600 12px 'Segoe UI', Roboto, Arial, sans-serif; fill: #8EF; }
+      .caption { font: 700 26px 'Segoe UI', Roboto, Arial, sans-serif; fill: #9AA4B2; }
+      .small { font: 600 14px 'Segoe UI', Roboto, Arial, sans-serif; fill: #9AA4B2; }
+    ]]></style>
+  </defs>
+  <g class="matrix" transform="translate(0,40)">
+    <g stroke="#59C7FF" stroke-width="2" stroke-linecap="round">
+      <path d="M100 0 v380"/>
+      <path d="M160 0 v360"/>
+      <path d="M220 0 v400"/>
+      <path d="M280 0 v350"/>
+      <path d="M340 0 v390"/>
+      <path d="M400 0 v370"/>
+      <path d="M460 0 v410"/>
+      <path d="M520 0 v340"/>
+      <path d="M580 0 v420"/>
+      <path d="M640 0 v360"/>
+      <path d="M700 0 v400"/>
+      <path d="M760 0 v350"/>
+      <path d="M820 0 v390"/>
+      <path d="M880 0 v370"/>
+      <path d="M940 0 v410"/>
+      <path d="M1000 0 v340"/>
+      <path d="M1060 0 v420"/>
+      <path d="M1120 0 v360"/>
+      <path d="M1180 0 v400"/>
+      <path d="M1240 0 v350"/>
+      <path d="M1300 0 v390"/>
+    </g>
+  </g>
+  <g transform="translate(120,120)">
+    <g filter="url(#softGlow)">
+      <path d="M240 -10 C220 -40, 290 -60, 270 -90 C340 -60, 390 -80, 430 -120 C470 -70, 520 -60, 540 -20 C500 -40, 460 -20, 430 -10 Z" fill="url(#flame)" opacity="0.7"/>
+      <path d="M180 -5 C160 -35, 210 -45, 200 -70 C240 -40, 270 -50, 300 -80 C320 -45, 360 -35, 370 -10 Z" fill="url(#flame)" opacity="0.5"/>
+    </g>
+    <rect x="0" y="0" width="560" height="220" rx="60" ry="60" fill="#0B0F14" stroke="url(#neon)" stroke-width="12" filter="url(#softGlow)"/>
+    <circle cx="170" cy="110" r="58" fill="none" stroke="url(#neon)" stroke-width="12"/>
+    <circle cx="330" cy="110" r="58" fill="none" stroke="url(#neon)" stroke-width="12"/>
+    <text x="135" y="117" text-anchor="middle" class="digit">V</text>
+    <text x="205" y="117" text-anchor="middle" class="digit">R</text>
+    <path d="M-50 80 h70" stroke="url(#neon)" stroke-width="12" stroke-linecap="round"/>
+    <path d="M560 80 h70" stroke="url(#neon)" stroke-width="12" stroke-linecap="round"/>
+    <g stroke="url(#neon)" stroke-width="4" fill="none">
+      <path d="M560 150 C650 160, 720 210, 820 200"/>
+      <path d="M560 60 C660 40, 740 80, 820 70"/>
+    </g>
+    <g transform="translate(820,40)">
+      <polygon points="40,0 80,20 80,60 40,80 0,60 0,20" fill="#0B0F14" stroke="url(#neon)" stroke-width="6"/>
+      <text x="40" y="48" text-anchor="middle" class="small">ENG</text>
+    </g>
+    <g transform="translate(820,160)">
+      <polygon points="40,0 80,20 80,60 40,80 0,60 0,20" fill="#0B0F14" stroke="url(#neon)" stroke-width="6"/>
+      <text x="40" y="48" text-anchor="middle" class="small">ENG</text>
+    </g>
+  </g>
+  <g transform="translate(120,370)">
+    <text x="0" y="0" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="80" font-weight="800" fill="url(#neon)">uevrLCX</text>
+    <text x="0" y="40" class="caption">Hook • Extract • Convert — Cross‑Engine Takeover</text>
+  </g>
+</svg>

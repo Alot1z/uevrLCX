@@ -1,20 +1,25 @@
-# 🥽 UEVR - Universal Engine VR Adapter
+# UEVR - Universal Engine VR Adapter
 
 <div align="center">
 
-![UEVR Logo](image.png)
+<img src="assets/logo/uevrLCX-logo-simple.svg" alt="uevrLCX Logo (simple)" width="720" />
+  
+<img src="assets/logo/uevrLCX-mascot-simple.svg" alt="The Injector — uevrLCX Mascot (simple)" width="920" />
+
+<sub><a href="docs/branding/brand-guide.md">Brand guide</a> • simple SVGs for maximum compatibility</sub>
 
 **Universal Cross-Engine VR Injection Framework**
 
-[![Build Status](https://img.shields.io/badge/build-passing-brightgreen)](https://github.com/praydog/uevr)
+[![Build PR](https://github.com/Alot1z/uevrLCX/actions/workflows/dev-build-pr.yml/badge.svg)](https://github.com/Alot1z/uevrLCX/actions/workflows/dev-build-pr.yml)
+[![Release](https://github.com/Alot1z/uevrLCX/actions/workflows/dev-release.yml/badge.svg)](https://github.com/Alot1z/uevrLCX/actions/workflows/dev-release.yml)
 [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
 [![C++](https://img.shields.io/badge/C%2B%2B-23-blue.svg)](https://isocpp.org/)
-[![CMake](https://img.shields.io/badge/CMake-3.15%2B-green.svg)](https://cmake.org/)
-[![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)](https://github.com/praydog/uevr)
+[![CMake](https://img.shields.io/badge/CMake-3.16%2B-green.svg)](https://cmake.org/)
+![Platform](https://img.shields.io/badge/platform-Windows%20%7C%20Linux%20%7C%20macOS-lightgrey.svg)
 
 **Bringing VR to 500+ Games Across All Major Game Engines**
 
-[📖 **Documentation**](#-documentation) • [🚀 **Quick Start**](#-quick-start) • [🎮 **Game Support**](#-game-support) • [🏗️ **Architecture**](#️-architecture-overview) • [🛠️ **Build System**](#️-build-system) • [🤝 **Contributing**](#-contributing)
+[📖 **Documentation**](#documentation) • [🚀 **Quick Start**](#quick-start) • [🎮 **Game Support**](#game-support) • [🏗️ **Architecture**](#architecture-overview) • [🛠️ **Build System**](#build-system) • [🤝 **Contributing**](#contributing)
 
 </div>
 
@@ -189,13 +194,19 @@ uevr/
 - **PowerShell 5.0+** - Script execution
 - **Git** - Version control and submodules
 
+### ⚠️ **Safety & Anti-Cheat**
+- Do not inject into games with active Anti-Cheat (especially multiplayer). Prefer offline mode and disable Anti-Cheat where possible.
+- Disable overlays that may conflict or cause crashes (RivaTuner, ASUS/Razer utilities, Overwolf, etc.).
+- Consider disabling Windows "Hardware Accelerated GPU Scheduling" if you experience flicker or extreme lag.
+- If you encounter judder/lag with Virtual Desktop, prefer OpenXR and enable its specific compatibility toggle.
+
 ### **🔄 Installation Steps**
 
 #### **1. Clone Repository**
 ```bash
 # Clone the main repository
-git clone https://github.com/praydog/uevr.git
-cd uevr
+git clone https://github.com/Alot1z/uevrLCX.git
+cd uevrLCX
 
 # Initialize and update submodules
 git submodule update --init --recursive
@@ -290,6 +301,9 @@ build_complete_system.bat --minimal --notest
 
 ## 📚 **DOCUMENTATION**
 
+### 🧭 Documentation Entry Points
+- Authoritative local docs hub (mdBook source): `docs/uevr-docs/src/README.md`
+
 ### 📚 Documentation Hub (mdBook) — Start Here
 - [Deep Wiki Home](docs/uevr-docs/src/README.md)
 - Architecture: [Overview](docs/uevr-docs/src/architecture/overview.md), [Structure](docs/uevr-docs/src/architecture/structure.md), [Hooks & Data Flow](docs/uevr-docs/src/architecture/hooks.md)
@@ -304,6 +318,11 @@ build_complete_system.bat --minimal --notest
 - Troubleshooting: [Common](docs/uevr-docs/src/troubleshooting/common.md), [Rendering](docs/uevr-docs/src/troubleshooting/rendering.md), [Input](docs/uevr-docs/src/troubleshooting/input.md)
 - Contributing & Roadmap: [Guidelines](docs/uevr-docs/src/contributing/guidelines.md), [Style](docs/uevr-docs/src/contributing/style.md), [Roadmap](docs/uevr-docs/src/contributing/roadmap.md)
 - [FAQ](docs/uevr-docs/src/faq.md) • [Glossary](docs/uevr-docs/src/glossary.md)
+
+### 🧩 DeepWiki Knowledge Base (Research/Implant)
+- Interfaces: `docs/deepwiki/implant/architecture/interfaces.md`
+- Matrix Extraction (adapters): `docs/deepwiki/implant/adapters/matrix-extraction.md`
+- CryEngine Adapter Notes: `docs/deepwiki/implant/adapters/cryengine.md`
 
 ### 📖 **Comprehensive Guides**
 
@@ -330,6 +349,18 @@ build_complete_system.bat --minimal --notest
 - **Integration Testing** - Cross-engine system testing
 - **Performance Testing** - VR performance benchmarking
 - **Validation Testing** - End-to-end system validation
+
+## 🤝 **CONTRIBUTING**
+
+- Please read `CONTRIBUTING.md` for guidelines, branch strategy, and research contribution format.
+- Issue templates: `.github/ISSUE_TEMPLATE/` (bug report, feature request, research issue)
+- PR template: `.github/PULL_REQUEST_TEMPLATE/research_contribution.md`
+
+## 🎮 **GAME SUPPORT**
+
+- Compatibility Matrix: `docs/compatibility/README.md`
+- Profiles: see `profiles/` (start from `profiles/_TEMPLATE/` and per-game folders)
+- Generator: `scripts/generate_compatibility_matrix.py`
 
 ---
 
@@ -384,10 +415,6 @@ build_complete_system.bat --minimal --notest
 - **Features**: Custom configurations, advanced features, security
 - **Performance**: Enterprise-optimized
 - **Use Case**: Corporate deployment
-
----
-
-## 🤝 **CONTRIBUTING**
 
 ### **Development Guidelines**
 
@@ -494,22 +521,21 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 ## 🔗 **USEFUL LINKS**
 
 ### **Project Resources**
-- **🌐 [Official Website](https://uevr.dev)** - Project homepage
-- **📖 [Documentation](https://docs.uevr.dev)** - Complete documentation
-- **🎮 [Game Compatibility](https://compatibility.uevr.dev)** - Game support matrix
-- **🛠️ [Build Tools](https://tools.uevr.dev)** - Build system tools
+- **📦 Repository**: https://github.com/Alot1z/uevrLCX
+- **📖 Documentation**: see local `docs/`
+- **🎮 Game Compatibility**: `docs/compatibility/README.md`
+- **🛠️ Tools**: `tools/`
 
 ### **Community Resources**
-- **💬 [Discord Server](https://discord.gg/uevr)** - Community discussions
-- **🐛 [GitHub Issues](https://github.com/praydog/uevr/issues)** - Bug reports
-- **💡 [Feature Requests](https://github.com/praydog/uevr/discussions)** - Feature suggestions
-- **📚 [Wiki](https://github.com/praydog/uevr/wiki)** - Community knowledge base
+- **🐛 Issues**: https://github.com/Alot1z/uevrLCX/issues
+- **💬 Discussions**: Use Issues for now (Discussions may be enabled later)
+- **📚 Wiki**: TBD
 
 ---
 
 ## 🎉 **CONCLUSION**
 
-**UEVR Universal Engine VR Adapter** represents the future of VR gaming, bringing immersive virtual reality experiences to hundreds of games that were never designed for VR. With its sophisticated cross-engine architecture, comprehensive build system, and extensive game support, UEVR is revolutionizing how we experience classic and modern games.
+**uevrLCX – Universal Cross-Engine VR Injection Framework** brings immersive VR to hundreds of games never designed for VR. With a cross-engine architecture, comprehensive build system, and expanding game support, uevrLCX advances how we experience classic and modern titles.
 
 **Key Achievements:**
 - ✅ **500+ Game Support** - Universal compatibility across all major engines
@@ -519,7 +545,7 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 - ✅ **Extensive Testing** - Quality assurance and validation
 - ✅ **Community Driven** - Active development and support
 
-**Ready to bring VR to your favorite games? Start building with UEVR Universal Engine VR Adapter today!**
+**Ready to bring VR to your favorite games? Start building with uevrLCX today!**
 
 ---
 
@@ -527,11 +553,11 @@ This project is licensed under the **MIT License** - see the [LICENSE](LICENSE) 
 
 **🌟 Star this repository if you find it helpful! 🌟**
 
-**Made with ❤️ by the UEVR community**
+**Made with ❤️ by the uevrLCX community**
 
-[![GitHub Stars](https://img.shields.io/github/stars/praydog/uevr?style=social)](https://github.com/praydog/uevr)
-[![GitHub Forks](https://img.shields.io/github/forks/praydog/uevr?style=social)](https://github.com/praydog/uevr)
-[![GitHub Issues](https://github.com/praydog/uevr/issues)](https://github.com/praydog/uevr/issues)
-[![GitHub Pull Requests](https://github.com/praydog/uevr/pulls)](https://github.com/praydog/uevr/pulls)
+[![GitHub Stars](https://img.shields.io/github/stars/Alot1z/uevrLCX?style=social)](https://github.com/Alot1z/uevrLCX)
+[![GitHub Forks](https://img.shields.io/github/forks/Alot1z/uevrLCX?style=social)](https://github.com/Alot1z/uevrLCX)
+[![GitHub Issues](https://img.shields.io/github/issues/Alot1z/uevrLCX?style=social)](https://github.com/Alot1z/uevrLCX/issues)
+[![GitHub Pull Requests](https://img.shields.io/github/issues-pr/Alot1z/uevrLCX?style=social)](https://github.com/Alot1z/uevrLCX/pulls)
 
 </div>

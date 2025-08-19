@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1400" height="500" viewBox="0 0 1400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Simple, filter-free mascot for maximum compatibility -->
+  <g transform="translate(100,60)" stroke="#7E4DFF" fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Matrix columns (very light, few lines) -->
+    <g opacity="0.35">
+      <path d="M80 0 v360"/>
+      <path d="M140 0 v340"/>
+      <path d="M200 0 v360"/>
+      <path d="M260 0 v320"/>
+      <path d="M320 0 v360"/>
+      <path d="M380 0 v340"/>
+      <path d="M440 0 v360"/>
+    </g>
+
+    <!-- Crown flames simplified as strokes -->
+    <path d="M260 20 C240 -10, 310 -20, 290 -50 C350 -30, 400 -40, 440 -80 C480 -30, 520 -20, 540 10"/>
+    <path d="M210 30 C190 0, 240 -10, 230 -30 C270 -10, 300 -20, 330 -40 C350 -10, 380 0, 390 20"/>
+
+    <!-- Headset (no fill, no filters) -->
+    <rect x="220" y="60" rx="36" ry="36" width="520" height="220"/>
+    <circle cx="360" cy="170" r="52"/>
+    <circle cx="600" cy="170" r="52"/>
+    <path d="M220 130 H180 C160 130 160 210 180 210 H220"/>
+    <path d="M740 130 H780 C800 130 800 210 780 210 H740"/>
+    <text x="330" y="190" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="70" font-weight="800" fill="#7E4DFF">VR</text>
+
+    <!-- Hook tendrils to generic nodes -->
+    <path d="M740 250 C850 260, 920 300, 1020 290"/>
+    <path d="M740 160 C860 140, 940 180, 1020 170"/>
+
+    <!-- Nodes (hex) -->
+    <g transform="translate(1020,135)">
+      <polygon points="40,0 80,20 80,60 40,80 0,60 0,20"/>
+      <text x="40" y="48" text-anchor="middle" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="18" font-weight="600" fill="#7E4DFF">ENG</text>
+    </g>
+    <g transform="translate(1020,255)">
+      <polygon points="40,0 80,20 80,60 40,80 0,60 0,20"/>
+      <text x="40" y="48" text-anchor="middle" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="18" font-weight="600" fill="#7E4DFF">ENG</text>
+    </g>
+  </g>
+
+  <!-- Wordmark and claim -->
+  <text x="120" y="430" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="96" font-weight="900" fill="#7E4DFF">uevrLCX</text>
+  <text x="120" y="470" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="28" font-weight="600" fill="#7E4DFF">Hook • Extract • Convert — Cross‑Engine Takeover</text>
+</svg>
