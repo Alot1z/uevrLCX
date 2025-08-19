@@ -1,0 +1,6 @@
+warning: in the working copy of 'src/adapters/re7/re7_adapter.cpp', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/vr/CMakeLists.txt', LF will be replaced by CRLF the next time Git touches it
+warning: in the working copy of 'src/vr/FullPhysicsIntegration.cpp', LF will be replaced by CRLF the next time Git touches it
+docs/FullAestheticCollisionEngine.md
+include/uevr/vr/FullPhysicsIntegration.hpp
+src/vr/FullPhysicsIntegration.cpp
