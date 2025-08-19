@@ -11,12 +11,9 @@ add_library(uevr_vr STATIC
     OpenXRIntegration.cpp
 )
 
-target_include_directories(uevr_vr
-    PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>
-        $<INSTALL_INTERFACE:include>
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}
+target_include_directories(uevr_vr PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../include
+    ${CMAKE_CURRENT_SOURCE_DIR}/../../dependencies/submodules/glm
 )
 
 target_link_libraries(uevr_vr

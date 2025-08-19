@@ -376,7 +376,7 @@ void    ImGui_ImplWin32_NewFrame()
     io.AddKeyEvent(ImGuiMod_Ctrl, IsVkDown(VK_CONTROL));
     io.AddKeyEvent(ImGuiMod_Shift, IsVkDown(VK_SHIFT));
     io.AddKeyEvent(ImGuiMod_Alt, IsVkDown(VK_MENU));
-    io.AddKeyEvent(ImGuiMod_Super, IsVkDown(VK_APPS));
+    io.AddKeyEvent(ImGuiMod_Super, IsVkDown(VK_LWIN) || IsVkDown(VK_RWIN));
     // Read keyboard modifiers inputs
     //io.KeyCtrl = (::GetKeyState(VK_CONTROL) & 0x8000) != 0 || io.KeysDown[VK_CONTROL] || io.KeysDown[VK_LCONTROL] || io.KeysDown[VK_RCONTROL];
     //io.KeyShift = (::GetKeyState(VK_SHIFT) & 0x8000) != 0 || io.KeysDown[VK_SHIFT] || io.KeysDown[VK_LSHIFT] || io.KeysDown[VK_RSHIFT];
@@ -603,24 +603,36 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARA
         return 0;
     case WM_KEYDOWN:
     case WM_SYSKEYDOWN:
-        if (wParam < 256) {
-            const auto key = ImGui_ImplWin32_VirtualKeyToImGuiKey(wParam);
+    {
+        ImGuiKey key = ImGuiKey_None;
+        if (wParam == VK_MENU) {
+            const bool is_right = (lParam & (1 << 24)) != 0; // extended bit indicates Right Alt
+            key = is_right ? ImGuiKey_RightAlt : ImGuiKey_LeftAlt;
+        } else if (wParam < 256) {
+            key = ImGui_ImplWin32_VirtualKeyToImGuiKey(wParam);
+        }
 
-            if (key != ImGuiKey_None) {
-                input_event.queued_keys.emplace_back(key, true);
-            }
+        if (key != ImGuiKey_None) {
+            input_event.queued_keys.emplace_back(key, true);
         }
         return 0;
+    }
     case WM_KEYUP:
     case WM_SYSKEYUP:
-        if (wParam < 256) {
-            const auto key = ImGui_ImplWin32_VirtualKeyToImGuiKey(wParam);
+    {
+        ImGuiKey key = ImGuiKey_None;
+        if (wParam == VK_MENU) {
+            const bool is_right = (lParam & (1 << 24)) != 0;
+            key = is_right ? ImGuiKey_RightAlt : ImGuiKey_LeftAlt;
+        } else if (wParam < 256) {
+            key = ImGui_ImplWin32_VirtualKeyToImGuiKey(wParam);
+        }
 
-            if (key != ImGuiKey_None) {
-                input_event.queued_keys.emplace_back(key, false);
-            }
+        if (key != ImGuiKey_None) {
+            input_event.queued_keys.emplace_back(key, false);
         }
         return 0;
+    }
     case WM_KILLFOCUS:
         imgui::reset_keystates();
         return 0;
@@ -629,6 +641,14 @@ IMGUI_IMPL_API LRESULT ImGui_ImplWin32_WndProcHandler(HWND hwnd, UINT msg, WPARA
         if (wParam > 0 && wParam < 0x10000)
             input_event.queued_chars.emplace_back((unsigned short)wParam);
         return 0;
+    case WM_SYSCHAR:
+        // Prevent system beep when Alt+Key is pressed
+        return 0;
+    case WM_SYSCOMMAND:
+        // Block system menu activation when Alt is pressed alone
+        if ((wParam & 0xFFF0) == SC_KEYMENU)
+            return 0;
+        break;
     case WM_SETCURSOR:
         if (LOWORD(lParam) == HTCLIENT && ImGui_ImplWin32_UpdateMouseCursor())
             return 1;
