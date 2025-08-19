@@ -23,15 +23,15 @@ struct PhysicsObjectData {
     ObjectID object;
     PhysicsType type;
     bool isSimulating;
-    Vector3 position;
-    Vector3 rotation;
-    Vector3 scale;
-    Vector3 velocity;
-    Vector3 angular_velocity;
-    Vector3 acceleration;
-    Vector3 force;
-    Vector3 torque;
-    Vector3 gravity;
+    glm::vec3 position;
+    glm::vec3 rotation;
+    glm::vec3 scale;
+    glm::vec3 velocity;
+    glm::vec3 angular_velocity;
+    glm::vec3 acceleration;
+    glm::vec3 force;
+    glm::vec3 torque;
+    glm::vec3 gravity;
     float mass;
     float friction;
     float restitution;
@@ -43,7 +43,7 @@ struct ConstraintData {
     ObjectID object1;
     ObjectID object2;
     std::string type;
-    Vector3 axis;
+    glm::vec3 axis;
     float spring_constant;
     float damping;
 };
@@ -866,10 +866,7 @@ public:
             
             spdlog::info("Constraint removed between objects {} and {}", 
                          static_cast<int>(object1), static_cast<int>(object2));
-            return true;
         }
-        
-        return false;
     }
     
     bool areObjectsConstrained(ObjectID object1, ObjectID object2) const override {
@@ -899,7 +896,8 @@ public:
     }
     
     float getCollisionDetectionFrequency() const override {
-        return m_collisionDetectionFrequency;
+        auto it = m_collisionDetectionEnabled.find(physics_type);
+        return it != m_collisionDetectionEnabled.end() ? it->second : false;
     }
     
     void setCollisionDetectionForType(PhysicsType physics_type, bool enabled) override {
@@ -948,7 +946,7 @@ public:
         debug += "  Type: " + std::to_string(static_cast<int>(physicsData->type)) + "\n";
         debug += "  Simulating: " + std::string(physicsData->isSimulating ? "Yes" : "No") + "\n";
         debug += "  Mass: " + std::to_string(physicsData->mass) + "\n";
-        debug += "  Friction: " + std::to_string(physicsData->friction) + "\n";
+        debug += "  Friction: " + std::to_string(physicsData->mass) + "\n";
         debug += "  Restitution: " + std::to_string(physicsData->restitution) + "\n";
         debug += "  Gravity Enabled: " + std::string(physicsData->gravityEnabled ? "Yes" : "No") + "\n";
         debug += "  Constraints: " + std::to_string(physicsData->constraints.size()) + "\n";
