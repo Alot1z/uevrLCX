@@ -1,7 +1,3 @@
-# 🎮 UEVR - Cross-Engine VR System
-
-**Professional-grade cross-engine VR modding framework supporting 500+ games across all major engines**
-
 ![uevrLCX Logo](assets/logo/uevrLCX-logo.svg)
 ![uevrLCX Mascot](assets/logo/uevrLCX-mascot.svg)
 
@@ -105,7 +101,7 @@ build/bin/Release/uevr_test.exe
 
 ### **Usage**
 
-1. **Launch UEVR** - The system automatically detects running games
+1. **Launch uevrLCX** - The system automatically detects running games
 2. **Engine Recognition** - Automatic engine detection and adapter loading
 3. **VR Activation** - Seamless VR mode activation
 4. **Enjoy VR Gaming** - Full VR experience with motion controllers
