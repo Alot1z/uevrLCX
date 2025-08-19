@@ -1,0 +1,34 @@
+name: Never-Stop Guard
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  guard:
+    name: Enforce Human Authorship & Research Policy
+    runs-on: windows-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Determine SHAs (push)
+        if: ${{ github.event_name == 'push' }}
+        shell: pwsh
+        run: |
+          echo "BASE_SHA=${{ github.event.before }}" >> $env:GITHUB_ENV
+          echo "HEAD_SHA=${{ github.sha }}" >> $env:GITHUB_ENV
+
+      - name: Determine SHAs (pull_request)
+        if: ${{ github.event_name == 'pull_request' }}
+        shell: pwsh
+        run: |
+          echo "BASE_SHA=${{ github.event.pull_request.base.sha }}" >> $env:GITHUB_ENV
+          echo "HEAD_SHA=${{ github.event.pull_request.head.sha }}" >> $env:GITHUB_ENV
+
+      - name: Run Never-Stop Guard
+        shell: pwsh
+        run: |
+          tools/ci/never_stop_guard.ps1 -BaseSha "$env:BASE_SHA" -HeadSha "$env:HEAD_SHA" -EventName "${{ github.event_name }}"

@@ -2065,3 +2065,31 @@ bool Framework::is_advanced_view_enabled() const {
 Framework::ImGuiThemes Framework::get_imgui_theme_value() const {
     return static_cast<ImGuiThemes>(FrameworkConfig::get()->get_imgui_theme_value());
 }
+
+void Framework::enable_engine_thread() {
+    if (m_engine_thread_enabled) {
+        return;
+    }
+    
+    m_engine_thread_enabled = true;
+    spdlog::info("[Framework] Engine thread enabled");
+    
+    // Start engine-specific processing if needed
+    if (m_adapter != nullptr) {
+        m_adapter->on_engine_thread_enabled();
+    }
+}
+
+void Framework::increment_sidebar_page() {
+    if (m_sidebar_page < m_max_sidebar_pages - 1) {
+        m_sidebar_page++;
+        spdlog::debug("[Framework] Sidebar page incremented to {}", m_sidebar_page);
+    }
+}
+
+void Framework::decrement_sidebar_page() {
+    if (m_sidebar_page > 0) {
+        m_sidebar_page--;
+        spdlog::debug("[Framework] Sidebar page decremented to {}", m_sidebar_page);
+    }
+}
