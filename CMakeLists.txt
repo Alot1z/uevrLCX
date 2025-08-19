@@ -61,23 +61,25 @@ endif()
 # Dependency setup with proper error handling
 include(FetchContent)
 
-# MinHook - API hooking library
-find_package(MinHook QUIET)
-if(NOT MinHook_FOUND)
-    message(STATUS "MinHook not found, fetching from source...")
-    FetchContent_Declare(
-        minhook
-        GIT_REPOSITORY https://github.com/TsudaKageyu/minhook.git
-        GIT_TAG master
-        GIT_SHALLOW TRUE
-    )
-    FetchContent_MakeAvailable(minhook)
-    if(NOT TARGET MinHook::MinHook)
-        add_library(MinHook::MinHook ALIAS minhook)
+# MinHook - API hooking library (only on Windows)
+if(WIN32)
+    find_package(MinHook QUIET)
+    if(NOT MinHook_FOUND)
+        message(STATUS "MinHook not found, fetching from source...")
+        FetchContent_Declare(
+            minhook
+            GIT_REPOSITORY https://github.com/TsudaKageyu/minhook.git
+            GIT_TAG master
+            GIT_SHALLOW TRUE
+        )
+        FetchContent_MakeAvailable(minhook)
+        if(NOT TARGET MinHook::MinHook)
+            add_library(MinHook::MinHook ALIAS minhook)
+        endif()
+        message(STATUS "MinHook fetched successfully")
+    else()
+        message(STATUS "MinHook found: ${MinHook_DIR}")
     endif()
-    message(STATUS "MinHook fetched successfully")
-else()
-    message(STATUS "MinHook found: ${MinHook_DIR}")
 endif()
 
 # spdlog - Fast logging library
@@ -214,8 +216,8 @@ message(STATUS "Configuring uevr components...")
 # Core framework (no dependencies)
 add_subdirectory(src/core)
 
-# VR system (depends on core) - temporarily disabled due to complexity
-# add_subdirectory(src/vr)
+# VR system (depends on core)
+add_subdirectory(src/vr)
 
 # Create a simple test executable with basic VR functionality
 add_executable(uevr_test
@@ -227,14 +229,12 @@ set_target_properties(uevr_test PROPERTIES
     OUTPUT_NAME "uevr_test"
 )
 
-# Link dependencies
-target_link_libraries(uevr_test
-    PRIVATE
-        uevr_core
-        spdlog::spdlog
-        nlohmann_json::nlohmann_json
-        MinHook::MinHook
-)
+set(TEST_LIBS uevr_core spdlog::spdlog nlohmann_json::nlohmann_json)
+if(WIN32 AND TARGET MinHook::MinHook)
+    list(APPEND TEST_LIBS MinHook::MinHook)
+endif()
+
+target_link_libraries(uevr_test PRIVATE ${TEST_LIBS})
 
 # Include directories
 target_include_directories(uevr_test

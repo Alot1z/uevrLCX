@@ -1,3 +1,4 @@
+#ifdef _WIN32
 #include <windows.h>
 #include "ExceptionHandler.hpp"
 
@@ -9,3 +10,11 @@ LONG WINAPI framework::global_exception_handler(struct _EXCEPTION_POINTERS* ei) 
 void framework::setup_exception_handler() {
     SetUnhandledExceptionFilter(global_exception_handler);
 }
+#else
+#include "ExceptionHandler.hpp"
+
+// Non-Windows platforms: no-op implementation
+namespace framework {
+void setup_exception_handler() {}
+}
+#endif
