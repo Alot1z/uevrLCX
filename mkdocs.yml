@@ -1,0 +1,67 @@
+site_name: UEVR LCX
+site_description: Universal Engine VR Modding Framework
+site_author: UEVR Project
+site_url: https://alot1z.github.io/uevrLCX/
+
+repo_name: Alot1z/uevrLCX
+repo_url: https://github.com/Alot1z/uevrLCX
+
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch
+        name: Switch to dark mode
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+      toggle:
+        icon: material/toggle-switch-off-outline
+        name: Switch to light mode
+
+nav:
+  - Home: index.md
+  - Quick Start: quick_start.md
+  - Architecture: architecture.md
+  - Game Support: game_support.md
+  - Build System: build_system.md
+  - Performance: performance.md
+  - Community: community.md
+  - Contributing: contributing.md
+
+plugins:
+  - search
+  - awesome-pages
+
+markdown_extensions:
+  - admonition
+  - codehilite
+  - footnotes
+  - meta
+  - pymdownx.arithmatex
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji
+  - pymdownx.highlight
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.magiclink
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences
+  - pymdownx.tabbed
+  - pymdownx.tasklist
+  - pymdownx.tilde
+  - toc:
+      permalink: true
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/Alot1z/uevrLCX
+  version:
+    provider: mike

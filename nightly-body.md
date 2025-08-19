@@ -1,30 +1,60 @@
-## Installation and quick usage
+# UEVR LCX Nightly Build
 
-Extract the UEVR.zip to a folder of your choice, then:
+## 🚀 What's New
 
-1. Launch the frontend GUI (UEVRInjector.exe)
-2. Launch the target game
-3. Locate the game in the process dropdown list
-4. Select your desired runtime (OpenVR/OpenXR)
-5. Toggle existing VR plugin nullification (if necessary)
-6. Configure pre-injection settings
-7. Inject
+This is an automated nightly build of UEVR LCX - Universal Engine VR Modding Framework.
 
-More information and troubleshooting can be found on the [Documentation](https://praydog.github.io/uevr-docs/) page.
+## 🔧 Build Information
 
-## Additional notes
+- **Build Number**: ${{ env.RUN_NUMBER }}
+- **Commit**: ${{ github.sha }}
+- **Branch**: ${{ github.ref_name }}
+- **Build Date**: ${{ github.event.head_commit.timestamp }}
 
-You may need to whitelist the UEVR folder or executable within your antivirus software for the time being.
+## 🎯 Features
 
-If nothing happens, try moving UEVR to a different folder.
+- **Core Framework**: Complete VR modding framework
+- **Context7 Database**: AI-powered game analysis system
+- **Cross-Engine Support**: RE Engine, REDengine 4, MT Framework, Unreal Engine, Unity
+- **Performance Optimization**: 90+ FPS target with <11ms latency
+- **DeepWiki Integration**: Comprehensive documentation system
 
-# Links
-[Main repository](https://github.com/praydog/UEVR)
+## 🎮 Supported Games
 
-[Website](http://uevr.io)
+- **Resident Evil 7/8** (RE Engine)
+- **Cyberpunk 2077** (REDengine 4)
+- **Monster Hunter World** (MT Framework)
+- **Unreal Engine Games** (Fortnite, Gears 5, etc.)
+- **Unity Games** (Among Us, Fall Guys, etc.)
 
-[Documentation](https://praydog.github.io/uevr-docs/)
+## 📥 Installation
 
-[Flatscreen to VR Modding Discord](http://flat2vr.com)
+1. Extract the ZIP file to your desired location
+2. Run `uevr.exe` to start the framework
+3. Configure your VR headset settings
+4. Launch your supported game
 
-[Donations](https://www.patreon.com/praydog)
+## ⚠️ Important Notes
+
+- This is a **nightly build** - may contain experimental features
+- Always backup your save files before testing
+- Report any issues on GitHub
+- Performance may vary depending on hardware
+
+## 🔗 Links
+
+- [GitHub Repository](https://github.com/Alot1z/uevrLCX)
+- [Documentation](https://alot1z.github.io/uevrLCX/)
+- [Issues](https://github.com/Alot1z/uevrLCX/issues)
+- [Discussions](https://github.com/Alot1z/uevrLCX/discussions)
+
+## 📊 Performance Targets
+
+- **Target FPS**: 90+ FPS
+- **Max Latency**: <11ms
+- **Memory Usage**: Optimized for VR
+- **CPU/GPU**: Efficient resource utilization
+
+---
+
+*Generated automatically by UEVR LCX build system*

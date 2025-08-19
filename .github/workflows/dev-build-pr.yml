@@ -1,11 +1,3 @@
-      - name: Upload build logs
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-logs
-          path: |
-            ${{github.workspace}}/build/*.log
-          if-no-files-found: ignore
 name: Dev Build PR
 on: [pull_request_target, workflow_dispatch]
 env:
@@ -73,3 +65,12 @@ jobs:
           name: ${{matrix.target}}
           path: ${{github.workspace}}/build/bin/${{matrix.target}}/*
           if-no-files-found: error
+
+      - name: Upload build logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-logs
+          path: |
+            ${{github.workspace}}/build/*.log
+          if-no-files-found: ignore
