@@ -15,33 +15,45 @@
 #include <cmath>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtx/quaternion.hpp>
+#include <unordered_set>
+#include <queue>
+#include <mutex>
+#include <thread>
+#include <future>
 
 namespace uevr {
 namespace vr {
 
+// Constructor
 FullAestheticCollisionEngine::FullAestheticCollisionEngine()
-    : m_initialized(false) {
+    : m_physics_integration(nullptr)
+    , m_collision_layers(0xFFFFFFFF)
+    , m_collision_mask(0xFFFFFFFF)
+    , m_max_collisions(1000)
+    , m_collision_tolerance(0.001f)
+    , m_next_object_id(1)
+    , m_next_collision_id(1)
+    , m_last_update_time(0.0f)
+    , m_collision_checks_per_frame(0)
+    , m_average_collision_time(0.0f) {
     
     spdlog::info("[FullAestheticCollision] Full Aesthetic Collision Engine created");
     
-    // Initialize collision statistics
-    m_stats.total_collisions = 0;
-    m_stats.successful_interactions = 0;
-    m_stats.failed_interactions = 0;
-    m_stats.average_response_time = 0.0f;
+    // Initialize collision detection systems
+    initializeCollisionDetection();
+    initializePhysicsSimulation();
+    initializeHapticSystem();
+    initializeVisualFeedback();
 }
 
+// Destructor
 FullAestheticCollisionEngine::~FullAestheticCollisionEngine() {
     spdlog::info("[FullAestheticCollision] Full Aesthetic Collision Engine destroyed");
-    shutdownCollision();
+    shutdown();
 }
 
-bool FullAestheticCollisionEngine::initializeFullCollision() {
-    if (m_initialized) {
-        spdlog::warn("[FullAestheticCollision] Collision engine already initialized");
-        return true;
-    }
-
+// Initialization and shutdown
+bool FullAestheticCollisionEngine::initialize() {
     try {
         spdlog::info("[FullAestheticCollision] Initializing Full Aesthetic Collision Engine...");
         
@@ -69,7 +81,6 @@ bool FullAestheticCollisionEngine::initializeFullCollision() {
             return false;
         }
         
-        m_initialized = true;
         spdlog::info("[FullAestheticCollision] Full Aesthetic Collision Engine initialized successfully");
         return true;
         
@@ -79,21 +90,21 @@ bool FullAestheticCollisionEngine::initializeFullCollision() {
     }
 }
 
-void FullAestheticCollisionEngine::shutdownCollision() {
-    if (!m_initialized) {
-        return;
-    }
-
+void FullAestheticCollisionEngine::shutdown() {
     try {
         spdlog::info("[FullAestheticCollision] Shutting down collision engine...");
         
         // Clear all registered objects
         m_objects.clear();
+        m_active_collisions.clear();
+        m_haptic_queue.clear();
+        m_visual_queue.clear();
         
-        // Reset statistics
-        m_stats = CollisionStats{};
+        // Reset performance metrics
+        m_last_update_time = 0.0f;
+        m_collision_checks_per_frame = 0;
+        m_average_collision_time = 0.0f;
         
-        m_initialized = false;
         spdlog::info("[FullAestheticCollision] Collision engine shutdown complete");
         
     } catch (const std::exception& e) {
@@ -101,971 +112,706 @@ void FullAestheticCollisionEngine::shutdownCollision() {
     }
 }
 
-CollisionResult FullAestheticCollisionEngine::detectFullCollision(ObjectID object, HandType hand, CollisionType type) {
-    if (!m_initialized) {
-        spdlog::warn("[FullAestheticCollision] Collision engine not initialized");
-        return CollisionResult{};
-    }
-
-    auto start_time = std::chrono::high_resolution_clock::now();
+// Core collision detection
+std::vector<CollisionResult> FullAestheticCollisionEngine::detectCollisions(const Vec3& position, float radius) {
+    std::vector<CollisionResult> results;
     
     try {
-        CollisionResult result;
+        auto start_time = std::chrono::high_resolution_clock::now();
         
-        // Check if object exists
-        auto obj_iter = m_objects.find(object);
-        if (obj_iter == m_objects.end()) {
-            spdlog::warn("[FullAestheticCollision] Object {} not registered for collision detection", object);
+        // Check against all active objects
+        for (const auto& [id, obj_data] : m_objects) {
+            if (!obj_data.is_active) continue;
+            
+            // Calculate distance between positions
+            Vec3 obj_pos = obj_data.physics_data.position;
+            float distance = std::sqrt(
+                std::pow(position.x - obj_pos.x, 2) +
+                std::pow(position.y - obj_pos.y, 2) +
+                std::pow(position.z - obj_pos.z, 2)
+            );
+            
+            // Check if within collision radius
+            if (distance <= radius + m_collision_tolerance) {
+                CollisionResult result;
+                result.colliding_object = id;
+                result.collision_type = CollisionType::TOUCH;
+                result.contact_point = position;
+                result.contact_normal = Vec3(
+                    (position.x - obj_pos.x) / distance,
+                    (position.y - obj_pos.y) / distance,
+                    (position.z - obj_pos.z) / distance
+                );
+                result.penetration_depth = radius + m_collision_tolerance - distance;
+                result.is_valid = true;
+                
+                results.push_back(result);
+            }
+        }
+        
+        // Update performance metrics
+        auto end_time = std::chrono::high_resolution_clock::now();
+        auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
+        m_average_collision_time = (m_average_collision_time + duration.count()) / 2.0f;
+        m_collision_checks_per_frame++;
+        
+    } catch (const std::exception& e) {
+        spdlog::error("[FullAestheticCollision] Error in detectCollisions: {}", e.what());
+    }
+    
+    return results;
+}
+
+bool FullAestheticCollisionEngine::checkCollision(ObjectID obj1, ObjectID obj2) {
+    try {
+        auto it1 = m_objects.find(obj1);
+        auto it2 = m_objects.find(obj2);
+        
+        if (it1 == m_objects.end() || it2 == m_objects.end()) {
+            return false;
+        }
+        
+        const auto& obj_data1 = it1->second;
+        const auto& obj_data2 = it2->second;
+        
+        if (!obj_data1.is_active || !obj_data2.is_active) {
+            return false;
+        }
+        
+        // Check collision layers and masks
+        if (!(obj_data1.collision_layers & obj_data2.collision_mask)) {
+            return false;
+        }
+        
+        // Calculate distance between objects
+        Vec3 pos1 = obj_data1.physics_data.position;
+        Vec3 pos2 = obj_data2.physics_data.position;
+        float distance = std::sqrt(
+            std::pow(pos1.x - pos2.x, 2) +
+            std::pow(pos1.y - pos2.y, 2) +
+            std::pow(pos1.z - pos2.z, 2)
+        );
+        
+        // Simple collision check based on object scales
+        float combined_radius = obj_data1.physics_data.scale.x + obj_data2.physics_data.scale.x;
+        return distance <= combined_radius + m_collision_tolerance;
+        
+    } catch (const std::exception& e) {
+        spdlog::error("[FullAestheticCollision] Error in checkCollision: {}", e.what());
+        return false;
+    }
+}
+
+CollisionResult FullAestheticCollisionEngine::getCollisionResult(ObjectID obj1, ObjectID obj2) {
+    CollisionResult result;
+    result.is_valid = false;
+    
+    try {
+        if (!checkCollision(obj1, obj2)) {
             return result;
         }
         
-        // Detect collisions with all other objects
-        for (const auto& [other_id, other_data] : m_objects) {
-            if (other_id == object || !other_data.collision_enabled) {
-                continue;
-            }
-            
-            // Check collision bounds
-            if (checkCollisionBounds(object, other_id)) {
-                // Calculate collision details
-                result.collision_detected = true;
-                result.collision_point = calculateCollisionPoint(object, other_id);
-                result.collision_normal = calculateCollisionNormal(object, other_id);
-                result.colliding_object = other_id;
-                result.collision_type = type;
-                
-                // Calculate collision distance and intensity
-                const auto& obj_data = obj_iter->second;
-                glm::vec3 distance_vec = result.collision_point - obj_data.position;
-                result.collision_distance = glm::length(distance_vec);
-                
-                // Calculate intensity based on collision type and physics
-                result.collision_intensity = calculateCollisionIntensity(object, other_id, type);
-                
-                // Update statistics
-                m_stats.total_collisions++;
-                
-                // Provide haptic feedback
-                provideFullHapticFeedback(hand, result.collision_intensity, HapticType::MEDIUM);
-                
-                // Show visual feedback
-                showFullCollisionHighlight(object, type);
-                
-                break; // Found first collision
-            }
+        auto it1 = m_objects.find(obj1);
+        auto it2 = m_objects.find(obj2);
+        
+        if (it1 == m_objects.end() || it2 == m_objects.end()) {
+            return result;
         }
         
-        // Calculate response time
+        const auto& obj_data1 = it1->second;
+        const auto& obj_data2 = it2->second;
+        
+        Vec3 pos1 = obj_data1.physics_data.position;
+        Vec3 pos2 = obj_data2.physics_data.position;
+        
+        // Calculate collision details
+        result.colliding_object = obj2;
+        result.collision_type = CollisionType::COLLIDE;
+        result.contact_point = Vec3(
+            (pos1.x + pos2.x) / 2.0f,
+            (pos1.y + pos2.y) / 2.0f,
+            (pos1.z + pos2.z) / 2.0f
+        );
+        
+        // Calculate contact normal
+        float distance = std::sqrt(
+            std::pow(pos1.x - pos2.x, 2) +
+            std::pow(pos1.y - pos2.y, 2) +
+            std::pow(pos1.z - pos2.z, 2)
+        );
+        
+        if (distance > 0.0f) {
+            result.contact_normal = Vec3(
+                (pos1.x - pos2.x) / distance,
+                (pos1.y - pos2.y) / distance,
+                (pos1.z - pos2.z) / distance
+            );
+        } else {
+            result.contact_normal = Vec3(0.0f, 1.0f, 0.0f);
+        }
+        
+        result.penetration_depth = std::max(0.0f, 
+            obj_data1.physics_data.scale.x + obj_data2.physics_data.scale.x - distance);
+        result.is_valid = true;
+        
+    } catch (const std::exception& e) {
+        spdlog::error("[FullAestheticCollision] Error in getCollisionResult: {}", e.what());
+    }
+    
+    return result;
+}
+
+// Object management
+ObjectID FullAestheticCollisionEngine::addObject(const PhysicsObject& obj) {
+    try {
+        ObjectID id = m_next_object_id++;
+        
+        ObjectData obj_data;
+        obj_data.physics_data = obj;
+        obj_data.physics_type = obj.type;
+        obj_data.collision_layers = m_collision_layers;
+        obj_data.collision_mask = m_collision_mask;
+        obj_data.is_active = true;
+        obj_data.is_static = (obj.type == PhysicsType::STATIC);
+        
+        m_objects[id] = obj_data;
+        
+        spdlog::info("[FullAestheticCollision] Added object with ID: {}", id);
+        return id;
+        
+    } catch (const std::exception& e) {
+        spdlog::error("[FullAestheticCollision] Failed to add object: {}", e.what());
+        return 0;
+    }
+}
+
+void FullAestheticCollisionEngine::removeObject(ObjectID id) {
+    try {
+        auto it = m_objects.find(id);
+        if (it != m_objects.end()) {
+            m_objects.erase(it);
+            
+            // Remove from active collisions
+            m_active_collisions.erase(
+                std::remove_if(m_active_collisions.begin(), m_active_collisions.end(),
+                    [id](const CollisionPair& pair) {
+                        return pair.obj1 == id || pair.obj2 == id;
+                    }),
+                m_active_collisions.end()
+            );
+            
+            spdlog::info("[FullAestheticCollision] Removed object with ID: {}", id);
+        }
+        
+    } catch (const std::exception& e) {
+        spdlog::error("[FullAestheticCollision] Failed to remove object: {}", e.what());
+    }
+}
+
+void FullAestheticCollisionEngine::updateObject(ObjectID id, const PhysicsObject& obj) {
+    try {
+        auto it = m_objects.find(id);
+        if (it != m_objects.end()) {
+            it->second.physics_data = obj;
+            it->second.physics_type = obj.type;
+            it->second.is_static = (obj.type == PhysicsType::STATIC);
+        }
+        
+    } catch (const std::exception& e) {
+        spdlog::error("[FullAestheticCollision] Failed to update object: {}", e.what());
+    }
+}
+
+PhysicsObject FullAestheticCollisionEngine::getObject(ObjectID id) const {
+    try {
+        auto it = m_objects.find(id);
+        if (it != m_objects.end()) {
+            return it->second.physics_data;
+        }
+        
+    } catch (const std::exception& e) {
+        spdlog::error("[FullAestheticCollision] Failed to get object: {}", e.what());
+    }
+    
+    return PhysicsObject{};
+}
+
+// Physics integration
+void FullAestheticCollisionEngine::setPhysicsIntegration(FullPhysicsIntegration* physics) {
+    m_physics_integration = physics;
+    spdlog::info("[FullAestheticCollision] Physics integration set");
+}
+
+void FullAestheticCollisionEngine::updatePhysicsSimulation(float delta_time) {
+    try {
+        auto start_time = std::chrono::high_resolution_clock::now();
+        
+        // Update collision detection
+        updateCollisionDetection(delta_time);
+        
+        // Update haptic feedback
+        updateHapticFeedback(delta_time);
+        
+        // Update visual feedback
+        updateVisualFeedback(delta_time);
+        
+        // Update performance metrics
         auto end_time = std::chrono::high_resolution_clock::now();
         auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end_time - start_time);
-        m_stats.average_response_time = (m_stats.average_response_time + duration.count()) / 2.0f;
-        
-        return result;
+        m_last_update_time = duration.count() / 1000.0f; // Convert to milliseconds
         
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception during collision detection: {}", e.what());
-        return CollisionResult{};
+        spdlog::error("[FullAestheticCollision] Error in updatePhysicsSimulation: {}", e.what());
     }
 }
 
-void FullAestheticCollisionEngine::simulateFullPhysics(ObjectID object, PhysicsType physics_type) {
-    if (!m_initialized) {
-        return;
-    }
-
+// Haptic and visual feedback
+void FullAestheticCollisionEngine::addHapticFeedback(const HapticFeedback& feedback) {
     try {
-        auto obj_iter = m_objects.find(object);
-        if (obj_iter == m_objects.end()) {
-            return;
-        }
+        m_haptic_queue.push_back(feedback);
         
-        auto& obj_data = obj_iter->second;
-        
-        // Update physics based on type
-        switch (physics_type) {
-            case PhysicsType::DYNAMIC:
-                // Apply gravity and velocity
-                obj_data.velocity.y -= 9.81f * 0.016f; // 60 FPS gravity
-                obj_data.position += obj_data.velocity * 0.016f;
-                break;
-                
-            case PhysicsType::KINEMATIC:
-                // Scripted movement - no physics simulation
-                break;
-                
-            case PhysicsType::RAGDOLL:
-                // Character physics simulation
-                simulateRagdollPhysics(object);
-                break;
-                
-            case PhysicsType::VEHICLE:
-                // Vehicle physics simulation
-                simulateVehiclePhysics(object);
-                break;
-                
-            case PhysicsType::WEAPON:
-                // Weapon physics simulation
-                simulateWeaponPhysics(object);
-                break;
-                
-            default:
-                // Static objects - no physics
-                break;
-        }
-        
-        // Update physics state
-        updatePhysics(object, 0.016f);
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception during physics simulation: {}", e.what());
-    }
-}
-
-void FullAestheticCollisionEngine::provideFullHapticFeedback(HandType hand, float intensity, HapticType haptic_type) {
-    if (!m_initialized) {
-        return;
-    }
-
-    try {
-        // Clamp intensity to valid range
-        intensity = std::clamp(intensity, 0.0f, 1.0f);
-        
-        // Send haptic feedback based on type
-        switch (haptic_type) {
-            case HapticType::LIGHT:
-                sendHapticFeedback(hand, intensity * 0.3f, haptic_type);
-                break;
-                
-            case HapticType::MEDIUM:
-                sendHapticFeedback(hand, intensity * 0.6f, haptic_type);
-                break;
-                
-            case HapticType::HEAVY:
-                sendHapticFeedback(hand, intensity, haptic_type);
-                break;
-                
-            case HapticType::VIBRATION:
-                sendHapticFeedback(hand, intensity, haptic_type);
-                break;
-                
-            case HapticType::PULSE:
-                sendHapticFeedback(hand, intensity, haptic_type);
-                break;
-                
-            case HapticType::BUZZ:
-                sendHapticFeedback(hand, intensity * 0.8f, haptic_type);
-                break;
-                
-            case HapticType::TAP:
-                sendHapticFeedback(hand, intensity * 0.5f, haptic_type);
-                break;
-                
-            case HapticType::GRAB:
-                sendHapticFeedback(hand, intensity * 0.7f, haptic_type);
-                break;
-                
-            case HapticType::RELEASE:
-                sendHapticFeedback(hand, intensity * 0.4f, haptic_type);
-                break;
-                
-            default:
-                break;
+        // Limit queue size
+        if (m_haptic_queue.size() > 100) {
+            m_haptic_queue.erase(m_haptic_queue.begin());
         }
         
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception during haptic feedback: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Failed to add haptic feedback: {}", e.what());
     }
 }
 
-void FullAestheticCollisionEngine::showFullCollisionHighlight(ObjectID object, CollisionType collision_type) {
-    if (!m_initialized) {
-        return;
-    }
-
+void FullAestheticCollisionEngine::addVisualFeedback(const VisualFeedback& feedback) {
     try {
-        // Render collision highlight based on type
-        switch (collision_type) {
-            case CollisionType::TOUCH:
-                renderCollisionHighlight(object, CollisionType::TOUCH);
-                break;
-                
-            case CollisionType::GRAB:
-                renderCollisionHighlight(object, CollisionType::GRAB);
-                break;
-                
-            case CollisionType::PUSH:
-                renderCollisionHighlight(object, CollisionType::PUSH);
-                break;
-                
-            case CollisionType::PULL:
-                renderCollisionHighlight(object, CollisionType::PULL);
-                break;
-                
-            case CollisionType::THROW:
-                renderCollisionHighlight(object, CollisionType::THROW);
-                break;
-                
-            case CollisionType::BREAK:
-                renderCollisionHighlight(object, CollisionType::BREAK);
-                break;
-                
-            case CollisionType::INTERACT:
-                renderCollisionHighlight(object, CollisionType::INTERACT);
-                break;
-                
-            case CollisionType::DAMAGE:
-                renderCollisionHighlight(object, CollisionType::DAMAGE);
-                break;
-                
-            case CollisionType::TRIGGER:
-                renderCollisionHighlight(object, CollisionType::TRIGGER);
-                break;
-                
-            default:
-                break;
+        m_visual_queue.push_back(feedback);
+        
+        // Limit queue size
+        if (m_visual_queue.size() > 100) {
+            m_visual_queue.erase(m_visual_queue.begin());
         }
         
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception during visual feedback: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Failed to add visual feedback: {}", e.what());
     }
 }
 
-bool FullAestheticCollisionEngine::enableDoorHandleGrabbing(ObjectID door, HandType hand) {
-    if (!m_initialized) {
-        return false;
-    }
-
+void FullAestheticCollisionEngine::clearHapticFeedback(HandType hand) {
     try {
-        auto obj_iter = m_objects.find(door);
-        if (obj_iter == m_objects.end()) {
-            spdlog::warn("[FullAestheticCollision] Door {} not registered for collision detection", door);
+        m_haptic_queue.erase(
+            std::remove_if(m_haptic_queue.begin(), m_haptic_queue.end(),
+                [hand](const HapticFeedback& feedback) {
+                    return feedback.hand == hand || feedback.hand == HandType::BOTH;
+                }),
+            m_haptic_queue.end()
+        );
+        
+    } catch (const std::exception& e) {
+        spdlog::error("[FullAestheticCollision] Failed to clear haptic feedback: {}", e.what());
+    }
+}
+
+void FullAestheticCollisionEngine::clearVisualFeedback(ObjectID id) {
+    try {
+        m_visual_queue.erase(
+            std::remove_if(m_visual_queue.begin(), m_visual_queue.end(),
+                [id](const VisualFeedback& feedback) {
+                    return feedback.object_id == id;
+                }),
+            m_visual_queue.end()
+        );
+        
+    } catch (const std::exception& e) {
+        spdlog::error("[FullAestheticCollision] Failed to clear visual feedback: {}", e.what());
+    }
+}
+
+// Game-specific interactions
+bool FullAestheticCollisionEngine::handleDoorInteraction(ObjectID door_id, HandType hand) {
+    try {
+        auto it = m_objects.find(door_id);
+        if (it == m_objects.end()) {
             return false;
         }
         
-        auto& obj_data = obj_iter->second;
+        // Create haptic feedback for door interaction
+        HapticFeedback feedback;
+        feedback.hand = hand;
+        feedback.type = HapticType::MEDIUM;
+        feedback.intensity = 0.7f;
+        feedback.duration = 0.2f;
+        feedback.position = it->second.physics_data.position;
+        feedback.is_active = true;
         
-        // Set door physics to kinematic for controlled movement
-        obj_data.physics_type = PhysicsType::KINEMATIC;
+        addHapticFeedback(feedback);
         
-        // Enable grab collision response
-        obj_data.collision_responses[CollisionType::GRAB] = 1.0f;
+        // Create visual feedback
+        VisualFeedback visual;
+        visual.object_id = door_id;
+        visual.highlight_color = Vec3(0.0f, 1.0f, 0.0f); // Green highlight
+        visual.intensity = 0.8f;
+        visual.is_active = true;
         
-        // Provide haptic feedback for successful grab
-        provideFullHapticFeedback(hand, 0.8f, HapticType::GRAB);
+        addVisualFeedback(visual);
         
-        spdlog::info("[FullAestheticCollision] Door handle grabbing enabled for door {}", door);
+        spdlog::info("[FullAestheticCollision] Door interaction handled for door ID: {}", door_id);
         return true;
         
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception enabling door handle grabbing: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Error in handleDoorInteraction: {}", e.what());
         return false;
     }
 }
 
-bool FullAestheticCollisionEngine::enableWeaponInteraction(ObjectID weapon, HandType hand) {
-    if (!m_initialized) {
-        return false;
-    }
-
+bool FullAestheticCollisionEngine::handleWeaponInteraction(ObjectID weapon_id, HandType hand) {
     try {
-        auto obj_iter = m_objects.find(weapon);
-        if (obj_iter == m_objects.end()) {
-            spdlog::warn("[FullAestheticCollision] Weapon {} not registered for collision detection", weapon);
+        auto it = m_objects.find(weapon_id);
+        if (it == m_objects.end()) {
             return false;
         }
         
-        auto& obj_data = obj_iter->second;
+        // Create haptic feedback for weapon interaction
+        HapticFeedback feedback;
+        feedback.hand = hand;
+        feedback.type = HapticType::HEAVY;
+        feedback.intensity = 0.9f;
+        feedback.duration = 0.3f;
+        feedback.position = it->second.physics_data.position;
+        feedback.is_active = true;
         
-        // Set weapon physics to kinematic for controlled handling
-        obj_data.physics_type = PhysicsType::KINEMATIC;
+        addHapticFeedback(feedback);
         
-        // Enable weapon-specific collision responses
-        obj_data.collision_responses[CollisionType::GRAB] = 1.0f;
-        obj_data.collision_responses[CollisionType::INTERACT] = 0.8f;
+        // Create visual feedback
+        VisualFeedback visual;
+        visual.object_id = weapon_id;
+        visual.highlight_color = Vec3(1.0f, 0.5f, 0.0f); // Orange highlight
+        visual.intensity = 1.0f;
+        visual.is_active = true;
         
-        // Provide haptic feedback for weapon grab
-        provideFullHapticFeedback(hand, 0.9f, HapticType::GRAB);
+        addVisualFeedback(visual);
         
-        spdlog::info("[FullAestheticCollision] Weapon interaction enabled for weapon {}", weapon);
+        spdlog::info("[FullAestheticCollision] Weapon interaction handled for weapon ID: {}", weapon_id);
         return true;
         
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception enabling weapon interaction: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Error in handleWeaponInteraction: {}", e.what());
         return false;
     }
 }
 
-bool FullAestheticCollisionEngine::enableEnvironmentalInteraction(ObjectID env_object, HandType hand) {
-    if (!m_initialized) {
-        return false;
-    }
-
+bool FullAestheticCollisionEngine::handleVehicleInteraction(ObjectID vehicle_id, HandType hand) {
     try {
-        auto obj_iter = m_objects.find(env_object);
-        if (obj_iter == m_objects.end()) {
-            spdlog::warn("[FullAestheticCollision] Environmental object {} not registered for collision detection", env_object);
+        auto it = m_objects.find(vehicle_id);
+        if (it == m_objects.end()) {
             return false;
         }
         
-        auto& obj_data = obj_iter->second;
+        // Create haptic feedback for vehicle interaction
+        HapticFeedback feedback;
+        feedback.hand = hand;
+        feedback.type = HapticType::LIGHT;
+        feedback.intensity = 0.5f;
+        feedback.duration = 0.1f;
+        feedback.position = it->second.physics_data.position;
+        feedback.is_active = true;
         
-        // Set environmental object physics to dynamic for manipulation
-        obj_data.physics_type = PhysicsType::DYNAMIC;
+        addHapticFeedback(feedback);
         
-        // Enable environmental interaction collision responses
-        obj_data.collision_responses[CollisionType::TOUCH] = 0.6f;
-        obj_data.collision_responses[CollisionType::GRAB] = 0.8f;
-        obj_data.collision_responses[CollisionType::PUSH] = 0.7f;
-        obj_data.collision_responses[CollisionType::PULL] = 0.7f;
-        
-        // Provide haptic feedback for environmental interaction
-        provideFullHapticFeedback(hand, 0.5f, HapticType::LIGHT);
-        
-        spdlog::info("[FullAestheticCollision] Environmental interaction enabled for object {}", env_object);
+        spdlog::info("[FullAestheticCollision] Vehicle interaction handled for vehicle ID: {}", vehicle_id);
         return true;
         
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception enabling environmental interaction: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Error in handleVehicleInteraction: {}", e.what());
         return false;
     }
 }
 
-bool FullAestheticCollisionEngine::enableNPCInteraction(ObjectID npc, HandType hand) {
-    if (!m_initialized) {
-        return false;
-    }
-
+bool FullAestheticCollisionEngine::handleNPCInteraction(ObjectID npc_id, HandType hand) {
     try {
-        auto obj_iter = m_objects.find(npc);
-        if (obj_iter == m_objects.end()) {
-            spdlog::warn("[FullAestheticCollision] NPC {} not registered for collision detection", npc);
+        auto it = m_objects.find(npc_id);
+        if (it == m_objects.end()) {
             return false;
         }
         
-        auto& obj_data = obj_iter->second;
+        // Create haptic feedback for NPC interaction
+        HapticFeedback feedback;
+        feedback.hand = hand;
+        feedback.type = HapticType::MEDIUM;
+        feedback.intensity = 0.6f;
+        feedback.duration = 0.15f;
+        feedback.position = it->second.physics_data.position;
+        feedback.is_active = true;
         
-        // Set NPC physics to ragdoll for realistic interaction
-        obj_data.physics_type = PhysicsType::RAGDOLL;
+        addHapticFeedback(feedback);
         
-        // Enable NPC interaction collision responses (RESPECT GAME BALANCE!)
-        obj_data.collision_responses[CollisionType::TOUCH] = 0.4f;  // Light touch only
-        obj_data.collision_responses[CollisionType::INTERACT] = 0.6f; // Basic interaction
+        // Create visual feedback
+        VisualFeedback visual;
+        visual.object_id = npc_id;
+        visual.highlight_color = Vec3(0.0f, 0.0f, 1.0f); // Blue highlight
+        visual.intensity = 0.7f;
+        visual.is_active = true;
         
-        // Provide haptic feedback for NPC interaction
-        provideFullHapticFeedback(hand, 0.3f, HapticType::LIGHT);
+        addVisualFeedback(visual);
         
-        spdlog::info("[FullAestheticCollision] NPC interaction enabled for NPC {} (respecting game balance)", npc);
+        spdlog::info("[FullAestheticCollision] NPC interaction handled for NPC ID: {}", npc_id);
         return true;
         
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception enabling NPC interaction: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Error in handleNPCInteraction: {}", e.what());
         return false;
     }
 }
 
-bool FullAestheticCollisionEngine::enableVehicleInteraction(ObjectID vehicle, HandType hand) {
-    if (!m_initialized) {
-        return false;
-    }
-
+bool FullAestheticCollisionEngine::handleEnvironmentInteraction(ObjectID env_id, HandType hand) {
     try {
-        auto obj_iter = m_objects.find(vehicle);
-        if (obj_iter == m_objects.end()) {
-            spdlog::warn("[FullAestheticCollision] Vehicle {} not registered for collision detection", vehicle);
+        auto it = m_objects.find(env_id);
+        if (it == m_objects.end()) {
             return false;
         }
         
-        auto& obj_data = obj_iter->second;
+        // Create haptic feedback for environment interaction
+        HapticFeedback feedback;
+        feedback.hand = hand;
+        feedback.type = HapticType::LIGHT;
+        feedback.intensity = 0.4f;
+        feedback.duration = 0.1f;
+        feedback.position = it->second.physics_data.position;
+        feedback.is_active = true;
         
-        // Set vehicle physics to vehicle type for realistic handling
-        obj_data.physics_type = PhysicsType::VEHICLE;
+        addHapticFeedback(feedback);
         
-        // Enable vehicle interaction collision responses
-        obj_data.collision_responses[CollisionType::TOUCH] = 0.5f;
-        obj_data.collision_responses[CollisionType::INTERACT] = 0.8f;
-        obj_data.collision_responses[CollisionType::GRAB] = 0.7f;
-        
-        // Provide haptic feedback for vehicle interaction
-        provideFullHapticFeedback(hand, 0.6f, HapticType::MEDIUM);
-        
-        spdlog::info("[FullAestheticCollision] Vehicle interaction enabled for vehicle {}", vehicle);
+        spdlog::info("[FullAestheticCollision] Environment interaction handled for environment ID: {}", env_id);
         return true;
         
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception enabling vehicle interaction: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Error in handleEnvironmentInteraction: {}", e.what());
         return false;
     }
 }
 
-bool FullAestheticCollisionEngine::enablePuzzleInteraction(ObjectID puzzle, HandType hand) {
-    if (!m_initialized) {
-        return false;
-    }
-
+bool FullAestheticCollisionEngine::handleInventoryInteraction(ObjectID item_id, HandType hand) {
     try {
-        auto obj_iter = m_objects.find(puzzle);
-        if (obj_iter == m_objects.end()) {
-            spdlog::warn("[FullAestheticCollision] Puzzle object {} not registered for collision detection", puzzle);
+        auto it = m_objects.find(item_id);
+        if (it == m_objects.end()) {
             return false;
         }
         
-        auto& obj_data = obj_iter->second;
+        // Create haptic feedback for inventory interaction
+        HapticFeedback feedback;
+        feedback.hand = hand;
+        feedback.type = HapticType::CUSTOM;
+        feedback.intensity = 0.8f;
+        feedback.duration = 0.25f;
+        feedback.position = it->second.physics_data.position;
+        feedback.is_active = true;
         
-        // Set puzzle object physics to kinematic for controlled interaction
-        obj_data.physics_type = PhysicsType::KINEMATIC;
+        addHapticFeedback(feedback);
         
-        // Enable puzzle interaction collision responses
-        obj_data.collision_responses[CollisionType::TOUCH] = 0.7f;
-        obj_data.collision_responses[CollisionType::INTERACT] = 1.0f;
-        obj_data.collision_responses[CollisionType::GRAB] = 0.8f;
+        // Create visual feedback
+        VisualFeedback visual;
+        visual.object_id = item_id;
+        visual.highlight_color = Vec3(1.0f, 1.0f, 0.0f); // Yellow highlight
+        visual.intensity = 0.9f;
+        visual.is_active = true;
         
-        // Provide haptic feedback for puzzle interaction
-        provideFullHapticFeedback(hand, 0.6f, HapticType::MEDIUM);
+        addVisualFeedback(visual);
         
-        spdlog::info("[FullAestheticCollision] Puzzle interaction enabled for puzzle {}", puzzle);
+        spdlog::info("[FullAestheticCollision] Inventory interaction handled for item ID: {}", item_id);
         return true;
         
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception enabling puzzle interaction: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Error in handleInventoryInteraction: {}", e.what());
         return false;
     }
 }
 
-bool FullAestheticCollisionEngine::enableInventoryManipulation(ObjectID item, HandType hand) {
-    if (!m_initialized) {
-        return false;
-    }
-
-    try {
-        auto obj_iter = m_objects.find(item);
-        if (obj_iter == m_objects.end()) {
-            spdlog::warn("[FullAestheticCollision] Inventory item {} not registered for collision detection", item);
-            return false;
-        }
-        
-        auto& obj_data = obj_iter->second;
-        
-        // Set inventory item physics to kinematic for controlled manipulation
-        obj_data.physics_type = PhysicsType::KINEMATIC;
-        
-        // Enable inventory manipulation collision responses
-        obj_data.collision_responses[CollisionType::TOUCH] = 0.8f;
-        obj_data.collision_responses[CollisionType::GRAB] = 1.0f;
-        obj_data.collision_responses[CollisionType::INTERACT] = 0.9f;
-        
-        // Provide haptic feedback for inventory manipulation
-        provideFullHapticFeedback(hand, 0.7f, HapticType::GRAB);
-        
-        spdlog::info("[FullAestheticCollision] Inventory manipulation enabled for item {}", item);
-        return true;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception enabling inventory manipulation: {}", e.what());
-        return false;
-    }
+// Configuration
+void FullAestheticCollisionEngine::setCollisionLayers(uint32_t layers) {
+    m_collision_layers = layers;
+    spdlog::info("[FullAestheticCollision] Collision layers set to: 0x{:08X}", layers);
 }
 
-bool FullAestheticCollisionEngine::registerObject(ObjectID object, PhysicsType physics_type, const glm::vec3& position, const glm::vec3& size) {
-    if (!m_initialized) {
-        return false;
-    }
-
-    try {
-        // Check if object already exists
-        if (m_objects.find(object) != m_objects.end()) {
-            spdlog::warn("[FullAestheticCollision] Object {} already registered", object);
-            return false;
-        }
-        
-        // Create new object data
-        ObjectData obj_data;
-        obj_data.physics_type = physics_type;
-        obj_data.position = position;
-        obj_data.size = size;
-        obj_data.collision_enabled = true;
-        
-        // Set default collision responses based on physics type
-        setDefaultCollisionResponses(obj_data, physics_type);
-        
-        // Register object
-        m_objects[object] = obj_data;
-        
-        spdlog::info("[FullAestheticCollision] Object {} registered with physics type {}", object, static_cast<int>(physics_type));
-        return true;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception registering object: {}", e.what());
-        return false;
-    }
+void FullAestheticCollisionEngine::setCollisionMask(uint32_t mask) {
+    m_collision_mask = mask;
+    spdlog::info("[FullAestheticCollision] Collision mask set to: 0x{:08X}", mask);
 }
 
-bool FullAestheticCollisionEngine::unregisterObject(ObjectID object) {
-    if (!m_initialized) {
-        return false;
-    }
-
-    try {
-        auto obj_iter = m_objects.find(object);
-        if (obj_iter == m_objects.end()) {
-            spdlog::warn("[FullAestheticCollision] Object {} not found for unregistration", object);
-            return false;
-        }
-        
-        m_objects.erase(obj_iter);
-        spdlog::info("[FullAestheticCollision] Object {} unregistered", object);
-        return true;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception unregistering object: {}", e.what());
-        return false;
-    }
+void FullAestheticCollisionEngine::setMaxCollisions(size_t max) {
+    m_max_collisions = max;
+    spdlog::info("[FullAestheticCollision] Max collisions set to: {}", max);
 }
 
-void FullAestheticCollisionEngine::updateObject(ObjectID object, const glm::vec3& position, const glm::vec3& velocity) {
-    if (!m_initialized) {
-        return;
-    }
-
-    try {
-        auto obj_iter = m_objects.find(object);
-        if (obj_iter == m_objects.end()) {
-            return;
-        }
-        
-        auto& obj_data = obj_iter->second;
-        obj_data.position = position;
-        obj_data.velocity = velocity;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception updating object: {}", e.what());
-    }
+void FullAestheticCollisionEngine::setCollisionTolerance(float tolerance) {
+    m_collision_tolerance = tolerance;
+    spdlog::info("[FullAestheticCollision] Collision tolerance set to: {}", tolerance);
 }
 
-void FullAestheticCollisionEngine::setCollisionResponse(ObjectID object, CollisionType type, float response_intensity) {
-    if (!m_initialized) {
-        return;
-    }
-
-    try {
-        auto obj_iter = m_objects.find(object);
-        if (obj_iter == m_objects.end()) {
-            return;
-        }
-        
-        auto& obj_data = obj_iter->second;
-        obj_data.collision_responses[type] = std::clamp(response_intensity, 0.0f, 1.0f);
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception setting collision response: {}", e.what());
-    }
+// Performance and debugging
+size_t FullAestheticCollisionEngine::getActiveCollisionCount() const {
+    return m_active_collisions.size();
 }
 
-void FullAestheticCollisionEngine::setCollisionEnabled(ObjectID object, bool enabled) {
-    if (!m_initialized) {
-        return;
-    }
-
-    try {
-        auto obj_iter = m_objects.find(object);
-        if (obj_iter == m_objects.end()) {
-            return;
-        }
-        
-        auto& obj_data = obj_iter->second;
-        obj_data.collision_enabled = enabled;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception setting collision enabled: {}", e.what());
-    }
+float FullAestheticCollisionEngine::getLastUpdateTime() const {
+    return m_last_update_time;
 }
 
-FullAestheticCollisionEngine::CollisionStats FullAestheticCollisionEngine::getCollisionStats() const {
-    return m_stats;
-}
-
-// Protected methods implementation
-bool FullAestheticCollisionEngine::checkCollisionBounds(ObjectID object1, ObjectID object2) {
-    try {
-        auto obj1_iter = m_objects.find(object1);
-        auto obj2_iter = m_objects.find(object2);
-        
-        if (obj1_iter == m_objects.end() || obj2_iter == m_objects.end()) {
-            return false;
-        }
-        
-        const auto& obj1_data = obj1_iter->second;
-        const auto& obj2_data = obj2_iter->second;
-        
-        // Simple AABB collision detection
-        glm::vec3 obj1_min = obj1_data.position - obj1_data.size * 0.5f;
-        glm::vec3 obj1_max = obj1_data.position + obj1_data.size * 0.5f;
-        glm::vec3 obj2_min = obj2_data.position - obj2_data.size * 0.5f;
-        glm::vec3 obj2_max = obj2_data.position + obj2_data.size * 0.5f;
-        
-        return (obj1_min.x <= obj2_max.x && obj1_max.x >= obj2_min.x) &&
-               (obj1_min.y <= obj2_max.y && obj1_max.y >= obj2_min.y) &&
-               (obj1_min.z <= obj2_max.z && obj1_max.z >= obj2_min.z);
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception checking collision bounds: {}", e.what());
-        return false;
-    }
-}
-
-glm::vec3 FullAestheticCollisionEngine::calculateCollisionPoint(ObjectID object1, ObjectID object2) {
-    try {
-        auto obj1_iter = m_objects.find(object1);
-        auto obj2_iter = m_objects.find(object2);
-        
-        if (obj1_iter == m_objects.end() || obj2_iter == m_objects.end()) {
-            return glm::vec3(0.0f);
-        }
-        
-        const auto& obj1_data = obj1_iter->second;
-        const auto& obj2_data = obj2_iter->second;
-        
-        // Calculate collision point as midpoint between object centers
-        return (obj1_data.position + obj2_data.position) * 0.5f;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception calculating collision point: {}", e.what());
-        return glm::vec3(0.0f);
-    }
-}
-
-glm::vec3 FullAestheticCollisionEngine::calculateCollisionNormal(ObjectID object1, ObjectID object2) {
-    try {
-        auto obj1_iter = m_objects.find(object1);
-        auto obj2_iter = m_objects.find(object2);
-        
-        if (obj1_iter == m_objects.end() || obj2_iter == m_objects.end()) {
-            return glm::vec3(0.0f, 1.0f, 0.0f);
-        }
-        
-        const auto& obj1_data = obj1_iter->second;
-        const auto& obj2_data = obj2_iter->second;
-        
-        // Calculate collision normal from object1 to object2
-        glm::vec3 direction = glm::normalize(obj2_data.position - obj1_data.position);
-        return direction;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception calculating collision normal: {}", e.what());
-        return glm::vec3(0.0f, 1.0f, 0.0f);
-    }
-}
-
-void FullAestheticCollisionEngine::applyPhysics(ObjectID object, const glm::vec3& force) {
-    try {
-        auto obj_iter = m_objects.find(object);
-        if (obj_iter == m_objects.end()) {
-            return;
-        }
-        
-        auto& obj_data = obj_iter->second;
-        
-        // Apply force based on physics type
-        if (obj_data.physics_type == PhysicsType::DYNAMIC) {
-            obj_data.velocity += force * 0.016f; // 60 FPS physics
-        }
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception applying physics: {}", e.what());
-    }
-}
-
-void FullAestheticCollisionEngine::updatePhysics(ObjectID object, float delta_time) {
-    try {
-        auto obj_iter = m_objects.find(object);
-        if (obj_iter == m_objects.end()) {
-            return;
-        }
-        
-        auto& obj_data = obj_iter->second;
-        
-        // Update physics based on type
-        switch (obj_data.physics_type) {
-            case PhysicsType::DYNAMIC:
-                // Apply velocity to position
-                obj_data.position += obj_data.velocity * delta_time;
-                
-                // Apply damping
-                obj_data.velocity *= 0.98f;
-                break;
-                
-            case PhysicsType::RAGDOLL:
-                // Update ragdoll physics
-                updateRagdollPhysics(object, delta_time);
-                break;
-                
-            case PhysicsType::VEHICLE:
-                // Update vehicle physics
-                updateVehiclePhysics(object, delta_time);
-                break;
-                
-            case PhysicsType::WEAPON:
-                // Update weapon physics
-                updateWeaponPhysics(object, delta_time);
-                break;
-                
-            default:
-                break;
-        }
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception updating physics: {}", e.what());
-    }
-}
-
-void FullAestheticCollisionEngine::sendHapticFeedback(HandType hand, float intensity, HapticType type) {
-    try {
-        // Implementation would integrate with VR runtime haptic system
-        // For now, just log the haptic feedback request
-        spdlog::debug("[FullAestheticCollision] Haptic feedback: Hand={}, Intensity={}, Type={}", 
-                     static_cast<int>(hand), intensity, static_cast<int>(type));
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception sending haptic feedback: {}", e.what());
-    }
-}
-
-void FullAestheticCollisionEngine::renderCollisionHighlight(ObjectID object, CollisionType type) {
-    try {
-        // Implementation would integrate with rendering system
-        // For now, just log the visual feedback request
-        spdlog::debug("[FullAestheticCollision] Visual feedback: Object={}, Type={}", 
-                     object, static_cast<int>(type));
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception rendering collision highlight: {}", e.what());
-    }
+void FullAestheticCollisionEngine::resetPerformanceMetrics() {
+    m_last_update_time = 0.0f;
+    m_collision_checks_per_frame = 0;
+    m_average_collision_time = 0.0f;
+    spdlog::info("[FullAestheticCollision] Performance metrics reset");
 }
 
 // Private helper methods
 bool FullAestheticCollisionEngine::initializeCollisionDetection() {
     try {
-        spdlog::info("[FullAestheticCollision] Initializing collision detection system");
-        // Collision detection system initialization
+        spdlog::info("[FullAestheticCollision] Initializing collision detection system...");
+        
+        // Initialize collision detection algorithms
+        // This would include setting up spatial partitioning, broad phase, narrow phase
+        
+        spdlog::info("[FullAestheticCollision] Collision detection system initialized");
         return true;
+        
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception initializing collision detection: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Failed to initialize collision detection: {}", e.what());
         return false;
     }
 }
 
 bool FullAestheticCollisionEngine::initializePhysicsSimulation() {
     try {
-        spdlog::info("[FullAestheticCollision] Initializing physics simulation system");
-        // Physics simulation system initialization
+        spdlog::info("[FullAestheticCollision] Initializing physics simulation system...");
+        
+        // Initialize physics simulation components
+        // This would include setting up physics world, solver, etc.
+        
+        spdlog::info("[FullAestheticCollision] Physics simulation system initialized");
         return true;
+        
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception initializing physics simulation: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Failed to initialize physics simulation: {}", e.what());
         return false;
     }
 }
 
 bool FullAestheticCollisionEngine::initializeHapticSystem() {
     try {
-        spdlog::info("[FullAestheticCollision] Initializing haptic feedback system");
-        // Haptic feedback system initialization
+        spdlog::info("[FullAestheticCollision] Initializing haptic feedback system...");
+        
+        // Initialize haptic feedback system
+        // This would include setting up haptic devices, feedback queues, etc.
+        
+        spdlog::info("[FullAestheticCollision] Haptic feedback system initialized");
         return true;
+        
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception initializing haptic system: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Failed to initialize haptic system: {}", e.what());
         return false;
     }
 }
 
 bool FullAestheticCollisionEngine::initializeVisualFeedback() {
     try {
-        spdlog::info("[FullAestheticCollision] Initializing visual feedback system");
-        // Visual feedback system initialization
+        spdlog::info("[FullAestheticCollision] Initializing visual feedback system...");
+        
+        // Initialize visual feedback system
+        // This would include setting up rendering, shaders, etc.
+        
+        spdlog::info("[FullAestheticCollision] Visual feedback system initialized");
         return true;
+        
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception initializing visual feedback: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Failed to initialize visual feedback: {}", e.what());
         return false;
     }
 }
 
-void FullAestheticCollisionEngine::setDefaultCollisionResponses(ObjectData& obj_data, PhysicsType physics_type) {
-    switch (physics_type) {
-        case PhysicsType::STATIC:
-            obj_data.collision_responses[CollisionType::TOUCH] = 0.5f;
-            break;
-            
-        case PhysicsType::DYNAMIC:
-            obj_data.collision_responses[CollisionType::TOUCH] = 0.7f;
-            obj_data.collision_responses[CollisionType::GRAB] = 0.8f;
-            obj_data.collision_responses[CollisionType::PUSH] = 0.6f;
-            obj_data.collision_responses[CollisionType::PULL] = 0.6f;
-            break;
-            
-        case PhysicsType::KINEMATIC:
-            obj_data.collision_responses[CollisionType::TOUCH] = 0.8f;
-            obj_data.collision_responses[CollisionType::GRAB] = 0.9f;
-            obj_data.collision_responses[CollisionType::INTERACT] = 1.0f;
-            break;
-            
-        case PhysicsType::RAGDOLL:
-            obj_data.collision_responses[CollisionType::TOUCH] = 0.4f;
-            obj_data.collision_responses[CollisionType::INTERACT] = 0.6f;
-            break;
-            
-        case PhysicsType::VEHICLE:
-            obj_data.collision_responses[CollisionType::TOUCH] = 0.5f;
-            obj_data.collision_responses[CollisionType::INTERACT] = 0.8f;
-            obj_data.collision_responses[CollisionType::GRAB] = 0.7f;
-            break;
-            
-        case PhysicsType::WEAPON:
-            obj_data.collision_responses[CollisionType::TOUCH] = 0.8f;
-            obj_data.collision_responses[CollisionType::GRAB] = 1.0f;
-            obj_data.collision_responses[CollisionType::INTERACT] = 0.9f;
-            break;
-            
-        case PhysicsType::ENVIRONMENTAL:
-            obj_data.collision_responses[CollisionType::TOUCH] = 0.6f;
-            obj_data.collision_responses[CollisionType::GRAB] = 0.8f;
-            obj_data.collision_responses[CollisionType::PUSH] = 0.7f;
-            obj_data.collision_responses[CollisionType::PULL] = 0.7f;
-            break;
-            
-        default:
-            break;
-    }
-}
-
-float FullAestheticCollisionEngine::calculateCollisionIntensity(ObjectID object1, ObjectID object2, CollisionType type) {
+void FullAestheticCollisionEngine::updateCollisionDetection(float delta_time) {
     try {
-        auto obj1_iter = m_objects.find(object1);
-        auto obj2_iter = m_objects.find(object2);
+        // Clear old collision pairs
+        m_active_collisions.clear();
         
-        if (obj1_iter == m_objects.end() || obj2_iter == m_objects.end()) {
-            return 0.0f;
+        // Perform broad phase collision detection
+        std::vector<std::pair<ObjectID, ObjectID>> potential_collisions;
+        
+        for (auto it1 = m_objects.begin(); it1 != m_objects.end(); ++it1) {
+            for (auto it2 = std::next(it1); it2 != m_objects.end(); ++it2) {
+                if (checkCollision(it1->first, it2->first)) {
+                    potential_collisions.emplace_back(it1->first, it2->first);
+                }
+            }
         }
         
-        const auto& obj1_data = obj1_iter->second;
-        const auto& obj2_data = obj2_iter->second;
-        
-        // Calculate intensity based on collision type and object physics
-        float base_intensity = 0.5f;
-        
-        switch (type) {
-            case CollisionType::TOUCH:
-                base_intensity = 0.3f;
-                break;
-                
-            case CollisionType::GRAB:
-                base_intensity = 0.8f;
-                break;
-                
-            case CollisionType::PUSH:
-                base_intensity = 0.6f;
-                break;
-                
-            case CollisionType::PULL:
-                base_intensity = 0.6f;
-                break;
-                
-            case CollisionType::THROW:
-                base_intensity = 0.9f;
-                break;
-                
-            case CollisionType::BREAK:
-                base_intensity = 1.0f;
-                break;
-                
-            case CollisionType::INTERACT:
-                base_intensity = 0.7f;
-                break;
-                
-            case CollisionType::DAMAGE:
-                base_intensity = 0.9f;
-                break;
-                
-            case CollisionType::TRIGGER:
-                base_intensity = 0.4f;
-                break;
-                
-            default:
-                base_intensity = 0.5f;
-                break;
+        // Perform narrow phase collision detection
+        for (const auto& [obj1, obj2] : potential_collisions) {
+            CollisionResult result = getCollisionResult(obj1, obj2);
+            if (result.is_valid) {
+                CollisionPair pair;
+                pair.obj1 = obj1;
+                pair.obj2 = obj2;
+                pair.result = result;
+                pair.is_active = true;
+                m_active_collisions.push_back(pair);
+            }
         }
         
-        // Adjust based on physics types
-        if (obj1_data.physics_type == PhysicsType::STATIC && obj2_data.physics_type == PhysicsType::DYNAMIC) {
-            base_intensity *= 1.2f; // Dynamic object hitting static object
-        } else if (obj1_data.physics_type == PhysicsType::DYNAMIC && obj2_data.physics_type == PhysicsType::DYNAMIC) {
-            base_intensity *= 1.5f; // Dynamic object hitting dynamic object
+        // Limit active collisions
+        if (m_active_collisions.size() > m_max_collisions) {
+            m_active_collisions.resize(m_max_collisions);
         }
         
-        return std::clamp(base_intensity, 0.0f, 1.0f);
-        
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception calculating collision intensity: {}", e.what());
-        return 0.5f;
+        spdlog::error("[FullAestheticCollision] Error in updateCollisionDetection: {}", e.what());
     }
 }
 
-void FullAestheticCollisionEngine::simulateRagdollPhysics(ObjectID object) {
+void FullAestheticCollisionEngine::updateHapticFeedback(float delta_time) {
     try {
-        // Ragdoll physics simulation implementation
-        // This would integrate with a physics engine like Bullet or PhysX
-        spdlog::debug("[FullAestheticCollision] Simulating ragdoll physics for object {}", object);
+        // Process haptic feedback queue
+        for (auto it = m_haptic_queue.begin(); it != m_haptic_queue.end();) {
+            if (it->is_active) {
+                // Apply haptic feedback
+                // This would interface with actual haptic devices
+                
+                // Deactivate after duration
+                it->duration -= delta_time;
+                if (it->duration <= 0.0f) {
+                    it->is_active = false;
+                }
+            }
+            
+            if (!it->is_active) {
+                it = m_haptic_queue.erase(it);
+            } else {
+                ++it;
+            }
+        }
         
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception simulating ragdoll physics: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Error in updateHapticFeedback: {}", e.what());
     }
 }
 
-void FullAestheticCollisionEngine::simulateVehiclePhysics(ObjectID object) {
+void FullAestheticCollisionEngine::updateVisualFeedback(float delta_time) {
     try {
-        // Vehicle physics simulation implementation
-        // This would handle wheel physics, suspension, etc.
-        spdlog::debug("[FullAestheticCollision] Simulating vehicle physics for object {}", object);
+        // Process visual feedback queue
+        for (auto it = m_visual_queue.begin(); it != m_visual_queue.end();) {
+            if (it->is_active) {
+                // Apply visual feedback
+                // This would interface with rendering system
+                
+                // Deactivate after some time
+                it->is_active = false;
+            }
+            
+            if (!it->is_active) {
+                it = m_visual_queue.erase(it);
+            } else {
+                ++it;
+            }
+        }
         
     } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception simulating vehicle physics: {}", e.what());
-    }
-}
-
-void FullAestheticCollisionEngine::simulateWeaponPhysics(ObjectID object) {
-    try {
-        // Weapon physics simulation implementation
-        // This would handle recoil, sway, etc.
-        spdlog::debug("[FullAestheticCollision] Simulating weapon physics for object {}", object);
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception simulating weapon physics: {}", e.what());
-    }
-}
-
-void FullAestheticCollisionEngine::updateRagdollPhysics(ObjectID object, float delta_time) {
-    try {
-        // Update ragdoll physics state
-        spdlog::debug("[FullAestheticCollision] Updating ragdoll physics for object {}", object);
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception updating ragdoll physics: {}", e.what());
-    }
-}
-
-void FullAestheticCollisionEngine::updateVehiclePhysics(ObjectID object, float delta_time) {
-    try {
-        // Update vehicle physics state
-        spdlog::debug("[FullAestheticCollision] Updating vehicle physics for object {}", object);
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception updating vehicle physics: {}", e.what());
-    }
-}
-
-void FullAestheticCollisionEngine::updateWeaponPhysics(ObjectID object, float delta_time) {
-    try {
-        // Update weapon physics state
-        spdlog::debug("[FullAestheticCollision] Updating weapon physics for object {}", object);
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[FullAestheticCollision] Exception updating weapon physics: {}", e.what());
+        spdlog::error("[FullAestheticCollision] Error in updateVisualFeedback: {}", e.what());
     }
 }
 

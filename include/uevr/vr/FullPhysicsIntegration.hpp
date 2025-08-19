@@ -10,12 +10,16 @@
 
 #pragma once
 
-#include <vector>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/quaternion.hpp>
 #include <memory>
-#include <unordered_map>
+#include <vector>
 #include <string>
+#include <cstdint>
+#include <unordered_map>
 #include <functional>
-// GLM temporarily disabled - using basic types instead
+
 #include "FullAestheticCollisionEngine.hpp"
 
 namespace uevr::vr {
