@@ -1,0 +1,23 @@
+# UEVR Context7 .gitignore
+# Ignore AI/ML content and all script files
+
+# Script files - ALWAYS IGNORE
+*.bat
+*.ps1
+*.cmd
+*.sh
+
+# AI/ML generated content
+*_ANALYZE_*.md
+*_analyzer.md
+*_AI_*.md
+*_ML_*.md
+*_generated*.md
+*_ai_*.md
+*_ml_*.md
+
+# Large documentation files
+*_FULL_*.md
+*_COMPLETE_*.md
+*_IMPLEMENTATION_*.md
+*_STATUS_*.md

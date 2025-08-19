@@ -3,8 +3,18 @@
 # Universal VR System and Engine-Agnostic Renderer
 
 add_library(uevr_vr STATIC
+    VRSystem.cpp
     UniversalVRSystem.cpp
+    VRSystem.cpp
+    FullAestheticCollisionEngine.cpp
+    FullPhysicsIntegration.cpp
     EngineAgnosticRenderer.cpp
+<<<<<<< Current (Your changes)
+    FullAestheticCollisionEngine.cpp
+    FullPhysicsIntegration.cpp
+=======
+>>>>>>> Incoming (Background Agent changes)
+    OpenXRIntegration.cpp
 )
 
 target_include_directories(uevr_vr
@@ -53,4 +63,4 @@ target_compile_definitions(uevr_vr
         $<$<BOOL:${uevr_ENABLE_OPENGL}>:UEVR_ENABLE_OPENGL>
 )
 
-message(STATUS "Configured VR system components")
+message(STATUS "Configured VR system components with full aesthetic collision and physics integration")

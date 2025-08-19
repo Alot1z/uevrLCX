@@ -11,6 +11,8 @@
 #include "uevr/adapters/cyberpunk2077/D3D12VRRenderer.hpp"
 #include "uevr/adapters/cyberpunk2077/RayTracingVROptimizer.hpp"
 #include "uevr/adapters/cyberpunk2077/CyberpunkUIAdapter.hpp"
+#include "uevr/vr/FullAestheticCollisionEngine.hpp"
+#include "uevr/vr/FullPhysicsIntegration.hpp"
 #include <spdlog/spdlog.h>
 #include <d3d12.h>
 #include <dxgi1_6.h>
@@ -30,6 +32,8 @@ Cyberpunk2077Adapter::Cyberpunk2077Adapter()
     , m_d3d12_renderer(nullptr)
     , m_rt_optimizer(nullptr)
     , m_ui_adapter(nullptr)
+    , m_collision_engine(nullptr)
+    , m_physics_engine(nullptr)
     , m_frame_count(0) {
     
     spdlog::info("[Cyberpunk2077] Cyberpunk 2077 VR adapter created");
@@ -72,6 +76,20 @@ bool Cyberpunk2077Adapter::initialize() {
         m_ui_adapter = std::make_unique<CyberpunkUIAdapter>();
         if (!m_ui_adapter->initialize()) {
             spdlog::error("[Cyberpunk2077] Failed to initialize UI adapter");
+            return false;
+        }
+        
+        // Initialize collision engine for Cyberpunk
+        m_collision_engine = std::make_unique<uevr::vr::FullAestheticCollisionEngine>();
+        if (!m_collision_engine->initializeFullCollision()) {
+            spdlog::error("[Cyberpunk2077] Failed to initialize collision engine");
+            return false;
+        }
+        
+        // Initialize physics engine for Cyberpunk
+        m_physics_engine = std::make_unique<uevr::vr::FullPhysicsIntegration>();
+        if (!m_physics_engine->initializeFullPhysics()) {
+            spdlog::error("[Cyberpunk2077] Failed to initialize physics engine");
             return false;
         }
         
