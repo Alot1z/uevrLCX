@@ -6,6 +6,8 @@ on:
   pull_request:
     branches: [ master, main ]
   workflow_dispatch:
+  schedule:
+    - cron: '0 * * * *'  # hourly auto-regeneration
 
 permissions:
   contents: read
@@ -28,9 +30,14 @@ jobs:
       with:
         python-version: '3.11'
         
-    - name: Generate Context7 Database
-      run: |
-        python3 scripts/generate_context7_database.py
+    - name: Generate Context7 Database (retry)
+      uses: nick-fields/retry@v3
+      with:
+        timeout_minutes: 20
+        max_attempts: 3
+        retry_wait_seconds: 10
+        command: |
+          python3 scripts/generate_context7_database.py
         
     - name: Upload database artifact
       uses: actions/upload-artifact@v4
@@ -38,8 +45,25 @@ jobs:
         name: context7-database
         path: data/context7_games_database_complete.json
         
+  build-deepwiki:
+    runs-on: windows-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+
+    - name: Generate DeepWiki Markdown
+      shell: pwsh
+      run: |
+        powershell -ExecutionPolicy Bypass -File tools/10_CREATE_FINAL_DEEPWIKI.ps1
+
+    - name: Upload DeepWiki artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: deepwiki-markdown
+        path: docs/deepwiki/DEEPWIKI_KOMPLET.md
+
   build-pages:
-    needs: generate-database
+    needs: [generate-database, build-deepwiki]
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -50,7 +74,13 @@ jobs:
       with:
         name: context7-database
         path: data/
-        
+
+    - name: Download DeepWiki
+      uses: actions/download-artifact@v4
+      with:
+        name: deepwiki-markdown
+        path: docs/deepwiki/
+
     - name: Set up Node.js
       uses: actions/setup-node@v4
       with:
@@ -58,15 +88,29 @@ jobs:
         cache: 'npm'
         cache-dependency-path: 'docs/github-pages/package-lock.json'
         
-    - name: Install dependencies
-      working-directory: docs/github-pages
-      run: npm ci
+    - name: Install dependencies (retry)
+      uses: nick-fields/retry@v3
+      with:
+        timeout_minutes: 20
+        max_attempts: 3
+        retry_wait_seconds: 10
+        command: |
+          cd docs/github-pages
+          npm ci
       
-    - name: Build GitHub Pages site
-      working-directory: docs/github-pages  
-      run: |
-        npm run build
-        cp ../../data/context7_games_database_complete.json ./dist/api/
+    - name: Build GitHub Pages site (retry)
+      uses: nick-fields/retry@v3
+      with:
+        timeout_minutes: 20
+        max_attempts: 3
+        retry_wait_seconds: 10
+        command: |
+          cd docs/github-pages
+          npm run build
+          mkdir -p ./dist/api
+          cp ../../data/context7_games_database_complete.json ./dist/api/
+          mkdir -p ./dist/deepwiki
+          cp ../deepwiki/DEEPWIKI_KOMPLET.md ./dist/deepwiki/
         
     - name: Setup Pages
       uses: actions/configure-pages@v3
