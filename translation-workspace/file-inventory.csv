@@ -1,0 +1,99 @@
+File Path,File Type,Danish Content,Priority,Status,Translator,Reviewer,Notes
+tools/08_ANALYZE_MISSING_FUNCTIONS.ps1,PowerShell Script,Extensive Danish comments and output messages,High,Not Started,,,Critical script with Danish output
+tools/01_ANALYZE_CORE.ps1,PowerShell Script,Danish comments and output messages,High,Not Started,,,Core analysis script
+tools/02_ANALYZE_HOOKS.ps1,PowerShell Script,Danish comments and output messages,High,Not Started,,,Hooks analysis script
+tools/03_ANALYZE_MODS.ps1,PowerShell Script,Danish comments and output messages,High,Not Started,,,Mods analysis script
+tools/04_ANALYZE_ADAPTERS.ps1,PowerShell Script,Danish comments and output messages,High,Not Started,,,Adapters analysis script
+tools/05_ANALYZE_VR.ps1,PowerShell Script,Danish comments and output messages,High,Not Started,,,VR analysis script
+tools/06_ANALYZE_IMGUI.ps1,PowerShell Script,Danish comments and output messages,High,Not Started,,,ImGui analysis script
+tools/07_ANALYZE_UTILITY.ps1,PowerShell Script,Danish comments and output messages,High,Not Started,,,Utility analysis script
+tools/09_MERGE_ALL_ANALYSES.ps1,PowerShell Script,Danish comments and output messages,High,Not Started,,,Analysis merger script
+tools/10_CREATE_FINAL_DEEPWIKI.ps1,PowerShell Script,Danish comments and output messages,High,Not Started,,,DeepWiki generator script
+tools/HURTIG_START.md,Documentation,Complete Danish quick start guide,High,Not Started,,,User-facing documentation
+tools/README_ANALYZER_SYSTEM.md,Documentation,Danish system documentation,Medium,Not Started,,,Technical documentation
+ALLE_ANALYSER_SAMLET.md,Analysis Report,Massive Danish analysis document (687KB),High,Not Started,,,Core analysis document
+MANGLENDE_FUNKTIONER.md,Analysis Report,Danish missing functions report,High,Not Started,,,Critical functionality report
+UTILITY_ANALYSE.md,Analysis Report,Danish utility analysis,Medium,Not Started,,,Technical analysis
+IMGUI_ANALYSE.md,Analysis Report,Danish ImGui analysis (115KB),Medium,Not Started,,,Technical analysis
+VR_ANALYSE.md,Analysis Report,Danish VR analysis (27KB),Medium,Not Started,,,Technical analysis
+ADAPTERS_ANALYSE.md,Analysis Report,Danish adapters analysis (70KB),Medium,Not Started,,,Technical analysis
+MODS_ANALYSE.md,Analysis Report,Danish mods analysis (471KB),Medium,Not Started,,,Technical analysis
+HOOKS_ANALYSE.md,Analysis Report,Danish hooks analysis (86KB),Medium,Not Started,,,Technical analysis
+CORE_ANALYSE.md,Analysis Report,Danish core analysis (122KB),Medium,Not Started,,,Technical analysis
+KILDEKODER_UDEN_DEPS.txt,Source Analysis,Danish source code analysis (4.9MB),Low,Not Started,,,Large source analysis file
+ALLE_KILDEKODER_SAMLET.txt,Source Analysis,Danish source code collection (34MB),Low,Not Started,,,Massive source collection
+everyfile.md,Documentation,Danish file documentation,Medium,Not Started,,,File system documentation
+implement_struktur.md,Documentation,Danish implementation structure guide,Medium,Not Started,,,Technical implementation guide
+CROSS_ENGINE_STATUS_REPORT.md,Documentation,Danish status report,Medium,Not Started,,,Project status documentation
+files.md,Documentation,Danish file documentation (1MB),Medium,Not Started,,,Large file documentation
+build_restructured.ps1,PowerShell Script,Danish output messages,Medium,Not Started,,,Build system script
+build_complete_system.bat,Batch Script,Danish output messages,Medium,Not Started,,,Build system script
+README.md,Documentation,Main project README (check for Danish),High,Not Started,,,Primary project documentation
+docs/COMPLETE_DOCUMENTATION_INDEX.md,Documentation,Documentation index (check for Danish),Medium,Not Started,,,Documentation organization
+docs/architecture/core-components.md,Documentation,Architecture documentation (check for Danish),Medium,Not Started,,,System architecture docs
+docs/architecture/data-flow.md,Documentation,Data flow documentation (check for Danish),Medium,Not Started,,,System design docs
+docs/architecture/design-patterns.md,Documentation,Design patterns documentation (check for Danish),Medium,Not Started,,,Software design docs
+docs/build-system/overview.md,Documentation,Build system documentation (check for Danish),Medium,Not Started,,,Build system docs
+docs/development/setup.md,Documentation,Development setup documentation (check for Danish),Medium,Not Started,,,Developer setup docs
+docs/development/code-standards.md,Documentation,Code standards documentation (check for Danish),Medium,Not Started,,,Development guidelines
+docs/development/api-reference.md,Documentation,API reference documentation (check for Danish),Medium,Not Started,,,API documentation
+docs/cross-engine/adapter_development.md,Documentation,Cross-engine documentation (check for Danish),Medium,Not Started,,,Engine integration docs
+docs/cross-engine/compatibility-matrix.md,Documentation,Compatibility documentation (check for Danish),Medium,Not Started,,,Compatibility information
+docs/games/compatibility-matrix.md,Documentation,Game compatibility documentation (check for Danish),Medium,Not Started,,,Game support docs
+docs/validation/README.md,Documentation,Validation documentation (check for Danish),Medium,Not Started,,,Validation procedures
+docs/validation/validation_status_finder_guide.md,Documentation,Validation guide documentation (check for Danish),Medium,Not Started,,,Validation guide
+docs/performance/overview.md,Documentation,Performance documentation (check for Danish),Medium,Not Started,,,Performance optimization
+docs/security/overview.md,Documentation,Security documentation (check for Danish),Medium,Not Started,,,Security considerations
+docs/testing/overview.md,Documentation,Testing documentation (check for Danish),Medium,Not Started,,,Testing procedures
+docs/deployment/overview.md,Documentation,Deployment documentation (check for Danish),Medium,Not Started,,,Deployment procedures
+docs/deployment/production.md,Documentation,Production deployment documentation (check for Danish),Medium,Not Started,,,Production setup
+docs/deployment/monitoring.md,Documentation,Monitoring documentation (check for Danish),Medium,Not Started,,,System monitoring
+docs/rendering/README.md,Documentation,Rendering documentation (check for Danish),Medium,Not Started,,,Graphics rendering
+docs/hooks/README.md,Documentation,Hooks documentation (check for Danish),Medium,Not Started,,,System hooks
+docs/engines/README.md,Documentation,Engines documentation (check for Danish),Medium,Not Started,,,Game engine support
+src/core/Framework.cpp,Source Code,Danish comments (if any),Low,Not Started,,,Core framework implementation
+src/core/Framework.hpp,Source Code,Danish comments (if any),Low,Not Started,,,Core framework header
+src/core/Main.cpp,Source Code,Danish comments (if any),Low,Not Started,,,Main application entry
+src/core/Mod.cpp,Source Code,Danish comments (if any),Low,Not Started,,,Mod system implementation
+src/core/Mod.hpp,Source Code,Danish comments (if any),Low,Not Started,,,Mod system header
+src/core/Mods.cpp,Source Code,Danish comments (if any),Low,Not Started,,,Mods management
+src/core/Mods.hpp,Source Code,Danish comments (if any),Low,Not Started,,,Mods management header
+src/core/WindowFilter.cpp,Source Code,Danish comments (if any),Low,Not Started,,,Window filtering
+src/core/WindowFilter.hpp,Source Code,Danish comments (if any),Low,Not Started,,,Window filtering header
+src/core/ExceptionHandler.cpp,Source Code,Danish comments (if any),Low,Not Started,,,Exception handling
+src/core/ExceptionHandler.hpp,Source Code,Danish comments (if any),Low,Not Started,,,Exception handling header
+src/adapters/common/matrix_extraction.hpp,Source Code,Danish comments (if any),Low,Not Started,,,Matrix extraction utilities
+src/adapters/common/memory_management.cpp,Source Code,Danish comments (if any),Low,Not Started,,,Memory management
+src/adapters/common/memory_management.hpp,Source Code,Danish comments (if any),Low,Not Started,,,Memory management header
+src/adapters/REDengine4/redengine_adapter.hpp,Source Code,Danish comments (if any),Low,Not Started,,,REDengine4 adapter
+src/adapters/REDengine4/redengine4_adapter.cpp,Source Code,Danish comments (if any),Low,Not Started,,,REDengine4 adapter implementation
+src/hooks/d3d11_hook.cpp,Source Code,Danish comments (if any),Low,Not Started,,,DirectX 11 hooks
+src/hooks/d3d12_hook.cpp,Source Code,Danish comments (if any),Low,Not Started,,,DirectX 12 hooks
+src/hooks/vulkan_hook.cpp,Source Code,Danish comments (if any),Low,Not Started,,,Vulkan hooks
+src/hooks/input_hook.cpp,Source Code,Danish comments (if any),Low,Not Started,,,Input system hooks
+src/mods/PluginLoader.cpp,Source Code,Danish comments (if any),Low,Not Started,,,Plugin loading system
+src/mods/VR.cpp,Source Code,Danish comments (if any),Low,Not Started,,,VR mod implementation
+src/mods/ImGuiThemeHelpers.hpp,Source Code,Danish comments (if any),Low,Not Started,,,ImGui theme system
+src/uevr-imgui/imgui_impl_dx11.cpp,Source Code,Danish comments (if any),Low,Not Started,,,ImGui DirectX 11 backend
+src/uevr-imgui/imgui_impl_dx12.cpp,Source Code,Danish comments (if any),Low,Not Started,,,ImGui DirectX 12 backend
+src/uevr-imgui/imgui_impl_win32.cpp,Source Code,Danish comments (if any),Low,Not Started,,,ImGui Win32 backend
+src/utility/Module.hpp,Source Code,Danish comments (if any),Low,Not Started,,,Module utilities
+src/utility/Patch.hpp,Source Code,Danish comments (if any),Low,Not Started,,,Patching utilities
+src/utility/Scan.hpp,Source Code,Danish comments (if any),Low,Not Started,,,Memory scanning
+src/utility/Thread.hpp,Source Code,Danish comments (if any),Low,Not Started,,,Threading utilities
+src/utility/String.hpp,Source Code,Danish comments (if any),Low,Not Started,,,String utilities
+src/utility/Input.hpp,Source Code,Danish comments (if any),Low,Not Started,,,Input utilities
+src/vr/OpenXR.cpp,Source Code,Danish comments (if any),Low,Not Started,,,OpenXR implementation
+src/vr/OpenXR.hpp,Source Code,Danish comments (if any),Low,Not Started,,,OpenXR header
+profiles/Cyberpunk2077/adapter.json,Configuration,Game-specific configuration (check for Danish),Low,Not Started,,,Game profile configuration
+profiles/MonsterHunterWorld/adapter.json,Configuration,Game-specific configuration (check for Danish),Low,Not Started,,,Game profile configuration
+profiles/re7/adapter.json,Configuration,Game-specific configuration (check for Danish),Low,Not Started,,,Game profile configuration
+profiles/re8-Win64-Shipping/adapter.json,Configuration,Game-specific configuration (check for Danish),Low,Not Started,,,Game profile configuration
+promts/Cyberpunk2077.md,Documentation,Game-specific prompts (check for Danish),Low,Not Started,,,Game development prompts
+promts/MonsterHunterWorld.md,Documentation,Game-specific prompts (check for Danish),Low,Not Started,,,Game development prompts
+promts/new promts.txt,Documentation,New prompts documentation (check for Danish),Low,Not Started,,,Development prompts
+cmake/UEVRConfig.cmake.in,Configuration,CMake configuration (check for Danish),Low,Not Started,,,Build configuration
+data/engine_signatures.json,Configuration,Engine signatures (check for Danish),Low,Not Started,,,Engine detection data
+CMakeLists.txt,Configuration,Main CMake configuration (check for Danish),Low,Not Started,,,Build system configuration
+cmake.toml,Configuration,CMake configuration (check for Danish),Low,Not Started,,,Build configuration
+cmkr.cmake,Configuration,CMake configuration (check for Danish),Low,Not Started,,,Build configuration

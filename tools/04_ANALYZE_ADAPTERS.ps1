@@ -3,14 +3,14 @@
 
 Write-Host "=== ANALYSERER ADAPTERS FILER ===" -ForegroundColor Green
 
-# Opret docs/deepwiki mappe hvis den ikke findes
-$docsPath = "docs\deepwiki"
-if (-not (Test-Path $docsPath)) {
-    New-Item -ItemType Directory -Path $docsPath -Force | Out-Null
-    Write-Host "✅ Oprettet mappe: $docsPath" -ForegroundColor Green
+# Opret docs/deepwiki/analyses mappe hvis den ikke findes
+$analysesPath = "docs\deepwiki\analyses"
+if (-not (Test-Path $analysesPath)) {
+    New-Item -ItemType Directory -Path $analysesPath -Force | Out-Null
+    Write-Host "OK Oprettet mappe: $analysesPath" -ForegroundColor Green
 }
 
-$outputFile = "$docsPath\ADAPTERS_ANALYSE.md"
+$outputFile = "$analysesPath\ADAPTERS_ANALYSE.md"
 $adapterFiles = @(
     "src\adapters\redengine4\redengine_adapter.cpp",
     "src\adapters\redengine4\redengine_adapter.hpp",

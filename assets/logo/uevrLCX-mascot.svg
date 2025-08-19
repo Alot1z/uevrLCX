@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- uevrLCX Mascot: "The Injector" - unique original vector art -->
+<svg width="1400" height="500" viewBox="0 0 1400 500" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+  <defs>
+    <linearGradient id="neon" x1="0" y1="0" x2="1400" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00F7FF"/>
+      <stop offset="0.45" stop-color="#7E4DFF"/>
+      <stop offset="0.75" stop-color="#B03CFF"/>
+      <stop offset="1" stop-color="#FF40E6"/>
+    </linearGradient>
+    <linearGradient id="flame" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#00E5FF"/>
+      <stop offset="1" stop-color="#7A5CFF"/>
+    </linearGradient>
+    <filter id="softGlow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur stdDeviation="6" result="g"/>
+      <feMerge>
+        <feMergeNode in="g"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+    <style><![CDATA[
+      .matrix { opacity: .22 }
+      .digit { font: 600 12px 'Segoe UI', Roboto, Arial, sans-serif; fill: #8EF; }
+      .caption { font: 700 26px 'Segoe UI', Roboto, Arial, sans-serif; fill: #9AA4B2; }
+      .small { font: 600 14px 'Segoe UI', Roboto, Arial, sans-serif; fill: #9AA4B2; }
+    ]]></style>
+  </defs>
+
+  <!-- Shared VR headset geometry from the main logo (ensures consistency) -->
+  <g id="vrHeadsetLogo">
+    <rect x="0" y="0" rx="40" ry="40" width="260" height="180" fill="#0B0F14" stroke="url(#neon)" stroke-width="10"/>
+    <circle cx="80" cy="90" r="40" stroke="url(#neon)" stroke-width="10" fill="none"/>
+    <circle cx="180" cy="90" r="40" stroke="url(#neon)" stroke-width="10" fill="none"/>
+    <path d="M0 60 H-40 C-60 60 -60 120 -40 120 H0" stroke="url(#neon)" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <path d="M260 60 H300 C320 60 320 120 300 120 H260" stroke="url(#neon)" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <text x="52" y="105" fill="url(#neon)" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="56" font-weight="700">VR</text>
+  </g>
+
+  <!-- Background matrix columns -->
+  <g class="matrix" transform="translate(0,40)">
+    <!-- simple abstract matrix rain -->
+    <g stroke="url(#neon)" stroke-width="2" stroke-linecap="round" opacity="0.7">
+      <path d="M100 0 v380"/>
+      <path d="M160 0 v360"/>
+      <path d="M220 0 v400"/>
+      <path d="M280 0 v350"/>
+      <path d="M340 0 v390"/>
+      <path d="M400 0 v370"/>
+      <path d="M460 0 v410"/>
+      <path d="M520 0 v340"/>
+      <path d="M580 0 v420"/>
+      <path d="M640 0 v360"/>
+      <path d="M700 0 v400"/>
+      <path d="M760 0 v350"/>
+      <path d="M820 0 v390"/>
+      <path d="M880 0 v370"/>
+      <path d="M940 0 v410"/>
+      <path d="M1000 0 v340"/>
+      <path d="M1060 0 v420"/>
+      <path d="M1120 0 v360"/>
+      <path d="M1180 0 v400"/>
+      <path d="M1240 0 v350"/>
+      <path d="M1300 0 v390"/>
+    </g>
+  </g>
+
+  <!-- Mascot body: abstract visor + crown flames indicating takeover -->
+  <g transform="translate(120,120)">
+    <!-- Crown flames -->
+    <g filter="url(#softGlow)">
+      <path d="M240 -10 C220 -40, 290 -60, 270 -90 C340 -60, 390 -80, 430 -120 C470 -70, 520 -60, 540 -20 C500 -40, 460 -20, 430 -10 Z" fill="url(#flame)" opacity="0.7"/>
+      <path d="M180 -5 C160 -35, 210 -45, 200 -70 C240 -40, 270 -50, 300 -80 C320 -45, 360 -35, 370 -10 Z" fill="url(#flame)" opacity="0.5"/>
+    </g>
+
+    <!-- Head/visor: reuse exact logo geometry for consistency -->
+    <g filter="url(#softGlow)">
+      <use xlink:href="#vrHeadsetLogo" transform="translate(0,20) scale(2,1.22)" />
+    </g>
+
+    <!-- Hook tendrils connecting to abstract engine nodes (no trademarks) -->
+    <g stroke="url(#neon)" stroke-width="4" fill="none">
+      <path d="M560 150 C650 160, 720 210, 820 200"/>
+      <path d="M560 60 C660 40, 740 80, 820 70"/>
+    </g>
+    <g transform="translate(820,40)">
+      <!-- generic node: hex + label ENG -->
+      <polygon points="40,0 80,20 80,60 40,80 0,60 0,20" fill="#0B0F14" stroke="url(#neon)" stroke-width="6"/>
+      <text x="40" y="48" text-anchor="middle" class="small">ENG</text>
+    </g>
+    <g transform="translate(820,160)">
+      <polygon points="40,0 80,20 80,60 40,80 0,60 0,20" fill="#0B0F14" stroke="url(#neon)" stroke-width="6"/>
+      <text x="40" y="48" text-anchor="middle" class="small">ENG</text>
+    </g>
+  </g>
+
+  <!-- Wordmark + claim -->
+  <g transform="translate(120,370)">
+    <text x="0" y="0" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="80" font-weight="800" fill="url(#neon)">uevrLCX</text>
+    <text x="0" y="40" class="caption">Hook • Extract • Convert — Cross‑Engine Takeover</text>
+  </g>
+</svg>

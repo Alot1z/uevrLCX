@@ -1,0 +1,167 @@
+# Site configuration
+title: uevrLCX
+description: Universal Engine VR Adapter Platform
+baseurl: "/uevrLCX"
+url: "https://your-username.github.io"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: pretty
+
+# Collections
+collections:
+  engines:
+    output: true
+    permalink: /engines/:name/
+  tools:
+    output: true
+    permalink: /tools/:name/
+  deepwiki:
+    output: true
+    permalink: /deepwiki/:name/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "engines"
+    values:
+      layout: "engine"
+  - scope:
+      path: ""
+      type: "tools"
+    values:
+      layout: "tool"
+  - scope:
+      path: ""
+      type: "deepwiki"
+    values:
+      layout: "deepwiki"
+
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-paginate
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - node_modules
+  - vendor/bundle/
+  - vendor/cache/
+  - vendor/gems/
+  - vendor/ruby/
+
+# Include in processing
+include:
+  - _pages
+  - _posts
+  - _engines
+  - _tools
+  - _deepwiki
+
+# Navigation
+navigation:
+  - title: Home
+    url: /
+  - title: Engines
+    url: /engines/
+    children:
+      - title: MT Framework
+        url: /engines/mt-framework/
+      - title: RE Engine
+        url: /engines/re-engine/
+      - title: REDengine 4
+        url: /engines/redengine4/
+      - title: Unreal Engine
+        url: /engines/unreal-engine/
+      - title: Unity Engine
+        url: /engines/unity-engine/
+  - title: Tools
+    url: /tools/
+    children:
+      - title: Engine Detector
+        url: /tools/engine-detector/
+      - title: Profile Generator
+        url: /tools/profile-generator/
+  - title: Testing
+    url: /testing/
+    children:
+      - title: AI Testing
+        url: /testing/ai-testing/
+      - title: Automated Suite
+        url: /testing/automated-suite/
+      - title: Validation Reports
+        url: /testing/validation-reports/
+  - title: Community
+    url: /community/
+    children:
+      - title: Feature Requests
+        url: /community/requests/
+      - title: Showcase
+        url: /community/showcase/
+  - title: DeepWiki
+    url: /deepwiki/
+    children:
+      - title: MT Framework Complete
+        url: /deepwiki/mt-framework-complete/
+      - title: RE Engine Complete
+        url: /deepwiki/re-engine-complete/
+      - title: REDengine 4 Complete
+        url: /deepwiki/redengine4-complete/
+  - title: Context7
+    url: /context7/
+  - title: API
+    url: /api/
+    children:
+      - title: Reference
+        url: /api/reference/
+
+# SEO
+author:
+  name: uevrLCX Team
+  email: team@uevrlcx.com
+  bio: Universal Engine VR Adapter Platform
+  location: GitHub
+  links:
+    - label: GitHub
+      icon: fab fa-github
+      url: https://github.com/your-repo/uevrLCX
+
+# Social media
+social:
+  name: uevrLCX
+  links:
+    - https://github.com/your-repo/uevrLCX
+    - https://discord.gg/uevrlcx
+
+# Analytics
+analytics:
+  provider: google
+  google:
+    tracking_id: UA-XXXXXXXXX-X
+    anonymize_ip: true
+
+# Search
+search: true
+search_full_content: true
+
+# Pagination
+paginate: 10
+paginate_path: "/blog/page:num/"
+
+# Feed
+feed:
+  path: rss.xml
+  limit: 20
+
+# Sitemap
+sitemap:
+  filetype: xml
+  priority: 0.5
+  changefreq: weekly
+  exclude: ['/admin/', '/private/']

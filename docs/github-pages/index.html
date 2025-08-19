@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>uevrLCX - Universal Engine VR Adapter Platform</title>
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="icon" type="image/x-icon" href="assets/images/favicon.ico">
+</head>
+<body>
+    <header class="site-header">
+        <nav class="main-nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1>uevrLCX</h1>
+                    <span class="tagline">Universal Engine VR Adapter</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="#engines">Engines</a></li>
+                    <li><a href="#games">Games</a></li>
+                    <li><a href="#testing">AI Testing</a></li>
+                    <li><a href="#community">Community</a></li>
+                    <li><a href="#tools">Tools</a></li>
+                    <li><a href="#docs">Documentation</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="site-main">
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h2>Transform Any Game into VR</h2>
+                <p>uevrLCX is the universal VR adapter that brings virtual reality to games never designed for VR. 
+                   Supporting MT Framework, RE Engine, REDengine 4, Unreal Engine, and Unity Engine.</p>
+                <div class="hero-actions">
+                    <a href="#quick-start" class="btn btn-primary">Get Started</a>
+                    <a href="#engines" class="btn btn-secondary">View Engines</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Engine Support Matrix -->
+        <section id="engines" class="engine-matrix">
+            <div class="container">
+                <h2>Engine Support Matrix</h2>
+                <div class="matrix-grid">
+                    <div class="engine-card mt-framework">
+                        <h3>🦖 MT Framework</h3>
+                        <div class="status complete">✅ Complete</div>
+                        <p>Full VR support for Capcom games</p>
+                        <ul>
+                            <li>Monster Hunter: World</li>
+                            <li>Resident Evil 5/6</li>
+                            <li>Lost Planet 3</li>
+                        </ul>
+                        <a href="engines/mt-framework.html" class="btn btn-small">View Details</a>
+                    </div>
+                    
+                    <div class="engine-card re-engine">
+                        <h3>🧟 RE Engine</h3>
+                        <div class="status partial">🔄 In Progress</div>
+                        <p>D3D11 rendering pipeline support</p>
+                        <ul>
+                            <li>Resident Evil 7</li>
+                            <li>Resident Evil 8</li>
+                            <li>Devil May Cry 5</li>
+                        </ul>
+                        <a href="engines/re-engine.html" class="btn btn-small">View Details</a>
+                    </div>
+                    
+                    <div class="engine-card redengine4">
+                        <h3>🌃 REDengine 4</h3>
+                        <div class="status planned">📋 Planned</div>
+                        <p>D3D12 pipeline integration</p>
+                        <ul>
+                            <li>Cyberpunk 2077</li>
+                            <li>The Witcher 3</li>
+                            <li>Future CDPR games</li>
+                        </ul>
+                        <a href="engines/redengine4.html" class="btn btn-small">View Details</a>
+                    </div>
+                    
+                    <div class="engine-card unreal-engine">
+                        <h3>🎭 Unreal Engine</h3>
+                        <div class="status complete">✅ Complete</div>
+                        <p>UEVR framework integration</p>
+                        <ul>
+                            <li>UE4.18 - UE5.x</li>
+                            <li>DirectX 9/11/12</li>
+                            <li>Vulkan support</li>
+                        </ul>
+                        <a href="engines/unreal-engine.html" class="btn btn-small">View Details</a>
+                    </div>
+                    
+                    <div class="engine-card unity-engine">
+                        <h3>🎪 Unity Engine</h3>
+                        <div class="status partial">🔄 In Progress</div>
+                        <p>Unity 2019-2023 support</p>
+                        <ul>
+                            <li>Among Us</li>
+                            <li>Fall Guys</li>
+                            <li>Phasmophobia</li>
+                        </ul>
+                        <a href="engines/unity-engine.html" class="btn btn-small">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Compatibility Database -->
+        <section id="games" class="game-database">
+            <div class="container">
+                <h2>Game Compatibility Database</h2>
+                <div class="search-container">
+                    <input type="text" id="game-search" placeholder="Search games..." class="search-input">
+                    <button id="search-btn" class="btn btn-primary">Search</button>
+                </div>
+                <div class="compatibility-table">
+                    <table id="games-table">
+                        <thead>
+                            <tr>
+                                <th>Game</th>
+                                <th>Engine</th>
+                                <th>VR Status</th>
+                                <th>Performance</th>
+                                <th>Last Tested</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="games-tbody">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Testing Dashboard -->
+        <section id="testing" class="ai-testing">
+            <div class="container">
+                <h2>AI Testing Dashboard</h2>
+                <div class="dashboard-grid">
+                    <div class="dashboard-card">
+                        <h3>Live Testing</h3>
+                        <div id="live-tests" class="live-status">
+                            <div class="status-item">
+                                <span class="status-dot active"></span>
+                                <span>MT Framework Tests</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-dot active"></span>
+                                <span>RE Engine Tests</span>
+                            </div>
+                            <div class="status-item">
+                                <span class="status-dot inactive"></span>
+                                <span>REDengine 4 Tests</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>Performance Metrics</h3>
+                        <div id="performance-chart" class="chart-container">
+                            <canvas id="perf-chart"></canvas>
+                        </div>
+                    </div>
+                    
+                    <div class="dashboard-card">
+                        <h3>Recent Issues</h3>
+                        <div id="recent-issues" class="issues-list">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Start Guide -->
+        <section id="quick-start" class="quick-start">
+            <div class="container">
+                <h2>Quick Start Guide</h2>
+                <div class="steps-grid">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <h3>Download uevrLCX</h3>
+                        <p>Get the latest release for your platform</p>
+                        <a href="https://github.com/your-repo/uevrLCX/releases" class="btn btn-small">Download</a>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <h3>Install VR Runtime</h3>
+                        <p>Set up SteamVR, OpenXR, or Oculus</p>
+                        <a href="docs/installation.md" class="btn btn-small">Install Guide</a>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <h3>Launch Game</h3>
+                        <p>Start uevrLCX and your chosen game</p>
+                        <a href="docs/first-steps.md" class="btn btn-small">First Steps</a>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <h3>Enjoy VR</h3>
+                        <p>Experience your favorite games in virtual reality</p>
+                        <a href="docs/configuration.md" class="btn btn-small">Configure</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Portal -->
+        <section id="community" class="community-portal">
+            <div class="container">
+                <h2>Community Portal</h2>
+                <div class="community-grid">
+                    <div class="community-card">
+                        <h3>Feature Requests</h3>
+                        <p>Request new VR features and game support</p>
+                        <a href="community/requests.html" class="btn btn-primary">Submit Request</a>
+                    </div>
+                    
+                    <div class="community-card">
+                        <h3>Showcase</h3>
+                        <p>Share your VR conversions and achievements</p>
+                        <a href="community/showcase.html" class="btn btn-primary">View Showcase</a>
+                    </div>
+                    
+                    <div class="community-card">
+                        <h3>Discord</h3>
+                        <p>Join our community for support and discussion</p>
+                        <a href="https://discord.gg/uevrlcx" class="btn btn-primary">Join Discord</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>uevrLCX</h3>
+                    <p>Universal Engine VR Adapter Platform</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="docs/README.md">Documentation</a></li>
+                        <li><a href="https://github.com/your-repo/uevrLCX">GitHub</a></li>
+                        <li><a href="docs/contributing.md">Contributing</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>Support</h3>
+                    <ul>
+                        <li><a href="docs/troubleshooting.md">Troubleshooting</a></li>
+                        <li><a href="https://github.com/your-repo/uevrLCX/issues">Issues</a></li>
+                        <li><a href="docs/faq.md">FAQ</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 uevrLCX. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="assets/js/main.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</body>
+</html>

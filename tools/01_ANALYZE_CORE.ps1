@@ -3,14 +3,14 @@
 
 Write-Host "=== ANALYSERER CORE FILER ===" -ForegroundColor Green
 
-# Opret docs/deepwiki mappe hvis den ikke findes
-$docsPath = "docs\deepwiki"
-if (-not (Test-Path $docsPath)) {
-    New-Item -ItemType Directory -Path $docsPath -Force | Out-Null
-    Write-Host "✅ Oprettet mappe: $docsPath" -ForegroundColor Green
+# Opret docs/deepwiki/analyses mappe hvis den ikke findes
+$analysesPath = "docs\deepwiki\analyses"
+if (-not (Test-Path $analysesPath)) {
+    New-Item -ItemType Directory -Path $analysesPath -Force | Out-Null
+    Write-Host "OK Oprettet mappe: $analysesPath" -ForegroundColor Green
 }
 
-$outputFile = "$docsPath\CORE_ANALYSE.md"
+$outputFile = "$analysesPath\CORE_ANALYSE.md"
 $coreFiles = @(
     "src\core\Framework.cpp",
     "src\core\Framework.hpp", 
@@ -83,4 +83,4 @@ $content
 }
 
 $markdown | Out-File -FilePath $outputFile -Encoding UTF8
-Write-Host "✅ Core analyse gemt til: $outputFile" -ForegroundColor Green
+Write-Host "OK Core analyse gemt til: $outputFile" -ForegroundColor Green

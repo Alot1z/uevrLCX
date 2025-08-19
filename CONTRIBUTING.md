@@ -108,6 +108,19 @@ Our research methodology incorporates advanced human analytical capabilities:
 - Reference issues (e.g., `Refs: #123`)—avoid naming tools in messages or titles
 - Keep commits narrowly scoped and well-described
 
+## 🛡️ CI Enforcement: Never-Stop Guard
+
+All pushes and pull requests run a guard that enforces contribution policy:
+
+- Scans changed files and commit messages for forbidden tool-name traces
+- Requires a research log for code changes under these directories:
+  - `src/`, `include/`, `adapters/`, `lua-api/`, `SOURCECODE/`, `UEVR/`
+- Script: `tools/ci/never_stop_guard.ps1`
+- Workflow: `.github/workflows/never-stop-guard.yml`
+
+The guard excludes itself and its workflow from scans to prevent false positives.
+For code changes, add a research log in `docs/contributing/logs/<yyyy-mm-dd>-<topic>.md`.
+
 ---
 
 ## 📋 **Contribution Process**

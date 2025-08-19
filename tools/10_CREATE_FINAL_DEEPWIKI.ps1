@@ -220,7 +220,7 @@ Start med filer der har flest manglende funktioner
 "@
 
 $markdown | Out-File -FilePath $outputFile -Encoding UTF8
-Write-Host "✅ Komplet deepwiki oprettet: $outputFile" -ForegroundColor Cyan
-Write-Host "📊 Total filer: $totalFiles" -ForegroundColor Cyan
-Write-Host "📊 Total linjer: $totalLines" -ForegroundColor Cyan
-Write-Host "📊 Total funktioner: $totalFunctions" -ForegroundColor Cyan
+Write-Host "OK Komplet deepwiki oprettet: $outputFile" -ForegroundColor Cyan
+Write-Host "INFO Total filer: $totalFiles" -ForegroundColor Cyan
+Write-Host "INFO Total linjer: $totalLines" -ForegroundColor Cyan
+Write-Host "INFO Total funktioner: $totalFunctions" -ForegroundColor Cyan

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="360" viewBox="0 0 1200 360" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Simple, filter-free logo for maximum compatibility -->
+  <g transform="translate(40,40)" stroke="#7E4DFF" fill="none" stroke-width="10" stroke-linecap="round" stroke-linejoin="round">
+    <!-- VR headset -->
+    <rect x="0" y="0" rx="36" ry="36" width="320" height="220"/>
+    <circle cx="100" cy="110" r="46"/>
+    <circle cx="220" cy="110" r="46"/>
+    <path d="M0 80 H-40 C-60 80 -60 140 -40 140 H0"/>
+    <path d="M320 80 H360 C380 80 380 140 360 140 H320"/>
+    <text x="70" y="128" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="64" font-weight="800" fill="#7E4DFF">VR</text>
+  </g>
+  <!-- Wordmark -->
+  <text x="420" y="150" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="96" font-weight="900" fill="#7E4DFF">uevrLCX</text>
+  <text x="420" y="200" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="28" font-weight="600" fill="#7E4DFF">Universal Cross-Engine VR</text>
+</svg>
