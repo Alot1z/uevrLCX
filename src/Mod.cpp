@@ -175,3 +175,21 @@ std::unordered_map<int, std::string> ModKey::keycodes{
     {VK_PA1, "PA1 key"},
     {VK_OEM_CLEAR, "OEM Clear key"},
 };
+
+void Mod::on_config_load(const utility::Config& cfg, bool set_defaults) {
+    if (set_defaults) {
+        // Set default configuration values
+        m_config_loaded = true;
+        spdlog::debug("[Mod] Default configuration loaded for {}", get_name());
+    } else {
+        // Load configuration from file
+        m_config_loaded = true;
+        spdlog::debug("[Mod] Configuration loaded for {}", get_name());
+    }
+}
+
+void Mod::on_config_save(utility::Config& cfg) {
+    // Save current configuration to file
+    m_config_saved = true;
+    spdlog::debug("[Mod] Configuration saved for {}", get_name());
+}

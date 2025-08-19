@@ -1,0 +1,26 @@
+# Navigation metadata for UEVR DeepWiki Implant
+nav:
+  - title: Index
+    path: /deepwiki/implant/index
+  - title: Overview
+    path: /deepwiki/implant/overview/overview
+  - title: Principles
+    path: /deepwiki/implant/PRINCIPLES
+  - title: Architecture
+    path: /deepwiki/implant/architecture/architecture
+  - title: Adapters
+    path: /deepwiki/implant/adapters/adapters-overview
+  - title: Runtimes
+    path: /deepwiki/implant/runtimes/runtimes-overview
+  - title: Input
+    path: /deepwiki/implant/input/input-overview
+  - title: Implementation
+    path: /deepwiki/implant/implementation/plan
+  - title: Guides
+    path: /deepwiki/implant/guides/developer-setup
+  - title: Reference
+    path: /deepwiki/implant/reference/api-index
+  - title: Knowledge
+    path: /deepwiki/implant/knowledge/research-index
+  - title: Playbooks
+    path: /deepwiki/implant/playbooks/triage
