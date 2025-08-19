@@ -1,4 +1,4 @@
-﻿.windsurf/
+.windsurf/
 .cursor/
 .aider*
 .claude/
@@ -24,6 +24,14 @@ sessions/
 *.bak
 *.swp
 *.swo
+
+# Windows scripts (remove from history)
+*.ps1
+*.bat
+*.cmd
+*.psm1
+*.psd1
+*.ps1xml
 
 # build/cmake/byproducts
 **/build*/

@@ -1,9 +1,10 @@
-name: Deploy Pages
+name: Deploy GitHub Pages with AI Analysis
+
 on:
   push:
-    branches: [ main ]
+    branches: [ main, master ]
   pull_request:
-    branches: [ main ]
+    branches: [ main, master ]
   workflow_dispatch:
 
 permissions:
@@ -18,23 +19,25 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    timeout-minutes: 30
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
-      
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
-      
+          cache: 'pip'
+          cache-dependency-path: 'requirements.txt'
+
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          pip install -r requirements.txt || true
-          pip install mkdocs mkdocs-material mkdocs-awesome-pages-plugin
-      
+          pip install -r requirements.txt
+
       - name: Create data directories
         run: |
           mkdir -p docs/data
@@ -44,19 +47,25 @@ jobs:
           mkdir -p docs/reports/redengine4
           mkdir -p docs/reports/unreal-engine
           mkdir -p docs/reports/unity-engine
-      
+
       - name: Run AI analysis
         run: |
           python scripts/ai-analysis.py --output-dir docs/data
-      
+
       - name: Generate GitHub Pages content
         run: |
-          python scripts/generate-github-pages.py --source-dir . --output-dir docs
-      
+          python scripts/generate-github-pages.py --source . --output docs
+
       - name: Build documentation
         run: |
-          mkdocs build --site-dir docs/_site
-      
+          if [ -f mkdocs.yml ]; then
+            mkdocs build --site-dir docs/_site
+          else
+            echo "mkdocs.yml not found; skipping mkdocs build"
+            mkdir -p docs/_site
+            echo "<!DOCTYPE html><html><body><h1>Docs placeholder</h1><p>mkdocs.yml not found.</p></body></html>" > docs/_site/index.html
+          fi
+
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
@@ -66,9 +75,9 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    timeout-minutes: 10
+    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment

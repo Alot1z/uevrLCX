@@ -1,33 +1,63 @@
+    50→      - name: Upload build logs
+    51→        if: always()
+    52→        uses: actions/upload-artifact@v4
+    53→        with:
+    54→          name: build-logs
+    55→          path: |
+    56→            ${{github.workspace}}/build/*.log
+    57→          if-no-files-found: ignore
 name: Dev Release
 on: [push, workflow_dispatch]
+permissions:
+  contents: write
 env:
   BUILD_TYPE: Release
+  GH_TOKEN: ${{ secrets.GITHUBTOKEN }}
 jobs:
   dev-release:
     runs-on: windows-latest
+    timeout-minutes: 90
+    concurrency:
+      group: dev-release-${{ github.ref }}
+      cancel-in-progress: true
     strategy:
       matrix:
         target: [uevr]
     steps:
       - name: Checkout backend
-        uses: actions/checkout@v4
+        uses: actions/checkout@b4ffde65f46336ab88eb53be808477a3936bae11
         with:
-          token: ${{ secrets.GITHUBTOKEN || github.token }}
+          token: ${{ secrets.UESDK_PULLER || secrets.GITHUBTOKEN || github.token }}
           submodules: recursive
           persist-credentials: false
           fetch-depth: 0
 
       - name: Configure CMake
-        run: cmake -S ${{github.workspace}} -B ${{github.workspace}}/build -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=${{env.BUILD_TYPE}}
+        shell: pwsh
+        run: |
+          cmake -S $env:GITHUB_WORKSPACE -B "$env:GITHUB_WORKSPACE/build" -G "Visual Studio 17 2022" -A x64 -DCMAKE_BUILD_TYPE=$env:BUILD_TYPE 2>&1 |
+            Tee-Object -FilePath "$env:GITHUB_WORKSPACE/build/configure.log"
 
       - name: Build backend
-        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target ${{matrix.target}}
+        shell: pwsh
+        run: |
+          cmake --build "$env:GITHUB_WORKSPACE/build" --config $env:BUILD_TYPE --target ${{matrix.target}} 2>&1 |
+            Tee-Object -FilePath "$env:GITHUB_WORKSPACE/build/backend.log"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Build plugin nullifier
-        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target vr-plugin-nullifier
+        shell: pwsh
+        run: |
+          cmake --build "$env:GITHUB_WORKSPACE/build" --config $env:BUILD_TYPE --target vr-plugin-nullifier 2>&1 |
+            Tee-Object -FilePath "$env:GITHUB_WORKSPACE/build/plugin-nullifier.log"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       - name: Build Lua API (shared DLL)
-        run: cmake --build ${{github.workspace}}/build --config ${{env.BUILD_TYPE}} --target LuaVR
+        shell: pwsh
+        run: |
+          cmake --build "$env:GITHUB_WORKSPACE/build" --config $env:BUILD_TYPE --target LuaVR 2>&1 |
+            Tee-Object -FilePath "$env:GITHUB_WORKSPACE/build/luavr.log"
+          if ($LASTEXITCODE -ne 0) { exit $LASTEXITCODE }
 
       # Frontend build removed: local-only repository, no upstream dependencies
 
@@ -40,6 +70,7 @@ jobs:
             ${{github.workspace}}/build/bin/vr-plugin-nullifier/UEVRPluginNullifier.dll
             ${{github.workspace}}/build/bin/LuaVR/LuaVR.dll
           if-no-files-found: error
+          retention-days: 7
 
       - name: Compress artifacts
         run: |
