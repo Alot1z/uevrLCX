@@ -1,16 +1,16 @@
 ﻿# ðŸŽ¨ UEVR ImGui Files Analysis
-## Komplet analyse af alle ImGui filer
+## Complete analysis of all ImGui files
 
-**Genereret:** 2025-08-19 12:20:15  
-**Antal filer:** 7  
-**Status:** âœ… Komplet
+**Generated:** 2025-08-19 12:20:15  
+**Number of files:** 7  
+**Status:** ✅ Complete
 
 ---
 
 ## ðŸ“ imgui_impl_dx11.cpp
-**Sti:** $filePath  
-**StÃ¸rrelse:** 26691 bytes  
-**Sidst Ã¦ndret:** 2025-08-19 11:20:13
+**Path:** $filePath  
+**Size:** 26691 bytes  
+**Last modified:** 2025-08-19 11:20:13
 
 ### ðŸ”— Includes
 `cpp
@@ -589,9 +589,9 @@ void ImGui_ImplDX11_NewFrame()
 
 ---
 ## ðŸ“ imgui_impl_dx11.h
-**Sti:** $filePath  
-**StÃ¸rrelse:** 1256 bytes  
-**Sidst Ã¦ndret:** 2025-08-19 11:20:13
+**Path:** $filePath  
+**Size:** 1256 bytes  
+**Last modified:** 2025-08-19 11:20:13
 
 ### ðŸ”— Includes
 `cpp
@@ -644,9 +644,9 @@ IMGUI_IMPL_API bool     ImGui_ImplDX11_CreateDeviceObjects();
 
 ---
 ## ðŸ“ imgui_impl_dx12.cpp
-**Sti:** $filePath  
-**StÃ¸rrelse:** 36032 bytes  
-**Sidst Ã¦ndret:** 2025-08-19 11:20:13
+**Path:** $filePath  
+**Size:** 36032 bytes  
+**Last modified:** 2025-08-19 11:20:13
 
 ### ðŸ”— Includes
 `cpp
@@ -1430,9 +1430,9 @@ void ImGui_ImplDX12_NewFrame()
 
 ---
 ## ðŸ“ imgui_impl_dx12.h
-**Sti:** $filePath  
-**StÃ¸rrelse:** 2407 bytes  
-**Sidst Ã¦ndret:** 2025-08-19 11:20:13
+**Path:** $filePath  
+**Size:** 2407 bytes  
+**Last modified:** 2025-08-19 11:20:13
 
 ### ðŸ”— Includes
 `cpp
@@ -1499,9 +1499,9 @@ IMGUI_IMPL_API bool     ImGui_ImplDX12_CreateDeviceObjects();
 
 ---
 ## ðŸ“ imgui_impl_win32.cpp
-**Sti:** $filePath  
-**StÃ¸rrelse:** 35857 bytes  
-**Sidst Ã¦ndret:** 2025-08-19 11:20:13
+**Path:** $filePath  
+**Size:** 35857 bytes  
+**Last modified:** 2025-08-19 11:20:13
 
 ### ðŸ”— Includes
 `cpp

@@ -8,14 +8,14 @@ $projectRoot = Split-Path (Split-Path $PSScriptRoot -Parent) -Parent
 Set-Location $projectRoot
 Write-Host "Arbejder i: $projectRoot" -ForegroundColor Yellow
 
-# Opret docs/deepwiki mappe hvis den ikke findes
-$docsPath = Join-Path $projectRoot "docs\deepwiki"
-if (-not (Test-Path $docsPath)) {
-    New-Item -ItemType Directory -Path $docsPath -Force | Out-Null
-    Write-Host "OK Oprettet mappe: $docsPath" -ForegroundColor Green
+# Opret docs/deepwiki/analyses mappe hvis den ikke findes
+$analysesPath = Join-Path $projectRoot "docs\deepwiki\analyses"
+if (-not (Test-Path $analysesPath)) {
+    New-Item -ItemType Directory -Path $analysesPath -Force | Out-Null
+    Write-Host "OK Oprettet mappe: $analysesPath" -ForegroundColor Green
 }
 
-$outputFile = Join-Path $docsPath "MANGLENDE_FUNKTIONER.md"
+$outputFile = Join-Path $analysesPath "MANGLENDE_FUNKTIONER.md"
 
 $markdown = @"
 # ❌ UEVR Missing Functions Analysis

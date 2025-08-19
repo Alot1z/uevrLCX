@@ -1,0 +1,10 @@
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\MT-FRAMEWORK\BUILD\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\42BF400859A9911ED7AD0C5C2722B42E\GENERATE.STAMP.RULE
+setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe "-SG:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/nlohmann_json-subbuild" "-BG:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/nlohmann_json-subbuild" --check-stamp-list CMakeFiles/generate.stamp.list --vs-solution-file "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/nlohmann_json-subbuild/nlohmann_json-populate.sln"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

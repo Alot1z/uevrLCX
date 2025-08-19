@@ -43,10 +43,6 @@ jobs:
         run: |
           mkdocs build --site-dir docs/github-pages/_site
       
-      - name: Run AI analysis
-        run: |
-          python scripts/ai-analysis.py --output docs/reports
-      
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:

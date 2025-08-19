@@ -1,39 +1,39 @@
-﻿# ðŸ¥½ UEVR VR Files Analysis
-## Komplet analyse af alle VR filer
+﻿# 🥵 UEVR VR Files Analysis
+## Complete analysis of all VR files
 
-**Genereret:** 2025-08-19 12:20:14  
-**Antal filer:** 2  
-**Status:** âœ… Komplet
+**Generated:** 2025-08-19 12:20:14  
+**Number of files:** 2  
+**Status:** ✅ Complete
 
 ---
 
-## ðŸ“ OpenXRIntegration.cpp
-**Sti:** $filePath  
-**StÃ¸rrelse:** 25088 bytes  
-**Sidst Ã¦ndret:** 2025-08-19 03:38:42
+## 📁 OpenXRIntegration.cpp
+**Path:** $filePath  
+**Size:** 25088 bytes  
+**Last modified:** 2025-08-19 03:38:42
 
-### ðŸ”— Includes
-`cpp
+### 📥 Includes
+```cpp
 #include <uevr/vr/OpenXRIntegration.hpp>
-`
+```
 
-### ðŸ—ï¸ Classes
-`cpp
+### 🏗️ Classes
+```cpp
 
-`
+```
 
-### âš™ï¸ VR Functions
-`cpp
+### ⚙️ VR Functions
+```cpp
 VRDeviceInfo OpenXRIntegration::getDeviceInfo()
-`
+```
 
-### âš™ï¸ General Functions
-`cpp
+### ⚙️ General Functions
+```cpp
 void OpenXRIntegration::shutdown()
-`
+```
 
-### ðŸ“„ Komplet Indhold
-`cpp
+### 📄 Complete Content
+```cpp
 #include <uevr/vr/OpenXRIntegration.hpp>
 #include <iostream>
 #include <algorithm>
@@ -775,36 +775,36 @@ void OpenXRIntegration::logError(const std::string& error) {
 
 } // namespace uevr
 
-`
+```
 
 ---
-## ðŸ“ VRSystem.h
-**Sti:** $filePath  
-**StÃ¸rrelse:** 1036 bytes  
-**Sidst Ã¦ndret:** 2025-08-19 10:55:06
+## 📁 VRSystem.h
+**Path:** $filePath  
+**Size:** 1036 bytes  
+**Last modified:** 2025-08-19 10:55:06
 
-### ðŸ”— Includes
-`cpp
+### 📥 Includes
+```cpp
 #include <string>
-`
+```
 
-### ðŸ—ï¸ Classes
-`cpp
+### 🏗️ Classes
+```cpp
 
-`
+```
 
-### âš™ï¸ VR Functions
-`cpp
+### ⚙️ VR Functions
+```cpp
 bool initializeVRSystem()
-`
+```
 
-### âš™ï¸ General Functions
-`cpp
+### ⚙️ General Functions
+```cpp
 void cleanupVRSystem()
-`
+```
 
-### ðŸ“„ Komplet Indhold
-`cpp
+### 📄 Complete Content
+```cpp
 #pragma once
 
 #include <string>
@@ -853,6 +853,6 @@ bool setVRPerformanceMode(const std::string& mode);
 
 
 
-`
+```
 
 ---

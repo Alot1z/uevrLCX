@@ -1,0 +1,62 @@
+﻿**********************
+Windows PowerShell transcript start
+Start time: 20250819135311
+Username: DESKTOP-28DQEG5\Mose
+RunAs User: DESKTOP-28DQEG5\Mose
+Configuration Name: 
+Machine: DESKTOP-28DQEG5 (Microsoft Windows NT 10.0.19045.0)
+Host Application: C:\Windows\System32\WindowsPowerShell\v1.0\powershell.exe -noexit -command try { . "c:\Users\Mose\AppData\Local\Programs\Windsurf\resources\app\out\vs\workbench\contrib\terminal\common\scripts\shellIntegration.ps1" } catch {}
+Process ID: 39132
+PSVersion: 5.1.19041.6216
+PSEdition: Desktop
+PSCompatibleVersions: 1.0, 2.0, 3.0, 4.0, 5.0, 5.1.19041.6216
+BuildVersion: 10.0.19041.6216
+CLRVersion: 4.0.30319.42000
+WSManStackVersion: 3.0
+PSRemotingProtocolVersion: 2.3
+SerializationVersion: 1.1.0.1
+**********************
+]633;D;0]633;A]633;P;Cwd=G:\x5cGITHUB REPOs\x5cuevrLCXPS G:\GITHUB REPOs\uevrLCX> ]633;B
+PS>try {
+  Write-Host "[0] Repo check"; git rev-parse --is-inside-work-tree | Out-Null
+  $tag = "pre-purge-ai-slop-$ts"
+  Write-Host "[1] Safety tag + stash: $tag"; git tag $tag; git add -A; git stash push -u -m $tag | Out-Null
+  $backupPath = Join-Path (Split-Path -Parent (Get-Location)) ("uevrLCX-backup-$ts.git")
+  Write-Host "[2] Mirror backup: $backupPath"; git clone --mirror . "$backupPath" | Out-Null
+  Write-Host "[3] Disable push to upstream (if present)"; $remotes = (git remote); if ($remotes -match '^upstream$') { git remote set-url --push upstream DISABLED_PUSH_UPSTREAM }
+  Write-Host "[4] Load purge patterns"; if (-not (Test-Path .\purge-ai-globs.txt)) { throw 'Missing purge-ai-globs.txt' }
+  $globs = Get-Content .\purge-ai-globs.txt | Where-Object { $_ -and -not $_.Trim().StartsWith('#') } | ForEach-Object { $_.Trim() }
+  Write-Host "[5] Untrack from index"; foreach ($g in $globs) { git rm -r --cached --ignore-unmatch -- $g | Out-Null }
+  if ((git status --porcelain).Trim().Length -gt 0) { git commit -m "chore(purge): untrack AI/tooling logs and caches per policy" }
+  Write-Host "[6] Ensure git-filter-repo"; $ok=$false; try { git filter-repo --version 1>$null 2>$null; if ($LASTEXITCODE -eq 0) { $ok=$true } } catch {}
+  if (-not $ok) { Write-Host "Installing git-filter-repo"; python -m pip install --user git-filter-repo | Out-Null; try { git filter-repo --version 1>$null 2>$null; if ($LASTEXITCODE -eq 0) { $ok=$true } } catch {} }
+  if (-not $ok) { throw 'git-filter-repo not available' }
+  Write-Host "[7] Run filter-repo (invert paths)"; $args=@('--force','--invert-paths'); foreach ($g in $globs) { $args += @('--path-glob',$g) }; & git filter-repo @args
+  Write-Host "[8] Prune/GC"; git reflog expire --expire=now --all; git gc --prune=now --aggressive
+  Write-Host "[9] Restore working tree"; if ((git stash list) -match [regex]::Escape($tag)) { git stash pop | Out-Null }
+  Write-Host "[10] Force push to origin only"; if ($remotes -match '^origin$') { git push --force --all origin; git push --force --tags origin } else { Write-Host "No origin found" }
+  Write-Host "[11] Done: tag=$tag backup=$backupPath"
+} catch {
+  Write-Host "[ERROR] $_"
+} finally {
+  Stop-Transcript | Out-Null
+}
+[0] Repo check
+[1] Safety tag + stash: pre-purge-ai-slop-20250819-135310
+
+
+[2] Mirror backup: G:\GITHUB REPOs\uevrLCX-backup-20250819-135310.git
+[3] Disable push to upstream (if present)
+
+[4] Load purge patterns
+[5] Untrack from index
+
+[6] Ensure git-filter-repo
+PS>TerminatingError(git.exe): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: git: 'filter-repo' is not a git command. See 'git --help'."
+Installing git-filter-repo
+PS>TerminatingError(git.exe): "The running command stopped because the preference variable "ErrorActionPreference" or common parameter is set to Stop: git: 'filter-repo' is not a git command. See 'git --help'."
+[ERROR] git-filter-repo not available
+**********************
+Windows PowerShell transcript end
+End time: 20250819135331
+**********************

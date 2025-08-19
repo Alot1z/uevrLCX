@@ -1,0 +1,15 @@
+# REDengine 4 Cross-Engine VR Adapter DLL
+# This is a placeholder file for the compiled DLL output
+# 
+# The actual DLL would be built from:
+# - REDengine4_Adapter.cpp
+# - REDengine4_Adapter.hpp
+# - CMakeLists.txt
+#
+# Build command:
+# cmake --build build --config Release
+#
+# Output location: build/bin/Release/redengine_adapter.dll
+#
+# This DLL extends uevr's plugin architecture to support CD Projekt Red's REDengine 4
+# enabling VR support for Cyberpunk 2077 and other REDengine 4 titles.

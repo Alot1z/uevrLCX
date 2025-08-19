@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Engine Detector - uevrLCX</title>
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <style>
+        .detector-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+        
+        .upload-area {
+            border: 2px dashed #ddd;
+            border-radius: 10px;
+            padding: 3rem;
+            text-align: center;
+            margin: 2rem 0;
+            transition: border-color 0.3s;
+        }
+        
+        .upload-area.dragover {
+            border-color: #007bff;
+            background-color: rgba(0, 123, 255, 0.1);
+        }
+        
+        .upload-area p {
+            margin-bottom: 1rem;
+            color: #666;
+        }
+        
+        .file-input {
+            display: none;
+        }
+        
+        .upload-btn {
+            background-color: #007bff;
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: background-color 0.3s;
+        }
+        
+        .upload-btn:hover {
+            background-color: #0056b3;
+        }
+        
+        .results {
+            margin-top: 2rem;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            display: none;
+        }
+        
+        .engine-result {
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 5px;
+            border-left: 5px solid #ddd;
+        }
+        
+        .engine-result.mt-framework { border-left-color: #28a745; }
+        .engine-result.re-engine { border-left-color: #ffc107; }
+        .engine-result.redengine4 { border-left-color: #dc3545; }
+        .engine-result.unreal-engine { border-left-color: #17a2b8; }
+        .engine-result.unity-engine { border-left-color: #6f42c1; }
+        
+        .confidence-bar {
+            width: 100%;
+            height: 20px;
+            background-color: #eee;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+        }
+        
+        .confidence-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #28a745, #20c997);
+            transition: width 0.3s;
+        }
+        
+        .fingerprint-info {
+            background-color: #f8f9fa;
+            padding: 1rem;
+            border-radius: 5px;
+            margin: 1rem 0;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+        
+        .download-links {
+            margin-top: 2rem;
+        }
+        
+        .download-links h3 {
+            margin-bottom: 1rem;
+        }
+        
+        .download-links ul {
+            list-style: none;
+        }
+        
+        .download-links li {
+            margin: 0.5rem 0;
+        }
+        
+        .download-links a {
+            color: #007bff;
+            text-decoration: none;
+        }
+        
+        .download-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <nav class="main-nav">
+            <div class="nav-container">
+                <div class="nav-logo">
+                    <h1>uevrLCX</h1>
+                    <span class="tagline">Universal Engine VR Adapter</span>
+                </div>
+                <ul class="nav-menu">
+                    <li><a href="../index.html">Home</a></li>
+                    <li><a href="../engines/">Engines</a></li>
+                    <li><a href="../tools/">Tools</a></li>
+                    <li><a href="../testing/">Testing</a></li>
+                    <li><a href="../community/">Community</a></li>
+                </ul>
+            </div>
+        </nav>
+    </header>
+
+    <main class="site-main">
+        <div class="detector-container">
+            <h1>🕵️ Engine Detector Tool</h1>
+            <p>Upload a game fingerprint JSON file to automatically detect the game engine and assess VR compatibility.</p>
+            
+            <div class="upload-area" id="uploadArea">
+                <p><strong>Drag and drop a fingerprint JSON file here</strong></p>
+                <p>or</p>
+                <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                    Choose File
+                </button>
+                <input type="file" id="fileInput" class="file-input" accept=".json" onchange="handleFileSelect(event)">
+            </div>
+            
+            <div class="results" id="results">
+                <h2>Analysis Results</h2>
+                <div id="resultsContent"></div>
+            </div>
+            
+            <div class="fingerprint-info">
+                <h3>📋 How to Generate Fingerprints</h3>
+                <p>Use our local CLI tool to generate safe game fingerprints:</p>
+                <ol>
+                    <li>Download the <code>fingerprint.exe</code> tool from our releases</li>
+                    <li>Run: <code>fingerprint.exe "path\to\game.exe"</code></li>
+                    <li>Upload the generated JSON file here</li>
+                </ol>
+                <p><strong>Note:</strong> We never process executable files directly for security reasons.</p>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>uevrLCX</h3>
+                    <p>Universal Engine VR Adapter Platform</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="../docs/README.md">Documentation</a></li>
+                        <li><a href="https://github.com/your-repo/uevrLCX">GitHub</a></li>
+                        <li><a href="../docs/contributing.md">Contributing</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 uevrLCX. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Drag and drop functionality
+        const uploadArea = document.getElementById('uploadArea');
+        const fileInput = document.getElementById('fileInput');
+        const results = document.getElementById('results');
+        const resultsContent = document.getElementById('resultsContent');
+
+        uploadArea.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            uploadArea.classList.add('dragover');
+        });
+
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
+        });
+
+        uploadArea.addEventListener('drop', (e) => {
+            e.preventDefault();
+            uploadArea.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                handleFile(files[0]);
+            }
+        });
+
+        function handleFileSelect(event) {
+            const file = event.target.files[0];
+            if (file) {
+                handleFile(file);
+            }
+        }
+
+        function handleFile(file) {
+            if (file.type !== 'application/json' && !file.name.endsWith('.json')) {
+                alert('Please select a JSON file');
+                return;
+            }
+
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                try {
+                    const fingerprint = JSON.parse(e.target.result);
+                    analyzeFingerprint(fingerprint);
+                } catch (error) {
+                    alert('Invalid JSON file: ' + error.message);
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        function analyzeFingerprint(fingerprint) {
+            // Engine detection logic based on fingerprint
+            const engineResults = detectEngine(fingerprint);
+            const compatibility = assessCompatibility(engineResults, fingerprint);
+            const recommendations = generateRecommendations(engineResults, compatibility);
+            
+            displayResults(engineResults, compatibility, recommendations, fingerprint);
+            results.style.display = 'block';
+        }
+
+        function detectEngine(fingerprint) {
+            const results = {};
+            
+            // MT Framework detection
+            if (fingerprint.strings && fingerprint.strings.some(s => s.includes('MTFramework'))) {
+                results.mt_framework = {
+                    confidence: 0.9,
+                    matched_patterns: ['MTFramework'],
+                    detected: true
+                };
+            }
+            
+            // RE Engine detection
+            if (fingerprint.strings && fingerprint.strings.some(s => s.includes('REEngine'))) {
+                results.re_engine = {
+                    confidence: 0.85,
+                    matched_patterns: ['REEngine'],
+                    detected: true
+                };
+            }
+            
+            // REDengine 4 detection
+            if (fingerprint.strings && fingerprint.strings.some(s => s.includes('REDengine'))) {
+                results.redengine4 = {
+                    confidence: 0.8,
+                    matched_patterns: ['REDengine'],
+                    detected: true
+                };
+            }
+            
+            // Unreal Engine detection
+            if (fingerprint.strings && fingerprint.strings.some(s => s.includes('UnrealEngine'))) {
+                results.unreal_engine = {
+                    confidence: 0.95,
+                    matched_patterns: ['UnrealEngine'],
+                    detected: true
+                };
+            }
+            
+            // Unity Engine detection
+            if (fingerprint.strings && fingerprint.strings.some(s => s.includes('Unity'))) {
+                results.unity_engine = {
+                    confidence: 0.9,
+                    matched_patterns: ['Unity'],
+                    detected: true
+                };
+            }
+            
+            return results;
+        }
+
+        function assessCompatibility(engineResults, fingerprint) {
+            const compatibility = {
+                overall_score: 0,
+                difficulty: 'unknown',
+                estimated_effort: 'unknown',
+                risks: [],
+                advantages: []
+            };
+            
+            const detectedEngines = Object.keys(engineResults).filter(key => engineResults[key].detected);
+            
+            if (detectedEngines.length === 0) {
+                compatibility.difficulty = 'high';
+                compatibility.estimated_effort = 'very_high';
+                compatibility.risks.push('Unknown engine - requires reverse engineering');
+                return compatibility;
+            }
+            
+            const primaryEngine = detectedEngines[0];
+            const confidence = engineResults[primaryEngine].confidence;
+            
+            // Engine-specific assessment
+            switch (primaryEngine) {
+                case 'mt_framework':
+                    compatibility.overall_score = Math.round(90 * confidence);
+                    compatibility.difficulty = 'low';
+                    compatibility.estimated_effort = 'low';
+                    compatibility.advantages.push('Well-documented and tested');
+                    break;
+                    
+                case 're_engine':
+                    compatibility.overall_score = Math.round(75 * confidence);
+                    compatibility.difficulty = 'medium';
+                    compatibility.estimated_effort = 'medium';
+                    compatibility.risks.push('Matrix mapping required');
+                    break;
+                    
+                case 'redengine4':
+                    compatibility.overall_score = Math.round(60 * confidence);
+                    compatibility.difficulty = 'high';
+                    compatibility.estimated_effort = 'high';
+                    compatibility.risks.push('D3D12 command list hooking required');
+                    break;
+                    
+                case 'unreal_engine':
+                    compatibility.overall_score = Math.round(95 * confidence);
+                    compatibility.difficulty = 'very_low';
+                    compatibility.estimated_effort = 'very_low';
+                    compatibility.advantages.push('UEVR framework available');
+                    break;
+                    
+                case 'unity_engine':
+                    compatibility.overall_score = Math.round(80 * confidence);
+                    compatibility.difficulty = 'medium';
+                    compatibility.estimated_effort = 'medium';
+                    compatibility.risks.push('Script engine integration required');
+                    break;
+            }
+            
+            return compatibility;
+        }
+
+        function generateRecommendations(engineResults, compatibility) {
+            const recommendations = [];
+            const detectedEngines = Object.keys(engineResults).filter(key => engineResults[key].detected);
+            
+            if (detectedEngines.length === 0) {
+                recommendations.push('Consider using generic hooking approach');
+                recommendations.push('Analyze executable with disassembler');
+                recommendations.push('Look for common rendering patterns');
+                return recommendations;
+            }
+            
+            const primaryEngine = detectedEngines[0];
+            
+            switch (primaryEngine) {
+                case 'mt_framework':
+                    recommendations.push('Use existing MT Framework adapter');
+                    recommendations.push('Follow Monster Hunter World implementation');
+                    recommendations.push('Test with known compatible games first');
+                    break;
+                    
+                case 're_engine':
+                    recommendations.push('Use REFramework for enhanced modding');
+                    recommendations.push('Focus on matrix identification');
+                    recommendations.push('Test with Resident Evil 7 first');
+                    break;
+                    
+                case 'redengine4':
+                    recommendations.push('Study Cyber Engine Tweaks integration');
+                    recommendations.push('Focus on D3D12 command list hooking');
+                    recommendations.push('Consider performance optimization early');
+                    break;
+                    
+                case 'unreal_engine':
+                    recommendations.push('Use UEVR framework directly');
+                    recommendations.push('Check for existing VR mods');
+                    recommendations.push('Verify engine version compatibility');
+                    break;
+                    
+                case 'unity_engine':
+                    recommendations.push('Use Unity-specific hooking techniques');
+                    recommendations.push('Focus on camera and input systems');
+                    recommendations.push('Check for existing VR mods');
+                    break;
+            }
+            
+            if (compatibility.difficulty === 'high' || compatibility.difficulty === 'very_high') {
+                recommendations.push('Consider starting with simpler games');
+                recommendations.push('Build expertise with easier engines first');
+                recommendations.push('Collaborate with community experts');
+            }
+            
+            return recommendations;
+        }
+
+        function displayResults(engineResults, compatibility, recommendations, fingerprint) {
+            let html = '';
+            
+            // Engine detection results
+            html += '<h3>🔍 Engine Detection Results</h3>';
+            const detectedEngines = Object.keys(engineResults).filter(key => engineResults[key].detected);
+            
+            if (detectedEngines.length === 0) {
+                html += '<p><strong>No known engine detected</strong></p>';
+            } else {
+                detectedEngines.forEach(engine => {
+                    const result = engineResults[engine];
+                    const engineName = engine.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase());
+                    const confidencePercent = Math.round(result.confidence * 100);
+                    
+                    html += `
+                        <div class="engine-result ${engine}">
+                            <h4>${engineName}</h4>
+                            <p>Confidence: ${confidencePercent}%</p>
+                            <div class="confidence-bar">
+                                <div class="confidence-fill" style="width: ${confidencePercent}%"></div>
+                            </div>
+                            <p>Matched patterns: ${result.matched_patterns.join(', ')}</p>
+                        </div>
+                    `;
+                });
+            }
+            
+            // Compatibility assessment
+            html += '<h3>🎯 VR Compatibility Assessment</h3>';
+            html += `<p><strong>Overall Score:</strong> ${compatibility.overall_score}/100</p>`;
+            html += `<p><strong>Difficulty:</strong> ${compatibility.difficulty}</p>`;
+            html += `<p><strong>Estimated Effort:</strong> ${compatibility.estimated_effort}</p>`;
+            
+            if (compatibility.advantages.length > 0) {
+                html += '<p><strong>Advantages:</strong></p><ul>';
+                compatibility.advantages.forEach(adv => html += `<li>${adv}</li>`);
+                html += '</ul>';
+            }
+            
+            if (compatibility.risks.length > 0) {
+                html += '<p><strong>Risks:</strong></p><ul>';
+                compatibility.risks.forEach(risk => html += `<li>${risk}</li>`);
+                html += '</ul>';
+            }
+            
+            // Recommendations
+            html += '<h3>💡 Recommendations</h3><ul>';
+            recommendations.forEach(rec => html += `<li>${rec}</li>`);
+            html += '</ul>';
+            
+            // Download links
+            if (detectedEngines.length > 0) {
+                const primaryEngine = detectedEngines[0];
+                html += `
+                    <div class="download-links">
+                        <h3>📥 Download Adapter</h3>
+                        <ul>
+                            <li><a href="../engines/${primaryEngine}.html">View ${primaryEngine.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())} Documentation</a></li>
+                            <li><a href="../downloads/${primaryEngine}-adapter.zip">Download ${primaryEngine.replace('_', ' ').replace(/\b\w/g, l => l.toUpperCase())} Adapter</a></li>
+                            <li><a href="../tools/profile-generator.html">Generate Custom Profile</a></li>
+                        </ul>
+                    </div>
+                `;
+            }
+            
+            resultsContent.innerHTML = html;
+        }
+    </script>
+</body>
+</html>
