@@ -35,18 +35,32 @@ jobs:
           pip install -r requirements.txt || true
           pip install mkdocs mkdocs-material mkdocs-awesome-pages-plugin
       
+      - name: Create data directories
+        run: |
+          mkdir -p docs/data
+          mkdir -p docs/reports
+          mkdir -p docs/reports/mt-framework
+          mkdir -p docs/reports/re-engine
+          mkdir -p docs/reports/redengine4
+          mkdir -p docs/reports/unreal-engine
+          mkdir -p docs/reports/unity-engine
+      
+      - name: Run AI analysis
+        run: |
+          python scripts/ai-analysis.py --output-dir docs/data
+      
       - name: Generate GitHub Pages content
         run: |
-          python scripts/generate-github-pages.py
+          python scripts/generate-github-pages.py --source-dir . --output-dir docs
       
       - name: Build documentation
         run: |
-          mkdocs build --site-dir docs/github-pages/_site
+          mkdocs build --site-dir docs/_site
       
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: docs/github-pages/_site
+          path: docs/_site
 
   deploy:
     environment:
