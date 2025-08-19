@@ -12,6 +12,8 @@
 #include "uevr/adapters/mhw/TPPToFPPConverter.hpp"
 #include "uevr/adapters/mhw/AnimationVRIntegrator.hpp"
 #include "uevr/adapters/mhw/CombatVRSystem.hpp"
+#include "uevr/vr/FullAestheticCollisionEngine.hpp"
+#include "uevr/vr/FullPhysicsIntegration.hpp"
 #include <spdlog/spdlog.h>
 #include <d3d11.h>
 #include <dxgi.h>
@@ -32,6 +34,8 @@ MHWAdapter::MHWAdapter()
     , m_camera_converter(nullptr)
     , m_animation_integrator(nullptr)
     , m_combat_system(nullptr)
+    , m_collision_engine(nullptr)
+    , m_physics_engine(nullptr)
     , m_frame_count(0)
     , m_camera_mode(CameraMode::THIRD_PERSON) {
     
@@ -83,6 +87,12 @@ bool MHWAdapter::initialize() {
         m_combat_system = std::make_unique<CombatVRSystem>();
         if (!m_combat_system->initialize()) {
             spdlog::error("[MHW] Failed to initialize combat VR system");
+            return false;
+        }
+        
+        // Initialize collision and physics engines for MHW
+        if (!initializeCollisionAndPhysics()) {
+            spdlog::error("[MHW] Failed to initialize collision and physics engines");
             return false;
         }
         
@@ -798,6 +808,37 @@ void MHWAdapter::loadConfigFromFile(const std::filesystem::path& config_path) {
 
 void MHWAdapter::createDefaultConfig() {
     spdlog::debug("[MHW] Creating default configuration");
+}
+
+bool MHWAdapter::initializeCollisionAndPhysics() {
+    spdlog::debug("[MHW] Initializing collision and physics engines for MHW");
+    
+    // Create collision engine
+    m_collision_engine = std::make_unique<FullAestheticCollisionEngine>();
+    if (!m_collision_engine->initialize()) {
+        spdlog::error("[MHW] Failed to initialize collision engine");
+        return false;
+    }
+    
+    // Create physics engine
+    m_physics_engine = std::make_unique<FullPhysicsIntegration>();
+    if (!m_physics_engine->initialize()) {
+        spdlog::error("[MHW] Failed to initialize physics engine");
+        return false;
+    }
+    
+    // Integrate collision and physics engines with MT Framework
+    if (!m_collision_engine->integrateWithMTFramework()) {
+        spdlog::error("[MHW] Failed to integrate collision engine with MT Framework");
+        return false;
+    }
+    if (!m_physics_engine->integrateWithMTFramework()) {
+        spdlog::error("[MHW] Failed to integrate physics engine with MT Framework");
+        return false;
+    }
+    
+    spdlog::info("[MHW] Collision and physics engines initialized successfully");
+    return true;
 }
 
 } // namespace mhw

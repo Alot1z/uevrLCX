@@ -1,4 +1,6 @@
 #include "VRSystem.h"
+#include "uevr/vr/FullAestheticCollisionEngine.hpp"
+#include "uevr/vr/FullPhysicsIntegration.hpp"
 #include <spdlog/spdlog.h>
 #include <Windows.h>
 #include <openvr.h>
@@ -8,6 +10,7 @@
 #include <vector>
 #include <string>
 #include <chrono>
+#include <cstring>
 
 namespace UEVR {
 namespace VR {
@@ -40,19 +43,32 @@ struct VRSystemState {
     bool async_reprojection_enabled;
     bool motion_smoothing_enabled;
     
+    // Collision and physics engines
+    std::unique_ptr<uevr::vr::FullAestheticCollisionEngine> collision_engine;
+    std::unique_ptr<uevr::vr::FullPhysicsIntegration> physics_engine;
+    
     VRSystemState() : initialized(false), vr_mode_active(false), openvr_system(nullptr), 
                       openvr_compositor(nullptr), xr_instance(XR_NULL_HANDLE), 
                       xr_session(XR_NULL_HANDLE), xr_system_id(XR_NULL_SYSTEM_ID),
                       headset_detected(false), controllers_detected(false), controller_count(0),
                       stereo_rendering_active(false), viewport_width(0), viewport_height(0),
-                      async_reprojection_enabled(false), motion_smoothing_enabled(false) {}
+                      async_reprojection_enabled(false), motion_smoothing_enabled(false),
+                      collision_engine(nullptr), physics_engine(nullptr) {}
 };
 
 static std::unique_ptr<VRSystemState> g_vrState;
 
+// Ensure global state is allocated before use
+static void ensureState() {
+    if (!g_vrState) {
+        g_vrState = std::make_unique<VRSystemState>();
+    }
+}
+
 // OpenVR initialization
 bool initializeOpenVR() {
     try {
+        ensureState();
         if (g_vrState->openvr_system) {
             spdlog::info("[VRSystem] OpenVR already initialized");
             return true;
@@ -64,6 +80,7 @@ bool initializeOpenVR() {
         
         if (initError != vr::VRInitError_None) {
             spdlog::error("[VRSystem] OpenVR initialization failed: {}", vr::VR_GetVRInitErrorAsEnglishDescription(initError));
+            g_vrState->openvr_system = nullptr;
             return false;
         }
 
@@ -71,6 +88,8 @@ bool initializeOpenVR() {
         g_vrState->openvr_compositor = vr::VRCompositor();
         if (!g_vrState->openvr_compositor) {
             spdlog::error("[VRSystem] Failed to initialize OpenVR compositor");
+            vr::VR_Shutdown();
+            g_vrState->openvr_system = nullptr;
             return false;
         }
 
@@ -83,19 +102,55 @@ bool initializeOpenVR() {
     }
 }
 
+// Initialize collision and physics engines
+bool initializeCollisionAndPhysics() {
+    try {
+        ensureState();
+        
+        // Initialize collision engine
+        g_vrState->collision_engine = std::make_unique<uevr::vr::FullAestheticCollisionEngine>();
+        if (!g_vrState->collision_engine->initializeFullCollision()) {
+            spdlog::error("[VRSystem] Failed to initialize collision engine");
+            return false;
+        }
+        
+        // Initialize physics engine
+        g_vrState->physics_engine = std::make_unique<uevr::vr::FullPhysicsIntegration>();
+        if (!g_vrState->physics_engine->initializeFullPhysics()) {
+            spdlog::error("[VRSystem] Failed to initialize physics engine");
+            return false;
+        }
+        
+        spdlog::info("[VRSystem] Collision and physics engines initialized successfully");
+        return true;
+        
+    } catch (const std::exception& e) {
+        spdlog::error("[VRSystem] Exception initializing collision and physics: {}", e.what());
+        return false;
+    }
+}
+
 // OpenXR initialization
 bool initializeOpenXR() {
     try {
+        ensureState();
         if (g_vrState->xr_instance != XR_NULL_HANDLE) {
             spdlog::info("[VRSystem] OpenXR already initialized");
             return true;
         }
 
         // Create OpenXR instance
-        XrInstanceCreateInfo createInfo = {XR_TYPE_INSTANCE_CREATE_INFO};
-        createInfo.applicationInfo = {
-            "UEVR Cross-Engine VR System", 1, "1.0.0", 1, "1.0.0"
-        };
+        XrInstanceCreateInfo createInfo{XR_TYPE_INSTANCE_CREATE_INFO};
+        XrApplicationInfo appInfo{};
+        std::memset(&appInfo, 0, sizeof(appInfo));
+        std::strncpy(appInfo.applicationName, "UEVR Cross-Engine VR System", XR_MAX_APPLICATION_NAME_SIZE - 1);
+        appInfo.applicationName[XR_MAX_APPLICATION_NAME_SIZE - 1] = '\0';
+        appInfo.applicationVersion = 1;
+        std::strncpy(appInfo.engineName, "UEVR", XR_MAX_ENGINE_NAME_SIZE - 1);
+        appInfo.engineName[XR_MAX_ENGINE_NAME_SIZE - 1] = '\0';
+        appInfo.engineVersion = 1;
+        appInfo.apiVersion = XR_CURRENT_API_VERSION;
+        createInfo.applicationInfo = appInfo;
         createInfo.enabledApiLayerCount = 0;
         createInfo.enabledExtensionCount = 0;
 
@@ -124,6 +179,26 @@ bool initializeOpenXR() {
     }
 }
 
+// Update collision and physics systems
+void updateCollisionAndPhysics(float delta_time) {
+    try {
+        ensureState();
+        
+        if (g_vrState->collision_engine) {
+            // Update collision system
+            g_vrState->collision_engine->updatePhysicsSimulation(delta_time);
+        }
+        
+        if (g_vrState->physics_engine) {
+            // Update physics system
+            g_vrState->physics_engine->updatePhysicsSimulation(delta_time);
+        }
+        
+    } catch (const std::exception& e) {
+        spdlog::error("[VRSystem] Exception updating collision and physics: {}", e.what());
+    }
+}
+
 // SteamVR initialization
 bool initializeSteamVR() {
     try {
@@ -139,6 +214,7 @@ bool initializeSteamVR() {
 // VR system initialization
 bool initializeVRSystem() {
     try {
+        ensureState();
         if (g_vrState->initialized) {
             spdlog::warn("[VRSystem] VR system already initialized");
             return true;
@@ -182,6 +258,9 @@ bool initializeVRSystem() {
 // VR system cleanup
 void cleanupVRSystem() {
     try {
+        if (!g_vrState) {
+            return;
+        }
         if (!g_vrState->initialized) {
             return;
         }
@@ -218,6 +297,7 @@ void cleanupVRSystem() {
 // VR mode activation
 bool activateVRMode() {
     try {
+        ensureState();
         if (!g_vrState->initialized) {
             spdlog::error("[VRSystem] VR system not initialized");
             return false;
@@ -260,6 +340,7 @@ bool activateVRMode() {
 // VR mode deactivation
 bool deactivateVRMode() {
     try {
+        ensureState();
         if (!g_vrState->vr_mode_active) {
             spdlog::warn("[VRSystem] VR mode not active");
             return true;
@@ -292,6 +373,7 @@ std::string getCurrentVRRuntime() {
 // VR headset detection
 bool detectVRHeadset() {
     try {
+        ensureState();
         if (!g_vrState->initialized) {
             return false;
         }
@@ -331,6 +413,7 @@ std::string getHeadsetName() {
 // VR controller detection
 bool detectVRControllers() {
     try {
+        ensureState();
         if (!g_vrState->initialized) {
             return false;
         }
@@ -379,6 +462,7 @@ int getControllerCount() {
 // VR stereo rendering initialization
 bool initializeVRStereoRendering() {
     try {
+        ensureState();
         if (!g_vrState->initialized) {
             return false;
         }
@@ -403,6 +487,7 @@ bool initializeVRStereoRendering() {
 // VR viewport setup
 bool setVRViewport(int width, int height) {
     try {
+        ensureState();
         if (!g_vrState->stereo_rendering_active) {
             return false;
         }
@@ -422,6 +507,7 @@ bool setVRViewport(int width, int height) {
 // VR frame submission
 bool submitVRFrame() {
     try {
+        ensureState();
         if (!g_vrState->vr_mode_active) {
             return false;
         }
@@ -439,6 +525,7 @@ bool submitVRFrame() {
 // VR frame presentation
 bool presentVRFrame() {
     try {
+        ensureState();
         if (!g_vrState->vr_mode_active) {
             return false;
         }
@@ -456,6 +543,7 @@ bool presentVRFrame() {
 // VR input initialization
 bool initializeVRInput() {
     try {
+        ensureState();
         if (!g_vrState->initialized) {
             return false;
         }
@@ -477,6 +565,7 @@ bool initializeVRInput() {
 // VR input polling
 bool pollVRInput() {
     try {
+        ensureState();
         if (!g_vrState->vr_mode_active) {
             return false;
         }
@@ -494,6 +583,7 @@ bool pollVRInput() {
 // Controller pose retrieval
 bool getControllerPose(int controller, float* position, float* rotation) {
     try {
+        ensureState();
         if (!g_vrState->vr_mode_active || !g_vrState->controllers_detected) {
             return false;
         }
@@ -528,6 +618,7 @@ bool getControllerPose(int controller, float* position, float* rotation) {
 // Controller button state
 bool getControllerButtonState(int controller, int button) {
     try {
+        ensureState();
         if (!g_vrState->vr_mode_active || !g_vrState->controllers_detected) {
             return false;
         }
@@ -550,6 +641,7 @@ bool getControllerButtonState(int controller, int button) {
 // Async reprojection
 bool enableAsyncReprojection() {
     try {
+        ensureState();
         if (!g_vrState->initialized) {
             return false;
         }
@@ -567,6 +659,7 @@ bool enableAsyncReprojection() {
 // Motion smoothing
 bool enableMotionSmoothing() {
     try {
+        ensureState();
         if (!g_vrState->initialized) {
             return false;
         }
@@ -584,6 +677,7 @@ bool enableMotionSmoothing() {
 // VR performance mode
 bool setVRPerformanceMode(const std::string& mode) {
     try {
+        ensureState();
         if (!g_vrState->initialized) {
             return false;
         }
