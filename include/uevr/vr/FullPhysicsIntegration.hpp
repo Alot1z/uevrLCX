@@ -1,5 +1,5 @@
 /*
- * UEVR Full Physics Integration
+ * UEVR Full Physics Integration Header
  * 
  * Complete physics simulation system for VR
  * Handles all object types with realistic physics and performance optimization
@@ -10,49 +10,150 @@
 
 #pragma once
 
+#include "uevr/vr/FullAestheticCollisionEngine.hpp"
 #include <memory>
 #include <vector>
-#include <string>
-#include <cstdint>
-#include <glm/glm.hpp>
-#include "uevr/vr/FullAestheticCollisionEngine.hpp"
+#include <unordered_map>
+#include <chrono>
 
 namespace uevr {
 namespace vr {
 
-// Shared types come from FullAestheticCollisionEngine.hpp
-// Provide a local alias for vector type used by physics implementation
-using Vector3 = glm::vec3;
+// Forward declarations
+class InteractionResult;
+class ForceType;
+class GravityType;
 
-// Additional enums used by physics system
-enum class ForceType {
-    LINEAR,
-    ANGULAR,
-    IMPULSE
-};
-
-enum class GravityType {
-    EARTH,
-    ZERO,
-    CUSTOM
-};
-
-// Minimal performance and interaction structs
-struct PhysicsPerformance {
-    uint64_t collision_checks = 0;
-    uint64_t physics_updates = 0;
-    uint64_t force_applications = 0;
-    uint64_t constraint_solves = 0;
-    float total_simulation_time = 0.0f;
-    float average_frame_time = 0.0f;
-    uint64_t total_frames = 0;
-};
-
+// Interaction result structure
 struct InteractionResult {
-    bool success = false;
-    uevr::vr::ObjectID object = 0;
-    uevr::vr::HandType hand = uevr::vr::HandType::NONE;
-    std::string description;
+    bool interaction_successful;
+    float interaction_strength;
+    glm::vec3 interaction_point;
+    glm::vec3 interaction_direction;
+    ObjectID interacted_object;
+    CollisionType interaction_type;
+    float response_time;
+    
+    InteractionResult() : interaction_successful(false), interaction_strength(0.0f), 
+                         response_time(0.0f) {}
+};
+
+// Force types for physics simulation
+enum class ForceType {
+    NONE,           // No force applied
+    LINEAR,         // Linear force
+    ANGULAR,        // Angular force (torque)
+    IMPULSE,        // Instant force impulse
+    GRAVITY,        // Gravitational force
+    CONSTANT,       // Constant force over time
+    SPRING,         // Spring force
+    DAMPING,        // Damping force
+    FRICTION,       // Friction force
+    BUOYANCY,       // Buoyancy force
+    MAGNETIC,       // Magnetic force
+    WIND            // Wind force
+};
+
+// Gravity types for different environments
+enum class GravityType {
+    NONE,           // No gravity
+    EARTH,          // Earth gravity (9.81 m/s²)
+    ZERO,           // Zero gravity
+    MOON,           // Moon gravity (1.62 m/s²)
+    MARS,           // Mars gravity (3.71 m/s²)
+    SPACE,          // Microgravity
+    CUSTOM          // Custom gravity value
+};
+
+// Interaction types for object interactions in VR
+enum class InteractionType {
+    NONE,
+    TOUCH,
+    GRAB,
+    RELEASE,
+    PUSH,
+    PULL,
+    THROW,
+    USE,
+    OPEN,
+    CLOSE,
+    EQUIP,
+    UNEQUIP,
+    BREAK,
+    INTERACT,
+    DAMAGE,
+    TRIGGER
+};
+
+// Physics performance metrics
+struct PhysicsPerformance {
+    float frame_time;
+    float physics_update_time;
+    uint64_t active_objects;
+    uint64_t collision_checks;
+    uint64_t physics_calculations;
+    uint64_t physics_updates;
+    uint64_t force_applications;
+    uint64_t constraint_solves;
+    float total_simulation_time;
+    float average_frame_time;
+    uint64_t total_frames;
+    float memory_usage_mb;
+    float cpu_usage_percent;
+    uint64_t successful_interactions;
+    uint64_t failed_interactions;
+    
+    PhysicsPerformance() : frame_time(0.0f), physics_update_time(0.0f), 
+                          active_objects(0), collision_checks(0), physics_calculations(0),
+                          physics_updates(0), force_applications(0), constraint_solves(0),
+                          total_simulation_time(0.0f), average_frame_time(0.0f), total_frames(0),
+                          memory_usage_mb(0.0f), cpu_usage_percent(0.0f),
+                          successful_interactions(0), failed_interactions(0) {}
+};
+
+// Physics state structure
+struct PhysicsState {
+    glm::vec3 position;
+    glm::vec3 velocity;
+    glm::vec3 angular_velocity;
+    glm::quat rotation;
+    glm::mat4 transform;
+    bool is_active;
+    bool is_sleeping;
+    
+    PhysicsState() : position(0.0f), velocity(0.0f), angular_velocity(0.0f), 
+                    rotation(1.0f, 0.0f, 0.0f, 0.0f), is_active(true), is_sleeping(false) {}
+};
+
+// Physics properties structure
+struct PhysicsProperties {
+    float mass;
+    float friction;
+    float restitution;
+    float linear_damping;
+    float angular_damping;
+    glm::vec3 inertia;
+    bool kinematic;
+    bool trigger;
+    
+    PhysicsProperties() : mass(1.0f), friction(0.5f), restitution(0.5f), 
+                        linear_damping(0.0f), angular_damping(0.0f), 
+                        inertia(1.0f), kinematic(false), trigger(false) {}
+};
+
+// Constraint data structure
+struct ConstraintData {
+    ObjectID object1;
+    ObjectID object2;
+    glm::vec3 pivot1;
+    glm::vec3 pivot2;
+    glm::vec3 axis1;
+    glm::vec3 axis2;
+    float lower_limit;
+    float upper_limit;
+    bool enabled;
+    
+    ConstraintData() : object1(0), object2(0), lower_limit(-180.0f), upper_limit(180.0f), enabled(true) {}
 };
 
 /**
@@ -160,28 +261,28 @@ public:
      * @param force The force vector to apply
      * @param force_type The type of force to apply
      */
-    virtual void applyFullForce(ObjectID object, Vector3 force, ForceType force_type) = 0;
+    virtual void applyFullForce(ObjectID object, const glm::vec3& force, ForceType force_type) = 0;
     
     /**
      * @brief Apply impulse force to an object
      * @param object The object to apply impulse to
      * @param impulse The impulse vector to apply
      */
-    virtual void applyImpulse(ObjectID object, Vector3 impulse) = 0;
+    virtual void applyImpulse(ObjectID object, const glm::vec3& impulse) = 0;
     
     /**
      * @brief Apply torque to an object
      * @param object The object to apply torque to
      * @param torque The torque vector to apply
      */
-    virtual void applyTorque(ObjectID object, Vector3 torque) = 0;
+    virtual void applyTorque(ObjectID object, const glm::vec3& torque) = 0;
     
     /**
      * @brief Get the current force being applied to an object
      * @param object The object to get force for
      * @return The current force vector
      */
-    virtual Vector3 getObjectForce(ObjectID object) const = 0;
+    virtual glm::vec3 getObjectForce(ObjectID object) const = 0;
     
     /**
      * @brief Clear all forces applied to an object
@@ -217,14 +318,14 @@ public:
      * @param object The object to set gravity for
      * @param gravity_vector The gravity vector to apply
      */
-    virtual void setObjectGravity(ObjectID object, Vector3 gravity_vector) = 0;
+    virtual void setObjectGravity(ObjectID object, const glm::vec3& gravity_vector) = 0;
     
     /**
      * @brief Get object-specific gravity
      * @param object The object to get gravity for
      * @return The gravity vector for this object
      */
-    virtual Vector3 getObjectGravity(ObjectID object) const = 0;
+    virtual glm::vec3 getObjectGravity(ObjectID object) const = 0;
     
     /**
      * @brief Disable gravity for a specific object
@@ -248,7 +349,7 @@ public:
      * @param collision The collision result to handle
      * @param type The type of collision that occurred
      */
-    virtual void handleFullCollisionResponse(CollisionResult collision, CollisionType type) = 0;
+    virtual void handleFullCollisionResponse(const CollisionResult& collision, CollisionType type) = 0;
     
     /**
      * @brief Set collision response enabled/disabled
@@ -384,42 +485,42 @@ public:
      * @param object The object to set position for
      * @param position The position vector to set
      */
-    virtual void setObjectPosition(ObjectID object, Vector3 position) = 0;
+    virtual void setObjectPosition(ObjectID object, const glm::vec3& position) = 0;
     
     /**
      * @brief Get object position
      * @param object The object to get position for
      * @return The current position of the object
      */
-    virtual Vector3 getObjectPosition(ObjectID object) const = 0;
+    virtual glm::vec3 getObjectPosition(ObjectID object) const = 0;
     
     /**
      * @brief Set object rotation
      * @param object The object to set rotation for
      * @param rotation The rotation vector to set (in radians)
      */
-    virtual void setObjectRotation(ObjectID object, Vector3 rotation) = 0;
+    virtual void setObjectRotation(ObjectID object, const glm::vec3& rotation) = 0;
     
     /**
      * @brief Get object rotation
      * @param object The object to get rotation for
      * @return The current rotation of the object (in radians)
      */
-    virtual Vector3 getObjectRotation(ObjectID object) const = 0;
+    virtual glm::vec3 getObjectRotation(ObjectID object) const = 0;
     
     /**
      * @brief Set object scale
      * @param object The object to set scale for
      * @param scale The scale vector to set
      */
-    virtual void setObjectScale(ObjectID object, Vector3 scale) = 0;
+    virtual void setObjectScale(ObjectID object, const glm::vec3& scale) = 0;
     
     /**
      * @brief Get object scale
      * @param object The object to get scale for
      * @return The current scale of the object
      */
-    virtual Vector3 getObjectScale(ObjectID object) const = 0;
+    virtual glm::vec3 getObjectScale(ObjectID object) const = 0;
 
     // ============================================================================
     // OBJECT VELOCITY AND MOMENTUM
@@ -430,42 +531,42 @@ public:
      * @param object The object to set velocity for
      * @param velocity The velocity vector to set
      */
-    virtual void setObjectVelocity(ObjectID object, Vector3 velocity) = 0;
+    virtual void setObjectVelocity(ObjectID object, const glm::vec3& velocity) = 0;
     
     /**
      * @brief Get object velocity
      * @param object The object to get velocity for
      * @return The current velocity of the object
      */
-    virtual Vector3 getObjectVelocity(ObjectID object) const = 0;
+    virtual glm::vec3 getObjectVelocity(ObjectID object) const = 0;
     
     /**
      * @brief Set object angular velocity
      * @param object The object to set angular velocity for
      * @param angular_velocity The angular velocity vector to set
      */
-    virtual void setObjectAngularVelocity(ObjectID object, Vector3 angular_velocity) = 0;
+    virtual void setObjectAngularVelocity(ObjectID object, const glm::vec3& angular_velocity) = 0;
     
     /**
      * @brief Get object angular velocity
      * @param object The object to get angular velocity for
      * @return The current angular velocity of the object
      */
-    virtual Vector3 getObjectAngularVelocity(ObjectID object) const = 0;
+    virtual glm::vec3 getObjectAngularVelocity(ObjectID object) const = 0;
     
     /**
      * @brief Get object momentum
      * @param object The object to get momentum for
      * @return The current momentum of the object
      */
-    virtual Vector3 getObjectMomentum(ObjectID object) const = 0;
+    virtual glm::vec3 getObjectMomentum(ObjectID object) const = 0;
     
     /**
      * @brief Get object angular momentum
      * @param object The object to get angular momentum for
      * @return The current angular momentum of the object
      */
-    virtual Vector3 getObjectAngularMomentum(ObjectID object) const = 0;
+    virtual glm::vec3 getObjectAngularMomentum(ObjectID object) const = 0;
 
     // ============================================================================
     // CONSTRAINT SYSTEM
@@ -486,7 +587,7 @@ public:
      * @param axis The axis of rotation for the hinge
      * @return true if constraint created successfully, false otherwise
      */
-    virtual bool createHingeConstraint(ObjectID object1, ObjectID object2, Vector3 axis) = 0;
+    virtual bool createHingeConstraint(ObjectID object1, ObjectID object2, const glm::vec3& axis) = 0;
     
     /**
      * @brief Create a spring constraint between two objects
@@ -590,6 +691,113 @@ public:
      * @return String containing debug information
      */
     virtual std::string getObjectPhysicsDebug(ObjectID object) const = 0;
+
+    // ============================================================================
+    // ADVANCED PHYSICS FEATURES
+    // ============================================================================
+    
+    /**
+     * @brief Enable advanced physics for an object
+     * @param object The object to enable advanced physics for
+     * @param enable true to enable, false to disable
+     * @return true if successful, false otherwise
+     */
+    virtual bool enableAdvancedPhysics(ObjectID object, bool enable) = 0;
+    
+    /**
+     * @brief Set physics properties for an object
+     * @param object The object to set properties for
+     * @param properties The physics properties to set
+     * @return true if successful, false otherwise
+     */
+    virtual bool setPhysicsProperties(ObjectID object, const PhysicsProperties& properties) = 0;
+    
+    /**
+     * @brief Set object physics state
+     * @param object The object to set state for
+     * @param state The physics state to set
+     * @return true if successful, false otherwise
+     */
+    virtual bool setObjectPhysicsState(ObjectID object, const PhysicsState& state) = 0;
+    
+    /**
+     * @brief Get object physics state
+     * @param object The object to get state for
+     * @return The current physics state
+     */
+    virtual PhysicsState getObjectPhysicsState(ObjectID object) const = 0;
+    
+    /**
+     * @brief Reset object physics to default state
+     * @param object The object to reset
+     * @return true if successful, false otherwise
+     */
+    virtual bool resetObjectPhysics(ObjectID object) = 0;
+    
+    /**
+     * @brief Freeze/unfreeze object physics
+     * @param object The object to freeze/unfreeze
+     * @param freeze true to freeze, false to unfreeze
+     * @return true if successful, false otherwise
+     */
+    virtual bool freezeObjectPhysics(ObjectID object, bool freeze) = 0;
+
+    // ============================================================================
+    // PHYSICS WORLD MANAGEMENT
+    // ============================================================================
+    
+    /**
+     * @brief Create physics world
+     * @return true if successful, false otherwise
+     */
+    virtual bool createPhysicsWorld() = 0;
+    
+    /**
+     * @brief Destroy physics world
+     * @return true if successful, false otherwise
+     */
+    virtual bool destroyPhysicsWorld() = 0;
+    
+    /**
+     * @brief Step physics world simulation
+     * @param delta_time Time since last step
+     * @return true if successful, false otherwise
+     */
+    virtual bool stepPhysicsWorld(float delta_time) = 0;
+    
+    /**
+     * @brief Clear physics world
+     * @return true if successful, false otherwise
+     */
+    virtual bool clearPhysicsWorld() = 0;
+
+    // ============================================================================
+    // PHYSICS SIMULATION CONTROL
+    // ============================================================================
+    
+    /**
+     * @brief Set physics time step
+     * @param time_step The time step in seconds
+     */
+    virtual void setPhysicsTimeStep(float time_step) = 0;
+    
+    /**
+     * @brief Set physics iterations
+     * @param iterations The number of iterations per frame
+     */
+    virtual void setPhysicsIterations(uint32_t iterations) = 0;
+    
+    /**
+     * @brief Enable physics debug
+     * @param enable true to enable, false to disable
+     */
+    virtual void enablePhysicsDebug(bool enable) = 0;
+    
+    /**
+     * @brief Set physics gravity
+     * @param gravity The gravity vector
+     */
+    virtual void setPhysicsGravity(const glm::vec3& gravity) = 0;
 };
 
 // Factory for obtaining a concrete implementation
