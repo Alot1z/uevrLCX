@@ -5,6 +5,8 @@
 #include <string_view>
 #include <unordered_set>
 #include <thread>
+#include <memory>
+
 #include <vector>
 #include <mutex>
 #include <chrono>
@@ -56,6 +58,7 @@ private:
     bool check_custom_filters(const std::string_view& window_name);
     void log_filtered_window(HWND hwnd, const std::string& reason);
     void update_filtering_statistics();
+    void initializeCommonPatterns();
 
     std::recursive_mutex m_mutex{};
     std::unordered_set<HWND> m_window_jobs{};

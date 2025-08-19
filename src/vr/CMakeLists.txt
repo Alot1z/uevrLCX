@@ -20,7 +20,7 @@ target_link_libraries(uevr_vr
     PUBLIC
         spdlog::spdlog
         nlohmann_json::nlohmann_json
-        glm
+        glm::glm
     PRIVATE
         uevr_core
 )
