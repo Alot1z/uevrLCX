@@ -10,10 +10,7 @@ namespace framework {
 #ifdef _WIN32
 LONG WINAPI global_exception_handler(struct _EXCEPTION_POINTERS* ei);
 void setup_exception_handler();
-<<<<<<< Current (Your changes)
-=======
 #else
 inline void setup_exception_handler() {}
 #endif
->>>>>>> Incoming (Background Agent changes)
 }
