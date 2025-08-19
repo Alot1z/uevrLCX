@@ -4,7 +4,11 @@
 
 add_library(uevr_vr STATIC
     UniversalVRSystem.cpp
+    VRSystem.cpp
+    FullAestheticCollisionEngine.cpp
+    FullPhysicsIntegration.cpp
     EngineAgnosticRenderer.cpp
+    OpenXRIntegration.cpp
 )
 
 target_include_directories(uevr_vr
