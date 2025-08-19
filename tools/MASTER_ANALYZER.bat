@@ -42,7 +42,7 @@ echo ========================================
 echo ALLE ANALYSER FÆRDIGE!
 echo ========================================
 echo.
-echo Filer oprettet i docs\deepwiki\:
+echo Filer oprettet i docs\deepwiki\analyses\:
 echo - CORE_ANALYSE.md
 echo - HOOKS_ANALYSE.md
 echo - MODS_ANALYSE.md
@@ -58,6 +58,6 @@ echo ========================================
 echo DEEPWIKI SYSTEM OPRETTET!
 echo ========================================
 echo Du har nu den dybe tallerken for alle projekters fulde filer!
-echo Alle filer gemmes i docs\deepwiki\ mappen!
+echo Alle filer gemmes i docs\deepwiki\analyses\ mappen!
 echo.
 pause

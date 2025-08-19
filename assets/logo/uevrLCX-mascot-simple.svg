@@ -1,16 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <svg width="1400" height="500" viewBox="0 0 1400 500" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="0" y1="0" x2="1400" y2="500" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#00F7FF"/>
+      <stop offset="0.45" stop-color="#7E4DFF"/>
+      <stop offset="0.75" stop-color="#B03CFF"/>
+      <stop offset="1" stop-color="#FF40E6"/>
+    </linearGradient>
+  </defs>
   <!-- Simple, filter-free mascot for maximum compatibility -->
-  <g transform="translate(100,60)" stroke="#7E4DFF" fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
+  <g transform="translate(100,60)" stroke="url(#g1)" fill="none" stroke-width="8" stroke-linecap="round" stroke-linejoin="round">
     <!-- Matrix columns (very light, few lines) -->
-    <g opacity="0.35">
-      <path d="M80 0 v360"/>
-      <path d="M140 0 v340"/>
-      <path d="M200 0 v360"/>
-      <path d="M260 0 v320"/>
-      <path d="M320 0 v360"/>
-      <path d="M380 0 v340"/>
-      <path d="M440 0 v360"/>
+    <g opacity="0.45" stroke-linecap="round">
+      <g stroke="#00F7FF" stroke-width="6" fill="#00F7FF">
+        <path d="M80 0 v360"/>
+        <circle cx="80" cy="60" r="3"/>
+        <circle cx="80" cy="140" r="3"/>
+        <circle cx="80" cy="300" r="3"/>
+      </g>
+      <g stroke="#7E4DFF" stroke-width="6" fill="#7E4DFF">
+        <path d="M140 0 v340"/>
+        <circle cx="140" cy="40" r="3"/>
+        <circle cx="140" cy="120" r="3"/>
+        <circle cx="140" cy="260" r="3"/>
+      </g>
+      <g stroke="#FF40E6" stroke-width="6" fill="#FF40E6">
+        <path d="M200 0 v360"/>
+        <circle cx="200" cy="50" r="3"/>
+        <circle cx="200" cy="180" r="3"/>
+        <circle cx="200" cy="320" r="3"/>
+      </g>
+      <g stroke="#00F7FF" stroke-width="6" fill="#00F7FF">
+        <path d="M260 0 v320"/>
+        <circle cx="260" cy="30" r="3"/>
+        <circle cx="260" cy="110" r="3"/>
+        <circle cx="260" cy="240" r="3"/>
+      </g>
+      <g stroke="#B03CFF" stroke-width="6" fill="#B03CFF">
+        <path d="M320 0 v360"/>
+        <circle cx="320" cy="70" r="3"/>
+        <circle cx="320" cy="150" r="3"/>
+        <circle cx="320" cy="330" r="3"/>
+      </g>
+      <g stroke="#7E4DFF" stroke-width="6" fill="#7E4DFF">
+        <path d="M380 0 v340"/>
+        <circle cx="380" cy="40" r="3"/>
+        <circle cx="380" cy="200" r="3"/>
+        <circle cx="380" cy="300" r="3"/>
+      </g>
+      <g stroke="#FF40E6" stroke-width="6" fill="#FF40E6">
+        <path d="M440 0 v360"/>
+        <circle cx="440" cy="50" r="3"/>
+        <circle cx="440" cy="130" r="3"/>
+        <circle cx="440" cy="220" r="3"/>
+      </g>
     </g>
 
     <!-- Crown flames simplified as strokes -->
@@ -23,7 +66,12 @@
     <circle cx="600" cy="170" r="52"/>
     <path d="M220 130 H180 C160 130 160 210 180 210 H220"/>
     <path d="M740 130 H780 C800 130 800 210 780 210 H740"/>
-    <text x="330" y="190" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="70" font-weight="800" fill="#7E4DFF">VR</text>
+    <!-- Layered VR text: dark outer, violet, cyan, white, then gradient fill -->
+    <text x="330" y="190" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="70" font-weight="800" fill="none" stroke="#0B0F14" stroke-width="6" style="stroke-linejoin: round;">VR</text>
+    <text x="330" y="190" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="70" font-weight="800" fill="none" stroke="#7E4DFF" stroke-width="4.5" style="stroke-linejoin: round;">VR</text>
+    <text x="330" y="190" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="70" font-weight="800" fill="none" stroke="#00F7FF" stroke-width="3" style="stroke-linejoin: round;">VR</text>
+    <text x="330" y="190" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="70" font-weight="800" fill="none" stroke="#FFFFFF" stroke-width="2" style="stroke-linejoin: round;">VR</text>
+    <text x="330" y="190" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="70" font-weight="800" fill="url(#g1)">VR</text>
 
     <!-- Hook tendrils to generic nodes -->
     <path d="M740 250 C850 260, 920 300, 1020 290"/>
@@ -32,15 +80,23 @@
     <!-- Nodes (hex) -->
     <g transform="translate(1020,135)">
       <polygon points="40,0 80,20 80,60 40,80 0,60 0,20"/>
-      <text x="40" y="48" text-anchor="middle" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="18" font-weight="600" fill="#7E4DFF">ENG</text>
+      <text x="40" y="48" text-anchor="middle" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="18" font-weight="600" fill="url(#g1)" stroke="#0B0F14" stroke-width="1" style="paint-order: stroke fill;">ENG</text>
     </g>
     <g transform="translate(1020,255)">
       <polygon points="40,0 80,20 80,60 40,80 0,60 0,20"/>
-      <text x="40" y="48" text-anchor="middle" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="18" font-weight="600" fill="#7E4DFF">ENG</text>
+      <text x="40" y="48" text-anchor="middle" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="18" font-weight="600" fill="url(#g1)" stroke="#0B0F14" stroke-width="1" style="paint-order: stroke fill;">ENG</text>
     </g>
   </g>
 
   <!-- Wordmark and claim -->
-  <text x="120" y="430" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="96" font-weight="900" fill="#7E4DFF">uevrLCX</text>
-  <text x="120" y="470" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="28" font-weight="600" fill="#7E4DFF">Hook • Extract • Convert — Cross‑Engine Takeover</text>
+  <text x="120" y="430" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="96" font-weight="900" fill="none" stroke="#0B0F14" stroke-width="6" style="stroke-linejoin: round;">uevrLCX</text>
+  <text x="120" y="430" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="96" font-weight="900" fill="none" stroke="#7E4DFF" stroke-width="4" style="stroke-linejoin: round;">uevrLCX</text>
+  <text x="120" y="430" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="96" font-weight="900" fill="none" stroke="#00F7FF" stroke-width="3" style="stroke-linejoin: round;">uevrLCX</text>
+  <text x="120" y="430" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="96" font-weight="900" fill="none" stroke="#FFFFFF" stroke-width="2" style="stroke-linejoin: round;">uevrLCX</text>
+  <text x="120" y="430" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="96" font-weight="900" fill="url(#g1)">uevrLCX</text>
+  <text x="120" y="470" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="28" font-weight="600" fill="none" stroke="#0B0F14" stroke-width="3" style="stroke-linejoin: round;">Hook • Extract • Convert — Cross‑Engine Takeover</text>
+  <text x="120" y="470" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="28" font-weight="600" fill="none" stroke="#7E4DFF" stroke-width="2.2" style="stroke-linejoin: round;">Hook • Extract • Convert — Cross‑Engine Takeover</text>
+  <text x="120" y="470" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="28" font-weight="600" fill="none" stroke="#00F7FF" stroke-width="1.6" style="stroke-linejoin: round;">Hook • Extract • Convert — Cross‑Engine Takeover</text>
+  <text x="120" y="470" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="28" font-weight="600" fill="none" stroke="#FFFFFF" stroke-width="1.2" style="stroke-linejoin: round;">Hook • Extract • Convert — Cross‑Engine Takeover</text>
+  <text x="120" y="470" font-family="Segoe UI, Roboto, Arial, sans-serif" font-size="28" font-weight="600" fill="url(#g1)">Hook • Extract • Convert — Cross‑Engine Takeover</text>
 </svg>
