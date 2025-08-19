@@ -1,0 +1,103 @@
+# Resident Evil 8 BIOHAZARD VILLAGE (RE Engine) - uevr Configuration
+# Cross-Engine VR Adapter Integration Profile
+
+# Core VR Settings
+vr_enabled=true
+stereo_rendering=true
+vr_runtime=openxr
+vr_form_factor=head_mounted_display
+vr_environment_blend_mode=opaque
+vr_view_configuration=primary_stereo
+
+# Performance Settings - Optimized for RE8's higher visual fidelity
+target_framerate=90
+uncapped_framerate=true
+vsync=false
+resolution_scale=0.9
+vr_quality=high
+performance_mode=vr_optimized
+
+# Camera Configuration - Optimized for RE8's first-person horror experience
+world_scale=1.0
+decoupled_pitch=true
+camera_forward_offset=0.0
+camera_right_offset=0.0
+camera_up_offset=0.0
+fov_policy=vr_optimized
+projection_type=perspective
+
+# Input Configuration - Enhanced for RE8's combat and exploration
+aim_method=right_controller
+enable_snap_turning=false
+snap_turn_angle=45.0
+joystick_deadzone=0.15
+roomscale_movement=true
+enable_haptic_feedback=true
+
+# Motion Controller Settings - Optimized for RE8's weapon and item systems
+weapon_controller=right
+utility_controller=left
+enable_motion_controllers=true
+controller_attachment_lerp_speed=20.0
+permanent_weapon_attachment=true
+permanent_utility_attachment=false
+
+# VR Comfort Settings - Enhanced for RE8's intense horror atmosphere
+enable_comfort_mode=true
+comfort_mode=enhanced
+enable_fov_reduction=true
+enable_motion_blur_reduction=true
+enable_head_bob_reduction=true
+enable_smooth_turning=true
+enable_snap_turning=false
+
+# RE Engine Specific Settings - Extended for RE8 compatibility
+re_engine_integration=true
+enable_reframework=true
+enable_native_d3d11_hooks=true
+enable_swapchain_hooks=true
+enable_device_hooks=true
+enable_rendering_hooks=true
+enable_camera_hooks=true
+enable_input_hooks=true
+
+# RE8-Specific Optimizations
+re8_optimization=true
+enable_enhanced_lighting=true
+enable_atmospheric_effects=true
+enable_particle_system_optimization=true
+enable_shadow_quality_optimization=true
+
+# Cross-Engine Adapter Configuration
+cross_engine_adapter=RE_Engine_Adapter
+adapter_version=1.1.0
+uevr_version=0.1.0
+integration_mode=full_vr_support
+game_specific=re8_village
+
+# Performance Optimization - Enhanced for RE8's demanding graphics
+enable_dynamic_lod=true
+enable_adaptive_quality=true
+enable_performance_monitoring=true
+enable_frame_timing=true
+enable_memory_tracking=false
+vr_optimization_level=ultra
+
+# UI and HUD Settings - Optimized for RE8's interface
+ui_projection_type=billboard
+ui_projection_distance=2.5
+ui_projection_scale=1.1
+ui_follow_view=false
+enable_hud_vr_projection=true
+
+# Audio Settings - Enhanced for RE8's spatial audio
+enable_spatial_audio=true
+audio_3d_positioning=true
+audio_reverb_optimization=true
+audio_occlusion_enabled=true
+
+# Horror Game Specific Settings
+horror_game_optimization=true
+enable_atmospheric_immersion=true
+enable_comfort_safeguards=true
+enable_emergency_exit=true

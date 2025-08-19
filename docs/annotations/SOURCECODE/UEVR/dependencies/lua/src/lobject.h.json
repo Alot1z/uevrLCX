@@ -1,0 +1,8818 @@
+{
+  "file": "G:\\GITHUB REPOs\\UEVR\\SOURCECODE\\UEVR\\dependencies\\lua\\src\\lobject.h",
+  "generated_at": "2025-08-18T19:58:37.198848",
+  "schema_version": 1,
+  "annotations": {
+    "1": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "2": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "3": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "4": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "5": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "6": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "7": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "8": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "9": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "10": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "11": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "12": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "13": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "14": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "15": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "16": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "17": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "18": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "19": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "20": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "21": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "22": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "23": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "24": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "25": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "26": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "27": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "28": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "29": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "30": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "31": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "32": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "33": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "34": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "35": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "36": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "37": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "38": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "39": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "40": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "41": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "42": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "43": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "44": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "45": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "46": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "47": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "48": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "49": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "50": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "51": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "52": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "53": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "54": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "55": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "56": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "57": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "58": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "59": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "60": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "61": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "62": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "63": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "64": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "65": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "66": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "67": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "68": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "69": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "70": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "71": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "72": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "73": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "74": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "75": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "76": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "77": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "78": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "79": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "80": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "81": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "82": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "83": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "84": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "85": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "86": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "87": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "88": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "89": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "90": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "91": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "92": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "93": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "94": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "95": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "96": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "97": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "98": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "99": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "100": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "101": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "102": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "103": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "104": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "105": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "106": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "107": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "108": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "109": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "110": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "111": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "112": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "113": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "114": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "115": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "116": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "117": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "118": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "119": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "120": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "121": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "122": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "123": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "124": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "125": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "126": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "127": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "128": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "129": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "130": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "131": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "132": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "133": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "134": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "135": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "136": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "137": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "138": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "139": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "140": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "141": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "142": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "143": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "144": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "145": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "146": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "147": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "148": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "149": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "150": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "151": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "152": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "153": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "154": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "155": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "156": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "157": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "158": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "159": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "160": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "161": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "162": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "163": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "164": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "165": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "166": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "167": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "168": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "169": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "170": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "171": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "172": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "173": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "174": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "175": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "176": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "177": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "178": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "179": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "180": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "181": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "182": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "183": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "184": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "185": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "186": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "187": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "188": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "189": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "190": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "191": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "192": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "193": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "194": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "195": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "196": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "197": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "198": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "199": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "200": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "201": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "202": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "203": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "204": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "205": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "206": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "207": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "208": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "209": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "210": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "211": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "212": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "213": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "214": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "215": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "216": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "217": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "218": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "219": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "220": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "221": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "222": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "223": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "224": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "225": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "226": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "227": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "228": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "229": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "230": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "231": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "232": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "233": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "234": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "235": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "236": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "237": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "238": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "239": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "240": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "241": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "242": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "243": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "244": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "245": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "246": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "247": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "248": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "249": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "250": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "251": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "252": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "253": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "254": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "255": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "256": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "257": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "258": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "259": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "260": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "261": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "262": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "263": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "264": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "265": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "266": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "267": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "268": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "269": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "270": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "271": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "272": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "273": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "274": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "275": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "276": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "277": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "278": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "279": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "280": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "281": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "282": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "283": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "284": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "285": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "286": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "287": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "288": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "289": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "290": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "291": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "292": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "293": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "294": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "295": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "296": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "297": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "298": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "299": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "300": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "301": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "302": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "303": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "304": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "305": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "306": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "307": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "308": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "309": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "310": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "311": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "312": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "313": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "314": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "315": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "316": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "317": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "318": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "319": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "320": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "321": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "322": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "323": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "324": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "325": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "326": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "327": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "328": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "329": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "330": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "331": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "332": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "333": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "334": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "335": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "336": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "337": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "338": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "339": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "340": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "341": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "342": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "343": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "344": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "345": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "346": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "347": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "348": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "349": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "350": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "351": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "352": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "353": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "354": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "355": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "356": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "357": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "358": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "359": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "360": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "361": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "362": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "363": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "364": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "365": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "366": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "367": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "368": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "369": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "370": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "371": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "372": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "373": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "374": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "375": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "376": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "377": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "378": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "379": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "380": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "381": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "382": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "383": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "384": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "385": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "386": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "387": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "388": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "389": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "390": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "391": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "392": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "393": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "394": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "395": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "396": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "397": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "398": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "399": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "400": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "401": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "402": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "403": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "404": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "405": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "406": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "407": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "408": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "409": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "410": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "411": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "412": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "413": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "414": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "415": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "416": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "417": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "418": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "419": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "420": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "421": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "422": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "423": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "424": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "425": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "426": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "427": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "428": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "429": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "430": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "431": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "432": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "433": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "434": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "435": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "436": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "437": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "438": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "439": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "440": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "441": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "442": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "443": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "444": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "445": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "446": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "447": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "448": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "449": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "450": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "451": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "452": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "453": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "454": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "455": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "456": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "457": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "458": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "459": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "460": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "461": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "462": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "463": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "464": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "465": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "466": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "467": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "468": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "469": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "470": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "471": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "472": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "473": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "474": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "475": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "476": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "477": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "478": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "479": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "480": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "481": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "482": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "483": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "484": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "485": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "486": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "487": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "488": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "489": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "490": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "491": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "492": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "493": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "494": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "495": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "496": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "497": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "498": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "499": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "500": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "501": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "502": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "503": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "504": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "505": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "506": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "507": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "508": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "509": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "510": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "511": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "512": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "513": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "514": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "515": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "516": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "517": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "518": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "519": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "520": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "521": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "522": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "523": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "524": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "525": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "526": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "527": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "528": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "529": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "530": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "531": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "532": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "533": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "534": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "535": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "536": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "537": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "538": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "539": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "540": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "541": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "542": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "543": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "544": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "545": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "546": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "547": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "548": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "549": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "550": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "551": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "552": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "553": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "554": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "555": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "556": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "557": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "558": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "559": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "560": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "561": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "562": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "563": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "564": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "565": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "566": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "567": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "568": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "569": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "570": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "571": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "572": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "573": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "574": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "575": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "576": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "577": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "578": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "579": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "580": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "581": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "582": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "583": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "584": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "585": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "586": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "587": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "588": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "589": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "590": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "591": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "592": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "593": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "594": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "595": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "596": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "597": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "598": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "599": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "600": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "601": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "602": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "603": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "604": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "605": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "606": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "607": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "608": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "609": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "610": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "611": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "612": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "613": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "614": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "615": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "616": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "617": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "618": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "619": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "620": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "621": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "622": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "623": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "624": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "625": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "626": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "627": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "628": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "629": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "630": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "631": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "632": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "633": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "634": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "635": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "636": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "637": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "638": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "639": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "640": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "641": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "642": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "643": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "644": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "645": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "646": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "647": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "648": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "649": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "650": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "651": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "652": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "653": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "654": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "655": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "656": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "657": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "658": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "659": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "660": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "661": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "662": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "663": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "664": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "665": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "666": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "667": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "668": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "669": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "670": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "671": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "672": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "673": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "674": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "675": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "676": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "677": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "678": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "679": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "680": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "681": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "682": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "683": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "684": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "685": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "686": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "687": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "688": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "689": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "690": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "691": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "692": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "693": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "694": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "695": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "696": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "697": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "698": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "699": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "700": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "701": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "702": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "703": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "704": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "705": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "706": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "707": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "708": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "709": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "710": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "711": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "712": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "713": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "714": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "715": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "716": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "717": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "718": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "719": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "720": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "721": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "722": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "723": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "724": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "725": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "726": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "727": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "728": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "729": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "730": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "731": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "732": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "733": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "734": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "735": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "736": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "737": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "738": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "739": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "740": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "741": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "742": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "743": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "744": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "745": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "746": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "747": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "748": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "749": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "750": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "751": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "752": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "753": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "754": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "755": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "756": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "757": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "758": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "759": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "760": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "761": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "762": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "763": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "764": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "765": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "766": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "767": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "768": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "769": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "770": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "771": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "772": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "773": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "774": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "775": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "776": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "777": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "778": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "779": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "780": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "781": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "782": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "783": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "784": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "785": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "786": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "787": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "788": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "789": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "790": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "791": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "792": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "793": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "794": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "795": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "796": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "797": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "798": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "799": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "800": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "801": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ]
+  }
+}

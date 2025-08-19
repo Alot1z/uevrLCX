@@ -1,0 +1,12 @@
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/CMakeFiles/MTFrameworkCrossEngineAdapter.dir
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/CMakeFiles/INSTALL.dir
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/CMakeFiles/ALL_BUILD.dir
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/CMakeFiles/ZERO_CHECK.dir
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-build/CMakeFiles/minhook.dir
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-build/CMakeFiles/INSTALL.dir
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-build/CMakeFiles/ALL_BUILD.dir
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-build/CMakeFiles/spdlog.dir
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-build/CMakeFiles/INSTALL.dir
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-build/CMakeFiles/ALL_BUILD.dir
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/nlohmann_json-build/CMakeFiles/INSTALL.dir
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/nlohmann_json-build/CMakeFiles/ALL_BUILD.dir

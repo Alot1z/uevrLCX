@@ -1,0 +1,132 @@
+{
+  "$schema": "../../adapter.schema.json",
+  "engine": "Custom-Engine",
+  "version": 1,
+  "engine_version": "Unknown",
+  "game_info": {
+    "executable": "GameName.exe",
+    "display_name": "Game Display Name",
+    "steam_app_id": "",
+    "epic_app_id": ""
+  },
+  "render": {
+    "api": "d3d11",
+    "swapchain_hook": "Present|Present1|ExecuteCommandLists",
+    "matrix_sources": {
+      "view": {
+        "cb_slot": 2,
+        "offset": 0,
+        "rows": 4,
+        "cols": 4,
+        "layout": "row_major",
+        "transpose": false
+      },
+      "projection": {
+        "cb_slot": 2,
+        "offset": 64,
+        "rows": 4,
+        "cols": 4,
+        "layout": "row_major",
+        "transpose": false
+      },
+      "viewproj": {
+        "cb_slot": 2,
+        "offset": 128,
+        "rows": 4,
+        "cols": 4,
+        "layout": "row_major",
+        "transpose": false
+      }
+    },
+    "fov_policy": "dynamic",
+    "stereo_mode": "sequential",
+    "depth_handling": "native",
+    "hook_points": [
+      {
+        "function": "Present",
+        "type": "post",
+        "description": "Post-render hook for VR frame injection"
+      },
+      {
+        "function": "ExecuteCommandLists",
+        "type": "post",
+        "description": "Post-command-list hook for VR rendering"
+      }
+    ]
+  },
+  "camera": {
+    "world_scale": 1.0,
+    "hmd_offsets": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "decoupled_pitch": true,
+    "motion_compensation": true
+  },
+  "ui": {
+    "projection": {
+      "technique": "billboard",
+      "scale": 1.0
+    },
+    "overrides": [
+      {
+        "name": "HUD_Main",
+        "mode": "world",
+        "scale": 0.75
+      }
+    ]
+  },
+  "input": {
+    "aim_method": "right",
+    "bindings": {
+      "trigger": "Fire",
+      "grip": "Interact",
+      "menu": "Menu",
+      "system": "System"
+    },
+    "haptic_feedback": true
+  },
+  "attachments": [
+    {
+      "path": "PlayerPawn>Components>WeaponComponent",
+      "controller": "right",
+      "permanent": true,
+      "rotation_quat": {
+        "w": 1.0,
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "location_offset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      }
+    }
+  ],
+  "performance": {
+    "resolution_scale": 1.0,
+    "uncap_framerate": true,
+    "async_reprojection": true,
+    "motion_smoothing": true
+  },
+  "vr_features": {
+    "stereo_rendering": true,
+    "motion_controllers": true,
+    "haptic_feedback": true,
+    "dynamic_fov": true,
+    "frame_interpolation": false,
+    "neural_upscaling": false,
+    "ray_tracing": false,
+    "temporal_upsampling": false
+  },
+  "compatibility_tier": 1,
+  "notes": [
+    "Template profile - customize for specific game/engine",
+    "Update matrix_sources with actual constant buffer offsets",
+    "Configure hook_points based on engine-specific functions",
+    "Adjust world_scale and HMD offsets for VR comfort",
+    "Test and validate all VR features before production use"
+  ]
+}

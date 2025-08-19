@@ -1,0 +1,107 @@
+{
+  "version": "2.0.0",
+  "description": "Memory signatures for automatic game engine detection",
+  "engines": [
+    {
+      "name": "RE-Engine",
+      "version": "3.0+",
+      "pattern": "52452D456E67696E652E646C6C",
+      "mask": "xxxxxxxxxxxx",
+      "offset": 0x1000,
+      "adapter_path": "src/adapters/re-engine/",
+      "description": "Capcom RE Engine signature"
+    },
+    {
+      "name": "REDengine4",
+      "version": "4.0+",
+      "pattern": "524544656E67696E65342E646C6C",
+      "mask": "xxxxxxxxxxxx",
+      "offset": 0x1000,
+      "adapter_path": "src/adapters/redengine4/",
+      "description": "CD Projekt RED engine signature"
+    },
+    {
+      "name": "MT-Framework",
+      "version": "2.0+",
+      "pattern": "4D542D4672616D65776F726B",
+      "mask": "xxxxxxxxxxxx",
+      "offset": 0x1000,
+      "adapter_path": "src/adapters/mt-framework/",
+      "description": "Capcom MT Framework signature"
+    },
+    {
+      "name": "Unreal-Engine-4",
+      "version": "4.27+",
+      "pattern": "556E7265616C456E67696E65342E646C6C",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "offset": 0x1000,
+      "adapter_path": "src/adapters/unreal-engine/",
+      "description": "Unreal Engine 4 signature"
+    },
+    {
+      "name": "Unreal-Engine-5",
+      "version": "5.0+",
+      "pattern": "556E7265616C456E67696E65352E646C6C",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "offset": 0x1000,
+      "adapter_path": "src/adapters/unreal-engine/",
+      "description": "Unreal Engine 5 signature"
+    },
+    {
+      "name": "Unity-Engine",
+      "version": "2022.3+",
+      "pattern": "556E697479456E67696E652E646C6C",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "offset": 0x1000,
+      "adapter_path": "src/adapters/unity/",
+      "description": "Unity Engine signature"
+    },
+    {
+      "name": "CryEngine",
+      "version": "5.7+",
+      "pattern": "437279456E67696E652E646C6C",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "offset": 0x1000,
+      "adapter_path": "src/adapters/cryengine/",
+      "description": "CryEngine signature"
+    },
+    {
+      "name": "id-Tech-6",
+      "version": "6.0+",
+      "pattern": "696454656368362E646C6C",
+      "mask": "xxxxxxxxxxxx",
+      "offset": 0x1000,
+      "adapter_path": "src/adapters/idtech/",
+      "description": "id Tech 6 signature"
+    },
+    {
+      "name": "id-Tech-7",
+      "version": "7.0+",
+      "pattern": "696454656368372E646C6C",
+      "mask": "xxxxxxxxxxxx",
+      "offset": 0x1000,
+      "adapter_path": "src/adapters/idtech/",
+      "description": "id Tech 7 signature"
+    },
+    {
+      "name": "Source-Engine",
+      "version": "2007+",
+      "pattern": "536F75726365456E67696E652E646C6C",
+      "mask": "xxxxxxxxxxxxxxxx",
+      "offset": 0x1000,
+      "adapter_path": "src/adapters/source/",
+      "description": "Source Engine signature"
+    },
+    {
+      "name": "Source-2",
+      "version": "2015+",
+      "pattern": "536F7572636532456E67696E652E646C6C",
+      "mask": "xxxxxxxxxxxxxxxxxx",
+      "offset": 0x1000,
+      "adapter_path": "src/adapters/source/",
+      "description": "Source 2 Engine signature"
+    }
+  ]
+}
+
+

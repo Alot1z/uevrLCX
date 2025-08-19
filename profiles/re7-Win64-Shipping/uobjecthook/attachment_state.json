@@ -1,0 +1,77 @@
+{
+  "attachment_state": {
+    "overall_status": "pending_validation",
+    "last_validation": "2024-12-19",
+    "validation_version": "1.0.0"
+  },
+  "weapon_attachments": {
+    "status": "pending",
+    "attachments": {
+      "primary_weapon": {
+        "component_path": "AcknowledgedPawn.Components.SkeletalMeshComponent",
+        "attachment_side": "right",
+        "permanent_change": true,
+        "save_state": true,
+        "validation_status": "pending"
+      },
+      "secondary_weapon": {
+        "component_path": "AcknowledgedPawn.Components.SkeletalMeshComponent",
+        "attachment_side": "right",
+        "permanent_change": true,
+        "save_state": true,
+        "validation_status": "pending"
+      },
+      "melee_weapon": {
+        "component_path": "AcknowledgedPawn.Components.SkeletalMeshComponent",
+        "attachment_side": "right",
+        "permanent_change": true,
+        "save_state": true,
+        "validation_status": "pending"
+      }
+    }
+  },
+  "utility_attachments": {
+    "status": "pending",
+    "attachments": {
+      "flashlight": {
+        "component_path": "AcknowledgedPawn.Components.SkeletalMeshComponent",
+        "attachment_side": "left",
+        "permanent_change": true,
+        "save_state": true,
+        "validation_status": "pending"
+      },
+      "inventory": {
+        "component_path": "AcknowledgedPawn.Components.SkeletalMeshComponent",
+        "attachment_side": "left",
+        "permanent_change": true,
+        "save_state": true,
+        "validation_status": "pending"
+      },
+      "health_items": {
+        "component_path": "AcknowledgedPawn.Components.SkeletalMeshComponent",
+        "attachment_side": "left",
+        "permanent_change": true,
+        "save_state": true,
+        "validation_status": "pending"
+      }
+    }
+  },
+  "input_configuration": {
+    "aim_method": "right_controller",
+    "weapon_side": "right",
+    "utility_side": "left",
+    "input_alignment": "right_controller_aim"
+  },
+  "validation_checklist": {
+    "weapon_attachments_configured": false,
+    "weapon_attachments_tested": false,
+    "weapon_attachments_persist": false,
+    "utility_attachments_configured": false,
+    "utility_attachments_tested": false,
+    "utility_attachments_persist": false,
+    "input_alignment_matches": false,
+    "all_attachments_persist": false
+  },
+  "notes": "RE7 UObjectHook attachment configuration - Weapon to right, Utility to left",
+  "last_updated": "2024-12-19"
+}

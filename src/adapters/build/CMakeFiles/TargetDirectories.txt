@@ -1,0 +1,12 @@
+G:/GITHUB REPOs/uevr/src/adapters/build/CMakeFiles/uevr_common_adapters.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/CMakeFiles/uevr_re_engine_adapter.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/CMakeFiles/uevr_redengine4_adapter.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/CMakeFiles/uevr_mt_framework_adapter.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/CMakeFiles/INSTALL.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/CMakeFiles/ALL_BUILD.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/CMakeFiles/ZERO_CHECK.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/_deps/minhook-build/CMakeFiles/minhook.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/_deps/minhook-build/CMakeFiles/INSTALL.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/_deps/minhook-build/CMakeFiles/ALL_BUILD.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-build/CMakeFiles/INSTALL.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-build/CMakeFiles/ALL_BUILD.dir

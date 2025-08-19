@@ -1,0 +1,12 @@
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:250:    g_adapter = new REDengine4Adapter();
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:69:    typedef HRESULT(WINAPI* ResizeBuffers_t)(IDXGISwapChain3* pSwapChain, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags);
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:364:    static HRESULT WINAPI hooked_resize_buffers(IDXGISwapChain3* pSwapChain, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags) {
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:367:            adapter->on_redengine4_resize_buffers(pSwapChain, BufferCount, Width, Height, NewFormat, SwapChainFlags);
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:371:            return adapter->m_original_resize_buffers(pSwapChain, BufferCount, Width, Height, NewFormat, SwapChainFlags);
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:407:    void on_redengine4_resize_buffers(IDXGISwapChain3* pSwapChain, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags) {
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:71:        // Create new attachment if it doesn't exist
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:72:        ObjectAttachment new_attachment;
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:73:        new_attachment.object_name = object_name;
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:74:        new_attachment.type = type;
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:75:        new_attachment.is_attached = true;
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:77:        m_attachments[object_name] = new_attachment;

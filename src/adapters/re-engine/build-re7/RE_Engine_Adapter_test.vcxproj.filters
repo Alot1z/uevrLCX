@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\CMakeFiles\04ba983d19a5e0dc2f4c64190c4a42de\RE_Engine_Adapter_test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\CMakeFiles\RE_Engine_Adapter_test" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{75218E11-06AE-3C4A-97B4-90732DE1C542}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

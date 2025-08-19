@@ -1,0 +1,1035 @@
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      The system is: Windows - 10.0.19045 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild version 17.14.14+a129329f1 for .NET Framework
+      Build started 18/08/2025 22.23.05.
+      
+      Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+        Creating directory "Debug\\CompilerIdC.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        Touching "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
+      ClCompile:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TC /FC /errorReport:queue CMakeCCompilerId.c
+        CMakeCCompilerId.c
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X64 Debug\\CMakeCCompilerId.obj
+        CompilerIdC.vcxproj -> G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdC\\CompilerIdC.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_C_COMPILER=C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate".
+      Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdC\\CompilerIdC.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:01.22
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+      
+      The C compiler identification is MSVC, found in:
+        G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/4.0.3/CompilerIdC/CompilerIdC.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild version 17.14.14+a129329f1 for .NET Framework
+      Build started 18/08/2025 22.23.07.
+      
+      Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+        Creating directory "Debug\\CompilerIdCXX.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        Touching "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+      ClCompile:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TP /FC /errorReport:queue CMakeCXXCompilerId.cpp
+        CMakeCXXCompilerId.cpp
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X64 Debug\\CMakeCXXCompilerId.obj
+        CompilerIdCXX.vcxproj -> G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdCXX\\CompilerIdCXX.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_CXX_COMPILER=C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate".
+      Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:01.61
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      
+      The CXX compiler identification is MSVC, found in:
+        G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/4.0.3/CompilerIdCXX/CompilerIdCXX.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-w8r4u7"
+      binary: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-w8r4u7"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-w8r4u7'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_bd6cc.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.14+a129329f1 for .NET Framework
+        Build started 18/08/2025 22.23.10.
+        
+        Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-w8r4u7\\cmTC_bd6cc.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_bd6cc.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-w8r4u7\\Debug\\".
+          Creating directory "cmTC_bd6cc.dir\\Debug\\cmTC_bd6cc.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_bd6cc.dir\\Debug\\cmTC_bd6cc.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_bd6cc.dir\\Debug\\cmTC_bd6cc.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_bd6cc.dir\\Debug\\\\" /Fd"cmTC_bd6cc.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Mose\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cmake\\data\\share\\cmake-4.0\\Modules\\CMakeCCompilerABI.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_bd6cc.dir\\Debug\\\\" /Fd"cmTC_bd6cc.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Mose\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cmake\\data\\share\\cmake-4.0\\Modules\\CMakeCCompilerABI.c"
+          CMakeCCompilerABI.c
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-w8r4u7\\Debug\\cmTC_bd6cc.exe" /INCREMENTAL /ILK:"cmTC_bd6cc.dir\\Debug\\cmTC_bd6cc.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-w8r4u7/Debug/cmTC_bd6cc.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-w8r4u7/Debug/cmTC_bd6cc.lib" /MACHINE:X64  /machine:x64 cmTC_bd6cc.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_bd6cc.vcxproj -> G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-w8r4u7\\Debug\\cmTC_bd6cc.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_bd6cc.dir\\Debug\\cmTC_bd6cc.tlog\\unsuccessfulbuild".
+          Touching "cmTC_bd6cc.dir\\Debug\\cmTC_bd6cc.tlog\\cmTC_bd6cc.lastbuildstate".
+        Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-w8r4u7\\cmTC_bd6cc.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:01.36
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:227 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'C': C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:270 (cmake_determine_linker_id)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Running the C compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35211.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-hu7q9o"
+      binary: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-hu7q9o"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-hu7q9o'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_cd56e.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.14+a129329f1 for .NET Framework
+        Build started 18/08/2025 22.23.12.
+        
+        Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-hu7q9o\\cmTC_cd56e.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_cd56e.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-hu7q9o\\Debug\\".
+          Creating directory "cmTC_cd56e.dir\\Debug\\cmTC_cd56e.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_cd56e.dir\\Debug\\cmTC_cd56e.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_cd56e.dir\\Debug\\cmTC_cd56e.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_cd56e.dir\\Debug\\\\" /Fd"cmTC_cd56e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Users\\Mose\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cmake\\data\\share\\cmake-4.0\\Modules\\CMakeCXXCompilerABI.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_cd56e.dir\\Debug\\\\" /Fd"cmTC_cd56e.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Users\\Mose\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cmake\\data\\share\\cmake-4.0\\Modules\\CMakeCXXCompilerABI.cpp"
+          CMakeCXXCompilerABI.cpp
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-hu7q9o\\Debug\\cmTC_cd56e.exe" /INCREMENTAL /ILK:"cmTC_cd56e.dir\\Debug\\cmTC_cd56e.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-hu7q9o/Debug/cmTC_cd56e.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-hu7q9o/Debug/cmTC_cd56e.lib" /MACHINE:X64  /machine:x64 cmTC_cd56e.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_cd56e.vcxproj -> G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-hu7q9o\\Debug\\cmTC_cd56e.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_cd56e.dir\\Debug\\cmTC_cd56e.tlog\\unsuccessfulbuild".
+          Touching "cmTC_cd56e.dir\\Debug\\cmTC_cd56e.tlog\\cmTC_cd56e.lastbuildstate".
+        Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-hu7q9o\\cmTC_cd56e.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:01.54
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:227 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'CXX': C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:270 (cmake_determine_linker_id)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Running the CXX compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35211.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      The system is: Windows - 10.0.19045 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild version 17.14.14+a129329f1 for .NET Framework
+      Build started 18/08/2025 22.26.09.
+      
+      Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+        Creating directory "Debug\\CompilerIdC.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        Touching "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
+      ClCompile:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TC /FC /errorReport:queue CMakeCCompilerId.c
+        CMakeCCompilerId.c
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X64 Debug\\CMakeCCompilerId.obj
+        CompilerIdC.vcxproj -> G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdC\\CompilerIdC.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_C_COMPILER=C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate".
+      Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdC\\CompilerIdC.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:01.27
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+      
+      The C compiler identification is MSVC, found in:
+        G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/4.0.3/CompilerIdC/CompilerIdC.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild version 17.14.14+a129329f1 for .NET Framework
+      Build started 18/08/2025 22.26.11.
+      
+      Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+        Creating directory "Debug\\CompilerIdCXX.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        Touching "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+      ClCompile:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TP /FC /errorReport:queue CMakeCXXCompilerId.cpp
+        CMakeCXXCompilerId.cpp
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X64 Debug\\CMakeCXXCompilerId.obj
+        CompilerIdCXX.vcxproj -> G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdCXX\\CompilerIdCXX.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_CXX_COMPILER=C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate".
+      Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:01.08
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      
+      The CXX compiler identification is MSVC, found in:
+        G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/4.0.3/CompilerIdCXX/CompilerIdCXX.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-yaz7ei"
+      binary: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-yaz7ei"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-yaz7ei'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_8a850.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.14+a129329f1 for .NET Framework
+        Build started 18/08/2025 22.26.13.
+        
+        Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-yaz7ei\\cmTC_8a850.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_8a850.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-yaz7ei\\Debug\\".
+          Creating directory "cmTC_8a850.dir\\Debug\\cmTC_8a850.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_8a850.dir\\Debug\\cmTC_8a850.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_8a850.dir\\Debug\\cmTC_8a850.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8a850.dir\\Debug\\\\" /Fd"cmTC_8a850.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Mose\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cmake\\data\\share\\cmake-4.0\\Modules\\CMakeCCompilerABI.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_8a850.dir\\Debug\\\\" /Fd"cmTC_8a850.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Mose\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cmake\\data\\share\\cmake-4.0\\Modules\\CMakeCCompilerABI.c"
+          CMakeCCompilerABI.c
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-yaz7ei\\Debug\\cmTC_8a850.exe" /INCREMENTAL /ILK:"cmTC_8a850.dir\\Debug\\cmTC_8a850.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-yaz7ei/Debug/cmTC_8a850.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-yaz7ei/Debug/cmTC_8a850.lib" /MACHINE:X64  /machine:x64 cmTC_8a850.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_8a850.vcxproj -> G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-yaz7ei\\Debug\\cmTC_8a850.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_8a850.dir\\Debug\\cmTC_8a850.tlog\\unsuccessfulbuild".
+          Touching "cmTC_8a850.dir\\Debug\\cmTC_8a850.tlog\\cmTC_8a850.lastbuildstate".
+        Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-yaz7ei\\cmTC_8a850.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:01.03
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:227 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'C': C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:270 (cmake_determine_linker_id)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Running the C compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35211.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-6qny5k"
+      binary: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-6qny5k"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-6qny5k'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_90448.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.14+a129329f1 for .NET Framework
+        Build started 18/08/2025 22.26.15.
+        
+        Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-6qny5k\\cmTC_90448.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_90448.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-6qny5k\\Debug\\".
+          Creating directory "cmTC_90448.dir\\Debug\\cmTC_90448.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_90448.dir\\Debug\\cmTC_90448.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_90448.dir\\Debug\\cmTC_90448.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_90448.dir\\Debug\\\\" /Fd"cmTC_90448.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Users\\Mose\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cmake\\data\\share\\cmake-4.0\\Modules\\CMakeCXXCompilerABI.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_90448.dir\\Debug\\\\" /Fd"cmTC_90448.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Users\\Mose\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cmake\\data\\share\\cmake-4.0\\Modules\\CMakeCXXCompilerABI.cpp"
+          CMakeCXXCompilerABI.cpp
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-6qny5k\\Debug\\cmTC_90448.exe" /INCREMENTAL /ILK:"cmTC_90448.dir\\Debug\\cmTC_90448.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-6qny5k/Debug/cmTC_90448.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-6qny5k/Debug/cmTC_90448.lib" /MACHINE:X64  /machine:x64 cmTC_90448.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_90448.vcxproj -> G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-6qny5k\\Debug\\cmTC_90448.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_90448.dir\\Debug\\cmTC_90448.tlog\\unsuccessfulbuild".
+          Touching "cmTC_90448.dir\\Debug\\cmTC_90448.tlog\\cmTC_90448.lastbuildstate".
+        Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-6qny5k\\cmTC_90448.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:01.17
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:227 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'CXX': C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:270 (cmake_determine_linker_id)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Running the CXX compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35211.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+
+---
+events:
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineSystem.cmake:205 (message)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      The system is: Windows - 10.0.19045 - AMD64
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCCompiler.cmake:123 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the C compiler identification source file "CMakeCCompilerId.c" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild version 17.14.14+a129329f1 for .NET Framework
+      Build started 18/08/2025 22.33.18.
+      
+      Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdC\\CompilerIdC.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+        Creating directory "Debug\\CompilerIdC.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdC.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        Touching "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
+      ClCompile:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TC /FC /errorReport:queue CMakeCCompilerId.c
+        CMakeCCompilerId.c
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdC.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdC.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdC.lib" /MACHINE:X64 Debug\\CMakeCCompilerId.obj
+        CompilerIdC.vcxproj -> G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdC\\CompilerIdC.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_C_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_C_COMPILER=C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdC.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdC.tlog\\CompilerIdC.lastbuildstate".
+      Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdC\\CompilerIdC.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:01.34
+      
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.exe"
+      
+      Compilation of the C compiler identification source "CMakeCCompilerId.c" produced "CompilerIdC.vcxproj"
+      
+      The C compiler identification is MSVC, found in:
+        G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/4.0.3/CompilerIdC/CompilerIdC.exe
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:17 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerId.cmake:64 (__determine_compiler_id_test)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCXXCompiler.cmake:126 (CMAKE_DETERMINE_COMPILER_ID)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Compiling the CXX compiler identification source file "CMakeCXXCompilerId.cpp" succeeded.
+      Compiler:  
+      Build flags: 
+      Id flags:  
+      
+      The output was:
+      0
+      MSBuild version 17.14.14+a129329f1 for .NET Framework
+      Build started 18/08/2025 22.33.20.
+      
+      Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" on node 1 (default targets).
+      PrepareForBuild:
+        Creating directory "Debug\\".
+        Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+        Creating directory "Debug\\CompilerIdCXX.tlog\\".
+      InitializeBuildStatus:
+        Creating "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+        Touching "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+      ClCompile:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /nologo /W0 /WX- /diagnostics:column /Od /D _MBCS /Gm- /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"Debug\\\\" /Fd"Debug\\vc143.pdb" /external:W0 /Gd /TP /FC /errorReport:queue CMakeCXXCompilerId.cpp
+        CMakeCXXCompilerId.cpp
+      Link:
+        C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:".\\CompilerIdCXX.exe" /INCREMENTAL:NO /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /PDB:".\\CompilerIdCXX.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:".\\CompilerIdCXX.lib" /MACHINE:X64 Debug\\CMakeCXXCompilerId.obj
+        CompilerIdCXX.vcxproj -> G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdCXX\\CompilerIdCXX.exe
+      PostBuildEvent:
+        for %%i in (cl.exe) do @echo CMAKE_CXX_COMPILER=%%~$PATH:i
+        :VCEnd
+        CMAKE_CXX_COMPILER=C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\Hostx64\\x64\\cl.exe
+      FinalizeBuildStatus:
+        Deleting file "Debug\\CompilerIdCXX.tlog\\unsuccessfulbuild".
+        Touching "Debug\\CompilerIdCXX.tlog\\CompilerIdCXX.lastbuildstate".
+      Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\4.0.3\\CompilerIdCXX\\CompilerIdCXX.vcxproj" (default targets).
+      
+      Build succeeded.
+          0 Warning(s)
+          0 Error(s)
+      
+      Time Elapsed 00:00:01.08
+      
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.exe"
+      
+      Compilation of the CXX compiler identification source "CMakeCXXCompilerId.cpp" produced "CompilerIdCXX.vcxproj"
+      
+      The CXX compiler identification is MSVC, found in:
+        G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/4.0.3/CompilerIdCXX/CompilerIdCXX.exe
+      
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    checks:
+      - "Detecting C compiler ABI info"
+    directories:
+      source: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-prvz3j"
+      binary: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-prvz3j"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_C_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-prvz3j'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_43791.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.14+a129329f1 for .NET Framework
+        Build started 18/08/2025 22.33.22.
+        
+        Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-prvz3j\\cmTC_43791.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_43791.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-prvz3j\\Debug\\".
+          Creating directory "cmTC_43791.dir\\Debug\\cmTC_43791.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_43791.dir\\Debug\\cmTC_43791.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_43791.dir\\Debug\\cmTC_43791.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_43791.dir\\Debug\\\\" /Fd"cmTC_43791.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Mose\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cmake\\data\\share\\cmake-4.0\\Modules\\CMakeCCompilerABI.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_43791.dir\\Debug\\\\" /Fd"cmTC_43791.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "C:\\Users\\Mose\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cmake\\data\\share\\cmake-4.0\\Modules\\CMakeCCompilerABI.c"
+          CMakeCCompilerABI.c
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-prvz3j\\Debug\\cmTC_43791.exe" /INCREMENTAL /ILK:"cmTC_43791.dir\\Debug\\cmTC_43791.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-prvz3j/Debug/cmTC_43791.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-prvz3j/Debug/cmTC_43791.lib" /MACHINE:X64  /machine:x64 cmTC_43791.dir\\Debug\\CMakeCCompilerABI.obj
+          cmTC_43791.vcxproj -> G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-prvz3j\\Debug\\cmTC_43791.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_43791.dir\\Debug\\cmTC_43791.tlog\\unsuccessfulbuild".
+          Touching "cmTC_43791.dir\\Debug\\cmTC_43791.tlog\\cmTC_43791.lastbuildstate".
+        Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-prvz3j\\cmTC_43791.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:01.02
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:227 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed C implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'C': C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:270 (cmake_determine_linker_id)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Running the C compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35211.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:83 (try_compile)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    checks:
+      - "Detecting CXX compiler ABI info"
+    directories:
+      source: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-9ye8du"
+      binary: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-9ye8du"
+    cmakeVariables:
+      CMAKE_CXX_FLAGS: "/DWIN32 /D_WINDOWS /GR /EHsc"
+      CMAKE_CXX_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_CXX_SCAN_FOR_MODULES: "OFF"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_CXX_ABI_COMPILED"
+      cached: true
+      stdout: |
+        Change Dir: 'G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-9ye8du'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_57d49.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.14+a129329f1 for .NET Framework
+        Build started 18/08/2025 22.33.24.
+        
+        Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-9ye8du\\cmTC_57d49.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_57d49.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-9ye8du\\Debug\\".
+          Creating directory "cmTC_57d49.dir\\Debug\\cmTC_57d49.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_57d49.dir\\Debug\\cmTC_57d49.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_57d49.dir\\Debug\\cmTC_57d49.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_57d49.dir\\Debug\\\\" /Fd"cmTC_57d49.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Users\\Mose\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cmake\\data\\share\\cmake-4.0\\Modules\\CMakeCXXCompilerABI.cpp"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D "CMAKE_INTDIR=\\"Debug\\"" /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /GR /Fo"cmTC_57d49.dir\\Debug\\\\" /Fd"cmTC_57d49.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TP /errorReport:queue "C:\\Users\\Mose\\AppData\\Local\\Programs\\Python\\Python313\\Lib\\site-packages\\cmake\\data\\share\\cmake-4.0\\Modules\\CMakeCXXCompilerABI.cpp"
+          CMakeCXXCompilerABI.cpp
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-9ye8du\\Debug\\cmTC_57d49.exe" /INCREMENTAL /ILK:"cmTC_57d49.dir\\Debug\\cmTC_57d49.ilk" /NOLOGO kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-9ye8du/Debug/cmTC_57d49.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-9ye8du/Debug/cmTC_57d49.lib" /MACHINE:X64  /machine:x64 cmTC_57d49.dir\\Debug\\CMakeCXXCompilerABI.obj
+          cmTC_57d49.vcxproj -> G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-9ye8du\\Debug\\cmTC_57d49.exe
+        FinalizeBuildStatus:
+          Deleting file "cmTC_57d49.dir\\Debug\\cmTC_57d49.tlog\\unsuccessfulbuild".
+          Touching "cmTC_57d49.dir\\Debug\\cmTC_57d49.tlog\\cmTC_57d49.lastbuildstate".
+        Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-9ye8du\\cmTC_57d49.vcxproj" (default targets).
+        
+        Build succeeded.
+            0 Warning(s)
+            0 Error(s)
+        
+        Time Elapsed 00:00:01.12
+        
+      exitCode: 0
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:227 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Parsed CXX implicit link information:
+        link line regex: [^( *|.*[/\\])(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?|CMAKE_LINK_STARTFILE-NOTFOUND|([^/\\]+-)?ld|collect2)[^/\\]*( |$)]
+        linker tool regex: [^[ 	]*(->|")?[ 	]*(([^"]*[/\\])?(ld[0-9]*(|\\.[a-rt-z][a-z]*|\\.s[a-np-z][a-z]*|\\.so[a-z]+)|link\\.exe|lld-link(\\.exe)?))("|,| |$)]
+        linker tool for 'CXX': C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe
+        implicit libs: []
+        implicit objs: []
+        implicit dirs: []
+        implicit fwks: []
+      
+      
+  -
+    kind: "message-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Internal/CMakeDetermineLinkerId.cmake:36 (message)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeDetermineCompilerABI.cmake:270 (cmake_determine_linker_id)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeTestCXXCompiler.cmake:26 (CMAKE_DETERMINE_COMPILER_ABI)"
+      - "CMakeLists.txt:5 (project)"
+    message: |
+      Running the CXX compiler's linker: "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/VC/Tools/MSVC/14.44.35207/bin/HostX64/x64/link.exe" "-v"
+      Microsoft (R) Incremental Linker Version 14.44.35211.0
+      Copyright (C) Microsoft Corporation.  All rights reserved.
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Internal/CheckSourceCompiles.cmake:104 (try_compile)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CheckCSourceCompiles.cmake:58 (cmake_check_source_compiles)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/FindThreads.cmake:97 (check_c_source_compiles)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/FindThreads.cmake:163 (_threads_check_libc)"
+      - "build-re7/_deps/spdlog-src/CMakeLists.txt:146 (find_package)"
+    checks:
+      - "Performing Test CMAKE_HAVE_LIBC_PTHREAD"
+    directories:
+      source: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-ducubp"
+      binary: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-ducubp"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_HAVE_LIBC_PTHREAD"
+      cached: true
+      stdout: |
+        Change Dir: 'G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-ducubp'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_07a3f.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.14+a129329f1 for .NET Framework
+        Build started 18/08/2025 22.33.43.
+        
+        Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-ducubp\\cmTC_07a3f.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_07a3f.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-ducubp\\Debug\\".
+          Creating directory "cmTC_07a3f.dir\\Debug\\cmTC_07a3f.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_07a3f.dir\\Debug\\cmTC_07a3f.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_07a3f.dir\\Debug\\cmTC_07a3f.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_07a3f.dir\\Debug\\\\" /Fd"cmTC_07a3f.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-ducubp\\src.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CMAKE_HAVE_LIBC_PTHREAD /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_07a3f.dir\\Debug\\\\" /Fd"cmTC_07a3f.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-ducubp\\src.c"
+          src.c
+        G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-ducubp\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-ducubp\\cmTC_07a3f.vcxproj]
+        Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-ducubp\\cmTC_07a3f.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-ducubp\\cmTC_07a3f.vcxproj" (default target) (1) ->
+        (ClCompile target) -> 
+          G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-ducubp\\src.c(1,10): error C1083: Cannot open include file: 'pthread.h': No such file or directory [G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-ducubp\\cmTC_07a3f.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.71
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CheckLibraryExists.cmake:112 (try_compile)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/FindThreads.cmake:112 (check_library_exists)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/FindThreads.cmake:175 (_threads_check_lib)"
+      - "build-re7/_deps/spdlog-src/CMakeLists.txt:146 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthreads"
+    directories:
+      source: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-343y9o"
+      binary: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-343y9o"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREADS_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-343y9o'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_bebe6.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.14+a129329f1 for .NET Framework
+        Build started 18/08/2025 22.33.44.
+        
+        Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-343y9o\\cmTC_bebe6.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_bebe6.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-343y9o\\Debug\\".
+          Creating directory "cmTC_bebe6.dir\\Debug\\cmTC_bebe6.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_bebe6.dir\\Debug\\cmTC_bebe6.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_bebe6.dir\\Debug\\cmTC_bebe6.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_bebe6.dir\\Debug\\\\" /Fd"cmTC_bebe6.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-343y9o\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_bebe6.dir\\Debug\\\\" /Fd"cmTC_bebe6.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-343y9o\\CheckFunctionExists.c"
+          CheckFunctionExists.c
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-343y9o\\Debug\\cmTC_bebe6.exe" /INCREMENTAL /ILK:"cmTC_bebe6.dir\\Debug\\cmTC_bebe6.ilk" /NOLOGO pthreads.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-343y9o/Debug/cmTC_bebe6.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-343y9o/Debug/cmTC_bebe6.lib" /MACHINE:X64  /machine:x64 cmTC_bebe6.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-343y9o\\cmTC_bebe6.vcxproj]
+        Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-343y9o\\cmTC_bebe6.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-343y9o\\cmTC_bebe6.vcxproj" (default target) (1) ->
+        (Link target) -> 
+          LINK : fatal error LNK1104: cannot open file 'pthreads.lib' [G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-343y9o\\cmTC_bebe6.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.82
+        
+      exitCode: 1
+  -
+    kind: "try_compile-v1"
+    backtrace:
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CheckLibraryExists.cmake:112 (try_compile)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/FindThreads.cmake:112 (check_library_exists)"
+      - "C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/FindThreads.cmake:176 (_threads_check_lib)"
+      - "build-re7/_deps/spdlog-src/CMakeLists.txt:146 (find_package)"
+    checks:
+      - "Looking for pthread_create in pthread"
+    directories:
+      source: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-pr0zrh"
+      binary: "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-pr0zrh"
+    cmakeVariables:
+      CMAKE_C_FLAGS: "/DWIN32 /D_WINDOWS"
+      CMAKE_C_FLAGS_DEBUG: "/Zi /Ob0 /Od /RTC1"
+      CMAKE_EXE_LINKER_FLAGS: "/machine:x64"
+    buildResult:
+      variable: "CMAKE_HAVE_PTHREAD_CREATE"
+      cached: true
+      stdout: |
+        Change Dir: 'G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-pr0zrh'
+        
+        Run Build Command(s): "C:/Program Files (x86)/Microsoft Visual Studio/2022/BuildTools/MSBuild/Current/Bin/amd64/MSBuild.exe" cmTC_d7041.vcxproj /p:Configuration=Debug /p:Platform=x64 /p:VisualStudioVersion=17.0 /v:n
+        MSBuild version 17.14.14+a129329f1 for .NET Framework
+        Build started 18/08/2025 22.33.46.
+        
+        Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-pr0zrh\\cmTC_d7041.vcxproj" on node 1 (default targets).
+        PrepareForBuild:
+          Creating directory "cmTC_d7041.dir\\Debug\\".
+          Structured output is enabled. The formatting of compiler diagnostics will reflect the error hierarchy. See https://aka.ms/cpp/structured-output for more details.
+          Creating directory "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-pr0zrh\\Debug\\".
+          Creating directory "cmTC_d7041.dir\\Debug\\cmTC_d7041.tlog\\".
+        InitializeBuildStatus:
+          Creating "cmTC_d7041.dir\\Debug\\cmTC_d7041.tlog\\unsuccessfulbuild" because "AlwaysCreate" was specified.
+          Touching "cmTC_d7041.dir\\Debug\\cmTC_d7041.tlog\\unsuccessfulbuild".
+        ClCompile:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\CL.exe /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d7041.dir\\Debug\\\\" /Fd"cmTC_d7041.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-pr0zrh\\CheckFunctionExists.c"
+          Microsoft (R) C/C++ Optimizing Compiler Version 19.44.35211 for x64
+          Copyright (C) Microsoft Corporation.  All rights reserved.
+          cl /c /Zi /W1 /WX- /diagnostics:column /Od /Ob0 /D _MBCS /D WIN32 /D _WINDOWS /D CHECK_FUNCTION_EXISTS=pthread_create /D "CMAKE_INTDIR=\\"Debug\\"" /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Zc:inline /Fo"cmTC_d7041.dir\\Debug\\\\" /Fd"cmTC_d7041.dir\\Debug\\vc143.pdb" /external:W1 /Gd /TC /errorReport:queue "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-pr0zrh\\CheckFunctionExists.c"
+          CheckFunctionExists.c
+        Link:
+          C:\\Program Files (x86)\\Microsoft Visual Studio\\2022\\BuildTools\\VC\\Tools\\MSVC\\14.44.35207\\bin\\HostX64\\x64\\link.exe /ERRORREPORT:QUEUE /OUT:"G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-pr0zrh\\Debug\\cmTC_d7041.exe" /INCREMENTAL /ILK:"cmTC_d7041.dir\\Debug\\cmTC_d7041.ilk" /NOLOGO pthread.lib kernel32.lib user32.lib gdi32.lib winspool.lib shell32.lib ole32.lib oleaut32.lib uuid.lib comdlg32.lib advapi32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-pr0zrh/Debug/cmTC_d7041.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/CMakeFiles/CMakeScratch/TryCompile-pr0zrh/Debug/cmTC_d7041.lib" /MACHINE:X64  /machine:x64 cmTC_d7041.dir\\Debug\\CheckFunctionExists.obj
+        LINK : fatal error LNK1104: cannot open file 'pthread.lib' [G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-pr0zrh\\cmTC_d7041.vcxproj]
+        Done Building Project "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-pr0zrh\\cmTC_d7041.vcxproj" (default targets) -- FAILED.
+        
+        Build FAILED.
+        
+        "G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-pr0zrh\\cmTC_d7041.vcxproj" (default target) (1) ->
+        (Link target) -> 
+          LINK : fatal error LNK1104: cannot open file 'pthread.lib' [G:\\GITHUB REPOs\\uevr\\adapters\\RE-Engine\\build-re7\\CMakeFiles\\CMakeScratch\\TryCompile-pr0zrh\\cmTC_d7041.vcxproj]
+        
+            0 Warning(s)
+            1 Error(s)
+        
+        Time Elapsed 00:00:00.67
+        
+      exitCode: 1
+...

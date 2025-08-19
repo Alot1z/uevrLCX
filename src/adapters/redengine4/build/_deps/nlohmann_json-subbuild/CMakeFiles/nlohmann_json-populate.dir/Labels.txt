@@ -1,0 +1,14 @@
+# Target labels
+ nlohmann_json-populate
+# Source files and their labels
+G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/nlohmann_json-subbuild/CMakeFiles/nlohmann_json-populate
+G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/nlohmann_json-subbuild/CMakeFiles/6827429c5196c7990c6e47ab3ae52616/nlohmann_json-populate.rule
+G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/nlohmann_json-subbuild/CMakeFiles/95aa7332387da1e28a3ec0e8918f4bbe/nlohmann_json-populate-complete.rule
+G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/nlohmann_json-subbuild/CMakeFiles/dc26327a0edc142bac58597d322d3de5/nlohmann_json-populate-build.rule
+G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/nlohmann_json-subbuild/CMakeFiles/dc26327a0edc142bac58597d322d3de5/nlohmann_json-populate-configure.rule
+G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/nlohmann_json-subbuild/CMakeFiles/dc26327a0edc142bac58597d322d3de5/nlohmann_json-populate-download.rule
+G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/nlohmann_json-subbuild/CMakeFiles/dc26327a0edc142bac58597d322d3de5/nlohmann_json-populate-install.rule
+G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/nlohmann_json-subbuild/CMakeFiles/dc26327a0edc142bac58597d322d3de5/nlohmann_json-populate-mkdir.rule
+G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/nlohmann_json-subbuild/CMakeFiles/dc26327a0edc142bac58597d322d3de5/nlohmann_json-populate-patch.rule
+G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/nlohmann_json-subbuild/CMakeFiles/dc26327a0edc142bac58597d322d3de5/nlohmann_json-populate-test.rule
+G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/nlohmann_json-subbuild/CMakeFiles/dc26327a0edc142bac58597d322d3de5/nlohmann_json-populate-update.rule

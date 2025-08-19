@@ -1,0 +1,62 @@
+# Universal Cross-Engine Camera Configuration
+# This file provides camera settings that work across all three target engines:
+# - RE Engine (Resident Evil 7)
+# - REDengine 4 (Cyberpunk 2077)
+# - MT Framework (Monster Hunter World)
+
+# Universal Camera Settings
+world_scale0=1.000000
+decoupled_pitch0=true
+camera_forward_offset0=0.000000
+camera_right_offset0=0.000000
+camera_up_offset0=0.000000
+
+# Cross-Engine Camera Transformation
+CrossEngine_ThirdPersonToFirstPerson=false
+CrossEngine_HeadTracking=true
+CrossEngine_CameraInterpolation=true
+CrossEngine_CameraSmoothing=0.8
+
+# Engine-Specific Camera Offsets
+
+# RE Engine (Resident Evil 7)
+RE_Engine_WorldScale=1.000000
+RE_Engine_DecoupledPitch=true
+RE_Engine_CameraForwardOffset=0.000000
+RE_Engine_CameraRightOffset=0.000000
+RE_Engine_CameraUpOffset=0.000000
+RE_Engine_HorrorGameOptimization=true
+
+# REDengine 4 (Cyberpunk 2077)
+REDengine4_WorldScale=1.000000
+REDengine4_DecoupledPitch=true
+REDengine4_CameraForwardOffset=0.000000
+REDengine4_CameraRightOffset=0.000000
+REDengine4_CameraUpOffset=0.000000
+REDengine4_OpenWorldOptimization=true
+
+# MT Framework (Monster Hunter World)
+MT_Framework_WorldScale=1.000000
+MT_Framework_DecoupledPitch=true
+MT_Framework_CameraForwardOffset=0.000000
+MT_Framework_CameraRightOffset=0.000000
+MT_Framework_CameraUpOffset=0.000000
+MT_Framework_ThirdPersonConversion=true
+
+# VR Comfort Settings
+VR_ComfortMode=true
+VR_MotionSicknessPrevention=true
+VR_FOVReduction=false
+VR_HeadBobReduction=true
+
+# Camera Performance
+Camera_PerformanceMode=balanced
+Camera_DynamicAdjustment=true
+Camera_StabilityThreshold=0.95
+Camera_InterpolationSpeed=15.0
+
+# Validation Settings
+Camera_ValidationEnabled=true
+Camera_StabilityMonitoring=true
+Camera_PerformanceTracking=true
+Camera_ErrorReporting=true

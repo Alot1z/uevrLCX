@@ -1,0 +1,18 @@
+{
+  "file": "G:\\GITHUB REPOs\\uevr\\docs\\uevr-docs\\.gitignore",
+  "generated_at": "2025-08-18T19:58:36.938887",
+  "schema_version": 1,
+  "annotations": {
+    "1": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/uevr",
+        "page": "5 Configuration System"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ]
+  }
+}

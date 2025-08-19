@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\redengine4\build\_deps\minhook-src\src\buffer.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\redengine4\build\_deps\minhook-src\src\hook.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\redengine4\build\_deps\minhook-src\src\trampoline.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\redengine4\build\_deps\minhook-src\src\hde\hde64.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\redengine4\build\_deps\minhook-src\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{437EA6AC-D0AA-3E8F-B45E-C5E6ED99E39F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

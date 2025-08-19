@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\nlohmann_json-subbuild\CMakeFiles\318ddcfa5edea01522c296d64aded1a8\nlohmann_json-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\nlohmann_json-subbuild\CMakeFiles\318ddcfa5edea01522c296d64aded1a8\nlohmann_json-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\nlohmann_json-subbuild\CMakeFiles\318ddcfa5edea01522c296d64aded1a8\nlohmann_json-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\nlohmann_json-subbuild\CMakeFiles\318ddcfa5edea01522c296d64aded1a8\nlohmann_json-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\nlohmann_json-subbuild\CMakeFiles\318ddcfa5edea01522c296d64aded1a8\nlohmann_json-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\nlohmann_json-subbuild\CMakeFiles\318ddcfa5edea01522c296d64aded1a8\nlohmann_json-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\nlohmann_json-subbuild\CMakeFiles\318ddcfa5edea01522c296d64aded1a8\nlohmann_json-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\nlohmann_json-subbuild\CMakeFiles\318ddcfa5edea01522c296d64aded1a8\nlohmann_json-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\nlohmann_json-subbuild\CMakeFiles\529285ed00a55060d4b4325d9319a80f\nlohmann_json-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\nlohmann_json-subbuild\CMakeFiles\b603aa660f5abbb379dc1fc5ac3b8ff1\nlohmann_json-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\nlohmann_json-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\nlohmann_json-subbuild\CMakeFiles\nlohmann_json-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{D3247E7E-6A7D-3541-9AF3-E4D75DFBEED8}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

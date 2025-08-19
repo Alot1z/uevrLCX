@@ -1,0 +1,29 @@
+{
+  "file": "G:\\GITHUB REPOs\\uevr\\revision.txt",
+  "generated_at": "2025-08-18T19:58:36.925284",
+  "schema_version": 1,
+  "annotations": {
+    "1": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/uevr",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "2": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/uevr",
+        "page": "1.1 Architecture Overview"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ]
+  }
+}

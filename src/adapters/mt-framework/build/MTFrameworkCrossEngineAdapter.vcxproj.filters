@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\mt_framework_bridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\mt_framework_factory.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\mt_framework_main.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\test_integration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\mt_framework_adapter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\mt_framework_factory.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\nlohmann_json-src\nlohmann_json.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{DB419D76-EA5E-343B-8056-45AA15D7F602}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{D8DAD76F-FE6B-3BC1-A316-6DF60275B4A7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

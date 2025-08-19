@@ -1,0 +1,98 @@
+# Monster Hunter: World Camera Configuration
+# MT Framework Engine - VR Camera Tuning
+
+# Camera System Configuration
+camera_system = "MT-Framework"
+engine_type = "MT-Framework"
+game_executable = "MonsterHunterWorld.exe"
+
+# VR Camera Settings
+vr_enabled = true
+first_person_mode = true
+third_person_to_first_person = true
+
+# Camera Position and Offset
+camera_offset_x = 0.0
+camera_offset_y = 1.6
+camera_offset_z = 0.0
+
+# Field of View Settings
+base_fov = 60.0
+vr_fov_multiplier = 1.0
+comfort_fov = 70.0
+max_fov = 90.0
+
+# Camera Movement and Smoothing
+camera_smoothing = 0.1
+headset_tracking_smoothing = 0.05
+camera_acceleration = 0.8
+camera_deceleration = 0.9
+
+# Distance Limits
+min_camera_distance = 0.5
+max_camera_distance = 5.0
+optimal_camera_distance = 1.0
+
+# Comfort Settings
+vignette_strength = 0.3
+motion_blur_reduction = true
+snap_turning = false
+smooth_turning = true
+turn_speed = 45.0
+
+# MT Framework Specific Hooks
+mt_framework_hooks = {
+    camera_manager = "MTFramework::CameraManager",
+    render_camera = "MTFramework::RenderCamera",
+    view_matrix = "MTFramework::ViewMatrix",
+    projection_matrix = "MTFramework::ProjectionMatrix"
+}
+
+# Camera Transformation Matrix
+camera_transform = {
+    view_matrix_pattern = "48 8B 05 ?? ?? ?? ?? 48 85 C0 74 ??",
+    projection_matrix_pattern = "F3 0F 10 05 ?? ?? ?? ?? F3 0F 10 0D",
+    view_matrix_offset = 0,
+    projection_matrix_offset = 64,
+    constant_buffer_slot = 0
+}
+
+# VR Rendering Pipeline
+vr_rendering = {
+    stereo_rendering = true,
+    eye_separation = 0.064,
+    ipd_adjustment = true,
+    depth_buffer_integration = true
+}
+
+# Performance Optimization
+performance = {
+    adaptive_resolution = true,
+    dynamic_lod = true,
+    frustum_culling = true,
+    occlusion_culling = true
+}
+
+# Monster Hunter World Specific
+mhw_camera = {
+    weapon_visibility = true,
+    monster_tracking = true,
+    combat_camera = true,
+    exploration_camera = true,
+    menu_camera = true
+}
+
+# Camera Attachments
+camera_attachments = {
+    weapon_camera = "right_controller",
+    utility_camera = "left_controller",
+    menu_camera = "headset"
+}
+
+# Validation Settings
+validation = {
+    camera_stability = true,
+    performance_monitoring = true,
+    comfort_testing = true,
+    vr_experience_validation = true
+}

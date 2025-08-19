@@ -1,0 +1,150 @@
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\MT-FRAMEWORK\BUILD\_DEPS\MINHOOK-SUBBUILD\CMAKEFILES\B2CAA3590417C28774E8AE7E3602FBAC\MINHOOK-POPULATE-MKDIR.RULE
+setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -Dcfgdir=/Debug -P "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/minhook-populate-prefix/tmp/minhook-populate-mkdirs.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/minhook-populate-prefix/src/minhook-populate-stamp/Debug/minhook-populate-mkdir"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\MT-FRAMEWORK\BUILD\_DEPS\MINHOOK-SUBBUILD\CMAKEFILES\B2CAA3590417C28774E8AE7E3602FBAC\MINHOOK-POPULATE-DOWNLOAD.RULE
+setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/minhook-populate-prefix/tmp/minhook-populate-gitclone.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/minhook-populate-prefix/src/minhook-populate-stamp/Debug/minhook-populate-download"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\MT-FRAMEWORK\BUILD\_DEPS\MINHOOK-SUBBUILD\CMAKEFILES\B2CAA3590417C28774E8AE7E3602FBAC\MINHOOK-POPULATE-UPDATE.RULE
+setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\minhook-src"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -Dcan_fetch=YES -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/minhook-populate-prefix/tmp/minhook-populate-gitupdate.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\MT-FRAMEWORK\BUILD\_DEPS\MINHOOK-SUBBUILD\CMAKEFILES\B2CAA3590417C28774E8AE7E3602FBAC\MINHOOK-POPULATE-PATCH.RULE
+setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/minhook-populate-prefix/src/minhook-populate-stamp/Debug/minhook-populate-patch"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\MT-FRAMEWORK\BUILD\_DEPS\MINHOOK-SUBBUILD\CMAKEFILES\B2CAA3590417C28774E8AE7E3602FBAC\MINHOOK-POPULATE-CONFIGURE.RULE
+setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\minhook-build"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/minhook-populate-prefix/src/minhook-populate-stamp/Debug/minhook-populate-configure"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\MT-FRAMEWORK\BUILD\_DEPS\MINHOOK-SUBBUILD\CMAKEFILES\B2CAA3590417C28774E8AE7E3602FBAC\MINHOOK-POPULATE-BUILD.RULE
+setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\minhook-build"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/minhook-populate-prefix/src/minhook-populate-stamp/Debug/minhook-populate-build"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\MT-FRAMEWORK\BUILD\_DEPS\MINHOOK-SUBBUILD\CMAKEFILES\B2CAA3590417C28774E8AE7E3602FBAC\MINHOOK-POPULATE-INSTALL.RULE
+setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\minhook-build"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/minhook-populate-prefix/src/minhook-populate-stamp/Debug/minhook-populate-install"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\MT-FRAMEWORK\BUILD\_DEPS\MINHOOK-SUBBUILD\CMAKEFILES\B2CAA3590417C28774E8AE7E3602FBAC\MINHOOK-POPULATE-TEST.RULE
+setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\minhook-build"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/minhook-populate-prefix/src/minhook-populate-stamp/Debug/minhook-populate-test"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\MT-FRAMEWORK\BUILD\_DEPS\MINHOOK-SUBBUILD\CMAKEFILES\3C976DB7E8235AA26118B0AE885493AF\MINHOOK-POPULATE-COMPLETE.RULE
+setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E make_directory "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/CMakeFiles/Debug"
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/CMakeFiles/Debug/minhook-populate-complete"
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/minhook-populate-prefix/src/minhook-populate-stamp/Debug/minhook-populate-done"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\MT-FRAMEWORK\BUILD\_DEPS\MINHOOK-SUBBUILD\CMAKEFILES\36C4FA404E5FA3A4EBFC2840D2D4F384\MINHOOK-POPULATE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\MT-FRAMEWORK\BUILD\_DEPS\MINHOOK-SUBBUILD\CMAKELISTS.TXT
+setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe "-SG:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild" "-BG:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild" --check-stamp-file "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/minhook-subbuild/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

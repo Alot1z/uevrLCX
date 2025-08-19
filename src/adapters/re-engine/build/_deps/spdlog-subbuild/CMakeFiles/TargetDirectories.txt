@@ -1,0 +1,3 @@
+G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/spdlog-subbuild/CMakeFiles/spdlog-populate.dir
+G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/spdlog-subbuild/CMakeFiles/ALL_BUILD.dir
+G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/spdlog-subbuild/CMakeFiles/ZERO_CHECK.dir

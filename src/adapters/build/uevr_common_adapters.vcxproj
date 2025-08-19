@@ -1,0 +1,317 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|x64">
+      <Configuration>Release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="MinSizeRel|x64">
+      <Configuration>MinSizeRel</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="RelWithDebInfo|x64">
+      <Configuration>RelWithDebInfo</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{BC3C9467-826B-3791-BAA6-3FA1E2B6E07B}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>uevr_common_adapters</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\build\Debug\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">uevr_common_adapters.dir\Debug\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">uevr_common_adapters</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">G:\GITHUB REPOs\uevr\src\adapters\build\Release\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|x64'">uevr_common_adapters.dir\Release\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='Release|x64'">uevr_common_adapters</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">G:\GITHUB REPOs\uevr\src\adapters\build\MinSizeRel\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">uevr_common_adapters.dir\MinSizeRel\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">uevr_common_adapters</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">.lib</TargetExt>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">G:\GITHUB REPOs\uevr\src\adapters\build\RelWithDebInfo\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">uevr_common_adapters.dir\RelWithDebInfo\</IntDir>
+    <TargetName Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">uevr_common_adapters</TargetName>
+    <TargetExt Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">.lib</TargetExt>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>G:\GITHUB REPOs\uevr\src\adapters\..\..\SOURCECODE\uevr\include;G:\GITHUB REPOs\uevr\src\adapters\..\..\include;G:\GITHUB REPOs\uevr\src\adapters;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-src\include;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus /Zc:__cplusplus</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4251;4275;4996;4100;4189;4244</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>Disabled</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>Disabled</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;_CRT_SECURE_NO_WARNINGS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;NOMINMAX;_WIN32_WINNT=0x0A00;CMAKE_INTDIR="Debug"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_DEBUG;_WINDOWS;_CRT_SECURE_NO_WARNINGS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;NOMINMAX;_WIN32_WINNT=0x0A00;CMAKE_INTDIR=\"Debug\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>G:\GITHUB REPOs\uevr\src\adapters\..\..\SOURCECODE\uevr\include;G:\GITHUB REPOs\uevr\src\adapters\..\..\include;G:\GITHUB REPOs\uevr\src\adapters;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-src\include;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>G:\GITHUB REPOs\uevr\src\adapters\..\..\SOURCECODE\uevr\include;G:\GITHUB REPOs\uevr\src\adapters\..\..\include;G:\GITHUB REPOs\uevr\src\adapters;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-src\include;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>G:\GITHUB REPOs\uevr\src\adapters\..\..\SOURCECODE\uevr\include;G:\GITHUB REPOs\uevr\src\adapters\..\..\include;G:\GITHUB REPOs\uevr\src\adapters;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-src\include;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus /Zc:__cplusplus</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DisableSpecificWarnings>4251;4275;4996;4100;4189;4244</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>AnySuitable</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <TreatWarningAsError>true</TreatWarningAsError>
+      <UseFullPaths>false</UseFullPaths>
+      <WarningLevel>Level4</WarningLevel>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;NOMINMAX;_WIN32_WINNT=0x0A00;CMAKE_INTDIR="Release"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;NOMINMAX;_WIN32_WINNT=0x0A00;CMAKE_INTDIR=\"Release\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>G:\GITHUB REPOs\uevr\src\adapters\..\..\SOURCECODE\uevr\include;G:\GITHUB REPOs\uevr\src\adapters\..\..\include;G:\GITHUB REPOs\uevr\src\adapters;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-src\include;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>G:\GITHUB REPOs\uevr\src\adapters\..\..\SOURCECODE\uevr\include;G:\GITHUB REPOs\uevr\src\adapters\..\..\include;G:\GITHUB REPOs\uevr\src\adapters;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-src\include;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>G:\GITHUB REPOs\uevr\src\adapters\..\..\SOURCECODE\uevr\include;G:\GITHUB REPOs\uevr\src\adapters\..\..\include;G:\GITHUB REPOs\uevr\src\adapters;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-src\include;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus /Zc:__cplusplus</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DisableSpecificWarnings>4251;4275;4996;4100;4189;4244</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MinSpace</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;NOMINMAX;_WIN32_WINNT=0x0A00;CMAKE_INTDIR="MinSizeRel"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <DebugInformationFormat>
+      </DebugInformationFormat>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;NOMINMAX;_WIN32_WINNT=0x0A00;CMAKE_INTDIR=\"MinSizeRel\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>G:\GITHUB REPOs\uevr\src\adapters\..\..\SOURCECODE\uevr\include;G:\GITHUB REPOs\uevr\src\adapters\..\..\include;G:\GITHUB REPOs\uevr\src\adapters;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-src\include;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>G:\GITHUB REPOs\uevr\src\adapters\..\..\SOURCECODE\uevr\include;G:\GITHUB REPOs\uevr\src\adapters\..\..\include;G:\GITHUB REPOs\uevr\src\adapters;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-src\include;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">
+    <ClCompile>
+      <AdditionalIncludeDirectories>G:\GITHUB REPOs\uevr\src\adapters\..\..\SOURCECODE\uevr\include;G:\GITHUB REPOs\uevr\src\adapters\..\..\include;G:\GITHUB REPOs\uevr\src\adapters;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-src\include;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalOptions>%(AdditionalOptions) /Zc:__cplusplus /Zc:__cplusplus</AdditionalOptions>
+      <AssemblerListingLocation>$(IntDir)</AssemblerListingLocation>
+      <BasicRuntimeChecks>Default</BasicRuntimeChecks>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+      <DisableSpecificWarnings>4251;4275;4996;4100;4189;4244</DisableSpecificWarnings>
+      <ExceptionHandling>Sync</ExceptionHandling>
+      <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
+      <LanguageStandard>stdcpp20</LanguageStandard>
+      <MinimalRebuild></MinimalRebuild>
+      <Optimization>MaxSpeed</Optimization>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <RuntimeTypeInfo>true</RuntimeTypeInfo>
+      <SupportJustMyCode></SupportJustMyCode>
+      <UseFullPaths>false</UseFullPaths>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;NOMINMAX;_WIN32_WINNT=0x0A00;CMAKE_INTDIR="RelWithDebInfo"</PreprocessorDefinitions>
+      <ObjectFileName>$(IntDir)</ObjectFileName>
+      <ScanSourceForModuleDependencies>false</ScanSourceForModuleDependencies>
+    </ClCompile>
+    <ResourceCompile>
+      <PreprocessorDefinitions>%(PreprocessorDefinitions);WIN32;_WINDOWS;NDEBUG;_CRT_SECURE_NO_WARNINGS;UNICODE;_UNICODE;WIN32_LEAN_AND_MEAN;NOMINMAX;_WIN32_WINNT=0x0A00;CMAKE_INTDIR=\"RelWithDebInfo\"</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>G:\GITHUB REPOs\uevr\src\adapters\..\..\SOURCECODE\uevr\include;G:\GITHUB REPOs\uevr\src\adapters\..\..\include;G:\GITHUB REPOs\uevr\src\adapters;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-src\include;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ResourceCompile>
+    <Midl>
+      <AdditionalIncludeDirectories>G:\GITHUB REPOs\uevr\src\adapters\..\..\SOURCECODE\uevr\include;G:\GITHUB REPOs\uevr\src\adapters\..\..\include;G:\GITHUB REPOs\uevr\src\adapters;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-src\include;G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+    <Lib>
+      <AdditionalOptions>%(AdditionalOptions) /machine:x64</AdditionalOptions>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule G:/GITHUB REPOs/uevr/src/adapters/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe "-SG:/GITHUB REPOs/uevr/src/adapters" "-BG:/GITHUB REPOs/uevr/src/adapters/build" --check-stamp-file "G:/GITHUB REPOs/uevr/src/adapters/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeCXXInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeCommonLanguageInclude.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeGenericSystem.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeInitializeConfigs.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeLanguageInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeRCInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Compiler\MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Compiler\MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject\shared_internal_commands.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FetchContent.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FetchContent\CMakeLists.cmake.in;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FindGit.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FindPackageHandleStandardArgs.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FindPackageMessage.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Linker\MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Linker\MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-Initialize.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\WindowsPaths.cmake;G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\4.0.3\CMakeCXXCompiler.cmake;G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\4.0.3\CMakeRCCompiler.cmake;G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\4.0.3\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Building Custom Rule G:/GITHUB REPOs/uevr/src/adapters/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe "-SG:/GITHUB REPOs/uevr/src/adapters" "-BG:/GITHUB REPOs/uevr/src/adapters/build" --check-stamp-file "G:/GITHUB REPOs/uevr/src/adapters/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeCXXInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeCommonLanguageInclude.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeGenericSystem.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeInitializeConfigs.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeLanguageInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeRCInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Compiler\MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Compiler\MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject\shared_internal_commands.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FetchContent.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FetchContent\CMakeLists.cmake.in;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FindGit.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FindPackageHandleStandardArgs.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FindPackageMessage.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Linker\MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Linker\MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-Initialize.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\WindowsPaths.cmake;G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\4.0.3\CMakeCXXCompiler.cmake;G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\4.0.3\CMakeRCCompiler.cmake;G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\4.0.3\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">Building Custom Rule G:/GITHUB REPOs/uevr/src/adapters/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe "-SG:/GITHUB REPOs/uevr/src/adapters" "-BG:/GITHUB REPOs/uevr/src/adapters/build" --check-stamp-file "G:/GITHUB REPOs/uevr/src/adapters/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeCXXInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeCommonLanguageInclude.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeGenericSystem.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeInitializeConfigs.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeLanguageInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeRCInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Compiler\MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Compiler\MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject\shared_internal_commands.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FetchContent.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FetchContent\CMakeLists.cmake.in;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FindGit.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FindPackageHandleStandardArgs.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FindPackageMessage.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Linker\MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Linker\MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-Initialize.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\WindowsPaths.cmake;G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\4.0.3\CMakeCXXCompiler.cmake;G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\4.0.3\CMakeRCCompiler.cmake;G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\4.0.3\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='MinSizeRel|x64'">false</LinkObjects>
+      <Message Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">Building Custom Rule G:/GITHUB REPOs/uevr/src/adapters/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe "-SG:/GITHUB REPOs/uevr/src/adapters" "-BG:/GITHUB REPOs/uevr/src/adapters/build" --check-stamp-file "G:/GITHUB REPOs/uevr/src/adapters/build/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeCXXInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeCommonLanguageInclude.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeGenericSystem.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeInitializeConfigs.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeLanguageInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeRCInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Compiler\CMakeCommonCompilerMacros.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Compiler\MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Compiler\MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject\shared_internal_commands.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FetchContent.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FetchContent\CMakeLists.cmake.in;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FindGit.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FindPackageHandleStandardArgs.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\FindPackageMessage.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Internal\CMakeCXXLinkerInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Internal\CMakeCommonLinkerInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Linker\MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Linker\MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Linker\Windows-MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-Initialize.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-MSVC-CXX.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-MSVC.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\WindowsPaths.cmake;G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\4.0.3\CMakeCXXCompiler.cmake;G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\4.0.3\CMakeRCCompiler.cmake;G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\4.0.3\CMakeSystem.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">G:\GITHUB REPOs\uevr\src\adapters\build\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='RelWithDebInfo|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\common\BaseCrossEngineAdapter.cpp" />
+    <ClInclude Include="G:\GITHUB REPOs\uevr\src\adapters\common\BaseCrossEngineAdapter.hpp" />
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\common\CrossEngineAdapterFactory.cpp" />
+    <ClInclude Include="G:\GITHUB REPOs\uevr\src\adapters\common\CrossEngineAdapterFactory.hpp" />
+    <Natvis Include="G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\nlohmann_json.natvis">
+    </Natvis>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="G:\GITHUB REPOs\uevr\src\adapters\build\ZERO_CHECK.vcxproj">
+      <Project>{A0D3525D-68C7-35B5-BAEB-29D21FC140BE}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+    <ProjectReference Include="G:\GITHUB REPOs\uevr\src\adapters\build\_deps\minhook-build\minhook.vcxproj">
+      <Project>{B1DED392-EFE3-3044-83FC-778195B98C31}</Project>
+      <Name>minhook</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

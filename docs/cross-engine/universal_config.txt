@@ -1,0 +1,69 @@
+# Universal Cross-Engine VR Configuration
+# This file provides VR settings that work across all three target engines:
+# - RE Engine (Resident Evil 7)
+# - REDengine 4 (Cyberpunk 2077)  
+# - MT Framework (Monster Hunter World)
+
+# VR Runtime Configuration
+Frontend_RequestedRuntime=openxr_loader.dll
+VR_ControllersAllowed=true
+VR_RoomscaleMovement=true
+
+# VR Aiming and Movement
+VR_AimMethod=2
+VR_SnapTurn=false
+VR_SnapturnTurnAngle=45
+VR_JoystickDeadzone=0.200000
+
+# Performance Settings
+VR_UncapFramerate=true
+VR_ShowFPSOverlay=true
+VR_WorldScale=1.000000
+
+# OpenXR Configuration
+OpenXR_ResolutionScale=0.900000
+OpenXR_FormFactor=head_mounted_display
+OpenXR_EnvironmentBlendMode=opaque
+OpenXR_ViewConfiguration=primary_stereo
+
+# Cross-Engine Specific Settings
+CrossEngine_VREnabled=true
+CrossEngine_StereoRendering=true
+CrossEngine_PerformanceMode=balanced
+
+# Engine Detection
+CrossEngine_AutoDetect=true
+CrossEngine_FallbackMode=true
+
+# Memory Management
+CrossEngine_PatternScanning=true
+CrossEngine_AddressValidation=true
+CrossEngine_FallbackHooks=true
+
+# Performance Optimization
+CrossEngine_DynamicLOD=true
+CrossEngine_FrustumCulling=true
+CrossEngine_ShaderOptimization=true
+CrossEngine_ResourcePooling=true
+
+# Camera System
+CrossEngine_DecoupledPitch=true
+CrossEngine_SmoothTurning=true
+CrossEngine_SnapTurning=false
+
+# Input Mapping
+CrossEngine_WeaponToRightController=true
+CrossEngine_UtilityToLeftController=true
+CrossEngine_PermanentWeaponChanges=true
+CrossEngine_PermanentUtilityChanges=false
+
+# Validation and Testing
+CrossEngine_PerformanceMonitoring=true
+CrossEngine_HookStability=true
+CrossEngine_MemoryManagement=true
+CrossEngine_FrameTiming=true
+
+# Debug and Development
+CrossEngine_DebugMode=false
+CrossEngine_LogLevel=info
+CrossEngine_ProfileGeneration=true

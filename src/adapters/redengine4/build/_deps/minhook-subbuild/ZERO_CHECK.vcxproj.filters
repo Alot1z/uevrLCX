@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\redengine4\build\_deps\minhook-subbuild\CMakeFiles\737b7e0617d551865058aa69ac011470\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{BBB10EC5-40A2-3E24-BF03-57C33780BA7F}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

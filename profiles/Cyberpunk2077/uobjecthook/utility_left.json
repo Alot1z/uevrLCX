@@ -1,0 +1,41 @@
+{
+  "attachment_type": "utility_left",
+  "object_name": "Utility_Item",
+  "component_path": "UtilityMesh",
+  "controller_side": "left",
+  "attachment_status": "baseline",
+  "transform_data": {
+    "location_offset": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "rotation_offset_quat": {
+      "x": 1.0,
+      "y": 0.0,
+      "z": 0.0,
+      "w": 0.0
+    },
+    "scale": 1.0
+  },
+  "attachment_state": {
+    "is_attached": false,
+    "permanent_change": false,
+    "visible": true,
+    "auto_attach": true
+  },
+  "redengine4_data": {
+    "object_address": "0x0000000000000000",
+    "component_address": "0x0000000000000000",
+    "memory_pattern": "utility_mesh_pattern",
+    "hook_status": "pending"
+  },
+  "profile_info": {
+    "profile_name": "Cyberpunk2077_UtilityLeft_Baseline",
+    "profile_version": "1.0.0",
+    "created_date": "2024-01-01",
+    "modified_date": "2024-01-01",
+    "validation_status": "baseline",
+    "notes": "Baseline utility attachment configuration for left controller"
+  }
+}

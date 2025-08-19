@@ -1,0 +1,21 @@
+# CMake generation dependency list for this directory.
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/BasicConfigVersion-AnyNewerVersion.cmake.in
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeCInformation.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeCommonLanguageInclude.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakeLanguageInformation.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakePackageConfigHelpers.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Compiler/CMakeCommonCompilerMacros.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Compiler/MSVC-C.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Compiler/MSVC.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Internal/CMakeCLinkerInformation.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Internal/CMakeCommonLinkerInformation.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Linker/MSVC-C.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Linker/MSVC.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Platform/Linker/Windows-MSVC-C.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Platform/Linker/Windows-MSVC.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Platform/Windows-MSVC-C.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Platform/Windows-MSVC.cmake
+C:/Users/Mose/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/WriteBasicConfigVersionFile.cmake
+G:/GITHUB REPOs/uevr/src/adapters/build/CMakeFiles/4.0.3/CMakeCCompiler.cmake
+G:/GITHUB REPOs/uevr/src/adapters/build/_deps/minhook-src/CMakeLists.txt
+G:/GITHUB REPOs/uevr/src/adapters/build/_deps/minhook-src/cmake/minhook-config.cmake.in

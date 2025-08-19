@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeFiles\cd7ee95af6162856a8758566bba49a8c\minhook-populate-mkdir.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeFiles\cd7ee95af6162856a8758566bba49a8c\minhook-populate-download.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeFiles\cd7ee95af6162856a8758566bba49a8c\minhook-populate-update.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeFiles\cd7ee95af6162856a8758566bba49a8c\minhook-populate-patch.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeFiles\cd7ee95af6162856a8758566bba49a8c\minhook-populate-configure.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeFiles\cd7ee95af6162856a8758566bba49a8c\minhook-populate-build.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeFiles\cd7ee95af6162856a8758566bba49a8c\minhook-populate-install.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeFiles\cd7ee95af6162856a8758566bba49a8c\minhook-populate-test.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeFiles\7e3da7ec25250ca5ba35c568a3344619\minhook-populate-complete.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeFiles\70e9897e3e78c56209182a44ef2f563d\minhook-populate.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeFiles\minhook-populate" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{85A31AA4-3780-3A9D-AD43-219C7727B0FF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

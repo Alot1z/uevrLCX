@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\re7_adapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\RE_Engine_Hooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\engine_hooks.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\RE_Engine_Integration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\RE_Engine_CrossEngine_Bridge.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\RE_Engine_Main_Integration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\RE_Engine_Final_Integration.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\RE_Engine_Hooks.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\engine_hooks.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\RE_Engine_Integration.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\RE_Engine_CrossEngine_Bridge.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\RE_Engine_Main_Integration.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\RE_Engine_Final_Integration.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="G:\GITHUB REPOs\uevr\src\adapters\re-engine\build\_deps\nlohmann_json-src\nlohmann_json.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{58ED9809-FE96-3153-94B1-62FB6DF08006}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{98F4C414-2D7A-3C7E-AB41-2576B4090935}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

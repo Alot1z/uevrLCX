@@ -1,0 +1,129 @@
+cmake_minimum_required(VERSION 3.16)
+project(uevr_RE_Engine_Test)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Set build type if not specified
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
+# Output directories
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+# Find required packages
+find_package(DirectX REQUIRED)
+find_package(MinHook REQUIRED)
+
+# Include directories
+include_directories(
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/external/minhook/include
+    ${CMAKE_SOURCE_DIR}/external/nlohmann_json/include
+)
+
+# Source files for test
+set(TEST_SOURCES
+    test_re_engine_adapter.cpp
+    src/adapters/re-engine/REEngineAdapter.cpp
+    src/adapters/common/UObjectHookSystem.cpp
+)
+
+# Create test executable
+add_executable(uevr_re_engine_test ${TEST_SOURCES})
+
+# Link libraries
+target_link_libraries(uevr_re_engine_test
+    MinHook::MinHook
+    d3d11
+    dxgi
+    d3dcompiler
+    psapi
+)
+
+# Compiler flags
+if(MSVC)
+    target_compile_options(uevr_re_engine_test PRIVATE
+        /W4
+        /MP
+        /EHsc
+        /utf-8
+    )
+    
+    # Disable specific warnings for external libraries
+    target_compile_options(uevr_re_engine_test PRIVATE
+        /wd4996  # 'function': was declared deprecated
+        /wd4251  # class needs to have dll-interface
+    )
+else()
+    target_compile_options(uevr_re_engine_test PRIVATE
+        -Wall
+        -Wextra
+        -Wpedantic
+        -fPIC
+    )
+endif()
+
+# Define preprocessor macros
+target_compile_definitions(uevr_re_engine_test PRIVATE
+    UNICODE
+    _UNICODE
+    WIN32_LEAN_AND_MEAN
+    NOMINMAX
+    _WIN32_WINNT=0x0601
+)
+
+# Copy dependencies to output directory
+add_custom_command(TARGET uevr_re_engine_test POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE:MinHook::MinHook>
+        $<TARGET_FILE_DIR:uevr_re_engine_test>
+)
+
+# Enable testing
+enable_testing()
+
+# Add test
+add_test(NAME RE_Engine_Adapter_Test COMMAND uevr_re_engine_test)
+
+# Set test properties
+set_tests_properties(RE_Engine_Adapter_Test PROPERTIES
+    TIMEOUT 300
+    ENVIRONMENT "uevr_TEST_MODE=1"
+)
+
+# Custom target for running tests
+add_custom_target(run_tests
+    COMMAND ${CMAKE_CTEST_COMMAND} --verbose
+    DEPENDS uevr_re_engine_test
+    COMMENT "Running uevr RE Engine Adapter tests..."
+)
+
+# Print configuration summary
+message(STATUS "========================================")
+message(STATUS "uevr RE Engine Test Configuration")
+message(STATUS "========================================")
+message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "C++ Standard: ${CMAKE_CXX_STANDARD}")
+message(STATUS "Output Directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+message(STATUS "MinHook: ${MinHook_FOUND}")
+message(STATUS "DirectX: ${DirectX_FOUND}")
+message(STATUS "========================================")
+
+# Installation
+install(TARGETS uevr_re_engine_test
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+
+# Install test data
+install(FILES 
+    test_re_engine_adapter.cpp
+    DESTINATION share/uevr/tests
+)

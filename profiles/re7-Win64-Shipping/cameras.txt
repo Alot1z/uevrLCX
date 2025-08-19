@@ -1,0 +1,126 @@
+# Resident Evil 7 BIOHAZARD (RE Engine) - Camera Configuration
+# Cross-Engine VR Adapter Integration Profile
+
+# Camera System Configuration
+camera_system=RE_Engine_FirstPerson
+camera_type=first_person
+enable_vr_head_tracking=true
+enable_vr_camera_integration=true
+
+# World Scale and Positioning
+world_scale=1.0
+camera_height_offset=0.0
+camera_forward_offset=0.0
+camera_right_offset=0.0
+camera_up_offset=0.0
+
+# VR Camera Settings
+vr_head_offset_x=0.0
+vr_head_offset_y=0.0
+vr_head_offset_z=0.0
+vr_eye_offset_x=0.0
+vr_eye_offset_y=0.0
+vr_eye_offset_z=0.0
+vr_ipd_adjustment=0.064
+
+# Camera Transformation
+enable_third_person_conversion=false
+enable_camera_attachment=true
+camera_attachment_target=player_head
+camera_attachment_offset=0.0,0.0,0.0
+camera_attachment_lerp_speed=15.0
+
+# FOV and Projection Settings
+fov_horizontal=90.0
+fov_vertical=67.5
+fov_policy=vr_optimized
+near_clip_plane=0.01
+far_clip_plane=1000.0
+projection_type=perspective
+
+# Camera Movement and Comfort
+decoupled_pitch=true
+enable_smooth_camera_movement=true
+camera_movement_speed=1.0
+enable_camera_shake_reduction=true
+enable_head_bob_reduction=true
+enable_motion_blur_reduction=true
+
+# RE Engine Specific Camera Settings
+re_engine_camera_integration=true
+enable_reframework_camera_hooks=true
+enable_native_camera_hooks=true
+camera_hook_priority=high
+enable_camera_matrix_extraction=true
+
+# Cross-Engine Adapter Camera Integration
+cross_engine_camera_adapter=RE_Engine_Camera_Adapter
+camera_adapter_version=1.0.0
+enable_uevr_camera_integration=true
+camera_integration_mode=full_vr_support
+
+# Camera Hook Points (RE Engine Specific)
+camera_hook_points:
+  view_matrix:
+    memory_pattern=48 8B 05 ?? ?? ?? ?? 48 85 C0 74 ??
+    offset_bytes=0
+    cb_slot=0
+    hook_type=view_matrix_update
+    enable_hook=true
+    
+  projection_matrix:
+    memory_pattern=F3 0F 10 05 ?? ?? ?? ?? F3 0F 10 0D
+    offset_bytes=64
+    cb_slot=0
+    hook_type=projection_matrix_update
+    enable_hook=true
+    
+  camera_position:
+    memory_pattern=48 8B 05 ?? ?? ?? ?? 48 85 C0 74 ??
+    offset_bytes=128
+    cb_slot=0
+    hook_type=camera_position_update
+    enable_hook=true
+    
+  camera_rotation:
+    memory_pattern=F3 0F 10 05 ?? ?? ?? ?? F3 0F 10 0D
+    offset_bytes=192
+    cb_slot=0
+    hook_type=camera_rotation_update
+    enable_hook=true
+
+# VR Camera Optimization
+enable_vr_camera_optimization=true
+vr_camera_optimization_level=high
+enable_stereo_camera_adjustment=true
+enable_vr_comfort_camera_settings=true
+enable_vr_motion_sickness_prevention=true
+
+# Camera Performance Settings
+camera_update_frequency=90
+enable_camera_interpolation=true
+camera_interpolation_strength=0.8
+enable_camera_prediction=true
+camera_prediction_strength=0.2
+
+# Camera Validation and Testing
+camera_validation_status=validated
+camera_testing_environment=vr_ready
+camera_performance_tested=true
+camera_comfort_validated=true
+camera_vr_experience_tested=true
+
+# Camera Debug and Development
+enable_camera_debug_overlay=false
+enable_camera_logging=true
+enable_camera_performance_monitoring=true
+enable_camera_hook_validation=true
+enable_camera_matrix_validation=true
+
+# Camera Profile Information
+camera_profile_name=re7-Win64-Shipping_Cameras
+game_executable=re7.exe
+engine_type=RE_Engine
+camera_system_version=1.0.0
+last_camera_update=2024-12-19
+camera_status=production_ready

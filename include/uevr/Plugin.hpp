@@ -1,5 +1,5 @@
 /*
-This file (Plugin.hpp) is licensed under the MIT license and is separate from the rest of the UEVR codebase.
+This file (Plugin.hpp) is licensed under the MIT license and is separate from the rest of the uevr codebase.
 
 Copyright (c) 2023 praydog
 
@@ -28,143 +28,314 @@ SOFTWARE.
 // and set uevr::g_plugin to their plugin instance
 #pragma once
 
-#include <windows.h>
-#include <Xinput.h>
-
-#include <d3d11.h>
-#include <d3d12.h>
-
-#include "API.hpp"
+#include <memory>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <functional>
 
 namespace uevr {
-class Plugin;
 
-namespace detail {
-    static inline ::uevr::Plugin* g_plugin{nullptr};
-}
+// Forward declarations
+class Framework;
+class CrossEngineAdapter;
 
+/**
+ * @brief Plugin interface for uevr system
+ * 
+ * This class provides the main entry point for uevr plugins,
+ * managing initialization, configuration, and lifecycle.
+ */
 class Plugin {
 public:
-    Plugin() { detail::g_plugin = this; }
+    /**
+     * @brief Plugin configuration structure
+     */
+    struct Config {
+        std::string name;
+        std::string version;
+        std::string description;
+        std::string author;
+        std::string website;
+        bool enabled = true;
+        bool auto_load = false;
+        std::vector<std::string> dependencies;
+        std::unordered_map<std::string, std::string> settings;
+    };
 
-    virtual ~Plugin() = default;
+    /**
+     * @brief Plugin state enumeration
+     */
+    enum class State {
+        UNLOADED,       ///< Plugin has not been loaded
+        LOADING,        ///< Plugin is currently loading
+        LOADED,         ///< Plugin has been loaded successfully
+        INITIALIZING,   ///< Plugin is initializing
+        RUNNING,        ///< Plugin is running normally
+        PAUSED,         ///< Plugin is paused
+        ERROR,          ///< Plugin encountered an error
+        UNLOADING       ///< Plugin is being unloaded
+    };
 
-    // Main plugin callbacks
-    virtual void on_dllmain() {}
-    virtual void on_initialize() {}
-    virtual void on_present() {}
-    virtual void on_post_render_vr_framework_dx11(ID3D11DeviceContext* context, ID3D11Texture2D* texture, ID3D11RenderTargetView* rtv) {}
-    virtual void on_post_render_vr_framework_dx12(ID3D12GraphicsCommandList* command_list, ID3D12Resource* rt, D3D12_CPU_DESCRIPTOR_HANDLE* rtv) {}
-    virtual void on_device_reset() {}
-    virtual bool on_message(HWND hwnd, UINT msg, WPARAM wparam, LPARAM lparam) { return true; }
-    virtual void on_xinput_get_state(uint32_t* retval, uint32_t user_index, XINPUT_STATE* state) {}
-    virtual void on_xinput_set_state(uint32_t* retval, uint32_t user_index, XINPUT_VIBRATION* vibration) {}
+    /**
+     * @brief Plugin priority levels
+     */
+    enum class Priority {
+        LOW = 0,        ///< Low priority (loaded last)
+        NORMAL = 100,   ///< Normal priority
+        HIGH = 200,     ///< High priority (loaded first)
+        CRITICAL = 300  ///< Critical priority (always loaded first)
+    };
 
-    // Game/Engine callbacks
-    virtual void on_pre_engine_tick(API::UGameEngine* engine, float delta) {}
-    virtual void on_post_engine_tick(API::UGameEngine* engine, float delta) {}
-    virtual void on_pre_slate_draw_window(UEVR_FSlateRHIRendererHandle renderer, UEVR_FViewportInfoHandle viewport_info) {}
-    virtual void on_post_slate_draw_window(UEVR_FSlateRHIRendererHandle renderer, UEVR_FViewportInfoHandle viewport_info) {}
-    virtual void on_pre_calculate_stereo_view_offset(UEVR_StereoRenderingDeviceHandle, int view_index, float world_to_meters, 
-                                                     UEVR_Vector3f* position, UEVR_Rotatorf* rotation, bool is_double) {};
-    virtual void on_post_calculate_stereo_view_offset(UEVR_StereoRenderingDeviceHandle, int view_index, float world_to_meters, 
-                                                      UEVR_Vector3f* position, UEVR_Rotatorf* rotation, bool is_double) {};
+public:
+    /**
+     * @brief Constructor
+     * @param config Plugin configuration
+     */
+    explicit Plugin(const Config& config);
+    
+    /**
+     * @brief Destructor
+     */
+    virtual ~Plugin();
 
-    virtual void on_pre_viewport_client_draw(UEVR_UGameViewportClientHandle viewport_client, UEVR_FViewportHandle viewport, UEVR_FCanvasHandle) {}
-    virtual void on_post_viewport_client_draw(UEVR_UGameViewportClientHandle viewport_client, UEVR_FViewportHandle viewport, UEVR_FCanvasHandle) {}
+    // Disable copy constructor and assignment
+    Plugin(const Plugin&) = delete;
+    Plugin& operator=(const Plugin&) = delete;
 
-    virtual void on_custom_event(const char* event_name, const char* event_data) {}
+    // Allow move constructor and assignment
+    Plugin(Plugin&&) noexcept;
+    Plugin& operator=(Plugin&&) noexcept;
+
+    /**
+     * @brief Initialize the plugin
+     * @return true if initialization was successful
+     */
+    virtual bool initialize();
+
+    /**
+     * @brief Start the plugin
+     * @return true if start was successful
+     */
+    virtual bool start();
+
+    /**
+     * @brief Stop the plugin
+     */
+    virtual void stop();
+
+    /**
+     * @brief Pause the plugin
+     */
+    virtual void pause();
+
+    /**
+     * @brief Resume the plugin
+     */
+    virtual void resume();
+
+    /**
+     * @brief Cleanup plugin resources
+     */
+    virtual void cleanup();
+
+    /**
+     * @brief Update plugin logic (called each frame)
+     * @param delta_time Time since last update in seconds
+     */
+    virtual void update(float delta_time);
+
+    /**
+     * @brief Render plugin UI (called each frame)
+     */
+    virtual void render();
+
+    /**
+     * @brief Handle plugin-specific messages
+     * @param message_id Message identifier
+     * @param data Message data
+     * @return true if message was handled
+     */
+    virtual bool handleMessage(uint32_t message_id, const void* data);
+
+    // Configuration access
+    const Config& getConfig() const { return m_config; }
+    Config& getConfig() { return m_config; }
+
+    // State management
+    State getState() const { return m_state; }
+    bool isEnabled() const { return m_config.enabled; }
+    bool isLoaded() const { return m_state >= State::LOADED; }
+    bool isRunning() const { return m_state == State::RUNNING; }
+    bool isPaused() const { return m_state == State::PAUSED; }
+    bool hasError() const { return m_state == State::ERROR; }
+
+    // Framework access
+    Framework* getFramework() const { return m_framework; }
+    void setFramework(Framework* framework) { m_framework = framework; }
+
+    // Priority management
+    Priority getPriority() const { return m_priority; }
+    void setPriority(Priority priority) { m_priority = priority; }
+
+    // Error handling
+    const std::string& getLastError() const { return m_last_error; }
+    void setLastError(const std::string& error);
+
+    // Lifecycle events
+    virtual void onLoad() {}
+    virtual void onUnload() {}
+    virtual void onStart() {}
+    virtual void onStop() {}
+    virtual void onPause() {}
+    virtual void onResume() {}
+    virtual void onError(const std::string& error) {}
+
+    // Settings management
+    template<typename T>
+    T getSetting(const std::string& key, const T& default_value = T{}) const;
+
+    template<typename T>
+    void setSetting(const std::string& key, const T& value);
+
+    bool hasSetting(const std::string& key) const;
+    void removeSetting(const std::string& key);
+
+    // Dependency management
+    bool checkDependencies() const;
+    void addDependency(const std::string& dependency);
+    void removeDependency(const std::string& dependency);
+
+    // Plugin information
+    const std::string& getName() const { return m_config.name; }
+    const std::string& getVersion() const { return m_config.version; }
+    const std::string& getDescription() const { return m_config.description; }
+    const std::string& getAuthor() const { return m_config.author; }
+    const std::string& getWebsite() const { return m_config.website; }
 
 protected:
+    // Protected methods for derived classes
+    void setState(State state);
+    void logInfo(const std::string& message);
+    void logWarning(const std::string& message);
+    void logError(const std::string& message);
+
+    // Framework integration
+    bool registerWithFramework();
+    void unregisterFromFramework();
+
+private:
+    Config m_config;
+    State m_state;
+    Priority m_priority;
+    Framework* m_framework;
+    std::string m_last_error;
+    bool m_is_initialized;
+    bool m_is_running;
+    float m_accumulated_time;
+    
+    // Internal state
+    void updateState();
+    bool validateConfig() const;
+    void loadSettings();
+    void saveSettings();
 };
-}
 
-extern "C" __declspec(dllexport) void uevr_plugin_required_version(UEVR_PluginVersion* version) {
-    version->major = UEVR_PLUGIN_VERSION_MAJOR;
-    version->minor = UEVR_PLUGIN_VERSION_MINOR;
-    version->patch = UEVR_PLUGIN_VERSION_PATCH;
-}
+/**
+ * @brief Plugin manager for handling multiple plugins
+ */
+class PluginManager {
+public:
+    /**
+     * @brief Constructor
+     */
+    PluginManager();
+    
+    /**
+     * @brief Destructor
+     */
+    ~PluginManager();
 
-extern "C" __declspec(dllexport) bool uevr_plugin_initialize(const UEVR_PluginInitializeParam* param) {
-    auto& api = uevr::API::initialize(param);
-    uevr::detail::g_plugin->on_initialize();
+    // Plugin management
+    bool loadPlugin(const std::string& path);
+    bool unloadPlugin(const std::string& name);
+    bool enablePlugin(const std::string& name);
+    bool disablePlugin(const std::string& name);
+    bool reloadPlugin(const std::string& name);
 
-    auto callbacks = param->callbacks;
-    auto sdk_callbacks = param->sdk->callbacks;
+    // Plugin access
+    Plugin* getPlugin(const std::string& name) const;
+    std::vector<Plugin*> getAllPlugins() const;
+    std::vector<Plugin*> getEnabledPlugins() const;
+    std::vector<Plugin*> getPluginsByPriority(Plugin::Priority priority) const;
 
-    callbacks->on_device_reset([]() {
-        uevr::detail::g_plugin->on_device_reset();
-    });
+    // Plugin lifecycle
+    bool initializeAllPlugins();
+    void startAllPlugins();
+    void stopAllPlugins();
+    void pauseAllPlugins();
+    void resumeAllPlugins();
+    void cleanupAllPlugins();
 
-    callbacks->on_present([]() {
-        uevr::detail::g_plugin->on_present();
-    });
+    // Plugin updates
+    void updateAllPlugins(float delta_time);
+    void renderAllPlugins();
 
-    callbacks->on_post_render_vr_framework_dx11([](void* context, void* texture, void* rtv) {
-        uevr::detail::g_plugin->on_post_render_vr_framework_dx11((ID3D11DeviceContext*)context, (ID3D11Texture2D*)texture, (ID3D11RenderTargetView*)rtv);
-    });
+    // Plugin discovery
+    std::vector<std::string> discoverPlugins(const std::string& directory);
+    bool scanForPlugins(const std::string& directory);
 
-    callbacks->on_post_render_vr_framework_dx12([](void* command_list, void* rt, void* rtv) {
-        uevr::detail::g_plugin->on_post_render_vr_framework_dx12((ID3D12GraphicsCommandList*)command_list, (ID3D12Resource*)rt, (D3D12_CPU_DESCRIPTOR_HANDLE*)rtv);
-    });
+    // Configuration
+    bool loadPluginConfig(const std::string& path);
+    bool savePluginConfig(const std::string& path);
+    void setPluginDirectory(const std::string& directory);
 
-    callbacks->on_message([](void* hwnd, unsigned int msg, unsigned long long wparam, long long lparam) {
-        return uevr::detail::g_plugin->on_message((HWND)hwnd, msg, wparam, lparam);
-    });
+    // Error handling
+    std::vector<std::string> getPluginErrors() const;
+    void clearPluginErrors();
 
-    callbacks->on_xinput_get_state([](unsigned int* retval, unsigned int user_index, void* state) {
-        uevr::detail::g_plugin->on_xinput_get_state(retval, user_index, (XINPUT_STATE*)state);
-    });
+private:
+    std::unordered_map<std::string, std::unique_ptr<Plugin>> m_plugins;
+    std::string m_plugin_directory;
+    std::vector<std::string> m_plugin_errors;
+    
+    bool validatePlugin(Plugin* plugin) const;
+    void sortPluginsByPriority();
+};
 
-    callbacks->on_xinput_set_state([](unsigned int* retval, unsigned int user_index, void* vibration) {
-        uevr::detail::g_plugin->on_xinput_set_state(retval, user_index, (XINPUT_VIBRATION*)vibration);
-    });
-
-    callbacks->on_custom_event([](const char* event_name, const char* event_data) {
-        uevr::detail::g_plugin->on_custom_event(event_name, event_data);
-    });
-
-    sdk_callbacks->on_pre_engine_tick([](UEVR_UGameEngineHandle engine, float delta) {
-        uevr::detail::g_plugin->on_pre_engine_tick((uevr::API::UGameEngine*)engine, delta);
-    });
-
-    sdk_callbacks->on_post_engine_tick([](UEVR_UGameEngineHandle engine, float delta) {
-        uevr::detail::g_plugin->on_post_engine_tick((uevr::API::UGameEngine*)engine, delta);
-    });
-
-    sdk_callbacks->on_pre_slate_draw_window_render_thread([](UEVR_FSlateRHIRendererHandle renderer, UEVR_FViewportInfoHandle viewport_info) {
-        uevr::detail::g_plugin->on_pre_slate_draw_window(renderer, viewport_info);
-    });
-
-    sdk_callbacks->on_post_slate_draw_window_render_thread([](UEVR_FSlateRHIRendererHandle renderer, UEVR_FViewportInfoHandle viewport_info) {
-        uevr::detail::g_plugin->on_post_slate_draw_window(renderer, viewport_info);
-    });
-
-    sdk_callbacks->on_pre_calculate_stereo_view_offset([](UEVR_StereoRenderingDeviceHandle device, int view_index, float world_to_meters, 
-                                                          UEVR_Vector3f* position, UEVR_Rotatorf* rotation, bool is_double) {
-        uevr::detail::g_plugin->on_pre_calculate_stereo_view_offset(device, view_index, world_to_meters, position, rotation, is_double);
-    });
-
-    sdk_callbacks->on_post_calculate_stereo_view_offset([](UEVR_StereoRenderingDeviceHandle device, int view_index, float world_to_meters, 
-                                                           UEVR_Vector3f* position, UEVR_Rotatorf* rotation, bool is_double) {
-        uevr::detail::g_plugin->on_post_calculate_stereo_view_offset(device, view_index, world_to_meters, position, rotation, is_double);
-    });
-
-    sdk_callbacks->on_pre_viewport_client_draw([](UEVR_UGameViewportClientHandle viewport_client, UEVR_FViewportHandle viewport, UEVR_FCanvasHandle canvas) {
-        uevr::detail::g_plugin->on_pre_viewport_client_draw(viewport_client, viewport, canvas);
-    });
-
-    sdk_callbacks->on_post_viewport_client_draw([](UEVR_UGameViewportClientHandle viewport_client, UEVR_FViewportHandle viewport, UEVR_FCanvasHandle canvas) {
-        uevr::detail::g_plugin->on_post_viewport_client_draw(viewport_client, viewport, canvas);
-    });
-
-    return true;
-}
-
-BOOL APIENTRY DllMain(HANDLE handle, DWORD reason, LPVOID reserved) {
-    if (reason == DLL_PROCESS_ATTACH) {
-        uevr::detail::g_plugin->on_dllmain();
+// Template implementations
+template<typename T>
+T Plugin::getSetting(const std::string& key, const T& default_value) const {
+    auto it = m_config.settings.find(key);
+    if (it != m_config.settings.end()) {
+        // Basic type conversion - can be extended for complex types
+        if constexpr (std::is_same_v<T, std::string>) {
+            return it->second;
+        } else if constexpr (std::is_same_v<T, int>) {
+            return std::stoi(it->second);
+        } else if constexpr (std::is_same_v<T, float>) {
+            return std::stof(it->second);
+        } else if constexpr (std::is_same_v<T, bool>) {
+            return (it->second == "true" || it->second == "1");
+        }
     }
-
-    return TRUE;
+    return default_value;
 }
+
+template<typename T>
+void Plugin::setSetting(const std::string& key, const T& value) {
+    if constexpr (std::is_same_v<T, std::string>) {
+        m_config.settings[key] = value;
+    } else if constexpr (std::is_same_v<T, int>) {
+        m_config.settings[key] = std::to_string(value);
+    } else if constexpr (std::is_same_v<T, float>) {
+        m_config.settings[key] = std::to_string(value);
+    } else if constexpr (std::is_same_v<T, bool>) {
+        m_config.settings[key] = value ? "true" : "false";
+    }
+}
+
+} // namespace uevr
+
+// Backward compatibility alias
+namespace uevr = uevr;

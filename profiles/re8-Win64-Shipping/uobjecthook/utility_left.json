@@ -1,0 +1,99 @@
+{
+  "attachment_config": {
+    "name": "RE8_Utility_Left_Controller",
+    "version": "1.1.0",
+    "game": "Resident Evil 8 BIOHAZARD VILLAGE",
+    "controller": "left",
+    "attachment_type": "utility",
+    "permanent": false
+  },
+  
+  "utility_components": {
+    "flashlight": {
+      "component_name": "RE8_Flashlight_Mesh",
+      "attachment_point": "left_controller_grip",
+      "offset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "scale": 1.0
+    },
+    
+    "healing_items": {
+      "component_name": "RE8_Healing_Item",
+      "attachment_point": "left_controller_utility",
+      "offset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "scale": 1.0
+    },
+    
+    "inventory": {
+      "component_name": "RE8_Inventory_System",
+      "attachment_point": "left_controller_menu",
+      "offset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "scale": 1.0
+    }
+  },
+  
+  "input_mapping": {
+    "trigger": "flashlight_toggle",
+    "grip": "item_use",
+    "thumbstick": "movement",
+    "buttons": {
+      "a": "inventory_open",
+      "b": "item_switch"
+    }
+  },
+  
+  "haptic_feedback": {
+    "item_use": {
+      "intensity": 0.4,
+      "duration": 0.15,
+      "pattern": "gentle_pulse"
+    },
+    "inventory_open": {
+      "intensity": 0.3,
+      "duration": 0.1,
+      "pattern": "single_pulse"
+    }
+  },
+  
+  "re8_specific": {
+    "utility_types": [
+      "Flashlight",
+      "First_Aid_Med",
+      "Herbs",
+      "Chemicals",
+      "Gunpowder",
+      "Crafting_Materials",
+      "Treasure_Items",
+      "Key_Items"
+    ],
+    "attachment_priority": "flashlight_first",
+    "auto_detection": true,
+    "context_sensitive": true
+  }
+}

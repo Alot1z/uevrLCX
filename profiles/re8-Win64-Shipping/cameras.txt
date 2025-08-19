@@ -1,0 +1,58 @@
+# Resident Evil 8 BIOHAZARD VILLAGE - VR Camera Configuration
+# Cross-Engine VR Adapter Integration Profile
+
+# Camera System Configuration
+camera_system=RE_Engine_FirstPerson_RE8
+camera_type=first_person
+world_scale=1.0
+
+# VR Camera Offsets - Optimized for RE8's first-person perspective
+camera_forward_offset=0.0
+camera_right_offset=0.0
+camera_up_offset=0.0
+
+# VR Head Tracking Configuration
+enable_vr_head_tracking=true
+head_tracking_sensitivity=1.0
+head_tracking_smoothing=0.8
+enable_6dof_tracking=true
+
+# VR Eye Configuration
+vr_ipd=0.064
+vr_eye_height=1.6
+vr_eye_depth=0.0
+
+# Camera Matrix Extraction - RE8 Specific Patterns
+view_matrix_pattern=RE8_ViewMatrix_Pattern
+projection_matrix_pattern=RE8_ProjectionMatrix_Pattern
+camera_position_pattern=RE8_CameraPosition_Pattern
+camera_rotation_pattern=RE8_CameraRotation_Pattern
+
+# Matrix Validation and Fallback
+matrix_validation=true
+fallback_matrix_extraction=true
+matrix_smoothing=0.9
+
+# VR Comfort Settings - Enhanced for RE8's Horror Atmosphere
+comfort_mode=enhanced
+fov_reduction=true
+motion_blur_reduction=true
+head_bob_reduction=true
+enable_smooth_turning=true
+snap_turn_angle=45.0
+
+# Performance Optimization
+camera_update_frequency=90
+matrix_interpolation=true
+optimization_level=ultra
+
+# RE8-Specific Camera Features
+enable_atmospheric_immersion=true
+enable_horror_camera_effects=true
+enable_dynamic_fov_adjustment=true
+enable_camera_shake_reduction=true
+
+# Fallback Camera Systems
+fallback_camera_system=RE_Engine_Standard
+fallback_camera_type=first_person
+fallback_world_scale=1.0

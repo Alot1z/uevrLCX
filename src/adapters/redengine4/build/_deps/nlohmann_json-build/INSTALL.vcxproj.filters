@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\redengine4\build\CMakeFiles\ce6320d751ace78ad97a6329e1cac6c2\INSTALL_force.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{F3A6EE3C-5F56-309E-B3E7-DB290C6BFE0C}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

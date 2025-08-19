@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|x64">
+      <Configuration>Debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{173DE361-DC54-3291-94CB-AF649AD5B446}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <WindowsTargetPlatformVersion>10.0.26100.0</WindowsTargetPlatformVersion>
+    <Platform>x64</Platform>
+    <ProjectName>spdlog-populate</ProjectName>
+    <VCProjectUpgraderObjectName>NoUpgrade</VCProjectUpgraderObjectName>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
+    <ConfigurationType>Utility</ConfigurationType>
+    <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
+    <UseDebugLibraries>true</UseDebugLibraries>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.20506.1</_ProjectFileVersion>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(Platform)\$(Configuration)\$(ProjectName)\</IntDir>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <Midl>
+      <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <OutputDirectory>$(ProjectDir)/$(IntDir)</OutputDirectory>
+      <HeaderFileName>%(Filename).h</HeaderFileName>
+      <TypeLibraryName>%(Filename).tlb</TypeLibraryName>
+      <InterfaceIdentifierFileName>%(Filename)_i.c</InterfaceIdentifierFileName>
+      <ProxyFileName>%(Filename)_p.c</ProxyFileName>
+    </Midl>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\61577b5254070921a0caee379d09c0cb\spdlog-populate-mkdir.rule">
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Creating directories for 'spdlog-populate'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -Dcfgdir=/Debug -P "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/spdlog-populate-prefix/tmp/spdlog-populate-mkdirs.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/Debug/spdlog-populate-mkdir"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-mkdir</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\61577b5254070921a0caee379d09c0cb\spdlog-populate-download.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing download step (git clone) for 'spdlog-populate'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/spdlog-populate-prefix/tmp/spdlog-populate-gitclone.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/Debug/spdlog-populate-download"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\spdlog-populate-gitinfo.txt;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-mkdir;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-download</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\61577b5254070921a0caee379d09c0cb\spdlog-populate-update.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Performing update step for 'spdlog-populate'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-src"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -Dcan_fetch=YES -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/spdlog-populate-prefix/tmp/spdlog-populate-gitupdate.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\tmp\spdlog-populate-gitupdate.cmake;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\spdlog-populate-update-info.txt;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-download;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-update</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</VerifyInputsAndOutputsExist>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\61577b5254070921a0caee379d09c0cb\spdlog-populate-patch.rule">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">No patch step for 'spdlog-populate'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/Debug/spdlog-populate-patch"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\spdlog-populate-patch-info.txt;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-update;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-patch</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</VerifyInputsAndOutputsExist>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\61577b5254070921a0caee379d09c0cb\spdlog-populate-configure.rule">
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">No configure step for 'spdlog-populate'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-build"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/Debug/spdlog-populate-configure"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\tmp\spdlog-populate-cfgcmd.txt;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-patch;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-configure</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\61577b5254070921a0caee379d09c0cb\spdlog-populate-build.rule">
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">No build step for 'spdlog-populate'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-build"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/Debug/spdlog-populate-build"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-configure;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-build</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\61577b5254070921a0caee379d09c0cb\spdlog-populate-install.rule">
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">No install step for 'spdlog-populate'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-build"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/Debug/spdlog-populate-install"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-build;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-install</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\61577b5254070921a0caee379d09c0cb\spdlog-populate-test.rule">
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">No test step for 'spdlog-populate'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-build"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/Debug/spdlog-populate-test"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-install;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-test</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\de63c12672c769f5bcfe9d0992be2bbe\spdlog-populate-complete.rule">
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Completed 'spdlog-populate'</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E make_directory "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/Debug"
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/Debug/spdlog-populate-complete"
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/spdlog-populate-prefix/src/spdlog-populate-stamp/Debug/spdlog-populate-done"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-install;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-mkdir;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-download;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-update;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-patch;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-configure;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-build;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\src\spdlog-populate-stamp\Debug\spdlog-populate-test;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\Debug\spdlog-populate-complete</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</VerifyInputsAndOutputsExist>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\24fdcde77a091a6c617a05d57d2e87d2\spdlog-populate.rule">
+      <BuildInParallel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</BuildInParallel>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'"></Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\Debug\spdlog-populate-complete;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\spdlog-populate</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+      <VerifyInputsAndOutputsExist Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</VerifyInputsAndOutputsExist>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeLists.txt">
+      <UseUtf8Encoding>Always</UseUtf8Encoding>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Building Custom Rule G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeLists.txt</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe "-SG:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild" "-BG:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild" --check-stamp-file "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal &amp; call :cmErrorLevel %errorlevel% &amp; goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd</Command>
+      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeGenericSystem.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeInitializeConfigs.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeSystemSpecificInformation.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\CMakeSystemSpecificInitialize.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject\PatchInfo.txt.in;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject\RepositoryInfo.txt.in;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject\UpdateInfo.txt.in;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject\cfgcmd.txt.in;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject\gitclone.cmake.in;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject\gitupdate.cmake.in;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject\mkdirs.cmake.in;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\ExternalProject\shared_internal_commands.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows-Initialize.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\Windows.cmake;C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\share\cmake-4.0\Modules\Platform\WindowsPaths.cmake;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\4.0.3\CMakeSystem.cmake;G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\spdlog-populate-prefix\tmp\spdlog-populate-mkdirs.cmake;%(AdditionalInputs)</AdditionalInputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\generate.stamp</Outputs>
+      <LinkObjects Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</LinkObjects>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\CMakeFiles\spdlog-populate">
+    </None>
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\build\_deps\spdlog-subbuild\ZERO_CHECK.vcxproj">
+      <Project>{046EEAA3-C2E4-31C2-B2F0-A093266A985D}</Project>
+      <Name>ZERO_CHECK</Name>
+      <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

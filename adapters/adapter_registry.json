@@ -1,0 +1,92 @@
+{
+  "version": "2.0.0",
+  "description": "Registry of all available engine adapters",
+  "adapters": [
+    {
+      "name": "common",
+      "path": "common/uevr_common_adapter.dll",
+      "version": "2.0.0",
+      "description": "Common VR functionality for all engines",
+      "priority": 0
+    },
+    {
+      "name": "RE-Engine",
+      "path": "re-engine/uevr_re_engine_adapter.dll",
+      "version": "2.0.0",
+      "description": "Capcom RE Engine adapter with PBR lighting integration",
+      "priority": 1
+    },
+    {
+      "name": "REDengine4",
+      "path": "redengine4/uevr_redengine4_adapter.dll",
+      "version": "2.0.0",
+      "description": "CD Projekt RED engine adapter with ray tracing VR optimization",
+      "priority": 1
+    },
+    {
+      "name": "MT-Framework",
+      "path": "mt-framework/uevr_mt_framework_adapter.dll",
+      "version": "2.0.0",
+      "description": "Capcom MT Framework adapter with animation system integration",
+      "priority": 1
+    },
+    {
+      "name": "Unreal-Engine-4",
+      "path": "unreal-engine/uevr_unreal4_adapter.dll",
+      "version": "2.0.0",
+      "description": "Unreal Engine 4 adapter with native VR support",
+      "priority": 1
+    },
+    {
+      "name": "Unreal-Engine-5",
+      "path": "unreal-engine/uevr_unreal5_adapter.dll",
+      "version": "2.0.0",
+      "description": "Unreal Engine 5 adapter with enhanced VR features",
+      "priority": 1
+    },
+    {
+      "name": "Unity-Engine",
+      "path": "unity/uevr_unity_adapter.dll",
+      "version": "2.0.0",
+      "description": "Unity Engine adapter with cross-platform VR support",
+      "priority": 1
+    },
+    {
+      "name": "CryEngine",
+      "path": "cryengine/uevr_cryengine_adapter.dll",
+      "version": "2.0.0",
+      "description": "CryEngine adapter with advanced rendering features",
+      "priority": 1
+    },
+    {
+      "name": "id-Tech-6",
+      "path": "idtech/uevr_idtech6_adapter.dll",
+      "version": "2.0.0",
+      "description": "id Tech 6 adapter with Vulkan optimization",
+      "priority": 1
+    },
+    {
+      "name": "id-Tech-7",
+      "path": "idtech/uevr_idtech7_adapter.dll",
+      "version": "2.0.0",
+      "description": "id Tech 7 adapter with ray tracing support",
+      "priority": 1
+    },
+    {
+      "name": "Source-Engine",
+      "path": "source/uevr_source_adapter.dll",
+      "version": "2.0.0",
+      "description": "Source Engine adapter with legacy VR support",
+      "priority": 1
+    },
+    {
+      "name": "Source-2",
+      "path": "source/uevr_source2_adapter.dll",
+      "version": "2.0.0",
+      "description": "Source 2 Engine adapter with modern VR features",
+      "priority": 1
+    }
+  ]
+}
+
+

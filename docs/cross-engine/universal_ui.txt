@@ -1,0 +1,260 @@
+# Universal Cross-Engine UI Configuration
+# This file provides common UI settings for all cross-engine VR adapters
+
+## Universal UI Settings
+
+### Display Configuration
+ui_scale = 1.0
+text_scale = 1.0
+opacity_base = 0.8
+billboard_enabled = true
+follow_view_enabled = false
+
+### Layer Management
+ui_layers = background,gameplay,hud,menu,overlay
+default_layer = hud
+layer_opacity = 0.9,0.8,0.7,0.6,0.5
+
+### Text Rendering
+default_font = Arial
+font_size_base = 16
+font_size_large = 24
+font_size_small = 12
+text_color_primary = 255,255,255,255
+text_color_secondary = 200,200,200,200
+text_color_warning = 255,255,0,255
+text_color_error = 255,0,0,255
+
+### Interaction Settings
+interaction_distance = 2.0
+hover_highlight = true
+click_feedback = true
+controller_deadzone = 0.1
+interaction_timeout = 5.0
+
+### Accessibility
+high_contrast = false
+large_text_mode = false
+color_blind_support = false
+motion_reduction = false
+screen_reader_support = false
+
+## Cross-Engine UI Settings
+
+### Engine Detection
+engine_detection = auto
+engine_override = none
+ui_adaptation_mode = engine_specific
+
+### Performance Settings
+ui_update_rate = 60
+texture_quality = high
+animation_smoothing = true
+dynamic_lod = true
+culling_enabled = true
+
+### VR Comfort
+comfort_mode = standard
+motion_comfort = medium
+ui_depth_offset = 0.1
+min_ui_distance = 0.5
+max_ui_distance = 3.0
+
+## Engine-Specific UI Overrides
+
+### RE Engine (Resident Evil 7)
+[RE_Engine]
+ui_style = horror_atmospheric
+opacity_base = 0.7
+preserve_atmosphere = true
+minimal_hud = true
+contextual_information = true
+horror_game_opacity = 0.8
+jump_scare_ui = true
+ui_elements = health_indicator,ammo_counter,inventory_hint,objective_marker,atmospheric_overlay
+
+### REDengine 4 (Cyberpunk 2077)
+[REDengine4]
+ui_style = cyberpunk_comprehensive
+opacity_base = 0.9
+comprehensive_hud = true
+open_world_information = true
+quest_tracking = true
+map_integration = true
+cyberpunk_style = true
+real_time_updates = true
+ui_elements = health_bar,stamina_bar,cyberware_status,quest_log,minimap,weapon_info,inventory_grid,skill_tree,reputation_display,weather_info
+
+### MT Framework (Monster Hunter World)
+[MT_Framework]
+ui_style = action_combat_focused
+opacity_base = 0.9
+combat_focused = true
+quick_access = true
+monster_information = true
+weapon_status = true
+party_information = true
+quest_progress = true
+ui_elements = health_bar,stamina_bar,weapon_sharpness,monster_health,monster_rage,party_status,quest_timer,item_bar,map_radar,combat_hints
+
+## Universal UI Element Positions
+
+### Health Display
+health_position_x = 0.0
+health_position_y = -0.3
+health_position_z = 1.0
+health_scale_x = 0.3
+health_scale_y = 0.05
+health_scale_z = 1.0
+
+### Stamina Display
+stamina_position_x = 0.0
+stamina_position_y = -0.4
+stamina_position_z = 1.0
+stamina_scale_x = 0.3
+stamina_scale_y = 0.05
+stamina_scale_z = 1.0
+
+### Weapon Information
+weapon_position_x = 0.4
+weapon_position_y = -0.3
+weapon_position_z = 1.0
+weapon_scale_x = 0.25
+weapon_scale_y = 0.08
+weapon_scale_z = 1.0
+
+### Inventory Display
+inventory_position_x = 0.0
+inventory_position_y = -0.5
+inventory_position_z = 1.0
+inventory_scale_x = 0.6
+inventory_scale_y = 0.08
+inventory_scale_z = 1.0
+
+### Quest Information
+quest_position_x = 0.0
+quest_position_y = 0.4
+quest_position_z = 1.0
+quest_scale_x = 0.6
+quest_scale_y = 0.15
+quest_scale_z = 1.0
+
+### Map Display
+map_position_x = 0.4
+map_position_y = 0.4
+map_position_z = 1.0
+map_scale_x = 0.2
+map_scale_y = 0.2
+map_scale_z = 1.0
+
+## UI Animation Settings
+
+### Animation Types
+fade_in = true
+fade_out = true
+slide_in = true
+slide_out = true
+scale_in = true
+scale_out = true
+rotation_in = true
+rotation_out = true
+
+### Animation Timing
+fade_duration = 0.3
+slide_duration = 0.4
+scale_duration = 0.3
+rotation_duration = 0.5
+default_duration = 0.3
+
+### Animation Easing
+easing_type = smooth
+easing_strength = 0.5
+bounce_enabled = false
+elastic_enabled = false
+
+## UI Performance Settings
+
+### Rendering Optimization
+vsync_enabled = true
+frame_rate_target = 90
+texture_filtering = anisotropic
+shader_optimization = high
+batch_rendering = true
+
+### Memory Management
+texture_cache_size = 256
+font_cache_size = 64
+ui_element_pool_size = 128
+garbage_collection_interval = 60
+
+### Dynamic Quality
+adaptive_quality = true
+quality_threshold_low = 45
+quality_threshold_medium = 60
+quality_threshold_high = 75
+quality_threshold_ultra = 90
+
+## UI Interaction Mappings
+
+### Controller Input
+trigger_click = true
+grip_hover = true
+thumbstick_navigation = true
+button_shortcuts = true
+haptic_feedback = true
+
+### Keyboard Input
+keyboard_navigation = true
+shortcut_keys = true
+text_input_support = true
+accessibility_shortcuts = true
+
+### Mouse Input
+mouse_navigation = true
+mouse_click = true
+mouse_wheel = true
+mouse_hover = true
+
+## UI Validation Settings
+
+### Quality Assurance
+ui_validation_enabled = true
+element_boundary_check = true
+text_overflow_check = true
+performance_monitoring = true
+accessibility_validation = true
+
+### Testing Parameters
+test_ui_visibility = true
+test_ui_interaction = true
+test_ui_performance = true
+test_ui_accessibility = true
+test_ui_compatibility = true
+
+### Debug Information
+debug_ui_enabled = false
+debug_element_info = false
+debug_performance_metrics = false
+debug_interaction_log = false
+debug_validation_results = false
+
+## UI Configuration Validation
+
+### Required Settings
+required_ui_elements = health_display,stamina_display,weapon_info
+required_interaction_methods = controller_input,keyboard_input
+required_accessibility_features = high_contrast,large_text
+required_performance_targets = frame_rate,memory_usage
+
+### Optional Settings
+optional_ui_elements = inventory_display,quest_log,map_view
+optional_interaction_methods = mouse_input,gesture_input
+optional_accessibility_features = screen_reader,color_blind_support
+optional_performance_features = adaptive_quality,dynamic_lod
+
+### Validation Rules
+validation_strict_mode = false
+validation_warnings_as_errors = false
+validation_auto_fix = false
+validation_report_format = json
+validation_output_path = logs/ui_validation.log

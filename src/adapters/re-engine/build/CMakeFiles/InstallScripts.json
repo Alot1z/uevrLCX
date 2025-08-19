@@ -1,0 +1,10 @@
+{
+	"InstallScripts" : 
+	[
+		"G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/cmake_install.cmake",
+		"G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/minhook-build/cmake_install.cmake",
+		"G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/spdlog-build/cmake_install.cmake",
+		"G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

@@ -1,0 +1,5 @@
+G:/GITHUB REPOs/uevr/examples/build/CMakeFiles/basic_plugin.dir
+G:/GITHUB REPOs/uevr/examples/build/CMakeFiles/custom_adapter.dir
+G:/GITHUB REPOs/uevr/examples/build/CMakeFiles/lua_example.dir
+G:/GITHUB REPOs/uevr/examples/build/CMakeFiles/ALL_BUILD.dir
+G:/GITHUB REPOs/uevr/examples/build/CMakeFiles/ZERO_CHECK.dir

@@ -1,0 +1,150 @@
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\RE-ENGINE\BUILD\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\D90674144D13D33580E9082EFDCFC5F9\NLOHMANN_JSON-POPULATE-MKDIR.RULE
+setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -Dcfgdir=/Debug -P "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/tmp/nlohmann_json-populate-mkdirs.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-mkdir"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\RE-ENGINE\BUILD\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\D90674144D13D33580E9082EFDCFC5F9\NLOHMANN_JSON-POPULATE-DOWNLOAD.RULE
+setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\re-engine\build\_deps"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/tmp/nlohmann_json-populate-gitclone.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-download"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\RE-ENGINE\BUILD\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\D90674144D13D33580E9082EFDCFC5F9\NLOHMANN_JSON-POPULATE-UPDATE.RULE
+setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\re-engine\build\_deps\nlohmann_json-src"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -Dcan_fetch=YES -DCMAKE_MESSAGE_LOG_LEVEL=VERBOSE -P "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/tmp/nlohmann_json-populate-gitupdate.cmake"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\RE-ENGINE\BUILD\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\D90674144D13D33580E9082EFDCFC5F9\NLOHMANN_JSON-POPULATE-PATCH.RULE
+setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-patch"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\RE-ENGINE\BUILD\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\D90674144D13D33580E9082EFDCFC5F9\NLOHMANN_JSON-POPULATE-CONFIGURE.RULE
+setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\re-engine\build\_deps\nlohmann_json-build"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-configure"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\RE-ENGINE\BUILD\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\D90674144D13D33580E9082EFDCFC5F9\NLOHMANN_JSON-POPULATE-BUILD.RULE
+setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\re-engine\build\_deps\nlohmann_json-build"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-build"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\RE-ENGINE\BUILD\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\D90674144D13D33580E9082EFDCFC5F9\NLOHMANN_JSON-POPULATE-INSTALL.RULE
+setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\re-engine\build\_deps\nlohmann_json-build"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-install"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\RE-ENGINE\BUILD\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\D90674144D13D33580E9082EFDCFC5F9\NLOHMANN_JSON-POPULATE-TEST.RULE
+setlocal
+cd "G:\GITHUB REPOs\uevr\src\adapters\re-engine\build\_deps\nlohmann_json-build"
+if %errorlevel% neq 0 goto :cmEnd
+G:
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E echo_append
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-test"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\RE-ENGINE\BUILD\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\6BCE8AD12AF32555203827C0D46D02F2\NLOHMANN_JSON-POPULATE-COMPLETE.RULE
+setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E make_directory "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/Debug"
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/Debug/nlohmann_json-populate-complete"
+if %errorlevel% neq 0 goto :cmEnd
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe -E touch "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/nlohmann_json-populate-prefix/src/nlohmann_json-populate-stamp/Debug/nlohmann_json-populate-done"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\RE-ENGINE\BUILD\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKEFILES\888F4F6127A09C0477EC0077B9296402\NLOHMANN_JSON-POPULATE.RULE
+setlocal
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd
+^G:\GITHUB REPOS\uevr\SRC\ADAPTERS\RE-ENGINE\BUILD\_DEPS\NLOHMANN_JSON-SUBBUILD\CMAKELISTS.TXT
+setlocal
+C:\Users\Mose\AppData\Local\Programs\Python\Python313\Lib\site-packages\cmake\data\bin\cmake.exe "-SG:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild" "-BG:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild" --check-stamp-file "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/generate.stamp"
+if %errorlevel% neq 0 goto :cmEnd
+:cmEnd
+endlocal & call :cmErrorLevel %errorlevel% & goto :cmDone
+:cmErrorLevel
+exit /b %1
+:cmDone
+if %errorlevel% neq 0 goto :VCEnd

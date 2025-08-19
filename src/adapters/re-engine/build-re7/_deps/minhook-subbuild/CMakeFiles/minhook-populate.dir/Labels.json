@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/minhook-subbuild/CMakeFiles/minhook-populate"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/minhook-subbuild/CMakeFiles/70e9897e3e78c56209182a44ef2f563d/minhook-populate.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/minhook-subbuild/CMakeFiles/7e3da7ec25250ca5ba35c568a3344619/minhook-populate-complete.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/minhook-subbuild/CMakeFiles/cd7ee95af6162856a8758566bba49a8c/minhook-populate-build.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/minhook-subbuild/CMakeFiles/cd7ee95af6162856a8758566bba49a8c/minhook-populate-configure.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/minhook-subbuild/CMakeFiles/cd7ee95af6162856a8758566bba49a8c/minhook-populate-download.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/minhook-subbuild/CMakeFiles/cd7ee95af6162856a8758566bba49a8c/minhook-populate-install.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/minhook-subbuild/CMakeFiles/cd7ee95af6162856a8758566bba49a8c/minhook-populate-mkdir.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/minhook-subbuild/CMakeFiles/cd7ee95af6162856a8758566bba49a8c/minhook-populate-patch.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/minhook-subbuild/CMakeFiles/cd7ee95af6162856a8758566bba49a8c/minhook-populate-test.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/minhook-subbuild/CMakeFiles/cd7ee95af6162856a8758566bba49a8c/minhook-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"minhook-populate"
+		],
+		"name" : "minhook-populate"
+	}
+}

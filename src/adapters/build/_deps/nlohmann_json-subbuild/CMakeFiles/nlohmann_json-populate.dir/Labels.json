@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-subbuild/CMakeFiles/nlohmann_json-populate"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-subbuild/CMakeFiles/ac4718ae27162c2b368fdcaf87d966f6/nlohmann_json-populate.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-subbuild/CMakeFiles/d6da32aef89b05425c7e43b0a1e68520/nlohmann_json-populate-complete.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-subbuild/CMakeFiles/eb771538fe22e782914f7342517b99ab/nlohmann_json-populate-build.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-subbuild/CMakeFiles/eb771538fe22e782914f7342517b99ab/nlohmann_json-populate-configure.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-subbuild/CMakeFiles/eb771538fe22e782914f7342517b99ab/nlohmann_json-populate-download.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-subbuild/CMakeFiles/eb771538fe22e782914f7342517b99ab/nlohmann_json-populate-install.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-subbuild/CMakeFiles/eb771538fe22e782914f7342517b99ab/nlohmann_json-populate-mkdir.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-subbuild/CMakeFiles/eb771538fe22e782914f7342517b99ab/nlohmann_json-populate-patch.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-subbuild/CMakeFiles/eb771538fe22e782914f7342517b99ab/nlohmann_json-populate-test.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/build/_deps/nlohmann_json-subbuild/CMakeFiles/eb771538fe22e782914f7342517b99ab/nlohmann_json-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"nlohmann_json-populate"
+		],
+		"name" : "nlohmann_json-populate"
+	}
+}

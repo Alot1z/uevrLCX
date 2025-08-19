@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/nlohmann_json-populate"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/888f4f6127a09c0477ec0077b9296402/nlohmann_json-populate.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/6bce8ad12af32555203827c0d46d02f2/nlohmann_json-populate-complete.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/d90674144d13d33580e9082efdcfc5f9/nlohmann_json-populate-build.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/d90674144d13d33580e9082efdcfc5f9/nlohmann_json-populate-configure.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/d90674144d13d33580e9082efdcfc5f9/nlohmann_json-populate-download.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/d90674144d13d33580e9082efdcfc5f9/nlohmann_json-populate-install.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/d90674144d13d33580e9082efdcfc5f9/nlohmann_json-populate-mkdir.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/d90674144d13d33580e9082efdcfc5f9/nlohmann_json-populate-patch.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/d90674144d13d33580e9082efdcfc5f9/nlohmann_json-populate-test.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/re-engine/build/_deps/nlohmann_json-subbuild/CMakeFiles/d90674144d13d33580e9082efdcfc5f9/nlohmann_json-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"nlohmann_json-populate"
+		],
+		"name" : "nlohmann_json-populate"
+	}
+}
