@@ -1,0 +1,100 @@
+{
+  "adapter": {
+    "name": "MonsterHunterWorld-MTFramework",
+    "version": "1.0.0",
+    "engine": "MT-Framework",
+    "executable": "MonsterHunterWorld.exe",
+    "description": "Cross-engine VR adapter for Monster Hunter: World using MT Framework integration"
+  },
+  "vr_settings": {
+    "enabled": true,
+    "first_person_mode": true,
+    "camera_offset": {
+      "x": 0.0,
+      "y": 1.6,
+      "z": 0.0
+    },
+    "fov_multiplier": 1.0,
+    "comfort_settings": {
+      "vignette_strength": 0.3,
+      "motion_blur_reduction": true,
+      "snap_turning": false,
+      "smooth_turning": true
+    }
+  },
+  "camera_system": {
+    "third_person_to_first_person": true,
+    "headset_tracking": true,
+    "camera_smoothing": 0.1,
+    "max_camera_distance": 5.0,
+    "min_camera_distance": 0.5,
+    "hook_points": {
+      "view_matrix": { "cb_slot": 0, "offset_bytes": 0 },
+      "projection_matrix": { "cb_slot": 0, "offset_bytes": 0 }
+    }
+  },
+  "input_mapping": {
+    "aim_method": "right_controller",
+    "left_controller": {
+      "trigger": "item_use",
+      "grip": "menu_open",
+      "stick": "movement",
+      "buttons": {
+        "a": "dodge",
+        "b": "interact",
+        "x": "item_cycle",
+        "y": "map_open"
+      }
+    },
+    "right_controller": {
+      "trigger": "attack",
+      "grip": "block",
+      "stick": "camera",
+      "buttons": {
+        "a": "special_attack",
+        "b": "weapon_sheathe",
+        "x": "weapon_switch",
+        "y": "lock_on"
+      }
+    }
+  },
+  "performance": {
+    "target_fps": 90,
+    "adaptive_resolution": true,
+    "vrss_enabled": true,
+    "optimization_level": "balanced"
+  },
+  "rendering": {
+    "stereo_rendering": true,
+    "msaa_level": 4,
+    "anisotropic_filtering": 16,
+    "shadow_quality": "high",
+    "texture_quality": "high"
+  },
+  "game_specific": {
+    "monster_hunter_world": {
+      "weapon_visibility": true,
+      "hud_vr_projection": true,
+      "menu_vr_adaptation": true,
+      "combat_vr_optimization": true,
+      "inventory_vr_navigation": true
+    }
+  },
+  "artifacts": {
+    "renderdoc_baseline": "captures/renderdoc/MonsterHunterWorld/mhw_baseline.rdc"
+  },
+  "compatibility": {
+    "mt_framework_version": "1.0",
+    "uevr_version": "1.0",
+    "d3d11_support": true,
+    "d3d12_support": false,
+    "openvr_support": true,
+    "openxr_support": true
+  },
+  "debug": {
+    "logging_enabled": true,
+    "performance_monitoring": true,
+    "camera_debug": true,
+    "input_debug": false
+  }
+}

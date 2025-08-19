@@ -1,0 +1,150 @@
+{
+  "$schema": "../../../adapter.schema.json",
+  "version": 2,
+  "engine": "REDengine4",
+  "engine_version": "4.0+",
+  "game_info": {
+    "executable": "GAME_NAME.exe",
+    "display_name": "Game Display Name",
+    "steam_app_id": "",
+    "epic_app_id": ""
+  },
+  "render": {
+    "api": "d3d12",
+    "swapchain_hook": "IDXGISwapChain3::Present1",
+    "matrix_sources": {
+      "view": {
+        "cb_slot": 1,
+        "offset": 0,
+        "rows": 4,
+        "cols": 4,
+        "layout": "row_major",
+        "transpose": false
+      },
+      "projection": {
+        "cb_slot": 1,
+        "offset": 64,
+        "rows": 4,
+        "cols": 4,
+        "layout": "row_major",
+        "transpose": false
+      },
+      "viewproj": {
+        "cb_slot": 1,
+        "offset": 128,
+        "rows": 4,
+        "cols": 4,
+        "layout": "row_major",
+        "transpose": false
+      }
+    },
+    "fov_policy": "dynamic",
+    "stereo_mode": "multiview",
+    "depth_handling": "override",
+    "hook_points": [
+      {
+        "function": "Present1",
+        "type": "pre",
+        "description": "Pre-present hook for VR rendering"
+      },
+      {
+        "function": "DrawIndexedInstanced",
+        "type": "post",
+        "description": "Post-draw hook for stereo rendering"
+      },
+      {
+        "function": "SetGraphicsRootConstantBufferView",
+        "type": "pre",
+        "description": "Hook for matrix injection"
+      }
+    ]
+  },
+  "camera": {
+    "world_scale": 0.8,
+    "hmd_offsets": {
+      "x": 0.0,
+      "y": -0.1,
+      "z": 0.0
+    },
+    "decoupled_pitch": true,
+    "motion_compensation": true
+  },
+  "ui": {
+    "projection": {
+      "technique": "depth",
+      "scale": 1.1
+    },
+    "overrides": [
+      {
+        "name": "HUD",
+        "mode": "world",
+        "scale": 1.3
+      },
+      {
+        "name": "Inventory",
+        "mode": "screen",
+        "scale": 1.0
+      },
+      {
+        "name": "Dialogue",
+        "mode": "world",
+        "scale": 1.2
+      }
+    ]
+  },
+  "input": {
+    "aim_method": "right",
+    "bindings": {
+      "trigger": "right_trigger",
+      "grip": "right_grip",
+      "menu": "right_menu",
+      "system": "right_system"
+    },
+    "haptic_feedback": true
+  },
+  "attachments": [
+    {
+      "path": "PlayerCharacter>Components>WeaponMesh",
+      "controller": "right",
+      "permanent": false,
+      "rotation_quat": {
+        "w": 0.707,
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.707
+      },
+      "location_offset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      }
+    }
+  ],
+  "performance": {
+    "resolution_scale": 0.9,
+    "uncap_framerate": true,
+    "async_reprojection": true,
+    "motion_smoothing": true
+  },
+  "vr_features": {
+    "stereo_rendering": true,
+    "motion_controllers": true,
+    "haptic_feedback": true,
+    "dynamic_fov": true,
+    "frame_interpolation": false,
+    "neural_upscaling": true,
+    "ray_tracing": true,
+    "temporal_upsampling": true
+  },
+  "compatibility_tier": 4,
+  "notes": [
+    "REDengine4 template - optimized for Cyberpunk 2077 style games",
+    "Uses D3D12 with multiview stereo rendering",
+    "Ray tracing support enabled for enhanced visuals",
+    "Temporal upsampling for better performance",
+    "Depth-based UI projection for better immersion",
+    "Optimized world scale for urban environments"
+  ]
+}
+
+

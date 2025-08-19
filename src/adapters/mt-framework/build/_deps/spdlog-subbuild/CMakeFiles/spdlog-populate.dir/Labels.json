@@ -1,0 +1,46 @@
+{
+	"sources" : 
+	[
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/spdlog-populate"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/24fdcde77a091a6c617a05d57d2e87d2/spdlog-populate.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/de63c12672c769f5bcfe9d0992be2bbe/spdlog-populate-complete.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-build.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-configure.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-download.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-install.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-mkdir.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-patch.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-test.rule"
+		},
+		{
+			"file" : "G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-update.rule"
+		}
+	],
+	"target" : 
+	{
+		"labels" : 
+		[
+			"spdlog-populate"
+		],
+		"name" : "spdlog-populate"
+	}
+}

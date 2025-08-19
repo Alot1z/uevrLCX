@@ -1,0 +1,46 @@
+{
+  "weapon_attachments": {
+    "primary_weapon": {
+      "component_path": "AcknowledgedPawn.Components.SkeletalMeshComponent",
+      "attachment_side": "right",
+      "attachment_type": "weapon",
+      "permanent_change": true,
+      "save_state": true,
+      "validation_status": "pending",
+      "notes": "Primary weapon attachment to right controller for combat"
+    },
+    "secondary_weapon": {
+      "component_path": "AcknowledgedPawn.Components.SkeletalMeshComponent",
+      "attachment_side": "right",
+      "attachment_type": "weapon",
+      "permanent_change": true,
+      "save_state": true,
+      "validation_status": "pending",
+      "notes": "Secondary weapon attachment to right controller"
+    },
+    "melee_weapon": {
+      "component_path": "AcknowledgedPawn.Components.SkeletalMeshComponent",
+      "attachment_side": "right",
+      "attachment_type": "weapon",
+      "permanent_change": true,
+      "save_state": true,
+      "validation_status": "pending",
+      "notes": "Melee weapon attachment to right controller"
+    }
+  },
+  "attachment_configuration": {
+    "weapon_side": "right",
+    "utility_side": "left",
+    "input_alignment": "right_controller_aim",
+    "permanent_changes_enabled": true,
+    "save_state_enabled": true
+  },
+  "validation_checklist": {
+    "weapon_attachments_configured": false,
+    "weapon_attachments_tested": false,
+    "weapon_attachments_persist": false,
+    "input_alignment_matches": false
+  },
+  "last_updated": "2024-12-19",
+  "version": "1.0.0"
+}

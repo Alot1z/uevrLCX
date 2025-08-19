@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\redengine4\build\_deps\nlohmann_json-subbuild\CMakeFiles\6827429c5196c7990c6e47ab3ae52616\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{AE2B6F4E-548F-39B8-9626-D6A186376427}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

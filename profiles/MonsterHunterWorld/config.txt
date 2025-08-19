@@ -1,0 +1,128 @@
+# Monster Hunter: World VR Configuration
+# MT Framework Engine - Complete VR Settings
+
+# Basic VR Configuration
+vr_enabled = true
+vr_runtime = "openxr"
+headset_type = "auto_detect"
+controller_type = "auto_detect"
+
+# Display Settings
+resolution_scale = 1.0
+supersampling = 1.0
+msaa_level = 4
+anisotropic_filtering = 16
+
+# Performance Settings
+target_fps = 90
+adaptive_resolution = true
+vrss_enabled = true
+optimization_level = "balanced"
+
+# Camera Configuration
+camera_mode = "first_person"
+third_person_override = true
+camera_height = 1.6
+camera_distance = 1.0
+
+# Movement and Locomotion
+movement_type = "roomscale"
+snap_turning = false
+smooth_turning = true
+turn_speed = 45.0
+movement_speed = 1.0
+
+# Comfort Settings
+vignette_strength = 0.3
+motion_blur_reduction = true
+comfort_mode = true
+reduced_motion = false
+
+# Input Mapping
+left_controller_mapping = {
+    trigger = "item_use",
+    grip = "menu_open",
+    stick = "movement",
+    a_button = "dodge",
+    b_button = "interact",
+    x_button = "item_cycle",
+    y_button = "map_open"
+}
+
+right_controller_mapping = {
+    trigger = "attack",
+    grip = "block",
+    stick = "camera",
+    a_button = "special_attack",
+    b_button = "weapon_sheathe",
+    x_button = "weapon_switch",
+    y_button = "lock_on"
+}
+
+# Weapon and Utility Attachments
+weapon_attachment = "right_controller"
+utility_attachment = "left_controller"
+permanent_weapon_attachment = true
+permanent_utility_attachment = false
+
+# HUD and UI Settings
+hud_vr_projection = true
+menu_vr_adaptation = true
+ui_scale = 1.0
+ui_depth = 2.0
+ui_comfort_distance = 1.5
+
+# Combat VR Settings
+combat_vr_optimization = true
+weapon_visibility = true
+monster_tracking = true
+aim_assistance = false
+combat_camera_smoothing = 0.1
+
+# Exploration VR Settings
+exploration_camera = true
+environment_interaction = true
+climbing_vr = true
+swimming_vr = true
+
+# Audio VR Settings
+spatial_audio = true
+3d_audio = true
+audio_distance = 10.0
+audio_occlusion = true
+
+# MT Framework Specific
+mt_framework_settings = {
+    engine_hooks = true,
+    rendering_pipeline = true,
+    memory_management = true,
+    performance_optimization = true
+}
+
+# Debug and Development
+debug_mode = false
+performance_monitoring = true
+camera_debug = false
+input_debug = false
+logging_level = "info"
+
+# Validation and Testing
+vr_experience_validation = true
+comfort_testing = true
+performance_benchmarking = true
+compatibility_testing = true
+
+# Game-Specific Optimizations
+monster_hunter_world = {
+    weapon_system = true,
+    monster_ai = true,
+    environment_rendering = true,
+    particle_effects = true,
+    animation_system = true
+}
+
+# Cross-Engine Integration
+uevr_integration = true
+cross_engine_adapter = true
+plugin_architecture = true
+extension_framework = true

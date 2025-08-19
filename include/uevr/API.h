@@ -1,649 +1,559 @@
-/*
-This file (API.h) is licensed under the MIT license and is separate from the rest of the UEVR codebase.
-
-Copyright (c) 2023 praydog
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
-*/
-
-/* C API for UEVR. */
-/* Must be ANSI C89 compatible. */
-#ifndef UEVR_API_H
-#define UEVR_API_H
-
-#ifndef __cplusplus
-#include <stdbool.h>
-#include <wchar.h>
-#endif
-
-#define UEVR_IN
-#define UEVR_OUT
-
-#define UEVR_PLUGIN_VERSION_MAJOR 2
-#define UEVR_PLUGIN_VERSION_MINOR 39
-#define UEVR_PLUGIN_VERSION_PATCH 0
-
-#define UEVR_RENDERER_D3D11 0
-#define UEVR_RENDERER_D3D12 1
-
-typedef struct {
-    int major;
-    int minor;
-    int patch;
-} UEVR_PluginVersion;
-
-/* strong typedefs */
-#define DECLARE_UEVR_HANDLE(name) struct name##__ { int unused; }; \
-                             typedef struct name##__ *name
-
-DECLARE_UEVR_HANDLE(UEVR_UGameEngineHandle);
-DECLARE_UEVR_HANDLE(UEVR_UEngineHandle);
-DECLARE_UEVR_HANDLE(UEVR_FSlateRHIRendererHandle);
-DECLARE_UEVR_HANDLE(UEVR_FViewportInfoHandle);
-DECLARE_UEVR_HANDLE(UEVR_UGameViewportClientHandle);
-DECLARE_UEVR_HANDLE(UEVR_FViewportHandle);
-DECLARE_UEVR_HANDLE(UEVR_FCanvasHandle);
-DECLARE_UEVR_HANDLE(UEVR_UObjectArrayHandle);
-DECLARE_UEVR_HANDLE(UEVR_UObjectHandle);
-DECLARE_UEVR_HANDLE(UEVR_FFieldHandle);
-DECLARE_UEVR_HANDLE(UEVR_UFieldHandle);
-DECLARE_UEVR_HANDLE(UEVR_FPropertyHandle);
-DECLARE_UEVR_HANDLE(UEVR_UStructHandle);
-DECLARE_UEVR_HANDLE(UEVR_UClassHandle);
-DECLARE_UEVR_HANDLE(UEVR_UFunctionHandle);
-DECLARE_UEVR_HANDLE(UEVR_FNameHandle);
-DECLARE_UEVR_HANDLE(UEVR_FFieldClassHandle);
-DECLARE_UEVR_HANDLE(UEVR_FConsoleManagerHandle);
-DECLARE_UEVR_HANDLE(UEVR_IConsoleObjectHandle);
-DECLARE_UEVR_HANDLE(UEVR_IConsoleCommandHandle);
-DECLARE_UEVR_HANDLE(UEVR_IConsoleVariableHandle);
-DECLARE_UEVR_HANDLE(UEVR_TArrayHandle);
-DECLARE_UEVR_HANDLE(UEVR_FMallocHandle);
-DECLARE_UEVR_HANDLE(UEVR_FRHITexture2DHandle);
-DECLARE_UEVR_HANDLE(UEVR_UScriptStructHandle);
-DECLARE_UEVR_HANDLE(UEVR_FArrayPropertyHandle);
-DECLARE_UEVR_HANDLE(UEVR_FBoolPropertyHandle);
-DECLARE_UEVR_HANDLE(UEVR_FStructPropertyHandle);
-DECLARE_UEVR_HANDLE(UEVR_FEnumPropertyHandle);
-DECLARE_UEVR_HANDLE(UEVR_UEnumHandle);
-DECLARE_UEVR_HANDLE(UEVR_FNumericPropertyHandle);
-
-/* OpenXR stuff */
-DECLARE_UEVR_HANDLE(UEVR_XrInstance);
-DECLARE_UEVR_HANDLE(UEVR_XrSession);
-DECLARE_UEVR_HANDLE(UEVR_XrSpace);
-
-#define UEVR_LEFT_EYE 0
-#define UEVR_RIGHT_EYE 1
-
-#define UEVR_OPENXR_SWAPCHAIN_LEFT_EYE 0
-#define UEVR_OPENXR_SWAPCHAIN_RIGHT_EYE 1
-#define UEVR_OPENXR_SWAPCHAIN_UI 2
-
-typedef int UEVR_Eye;
-typedef int UEVR_TrackedDeviceIndex;
-typedef int UEVR_OpenXRSwapchainIndex;
-
-typedef struct {
-    float x;
-    float y;
-} UEVR_Vector2f;
-
-typedef struct {
-    float x;
-    float y;
-    float z;
-} UEVR_Vector3f;
-
-typedef struct {
-    double x;
-    double y;
-    double z;
-} UEVR_Vector3d;
-
-typedef struct {
-    float x;
-    float y;
-    float z;
-    float w;
-} UEVR_Vector4f;
-
-typedef struct {
-    float w;
-    float x;
-    float y;
-    float z;
-} UEVR_Quaternionf;
-
-typedef struct {
-    float pitch;
-    float yaw;
-    float roll;
-} UEVR_Rotatorf;
-
-typedef struct {
-    double pitch;
-    double yaw;
-    double roll;
-} UEVR_Rotatord;
-
-typedef struct {
-    float m[4][4];
-} UEVR_Matrix4x4f;
-
-typedef struct {
-    double m[4][4];
-} UEVR_Matrix4x4d;
-
-/* Generic DX renderer callbacks */
-typedef void (*UEVR_OnPresentCb)();
-typedef void (*UEVR_OnDeviceResetCb)();
-
-/* VR Specific renderer callbacks */
-typedef void (*UEVR_OnPostRenderVRFrameworkDX11Cb)(void*, void*, void*); /* immediate_context, ID3D11Texture2D* resource, ID3D11RenderTargetView* rtv */
-/* On DX12 the resource state is D3D12_RESOURCE_STATE_RENDER_TARGET */
-typedef void (*UEVR_OnPostRenderVRFrameworkDX12Cb)(void*, void*, void*); /* command_list, ID3D12Resource* resource, D3D12_CPU_DESCRIPTOR_HANDLE* rtv */
-
-/* Windows callbacks*/
-typedef bool (*UEVR_OnMessageCb)(void*, unsigned int, unsigned long long, long long);
-typedef void (*UEVR_OnXInputGetStateCb)(unsigned int*, unsigned int, void*); /* retval, dwUserIndex, pState, read MSDN for details */
-typedef void (*UEVR_OnXInputSetStateCb)(unsigned int*, unsigned int, void*); /* retval, dwUserIndex, pVibration, read MSDN for details */
-
-/* UE Callbacks */
-typedef void (*UEVR_Engine_TickCb)(UEVR_UGameEngineHandle engine, float delta_seconds);
-typedef void (*UEVR_Slate_DrawWindow_RenderThreadCb)(UEVR_FSlateRHIRendererHandle renderer, UEVR_FViewportInfoHandle viewport_info);
-typedef void (*UEVR_ViewportClient_DrawCb)(UEVR_UGameViewportClientHandle viewport_client, UEVR_FViewportHandle viewport, UEVR_FCanvasHandle canvas);
-
-DECLARE_UEVR_HANDLE(UEVR_StereoRenderingDeviceHandle);
-/* the position and rotation must be converted to double format based on the is_double parameter. */
-typedef void (*UEVR_Stereo_CalculateStereoViewOffsetCb)(UEVR_StereoRenderingDeviceHandle, int view_index, float world_to_meters, UEVR_Vector3f* position, UEVR_Rotatorf* rotation, bool is_double);
-
-/* Generic DX Renderer */
-typedef bool (*UEVR_OnPresentFn)(UEVR_OnPresentCb);
-typedef bool (*UEVR_OnDeviceResetFn)(UEVR_OnDeviceResetCb);
-
-/* VR Renderer */
-typedef bool (*UEVR_OnPostRenderVRFrameworkDX11Fn)(UEVR_OnPostRenderVRFrameworkDX11Cb);
-typedef bool (*UEVR_OnPostRenderVRFrameworkDX12Fn)(UEVR_OnPostRenderVRFrameworkDX12Cb);
-
-/* Windows */
-typedef bool (*UEVR_OnMessageFn)(UEVR_OnMessageCb);
-typedef bool (*UEVR_OnXInputGetStateFn)(UEVR_OnXInputGetStateCb);
-typedef bool (*UEVR_OnXInputSetStateFn)(UEVR_OnXInputSetStateCb);
-
-/* Lua */
-typedef void (*UEVR_OnCustomEventCb)(const char* evt, const char* evt_data);
-typedef bool (*UEVR_OnCustomEventFn)(UEVR_OnCustomEventCb);
-
-/* Engine */
-typedef bool (*UEVR_Engine_TickFn)(UEVR_Engine_TickCb);
-typedef bool (*UEVR_Slate_DrawWindow_RenderThreadFn)(UEVR_Slate_DrawWindow_RenderThreadCb);
-typedef bool (*UEVR_Stereo_CalculateStereoViewOffsetFn)(UEVR_Stereo_CalculateStereoViewOffsetCb);
-typedef bool (*UEVR_ViewportClient_DrawFn)(UEVR_ViewportClient_DrawCb);
-typedef bool (*UEVR_UFunction_NativeFn)(UEVR_UObjectHandle, void*, void*); /* obj, frame, ret */
-typedef bool (*UEVR_UFunction_NativePreFn)(UEVR_UFunctionHandle, UEVR_UObjectHandle, void*, void*); /* obj, frame, ret */
-typedef bool (*UEVR_UFunction_NativePostFn)(UEVR_UFunctionHandle, UEVR_UObjectHandle, void*, void*); /* obj, frame, ret */
-
-typedef void (*UEVR_PluginRequiredVersionFn)(UEVR_PluginVersion*);
-
-typedef struct {
-    UEVR_OnPresentFn on_present;
-    UEVR_OnDeviceResetFn on_device_reset;
-    UEVR_OnMessageFn on_message;
-    UEVR_OnXInputGetStateFn on_xinput_get_state;
-    UEVR_OnXInputSetStateFn on_xinput_set_state;
-    UEVR_OnPostRenderVRFrameworkDX11Fn on_post_render_vr_framework_dx11;
-    UEVR_OnPostRenderVRFrameworkDX12Fn on_post_render_vr_framework_dx12;
-    UEVR_OnCustomEventFn on_custom_event;
-} UEVR_PluginCallbacks;
-
-typedef struct {
-    void (*log_error)(const char* format, ...);
-    void (*log_warn)(const char* format, ...);
-    void (*log_info)(const char* format, ...);
-    bool (*is_drawing_ui)();
-    bool (*remove_callback)(void* cb);
-    unsigned int (*get_persistent_dir)(wchar_t* buffer, unsigned int buffer_size);
-    int (*register_inline_hook)(void* target, void* dst, void** original);
-    void (*unregister_inline_hook)(int hook_id);
-    void (*dispatch_lua_event)(const char* event_name, const char* event_data);
-
-    const char* (*get_commit_hash)();
-    const char* (*get_tag)();
-    const char* (*get_tag_long)();
-    const char* (*get_branch)();
-    const char* (*get_build_date)();
-    const char* (*get_build_time)();
-    unsigned int (*get_commits_past_tag)();
-    unsigned int (*get_total_commits)();
-
-    /* Intended for C plugins to listen to via on_custom_event */
-    void (*dispatch_custom_event)(const char* event_name, const char* event_data);
-} UEVR_PluginFunctions;
-
-typedef struct {
-    UEVR_Engine_TickFn on_pre_engine_tick;
-    UEVR_Engine_TickFn on_post_engine_tick;
-    UEVR_Slate_DrawWindow_RenderThreadFn on_pre_slate_draw_window_render_thread;
-    UEVR_Slate_DrawWindow_RenderThreadFn on_post_slate_draw_window_render_thread;
-    UEVR_Stereo_CalculateStereoViewOffsetFn on_pre_calculate_stereo_view_offset;
-    UEVR_Stereo_CalculateStereoViewOffsetFn on_post_calculate_stereo_view_offset;
-    UEVR_ViewportClient_DrawFn on_pre_viewport_client_draw;
-    UEVR_ViewportClient_DrawFn on_post_viewport_client_draw;
-
-    UEVR_Stereo_CalculateStereoViewOffsetFn on_early_calculate_stereo_view_offset;
-} UEVR_SDKCallbacks;
-
-typedef struct {
-    int renderer_type;
-    void* device;
-    void* swapchain;
-    void* command_queue;
-} UEVR_RendererData;
-
-typedef struct {
-    UEVR_UEngineHandle (*get_uengine)();
-    void (*set_cvar_int)(const char* module_name, const char* name, int value);
-    UEVR_UObjectArrayHandle (*get_uobject_array)();
-
-    UEVR_UObjectHandle (*get_player_controller)(int index);
-    UEVR_UObjectHandle (*get_local_pawn)(int index);
-    UEVR_UObjectHandle (*spawn_object)(UEVR_UClassHandle klass, UEVR_UObjectHandle outer);
-
-    /* Handles exec commands, find_console_command does not */
-    void (*execute_command)(const wchar_t* command);
-    void (*execute_command_ex)(UEVR_UObjectHandle world, const wchar_t* command, void* output_device);
-
-    UEVR_FConsoleManagerHandle (*get_console_manager)();
-
-    UEVR_UObjectHandle (*add_component_by_class)(UEVR_UObjectHandle actor, UEVR_UClassHandle klass, bool deferred);
-} UEVR_SDKFunctions;
-
-typedef struct {
-    UEVR_TArrayHandle (*get_console_objects)(UEVR_FConsoleManagerHandle mgr);
-    UEVR_IConsoleObjectHandle (*find_object)(UEVR_FConsoleManagerHandle mgr, const wchar_t* name);
-    UEVR_IConsoleVariableHandle (*find_variable)(UEVR_FConsoleManagerHandle mgr, const wchar_t* name);
-    UEVR_IConsoleCommandHandle (*find_command)(UEVR_FConsoleManagerHandle mgr, const wchar_t* name);
-
-    UEVR_IConsoleCommandHandle (*as_command)(UEVR_IConsoleObjectHandle object);
-
-    void (*variable_set)(UEVR_IConsoleVariableHandle cvar, const wchar_t* value);
-    void (*variable_set_ex)(UEVR_IConsoleVariableHandle cvar, const wchar_t* value, unsigned int flags);
-    int (*variable_get_int)(UEVR_IConsoleVariableHandle cvar);
-    float (*variable_get_float)(UEVR_IConsoleVariableHandle cvar);
-
-    /* better to just use execute_command if possible */
-    void (*command_execute)(UEVR_IConsoleCommandHandle cmd, const wchar_t* args);
-} UEVR_ConsoleFunctions;
-
-DECLARE_UEVR_HANDLE(UEVR_FUObjectItemHandle);
-
-typedef struct {
-    UEVR_UObjectHandle (*find_uobject)(const wchar_t* name);
-
-    bool (*is_chunked)();
-    bool (*is_inlined)();
-    unsigned int (*get_objects_offset)();
-    unsigned int (*get_item_distance)();
-
-    int (*get_object_count)(UEVR_UObjectArrayHandle array);
-    void* (*get_objects_ptr)(UEVR_UObjectArrayHandle array);
-    UEVR_UObjectHandle (*get_object)(UEVR_UObjectArrayHandle array, int index);
-    UEVR_FUObjectItemHandle (*get_item)(UEVR_UObjectArrayHandle array, int index);
-} UEVR_UObjectArrayFunctions;
-
-typedef struct {
-    UEVR_FFieldHandle (*get_next)(UEVR_FFieldHandle field);
-    UEVR_FFieldClassHandle (*get_class)(UEVR_FFieldHandle field);
-    UEVR_FNameHandle (*get_fname)(UEVR_FFieldHandle field);
-} UEVR_FFieldFunctions;
-
-typedef struct {
-    UEVR_UFieldHandle (*get_next)(UEVR_UFieldHandle field);
-} UEVR_UFieldFunctions;
-
-typedef struct {
-    int (*get_offset)(UEVR_FPropertyHandle prop);
-    unsigned long long (*get_property_flags)(UEVR_FPropertyHandle prop);
-    bool (*is_param)(UEVR_FPropertyHandle prop);
-    bool (*is_out_param)(UEVR_FPropertyHandle prop);
-    bool (*is_return_param)(UEVR_FPropertyHandle prop);
-    bool (*is_reference_param)(UEVR_FPropertyHandle prop);
-    bool (*is_pod)(UEVR_FPropertyHandle prop);
-} UEVR_FPropertyFunctions;
-
-typedef struct {
-    UEVR_UStructHandle (*get_super_struct)(UEVR_UStructHandle klass);
-    UEVR_FFieldHandle (*get_child_properties)(UEVR_UStructHandle klass);
-    UEVR_UFunctionHandle (*find_function)(UEVR_UStructHandle klass, const wchar_t* name);
-    UEVR_FPropertyHandle (*find_property)(UEVR_UStructHandle klass, const wchar_t* name);
-    int (*get_properties_size)(UEVR_UStructHandle klass); /* size in bytes */
-    int (*get_min_alignment)(UEVR_UStructHandle klass);
-    UEVR_UFieldHandle (*get_children)(UEVR_UStructHandle klass);
-} UEVR_UStructFunctions;
-
-typedef struct {
-    UEVR_UObjectHandle (*get_class_default_object)(UEVR_UClassHandle klass);
-} UEVR_UClassFunctions;
-
-typedef struct {
-    void* (*get_native_function)(UEVR_UFunctionHandle function);
-    bool (*hook_ptr)(UEVR_UFunctionHandle function, UEVR_UFunction_NativePreFn pre_hook, UEVR_UFunction_NativePostFn post_hook);
-    unsigned int (*get_function_flags)(UEVR_UFunctionHandle function);
-    void (*set_function_flags)(UEVR_UFunctionHandle function, unsigned int flags);
-} UEVR_UFunctionFunctions;
-
-typedef struct {
-    UEVR_UClassHandle (*get_class)(UEVR_UObjectHandle object);
-    UEVR_UObjectHandle (*get_outer)(UEVR_UObjectHandle object);
-
-    /* pointer to the property data, not the UProperty/FProperty */
-    void* (*get_property_data)(UEVR_UObjectHandle object, const wchar_t* name);
-    bool (*is_a)(UEVR_UObjectHandle object, UEVR_UClassHandle other);
-
-    void (*process_event)(UEVR_UObjectHandle object, UEVR_UFunctionHandle function, void* params);
-    void (*call_function)(UEVR_UObjectHandle object, const wchar_t* name, void* params);
-
-    UEVR_FNameHandle (*get_fname)(UEVR_UObjectHandle object);
-
-    bool (*get_bool_property)(UEVR_UObjectHandle object, const wchar_t* name);
-    void (*set_bool_property)(UEVR_UObjectHandle object, const wchar_t* name, bool value);
-} UEVR_UObjectFunctions;
-
-DECLARE_UEVR_HANDLE(UEVR_UObjectHookMotionControllerStateHandle);
-
-typedef struct {
-    void (*set_rotation_offset)(UEVR_UObjectHookMotionControllerStateHandle, const UEVR_Quaternionf* rotation);
-    void (*set_location_offset)(UEVR_UObjectHookMotionControllerStateHandle, const UEVR_Vector3f* location);
-    void (*set_hand)(UEVR_UObjectHookMotionControllerStateHandle, unsigned int hand);
-    void (*set_permanent)(UEVR_UObjectHookMotionControllerStateHandle, bool permanent);
-} UEVR_UObjectHookMotionControllerStateFunctions;
-
-typedef struct {
-    void (*activate)();
-    bool (*exists)(UEVR_UObjectHandle object);
-
-    /* if 0 or nullptr is passed, it will return how many objects are in the array */
-    /* so you can allocate the right amount of memory */
-    int (*get_objects_by_class)(UEVR_UClassHandle klass, UEVR_UObjectHandle* out_objects, unsigned int max_objects, bool allow_default);
-    int (*get_objects_by_class_name)(const wchar_t* class_name, UEVR_UObjectHandle* out_objects, unsigned int max_objects, bool allow_default);
-
-    UEVR_UObjectHandle (*get_first_object_by_class)(UEVR_UClassHandle klass, bool allow_default);
-    UEVR_UObjectHandle (*get_first_object_by_class_name)(const wchar_t* class_name, bool allow_default);
-
-    UEVR_UObjectHookMotionControllerStateHandle (*get_or_add_motion_controller_state)(UEVR_UObjectHandle object);
-    UEVR_UObjectHookMotionControllerStateHandle (*get_motion_controller_state)(UEVR_UObjectHandle object);
-
-    UEVR_UObjectHookMotionControllerStateFunctions* mc_state;
-
-    bool (*is_disabled)();
-    void (*set_disabled)(bool disabled);
-
-    void (*remove_motion_controller_state)(UEVR_UObjectHandle object);
-    void (*remove_all_motion_controller_states)();
-} UEVR_UObjectHookFunctions;
-
-typedef struct {
-    UEVR_FNameHandle (*get_fname)(UEVR_FFieldClassHandle field_class);
-} UEVR_FFieldClassFunctions;
-
-typedef struct {
-    unsigned int (*to_string)(UEVR_FNameHandle name, wchar_t* buffer, unsigned int buffer_size);
-    void (*constructor)(UEVR_FNameHandle name, const wchar_t* data, unsigned int find_type);
-} UEVR_FNameFunctions;
-
-typedef struct {
-    UEVR_FMallocHandle (*get)();
-
-    void* (*malloc)(UEVR_FMallocHandle instance, unsigned int size, unsigned int alignment);
-    void* (*realloc)(UEVR_FMallocHandle instance, void* ptr, unsigned int size, unsigned int alignment);
-    void (*free)(UEVR_FMallocHandle instance, void* ptr);
-} UEVR_FMallocFunctions;
-
-DECLARE_UEVR_HANDLE(UEVR_IPooledRenderTargetHandle);
-
-typedef struct {
-    void (*activate)();
-    UEVR_IPooledRenderTargetHandle (*get_render_target)(const wchar_t* name);
-} UEVR_FRenderTargetPoolHookFunctions;
-
-typedef struct {
-    UEVR_FRHITexture2DHandle (*get_scene_render_target)();
-    UEVR_FRHITexture2DHandle (*get_ui_render_target)();
-} UEVR_FFakeStereoRenderingHookFunctions;
-
-typedef struct {
-    void* (*get_native_resource)(UEVR_FRHITexture2DHandle texture);
-} UEVR_FRHITexture2DFunctions;
-
-DECLARE_UEVR_HANDLE(UEVR_StructOpsHandle);
-
-typedef struct {
-    UEVR_StructOpsHandle (*get_struct_ops)(UEVR_UScriptStructHandle script_struct);
-    int (*get_struct_size)(UEVR_UScriptStructHandle script_struct);
-} UEVR_UScriptStructFunctions;
-
-typedef struct {
-    UEVR_FPropertyHandle (*get_inner)(UEVR_FArrayPropertyHandle prop);
-} UEVR_FArrayPropertyFunctions;
-
-typedef struct {
-    unsigned int (*get_field_size)(UEVR_FBoolPropertyHandle prop);
-    unsigned int (*get_byte_offset)(UEVR_FBoolPropertyHandle prop);
-    unsigned int (*get_byte_mask)(UEVR_FBoolPropertyHandle prop);
-    unsigned int (*get_field_mask)(UEVR_FBoolPropertyHandle prop);
-    bool (*get_value_from_object)(UEVR_FBoolPropertyHandle prop, void* object);
-    bool (*get_value_from_propbase)(UEVR_FBoolPropertyHandle prop, void* addr);
-    void (*set_value_in_object)(UEVR_FBoolPropertyHandle prop, void* object, bool value);
-    void (*set_value_in_propbase)(UEVR_FBoolPropertyHandle prop, void* addr, bool value);
-} UEVR_FBoolPropertyFunctions;
-
-typedef struct {
-    UEVR_UScriptStructHandle (*get_struct)(UEVR_FStructPropertyHandle prop);
-} UEVR_FStructPropertyFunctions;
-
-typedef struct {
-    UEVR_FNumericPropertyHandle (*get_underlying_prop)(UEVR_FEnumPropertyHandle prop);
-    UEVR_UEnumHandle (*get_enum)(UEVR_FEnumPropertyHandle prop);
-} UEVR_FEnumPropertyFunctions;
-
-typedef struct {
-    void (*exec)(UEVR_UGameViewportClientHandle vp, const wchar_t* command);
-    void (*exec_ex)(UEVR_UGameViewportClientHandle vp, UEVR_UObjectHandle world, const wchar_t* command, void* output_device);
-} UEVR_UGameViewportClientFunctions;
-
-typedef struct {
-    const UEVR_SDKFunctions* functions;
-    const UEVR_SDKCallbacks* callbacks;
-    const UEVR_UObjectFunctions* uobject;
-    const UEVR_UObjectArrayFunctions* uobject_array;
-    const UEVR_FFieldFunctions* ffield;
-    const UEVR_FPropertyFunctions* fproperty;
-    const UEVR_UStructFunctions* ustruct;
-    const UEVR_UClassFunctions* uclass;
-    const UEVR_UFunctionFunctions* ufunction;
-    const UEVR_UObjectHookFunctions* uobject_hook;
-    const UEVR_FFieldClassFunctions* ffield_class;
-    const UEVR_FNameFunctions* fname;
-    const UEVR_ConsoleFunctions* console;
-    const UEVR_FMallocFunctions* malloc;
-    const UEVR_FRenderTargetPoolHookFunctions* render_target_pool_hook;
-    const UEVR_FFakeStereoRenderingHookFunctions* stereo_hook;
-    const UEVR_FRHITexture2DFunctions* frhitexture2d;
-    const UEVR_UScriptStructFunctions* uscriptstruct;
-    const UEVR_FArrayPropertyFunctions* farrayproperty;
-    const UEVR_FBoolPropertyFunctions* fboolproperty;
-    const UEVR_FStructPropertyFunctions* fstructproperty;
-    const UEVR_FEnumPropertyFunctions* fenumproperty;
-    const UEVR_UFieldFunctions* ufield;
-    const UEVR_UGameViewportClientFunctions* game_viewport_client;
-} UEVR_SDKData;
-
-DECLARE_UEVR_HANDLE(UEVR_IVRSystem);
-DECLARE_UEVR_HANDLE(UEVR_IVRChaperone);
-DECLARE_UEVR_HANDLE(UEVR_IVRChaperoneSetup);
-DECLARE_UEVR_HANDLE(UEVR_IVRCompositor);
-DECLARE_UEVR_HANDLE(UEVR_IVROverlay);
-DECLARE_UEVR_HANDLE(UEVR_IVROverlayView);
-DECLARE_UEVR_HANDLE(UEVR_IVRHeadsetView);
-DECLARE_UEVR_HANDLE(UEVR_IVRScreenshots);
-DECLARE_UEVR_HANDLE(UEVR_IVRRenderModels);
-DECLARE_UEVR_HANDLE(UEVR_IVRApplications);
-DECLARE_UEVR_HANDLE(UEVR_IVRSettings);
-DECLARE_UEVR_HANDLE(UEVR_IVRResources);
-DECLARE_UEVR_HANDLE(UEVR_IVRExtendedDisplay);
-DECLARE_UEVR_HANDLE(UEVR_IVRTrackedCamera);
-DECLARE_UEVR_HANDLE(UEVR_IVRDriverManager);
-DECLARE_UEVR_HANDLE(UEVR_IVRInput);
-DECLARE_UEVR_HANDLE(UEVR_IVRIOBuffer);
-DECLARE_UEVR_HANDLE(UEVR_IVRSpatialAnchors);
-DECLARE_UEVR_HANDLE(UEVR_IVRNotifications);
-DECLARE_UEVR_HANDLE(UEVR_IVRDebug);
-
-typedef struct {
-    UEVR_IVRSystem (*get_vr_system)();
-    UEVR_IVRChaperone (*get_vr_chaperone)();
-    UEVR_IVRChaperoneSetup (*get_vr_chaperone_setup)();
-    UEVR_IVRCompositor (*get_vr_compositor)();
-    UEVR_IVROverlay (*get_vr_overlay)();
-    UEVR_IVROverlayView (*get_vr_overlay_view)();
-    UEVR_IVRHeadsetView (*get_vr_headset_view)();
-    UEVR_IVRScreenshots (*get_vr_screenshots)();
-    UEVR_IVRRenderModels (*get_vr_render_models)();
-    UEVR_IVRApplications (*get_vr_applications)();
-    UEVR_IVRSettings (*get_vr_settings)();
-    UEVR_IVRResources (*get_vr_resources)();
-    UEVR_IVRExtendedDisplay (*get_vr_extended_display)();
-    UEVR_IVRTrackedCamera (*get_vr_tracked_camera)();
-    UEVR_IVRDriverManager (*get_vr_driver_manager)();
-    UEVR_IVRInput (*get_vr_input)();
-    UEVR_IVRIOBuffer (*get_vr_io_buffer)();
-    UEVR_IVRSpatialAnchors (*get_vr_spatial_anchors)();
-    UEVR_IVRNotifications (*get_vr_notifications)();
-    UEVR_IVRDebug (*get_vr_debug)();
-} UEVR_OpenVRData;
-
-typedef struct {
-    UEVR_XrInstance (*get_xr_instance)();
-    UEVR_XrSession (*get_xr_session)();
-
-    UEVR_XrSpace (*get_stage_space)(); /* XrSpace */
-    UEVR_XrSpace (*get_view_space)(); /* XrSpace */
-} UEVR_OpenXRData;
-
-DECLARE_UEVR_HANDLE(UEVR_ActionHandle);
-DECLARE_UEVR_HANDLE(UEVR_InputSourceHandle);
-
-typedef struct {
-    bool (*is_runtime_ready)();
-    bool (*is_openvr)();
-    bool (*is_openxr)();
-
-    bool (*is_hmd_active)();
-
-    void (*get_standing_origin)(UEVR_Vector3f* out_origin);
-    void (*get_rotation_offset)(UEVR_Quaternionf* out_rotation);
-    void (*set_standing_origin)(const UEVR_Vector3f* origin);
-    void (*set_rotation_offset)(const UEVR_Quaternionf* rotation);
-
-    UEVR_TrackedDeviceIndex (*get_hmd_index)();
-    UEVR_TrackedDeviceIndex (*get_left_controller_index)();
-    UEVR_TrackedDeviceIndex (*get_right_controller_index)();
-
-    /* OpenVR/OpenXR space. */
-    void (*get_pose)(UEVR_TrackedDeviceIndex index, UEVR_Vector3f* out_position, UEVR_Quaternionf* out_rotation);
-    void (*get_transform)(UEVR_TrackedDeviceIndex index, UEVR_Matrix4x4f* out_transform);
-
-    /* For getting grip or aim poses for the controllers */
-    void (*get_grip_pose)(UEVR_TrackedDeviceIndex index, UEVR_Vector3f* out_position, UEVR_Quaternionf* out_rotation);
-    void (*get_aim_pose)(UEVR_TrackedDeviceIndex index, UEVR_Vector3f* out_position, UEVR_Quaternionf* out_rotation);
-    void (*get_grip_transform)(UEVR_TrackedDeviceIndex index, UEVR_Matrix4x4f* out_transform);
-    void (*get_aim_transform)(UEVR_TrackedDeviceIndex index, UEVR_Matrix4x4f* out_transform);
-
-    void (*get_eye_offset)(UEVR_Eye eye, UEVR_Vector3f* out_position);
-
-    /* Converted to UE projection matrix */
-    void (*get_ue_projection_matrix)(UEVR_Eye eye, UEVR_Matrix4x4f* out_projection);
-
-    UEVR_InputSourceHandle (*get_left_joystick_source)();
-    UEVR_InputSourceHandle (*get_right_joystick_source)();
+#pragma once
+
+#include <memory>
+#include <string>
+#include <vector>
+#include <unordered_map>
+#include <functional>
+#include <chrono>
+#include <filesystem>
+
+// Forward declarations
+class CrossEngineAdapter;
+class AdapterFactory;
+class GameProfile;
+class CrossEngineAdapterRegistry;
+class HookManager;
+class VRModManager;
+
+namespace uevr {
+
+// API version information
+#define uevr_API_VERSION_MAJOR 1
+#define uevr_API_VERSION_MINOR 0
+#define uevr_API_VERSION_PATCH 0
+#define uevr_API_VERSION_STRING "1.0.0"
+
+// API state enumeration
+enum class APIState {
+    UNINITIALIZED = 0,
+    INITIALIZING,
+    INITIALIZED,
+    RUNNING,
+    PAUSED,
+    STOPPING,
+    STOPPED,
+    ERROR,
+    CLEANING_UP
+};
+
+// API initialization flags
+enum class APIInitFlags : uint32_t {
+    NONE = 0x00000000,
+    ENABLE_LOGGING = 0x00000001,
+    ENABLE_HOOKING = 0x00000002,
+    ENABLE_ADAPTERS = 0x00000004,
+    ENABLE_MODS = 0x00000008,
+    ENABLE_PLUGINS = 0x00000010,
+    ENABLE_PERFORMANCE_MONITORING = 0x00000020,
+    ENABLE_ERROR_HANDLING = 0x00000040,
+    ENABLE_DEBUG_MODE = 0x00000080,
+    ENABLE_CONFIG_FILE = 0x00000100,
+    ENABLE_CACHE = 0x00000200,
+    ENABLE_STATISTICS = 0x00000400,
+    ENABLE_CALLBACKS = 0x00000800,
+    ENABLE_THREADING = 0x00001000,
+    ENABLE_SHARED_MEMORY = 0x00002000,
+    ENABLE_IMGUI = 0x00004000,
+    ENABLE_NETWORK = 0x00008000,
+    ENABLE_CRASH_REPORTING = 0x00010000,
+    ENABLE_UPDATE_CHECKING = 0x00020000,
+    ENABLE_BACKUP_RESTORE = 0x00040000,
+    ENABLE_MIGRATION = 0x00080000,
+    DEFAULT = ENABLE_LOGGING | ENABLE_HOOKING | ENABLE_ADAPTERS | ENABLE_MODS | ENABLE_PLUGINS | ENABLE_ERROR_HANDLING,
+    ALL = 0xFFFFFFFF
+};
+
+// API configuration structure
+struct APIConfig {
+    // Core settings
+    std::string application_name = "uevr";
+    std::string application_version = uevr_API_VERSION_STRING;
+    std::string config_directory = "config";
+    std::string cache_directory = "cache";
+    std::string log_directory = "logs";
+    std::string plugin_directory = "plugins";
+    std::string backup_directory = "backups";
     
-    UEVR_ActionHandle (*get_action_handle)(const char* action_path);
-
-    bool (*is_action_active)(UEVR_ActionHandle action, UEVR_InputSourceHandle source);
-    bool (*is_action_active_any_joystick)(UEVR_ActionHandle action);
-    void (*get_joystick_axis)(UEVR_InputSourceHandle source, UEVR_Vector2f* out_axis);
-    void (*trigger_haptic_vibration)(float seconds_from_now, float duration, float frequency, float amplitude, UEVR_InputSourceHandle source);
-    /* if any controller action is active or has been active within certain previous timeframe */
-    bool (*is_using_controllers)();
-    bool (*is_decoupled_pitch_enabled)();
+    // Feature flags
+    APIInitFlags init_flags = APIInitFlags::DEFAULT;
     
-    unsigned int (*get_movement_orientation)();
-    unsigned int (*get_lowest_xinput_index)();
+    // Performance settings
+    uint32_t max_threads = 0; // 0 = auto-detect
+    uint32_t max_memory_mb = 0; // 0 = unlimited
+    uint32_t performance_threshold_ms = 16; // 60 FPS target
+    bool enable_vsync = true;
+    bool enable_frame_limiting = true;
+    uint32_t max_fps = 60;
+    
+    // Logging settings
+    std::string log_level = "INFO";
+    std::string log_format = "detailed";
+    bool enable_file_logging = true;
+    bool enable_console_logging = true;
+    bool enable_remote_logging = false;
+    std::string remote_log_endpoint = "";
+    uint32_t max_log_file_size_mb = 100;
+    uint32_t max_log_files = 10;
+    
+    // Hook settings
+    bool enable_directx_hooks = true;
+    bool enable_opengl_hooks = true;
+    bool enable_vulkan_hooks = true;
+    bool enable_engine_hooks = true;
+    bool enable_safe_hooking = true;
+    bool enable_hook_validation = true;
+    uint32_t hook_timeout_ms = 5000;
+    
+    // Adapter settings
+    bool enable_adapter_auto_discovery = true;
+    bool enable_adapter_caching = true;
+    bool enable_adapter_validation = true;
+    uint32_t adapter_scan_timeout_ms = 30000;
+    uint32_t max_adapters = 1000;
+    
+    // Mod settings
+    bool enable_mod_auto_loading = true;
+    bool enable_mod_validation = true;
+    bool enable_mod_caching = true;
+    bool enable_mod_hot_reload = false;
+    uint32_t mod_scan_interval_ms = 5000;
+    
+    // Plugin settings
+    bool enable_plugin_auto_loading = true;
+    bool enable_plugin_validation = true;
+    bool enable_plugin_sandboxing = true;
+    bool enable_plugin_hot_reload = false;
+    uint32_t plugin_scan_interval_ms = 10000;
+    
+    // Error handling settings
+    bool enable_crash_reporting = true;
+    bool enable_error_recovery = true;
+    bool enable_graceful_degradation = true;
+    uint32_t max_error_retries = 3;
+    uint32_t error_recovery_timeout_ms = 10000;
+    
+    // Network settings
+    bool enable_network_features = false;
+    std::string network_host = "localhost";
+    uint16_t network_port = 8080;
+    bool enable_ssl = false;
+    std::string ssl_certificate = "";
+    std::string ssl_private_key = "";
+    
+    // Update settings
+    bool enable_auto_updates = false;
+    std::string update_server = "https://updates.uevr.com";
+    bool enable_update_notifications = true;
+    bool enable_beta_updates = false;
+    
+    // Backup settings
+    bool enable_auto_backup = true;
+    uint32_t backup_interval_hours = 24;
+    uint32_t max_backup_files = 10;
+    bool enable_backup_compression = true;
+    
+    // Advanced settings
+    bool enable_experimental_features = false;
+    bool enable_developer_mode = false;
+    bool enable_profiling = false;
+    bool enable_memory_tracking = false;
+    bool enable_thread_affinity = false;
+    std::string cpu_affinity_mask = "";
+    
+    // Custom settings
+    std::unordered_map<std::string, std::string> custom_settings;
+};
 
-    void (*recenter_view)();
-    void (*recenter_horizon)();
+// API statistics structure
+struct APIStats {
+    // General statistics
+    uint64_t total_runtime_ms = 0;
+    uint64_t total_frames_processed = 0;
+    uint64_t total_adapters_loaded = 0;
+    uint64_t total_mods_loaded = 0;
+    uint64_t total_plugins_loaded = 0;
+    uint64_t total_hooks_installed = 0;
+    
+    // Performance statistics
+    double average_frame_time_ms = 0.0;
+    double min_frame_time_ms = 0.0;
+    double max_frame_time_ms = 0.0;
+    double average_fps = 0.0;
+    double min_fps = 0.0;
+    double max_fps = 0.0;
+    
+    // Memory statistics
+    uint64_t current_memory_usage_bytes = 0;
+    uint64_t peak_memory_usage_bytes = 0;
+    uint64_t total_memory_allocated_bytes = 0;
+    uint64_t total_memory_freed_bytes = 0;
+    
+    // Error statistics
+    uint64_t total_errors = 0;
+    uint64_t total_warnings = 0;
+    uint64_t total_crashes = 0;
+    uint64_t total_recoveries = 0;
+    
+    // Hook statistics
+    uint64_t total_hook_calls = 0;
+    uint64_t total_hook_failures = 0;
+    double average_hook_time_ms = 0.0;
+    
+    // Adapter statistics
+    uint64_t total_adapter_calls = 0;
+    uint64_t total_adapter_failures = 0;
+    double average_adapter_time_ms = 0.0;
+    
+    // Mod statistics
+    uint64_t total_mod_calls = 0;
+    uint64_t total_mod_failures = 0;
+    double average_mod_time_ms = 0.0;
+    
+    // Plugin statistics
+    uint64_t total_plugin_calls = 0;
+    uint64_t total_plugin_failures = 0;
+    double average_plugin_time_ms = 0.0;
+    
+    // Timestamps
+    std::chrono::steady_clock::time_point start_time;
+    std::chrono::steady_clock::time_point last_update_time;
+    std::chrono::steady_clock::time_point last_error_time;
+    std::chrono::steady_clock::time_point last_warning_time;
+};
 
-    unsigned int (*get_aim_method)();
-    void (*set_aim_method)(unsigned int method);
-    bool (*is_aim_allowed)();
-    void (*set_aim_allowed)(bool allowed);
+// API error information
+struct APIError {
+    std::string error_code;
+    std::string error_message;
+    std::string error_details;
+    std::string error_location;
+    std::string error_stack_trace;
+    std::chrono::steady_clock::time_point error_time;
+    uint32_t error_severity = 0; // 0 = info, 1 = warning, 2 = error, 3 = critical
+    bool is_recoverable = false;
+    std::vector<std::string> error_context;
+    std::unordered_map<std::string, std::string> error_metadata;
+};
 
-    unsigned int (*get_hmd_width)();
-    unsigned int (*get_hmd_height)();
-    unsigned int (*get_ui_width)();
-    unsigned int (*get_ui_height)();
+// API callback types
+using APIStateChangeCallback = std::function<void(APIState old_state, APIState new_state)>;
+using APIErrorCallback = std::function<void(const APIError& error)>;
+using APIFrameCallback = std::function<void(uint64_t frame_number, double frame_time_ms)>;
+using APIAdapterCallback = std::function<void(const std::string& adapter_id, bool loaded)>;
+using APIModCallback = std::function<void(const std::string& mod_id, bool loaded)>;
+using APIPluginCallback = std::function<void(const std::string& plugin_id, bool loaded)>;
+using APIHookCallback = std::function<void(const std::string& hook_id, bool installed)>;
 
-    bool (*is_snap_turn_enabled)();
-    void (*set_snap_turn_enabled)(bool enabled);
-    void (*set_decoupled_pitch_enabled)(bool enabled);
+/**
+ * @brief uevr API Main Interface
+ * 
+ * This class provides the main public interface for the uevr framework.
+ * It manages the overall lifecycle, configuration, and provides access to
+ * all major subsystems including adapters, hooks, mods, and plugins.
+ * 
+ * Features:
+ * - Framework initialization and shutdown
+ * - Configuration management
+ * - State management
+ * - Subsystem access
+ * - Error handling and recovery
+ * - Performance monitoring
+ * - Statistics and reporting
+ * - Callback management
+ * - Threading support
+ * - Memory management
+ * - Logging and debugging
+ * - Plugin system
+ * - Hot reloading
+ * - Backup and restore
+ * - Update management
+ * - Network features
+ * - Crash reporting
+ */
+class API {
+public:
+    // Singleton access
+    static API& getInstance();
+    
+    // Constructor and destructor
+    explicit API(const APIConfig& config = APIConfig{});
+    ~API();
+    
+    // Copy and move operations
+    API(const API&) = delete;
+    API& operator=(const API&) = delete;
+    API(API&&) = delete;
+    API& operator=(API&&) = delete;
 
-    void (*set_mod_value)(const char* key, const char* value);
-    void (*get_mod_value)(const char* key, char* value, unsigned int value_size);
-    void (*save_config)();
-    void (*reload_config)();
-} UEVR_VRData;
+    // Core API management
+    bool initialize();
+    bool initialize(const APIConfig& config);
+    void shutdown();
+    bool isInitialized() const;
+    APIState getState() const;
+    bool isRunning() const;
+    bool isPaused() const;
+    bool isStopped() const;
+    
+    // Configuration management
+    const APIConfig& getConfig() const;
+    void updateConfig(const APIConfig& config);
+    void resetConfig();
+    bool saveConfig(const std::string& config_path = "") const;
+    bool loadConfig(const std::string& config_path);
+    bool validateConfig() const;
+    
+    // State management
+    bool start();
+    bool stop();
+    bool pause();
+    bool resume();
+    bool restart();
+    bool reset();
+    
+    // Runtime management
+    void run();
+    void runOnce();
+    void runForDuration(std::chrono::milliseconds duration);
+    void runUntil(std::function<bool()> stop_condition);
+    void setFrameRate(uint32_t fps);
+    uint32_t getFrameRate() const;
+    void setVSync(bool enable);
+    bool isVSyncEnabled() const;
+    
+    // Subsystem access
+    CrossEngineAdapterRegistry* getAdapterRegistry() const;
+    HookManager* getHookManager() const;
+    VRModManager* getVRModManager() const;
+    
+    // Adapter management
+    bool loadAdapter(const std::string& adapter_id);
+    bool unloadAdapter(const std::string& adapter_id);
+    bool isAdapterLoaded(const std::string& adapter_id) const;
+    std::vector<std::string> getLoadedAdapters() const;
+    std::vector<std::string> getAvailableAdapters() const;
+    
+    // Mod management
+    bool loadMod(const std::string& mod_id);
+    bool unloadMod(const std::string& mod_id);
+    bool isModLoaded(const std::string& mod_id) const;
+    std::vector<std::string> getLoadedMods() const;
+    std::vector<std::string> getAvailableMods() const;
+    
+    // Plugin management
+    bool loadPlugin(const std::string& plugin_id);
+    bool unloadPlugin(const std::string& plugin_id);
+    bool isPluginLoaded(const std::string& plugin_id) const;
+    std::vector<std::string> getLoadedPlugins() const;
+    std::vector<std::string> getAvailablePlugins() const;
+    
+    // Hook management
+    bool installHook(const std::string& hook_id);
+    bool uninstallHook(const std::string& hook_id);
+    bool isHookInstalled(const std::string& hook_id) const;
+    std::vector<std::string> getInstalledHooks() const;
+    std::vector<std::string> getAvailableHooks() const;
+    
+    // Error handling
+    const APIError& getLastError() const;
+    void clearLastError();
+    std::vector<APIError> getErrorHistory() const;
+    bool hasErrors() const;
+    bool hasWarnings() const;
+    bool hasCriticalErrors() const;
+    void enableErrorRecovery(bool enable);
+    bool isErrorRecoveryEnabled() const;
+    
+    // Performance monitoring
+    void enablePerformanceMonitoring(bool enable);
+    bool isPerformanceMonitoringEnabled() const;
+    void setPerformanceThreshold(double threshold_ms);
+    double getPerformanceThreshold() const;
+    void resetPerformanceStats();
+    
+    // Statistics and reporting
+    const APIStats& getStatistics() const;
+    void resetStatistics();
+    std::string getStatisticsReport() const;
+    void exportStatistics(const std::string& file_path) const;
+    void exportConfiguration(const std::string& file_path) const;
+    
+    // Logging and debugging
+    void setLogLevel(const std::string& level);
+    std::string getLogLevel() const;
+    void enableDebugMode(bool enable);
+    bool isDebugModeEnabled() const;
+    void enableProfiling(bool enable);
+    bool isProfilingEnabled() const;
+    void dumpState() const;
+    void validateAllSystems() const;
+    
+    // Callback management
+    void setStateChangeCallback(APIStateChangeCallback callback);
+    void setErrorCallback(APIErrorCallback callback);
+    void setFrameCallback(APIFrameCallback callback);
+    void setAdapterCallback(APIAdapterCallback callback);
+    void setModCallback(APIModCallback callback);
+    void setPluginCallback(APIPluginCallback callback);
+    void setHookCallback(APIHookCallback callback);
+    void clearCallbacks();
+    
+    // Plugin system
+    bool scanForPlugins();
+    bool reloadPlugins();
+    bool enablePluginHotReload(bool enable);
+    bool isPluginHotReloadEnabled() const;
+    
+    // Hot reloading
+    bool enableHotReload(bool enable);
+    bool isHotReloadEnabled() const;
+    bool reloadConfiguration();
+    bool reloadAdapters();
+    bool reloadMods();
+    bool reloadHooks();
+    
+    // Backup and restore
+    bool createBackup(const std::string& backup_name = "");
+    bool restoreBackup(const std::string& backup_name);
+    std::vector<std::string> getAvailableBackups() const;
+    bool deleteBackup(const std::string& backup_name);
+    bool enableAutoBackup(bool enable);
+    bool isAutoBackupEnabled() const;
+    
+    // Update management
+    bool checkForUpdates();
+    bool performUpdate();
+    std::string getCurrentVersion() const;
+    std::string getLatestVersion() const;
+    bool isUpdateAvailable() const;
+    void enableAutoUpdates(bool enable);
+    bool isAutoUpdateEnabled() const;
+    
+    // Network features
+    bool enableNetworkFeatures(bool enable);
+    bool isNetworkEnabled() const;
+    bool connectToServer(const std::string& host, uint16_t port);
+    bool disconnectFromServer();
+    bool isConnected() const;
+    
+    // Utility functions
+    std::string getStateString() const;
+    std::string getVersionString() const;
+    std::string getBuildInfo() const;
+    std::string getSystemInfo() const;
+    bool isFeatureEnabled(const std::string& feature_name) const;
+    void enableFeature(const std::string& feature_name, bool enable);
 
-struct lua_State;
+protected:
+    // Internal API management
+    bool initializeInternal();
+    void shutdownInternal();
+    bool startInternal();
+    bool stopInternal();
+    bool pauseInternal();
+    bool resumeInternal();
+    
+    // Subsystem management
+    bool initializeSubsystems();
+    void shutdownSubsystems();
+    bool initializeAdapters();
+    bool initializeHooks();
+    bool initializeMods();
+    bool initializePlugins();
+    
+    // Runtime management
+    void runInternal();
+    void runFrame();
+    void updateStatistics();
+    void checkPerformance();
+    void handleErrors();
+    
+    // Configuration management
+    bool loadDefaultConfig();
+    bool validateConfigInternal() const;
+    
+    // Error management
+    void setLastError(const APIError& error);
+    void logError(const APIError& error);
+    bool handleError(const APIError& error);
+    bool canRecoverFromError(const APIError& error) const;
+    
+    // Performance management
+    void updatePerformanceStats();
+    void checkPerformanceThresholds();
+    void optimizePerformance();
+    
+    // Callback management
+    void notifyStateChange(APIState old_state, APIState new_state);
+    void notifyError(const APIError& error);
+    void notifyFrame(uint64_t frame_number, double frame_time_ms);
+    void notifyAdapter(const std::string& adapter_id, bool loaded);
+    void notifyMod(const std::string& mod_id, bool loaded);
+    void notifyPlugin(const std::string& plugin_id, bool loaded);
+    void notifyHook(const std::string& hook_id, bool installed);
 
-typedef struct {
-    lua_State* (*get_lua_state)();
-    void (*add_additional_bindings)(lua_State* L); /* for external Lua environments. adds json, fs, imgui, etc*/
-} UEVR_LuaData;
+private:
+    // Configuration and state
+    APIConfig m_config;
+    APIStats m_stats;
+    APIState m_state;
+    
+    // Subsystems
+    std::unique_ptr<CrossEngineAdapterRegistry> m_adapter_registry;
+    std::unique_ptr<HookManager> m_hook_manager;
+    std::unique_ptr<VRModManager> m_vr_mod_manager;
+    
+    // Callbacks
+    APIStateChangeCallback m_state_change_callback;
+    APIErrorCallback m_error_callback;
+    APIFrameCallback m_frame_callback;
+    APIAdapterCallback m_adapter_callback;
+    APIModCallback m_mod_callback;
+    APIPluginCallback m_plugin_callback;
+    APIHookCallback m_hook_callback;
+    
+    // Runtime state
+    bool m_running;
+    bool m_paused;
+    uint64_t m_frame_number;
+    std::chrono::steady_clock::time_point m_last_frame_time;
+    std::chrono::steady_clock::time_point m_start_time;
+    
+    // Performance monitoring
+    bool m_performance_monitoring_enabled;
+    double m_performance_threshold;
+    std::vector<double> m_frame_times;
+    size_t m_max_frame_time_samples;
+    
+    // Error handling
+    APIError m_last_error;
+    std::vector<APIError> m_error_history;
+    bool m_error_recovery_enabled;
+    uint32_t m_error_retry_count;
+    
+    // Features
+    bool m_hot_reload_enabled;
+    bool m_plugin_hot_reload_enabled;
+    bool m_auto_backup_enabled;
+    bool m_auto_update_enabled;
+    bool m_network_enabled;
+    
+    // Internal utilities
+    void setState(APIState new_state);
+    void cleanupResources();
+    bool validateStateTransition(APIState new_state) const;
+    void logInfo(const std::string& message) const;
+    void logWarning(const std::string& message) const;
+    void logError(const std::string& message) const;
+    void logDebug(const std::string& message) const;
+};
 
-typedef struct {
-    void* uevr_module;
-    const UEVR_PluginVersion* version;
-    const UEVR_PluginFunctions* functions;
-    const UEVR_PluginCallbacks* callbacks;
-    const UEVR_RendererData* renderer;
+// Utility functions
+std::string getAPIVersionString();
+uint32_t getAPIVersionMajor();
+uint32_t getAPIVersionMinor();
+uint32_t getAPIVersionPatch();
+bool isAPIVersionCompatible(uint32_t major, uint32_t minor, uint32_t patch);
 
-    const UEVR_VRData* vr;
-    const UEVR_OpenVRData* openvr;
-    const UEVR_OpenXRData* openxr;
-
-    /* Engine/Game specific functions and data */
-    const UEVR_SDKData* sdk;
-
-    const UEVR_LuaData* lua;
-} UEVR_PluginInitializeParam;
-
-typedef bool (*UEVR_PluginInitializeFn)(const UEVR_PluginInitializeParam*);
-
-#endif
+} // namespace uevr

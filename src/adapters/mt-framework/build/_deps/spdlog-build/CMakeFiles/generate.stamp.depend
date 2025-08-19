@@ -1,0 +1,12 @@
+# CMake generation dependency list for this directory.
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CheckCSourceCompiles.cmake
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CheckIncludeFile.cmake
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CheckLibraryExists.cmake
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/FindPackageHandleStandardArgs.cmake
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/FindPackageMessage.cmake
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/FindThreads.cmake
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/GNUInstallDirs.cmake
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/Internal/CheckSourceCompiles.cmake
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-src/CMakeLists.txt
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-src/cmake/ide.cmake
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-src/cmake/utils.cmake

@@ -1,0 +1,24 @@
+@PACKAGE_INIT@
+
+# Include the targets file
+include("${CMAKE_CURRENT_LIST_DIR}/UEVRTargets.cmake")
+
+# Set variables
+set(UEVR_INCLUDE_DIRS "@PACKAGE_CMAKE_INSTALL_INCLUDEDIR@")
+set(UEVR_LIBRARY_DIRS "@PACKAGE_CMAKE_INSTALL_LIBDIR@")
+
+# Check if all required components are available
+set(UEVR_FOUND TRUE)
+
+# Version information
+set(UEVR_VERSION "@PACKAGE_VERSION@")
+set(UEVR_VERSION_MAJOR "@PACKAGE_VERSION_MAJOR@")
+set(UEVR_VERSION_MINOR "@PACKAGE_VERSION_MINOR@")
+set(UEVR_VERSION_PATCH "@PACKAGE_VERSION_PATCH@")
+
+# Print status
+if(UEVR_FOUND)
+    message(STATUS "Found UEVR: ${UEVR_VERSION}")
+    message(STATUS "  Include dirs: ${UEVR_INCLUDE_DIRS}")
+    message(STATUS "  Library dirs: ${UEVR_LIBRARY_DIRS}")
+endif()

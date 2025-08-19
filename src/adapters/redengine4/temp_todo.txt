@@ -1,0 +1,19 @@
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:159:    // TODO: Implement camera matrix extraction from REDengine 4 command lists
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:172:    // TODO: Implement stereo rendering pipeline for D3D12
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:189:    // TODO: Implement D3D12 stereo rendering using uevr's framework
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:201:    // TODO: Implement D3D12 resource creation for stereo rendering
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:211:    // TODO: Implement D3D12 resource cleanup
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:427:        // TODO: Implement based on CP2077 RenderDoc captures
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:435:        // TODO: Implement based on CP2077 RenderDoc captures
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:450:        // TODO: Implement stereo rendering pipeline
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:462:        // TODO: Implement VR parameter adjustment
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:36:        // TODO: Implement hook cleanup
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:165:    // TODO: Implement actual REDengine 4 object scanning
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:177:    // TODO: Implement actual REDengine 4 object system hooks
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:212:    // TODO: Implement weapon scanning for Cyberpunk 2077
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:218:    // TODO: Implement utility scanning for Cyberpunk 2077
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:224:    // TODO: Implement UI element scanning for Cyberpunk 2077
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:230:    // TODO: Implement safe memory reading for REDengine 4
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:240:    // TODO: Implement safe memory writing for REDengine 4
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:250:    // TODO: Implement actual object transformation for REDengine 4
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:260:    // TODO: Implement object visibility updates for REDengine 4

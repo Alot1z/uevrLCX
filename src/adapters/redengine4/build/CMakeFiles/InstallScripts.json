@@ -1,0 +1,9 @@
+{
+	"InstallScripts" : 
+	[
+		"G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/cmake_install.cmake",
+		"G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/minhook-build/cmake_install.cmake",
+		"G:/GITHUB REPOs/uevr/src/adapters/redengine4/build/_deps/nlohmann_json-build/cmake_install.cmake"
+	],
+	"Parallel" : false
+}

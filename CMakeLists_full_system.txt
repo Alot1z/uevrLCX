@@ -1,0 +1,310 @@
+cmake_minimum_required(VERSION 3.16)
+project(uevr_Full_System)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Set build type if not specified
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
+# Output directories
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+# Find required packages
+find_package(DirectX REQUIRED)
+find_package(MinHook REQUIRED)
+
+# Include directories
+include_directories(
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/external/minhook/include
+    ${CMAKE_SOURCE_DIR}/external/nlohmann_json/include
+    ${CMAKE_SOURCE_DIR}/external/openxr/include
+)
+
+# Source files for common components
+set(COMMON_SOURCES
+    src/adapters/common/BaseCrossEngineAdapter.cpp
+    src/adapters/common/CrossEngineAdapterFactory.cpp
+    src/adapters/common/UObjectHookSystem.cpp
+)
+
+# Source files for RE Engine adapter
+set(RE_ENGINE_SOURCES
+    src/adapters/re-engine/REEngineAdapter.cpp
+)
+
+# Source files for REDengine4 adapter
+set(REDENGINE4_SOURCES
+    src/adapters/redengine4/REDengine4Adapter.cpp
+)
+
+# Source files for MT Framework adapter
+set(MT_FRAMEWORK_SOURCES
+    src/adapters/mt-framework/MTFrameworkAdapter.cpp
+)
+
+# Source files for VR integration
+set(VR_SOURCES
+    src/vr/OpenXRIntegration.cpp
+)
+
+# Source files for graphics hooks
+set(HOOKS_SOURCES
+    src/hooks/VulkanHooks.cpp
+)
+
+# Create common library
+add_library(uevr_common STATIC ${COMMON_SOURCES} ${VR_SOURCES} ${HOOKS_SOURCES})
+
+# Create RE Engine adapter library
+add_library(uevr_re_engine SHARED ${RE_ENGINE_SOURCES})
+
+# Create REDengine4 adapter library
+add_library(uevr_redengine4 SHARED ${REDENGINE4_SOURCES})
+
+# Create MT Framework adapter library
+add_library(uevr_mt_framework SHARED ${MT_FRAMEWORK_SOURCES})
+
+# Link common library to all adapters
+target_link_libraries(uevr_re_engine uevr_common)
+target_link_libraries(uevr_redengine4 uevr_common)
+target_link_libraries(uevr_mt_framework uevr_common)
+
+# Link external libraries to all adapters
+target_link_libraries(uevr_re_engine
+    MinHook::MinHook
+    d3d11
+    dxgi
+    d3dcompiler
+    psapi
+)
+
+target_link_libraries(uevr_redengine4
+    MinHook::MinHook
+    d3d12
+    dxgi
+    d3dcompiler
+    psapi
+)
+
+target_link_libraries(uevr_mt_framework
+    MinHook::MinHook
+    d3d11
+    dxgi
+    d3dcompiler
+    psapi
+)
+
+# Create main uevr library that includes all adapters
+add_library(uevr_full_system SHARED
+    src/adapters/main.cpp
+)
+
+target_link_libraries(uevr_full_system
+    uevr_common
+    uevr_re_engine
+    uevr_redengine4
+    uevr_mt_framework
+    MinHook::MinHook
+    d3d11
+    d3d12
+    dxgi
+    d3dcompiler
+    psapi
+    openxr_loader
+)
+
+# Create test executables
+add_executable(uevr_re_engine_test
+    test_re_engine_adapter.cpp
+)
+
+add_executable(uevr_full_system_test
+    test_full_uevr_system.cpp
+)
+
+# Link test executables
+target_link_libraries(uevr_re_engine_test
+    uevr_common
+    uevr_re_engine
+    MinHook::MinHook
+    d3d11
+    dxgi
+    d3dcompiler
+    psapi
+    openxr_loader
+)
+
+target_link_libraries(uevr_full_system_test
+    uevr_common
+    uevr_re_engine
+    uevr_redengine4
+    uevr_mt_framework
+    MinHook::MinHook
+    d3d11
+    d3d12
+    dxgi
+    d3dcompiler
+    psapi
+    openxr_loader
+)
+
+# Compiler flags for all targets
+set(ALL_TARGETS
+    uevr_common
+    uevr_re_engine
+    uevr_redengine4
+    uevr_mt_framework
+    uevr_full_system
+    uevr_re_engine_test
+    uevr_full_system_test
+)
+
+if(MSVC)
+    foreach(target ${ALL_TARGETS})
+        target_compile_options(${target} PRIVATE
+            /W4
+            /MP
+            /EHsc
+            /utf-8
+        )
+        
+        # Disable specific warnings for external libraries
+        target_compile_options(${target} PRIVATE
+            /wd4996  # 'function': was declared deprecated
+            /wd4251  # class needs to have dll-interface
+        )
+    endforeach()
+else()
+    foreach(target ${ALL_TARGETS})
+        target_compile_options(${target} PRIVATE
+            -Wall
+            -Wextra
+            -Wpedantic
+            -fPIC
+        )
+    endforeach()
+endif()
+
+# Define preprocessor macros for all targets
+foreach(target ${ALL_TARGETS})
+    target_compile_definitions(${target} PRIVATE
+        UNICODE
+        _UNICODE
+        WIN32_LEAN_AND_MEAN
+        NOMINMAX
+        _WIN32_WINNT=0x0601
+        uevr_EXPORTS
+    )
+endforeach()
+
+# Copy dependencies to output directory
+add_custom_command(TARGET uevr_full_system POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+        $<TARGET_FILE:MinHook::MinHook>
+        $<TARGET_FILE_DIR:uevr_full_system>
+)
+
+# Enable testing
+enable_testing()
+
+# Add tests
+add_test(NAME RE_Engine_Adapter_Test COMMAND uevr_re_engine_test)
+add_test(NAME Full_System_Test COMMAND uevr_full_system_test)
+
+# Set test properties
+set_tests_properties(RE_Engine_Adapter_Test PROPERTIES
+    TIMEOUT 300
+    ENVIRONMENT "uevr_TEST_MODE=1"
+)
+
+set_tests_properties(Full_System_Test PROPERTIES
+    TIMEOUT 600
+    ENVIRONMENT "uevr_TEST_MODE=1"
+)
+
+# Custom targets for running tests
+add_custom_target(run_re_engine_test
+    COMMAND ${CMAKE_CTEST_COMMAND} --verbose -R RE_Engine_Adapter_Test
+    DEPENDS uevr_re_engine_test
+    COMMENT "Running uevr RE Engine Adapter tests..."
+)
+
+add_custom_target(run_full_system_test
+    COMMAND ${CMAKE_CTEST_COMMAND} --verbose -R Full_System_Test
+    DEPENDS uevr_full_system_test
+    COMMENT "Running uevr Full System tests..."
+)
+
+add_custom_target(run_all_tests
+    COMMAND ${CMAKE_CTEST_COMMAND} --verbose
+    DEPENDS uevr_re_engine_test uevr_full_system_test
+    COMMENT "Running all uevr tests..."
+)
+
+# Print configuration summary
+message(STATUS "========================================")
+message(STATUS "uevr Full System Configuration")
+message(STATUS "========================================")
+message(STATUS "Build Type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "C++ Standard: ${CMAKE_CXX_STANDARD}")
+message(STATUS "Output Directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+message(STATUS "MinHook: ${MinHook_FOUND}")
+message(STATUS "DirectX: ${DirectX_FOUND}")
+message(STATUS "")
+message(STATUS "Targets:")
+message(STATUS "  - uevr_common (static library)")
+message(STATUS "  - uevr_re_engine (shared library)")
+message(STATUS "  - uevr_redengine4 (shared library)")
+message(STATUS "  - uevr_mt_framework (shared library)")
+message(STATUS "  - uevr_full_system (shared library)")
+message(STATUS "  - uevr_re_engine_test (executable)")
+message(STATUS "  - uevr_full_system_test (executable)")
+message(STATUS "")
+message(STATUS "Test Targets:")
+message(STATUS "  - run_re_engine_test")
+message(STATUS "  - run_full_system_test")
+message(STATUS "  - run_all_tests")
+message(STATUS "========================================")
+
+# Installation
+install(TARGETS 
+    uevr_common
+    uevr_re_engine
+    uevr_redengine4
+    uevr_mt_framework
+    uevr_full_system
+    uevr_re_engine_test
+    uevr_full_system_test
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+
+# Install headers
+install(DIRECTORY src/adapters/
+    DESTINATION include/uevr/adapters
+    FILES_MATCHING PATTERN "*.hpp"
+)
+
+# Install test files
+install(FILES 
+    test_re_engine_adapter.cpp
+    test_full_uevr_system.cpp
+    DESTINATION share/uevr/tests
+)
+
+# Install documentation
+install(FILES 
+    src/adapters/README.md
+    src/adapters/STATUS_REPORT.md
+    src/adapters/BUILD_GUIDE.md
+    DESTINATION share/uevr/docs
+)

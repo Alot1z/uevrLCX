@@ -1,0 +1,170 @@
+{
+  "$schema": "../../adapter.schema.json",
+  "version": 2,
+  "engine": "RE-Engine",
+  "engine_version": "3.0+",
+  "game_info": {
+    "executable": "re7-Win64-Shipping.exe",
+    "display_name": "Resident Evil 7: Biohazard",
+    "steam_app_id": "418370",
+    "epic_app_id": "ResidentEvil7"
+  },
+  "render": {
+    "api": "d3d11",
+    "swapchain_hook": "IDXGISwapChain::Present",
+    "matrix_sources": {
+      "view": {
+        "cb_slot": 2,
+        "offset": 0,
+        "rows": 4,
+        "cols": 4,
+        "layout": "row_major",
+        "transpose": false
+      },
+      "projection": {
+        "cb_slot": 2,
+        "offset": 64,
+        "rows": 4,
+        "cols": 4,
+        "layout": "row_major",
+        "transpose": false
+      }
+    },
+    "fov_policy": "dynamic",
+    "stereo_mode": "sequential",
+    "depth_handling": "native",
+    "hook_points": [
+      {
+        "function": "Present",
+        "type": "pre",
+        "description": "Pre-present hook for VR rendering"
+      },
+      {
+        "function": "DrawIndexed",
+        "type": "post",
+        "description": "Post-draw hook for stereo rendering"
+      },
+      {
+        "function": "VSSetConstantBuffers",
+        "type": "pre",
+        "description": "Hook for matrix injection"
+      },
+      {
+        "function": "PSSetShaderResources",
+        "type": "pre",
+        "description": "Hook for PBR lighting integration"
+      }
+    ]
+  },
+  "camera": {
+    "world_scale": 1.0,
+    "hmd_offsets": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "decoupled_pitch": true,
+    "motion_compensation": true
+  },
+  "ui": {
+    "projection": {
+      "technique": "billboard",
+      "scale": 1.0
+    },
+    "overrides": [
+      {
+        "name": "HUD",
+        "mode": "world",
+        "scale": 1.2
+      },
+      {
+        "name": "Inventory",
+        "mode": "screen",
+        "scale": 1.0
+      },
+      {
+        "name": "Map",
+        "mode": "world",
+        "scale": 1.1
+      },
+      {
+        "name": "HealthIndicator",
+        "mode": "world",
+        "scale": 1.3
+      }
+    ]
+  },
+  "input": {
+    "aim_method": "right",
+    "bindings": {
+      "trigger": "right_trigger",
+      "grip": "right_grip",
+      "menu": "right_menu",
+      "system": "right_system"
+    },
+    "haptic_feedback": true
+  },
+  "attachments": [
+    {
+      "path": "PlayerCharacter>Components>WeaponComponent",
+      "controller": "right",
+      "permanent": false,
+      "rotation_quat": {
+        "w": 1.0,
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "location_offset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      }
+    },
+    {
+      "path": "PlayerCharacter>Components>Flashlight",
+      "controller": "left",
+      "permanent": false,
+      "rotation_quat": {
+        "w": 1.0,
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "location_offset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      }
+    }
+  ],
+  "performance": {
+    "resolution_scale": 1.0,
+    "uncap_framerate": true,
+    "async_reprojection": true,
+    "motion_smoothing": true
+  },
+  "vr_features": {
+    "stereo_rendering": true,
+    "motion_controllers": true,
+    "haptic_feedback": true,
+    "dynamic_fov": true,
+    "frame_interpolation": false,
+    "neural_upscaling": false,
+    "ray_tracing": false,
+    "temporal_upsampling": false
+  },
+  "compatibility_tier": 4,
+  "notes": [
+    "Resident Evil 7 - Complete VR profile with RE Engine optimization",
+    "PBR lighting integration for realistic horror atmosphere",
+    "Sequential stereo rendering for stable performance",
+    "Optimized for survival horror gameplay",
+    "Standard world scale for realistic environments",
+    "Weapon and flashlight attachments for immersive gameplay",
+    "Enhanced HUD scaling for VR visibility",
+    "Performance optimized for smooth horror experience"
+  ]
+}
+
+

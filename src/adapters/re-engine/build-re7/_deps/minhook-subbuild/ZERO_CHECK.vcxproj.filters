@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\adapters\RE-Engine\build-re7\_deps\minhook-subbuild\CMakeFiles\70e9897e3e78c56209182a44ef2f563d\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{85A31AA4-3780-3A9D-AD43-219C7727B0FF}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

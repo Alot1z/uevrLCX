@@ -1,0 +1,1 @@
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:270:                delete g_adapter;

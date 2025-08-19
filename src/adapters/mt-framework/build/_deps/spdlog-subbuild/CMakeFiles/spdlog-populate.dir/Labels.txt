@@ -1,0 +1,14 @@
+# Target labels
+ spdlog-populate
+# Source files and their labels
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/spdlog-populate
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/24fdcde77a091a6c617a05d57d2e87d2/spdlog-populate.rule
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/de63c12672c769f5bcfe9d0992be2bbe/spdlog-populate-complete.rule
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-build.rule
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-configure.rule
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-download.rule
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-install.rule
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-mkdir.rule
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-patch.rule
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-test.rule
+G:/GITHUB REPOs/uevr/src/adapters/mt-framework/build/_deps/spdlog-subbuild/CMakeFiles/61577b5254070921a0caee379d09c0cb/spdlog-populate-update.rule

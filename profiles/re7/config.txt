@@ -1,0 +1,12 @@
+Frontend_RequestedRuntime=openxr_loader.dll
+VR_ControllersAllowed=true
+VR_RoomscaleMovement=true
+VR_AimMethod=2
+VR_SnapTurn=false
+VR_SnapturnTurnAngle=45
+VR_JoystickDeadzone=0.200000
+VR_UncapFramerate=true
+VR_ShowFPSOverlay=true
+VR_WorldScale=1.000000
+OpenXR_ResolutionScale=0.900000
+UObjectHook_EnabledAtStartup=true

@@ -1,0 +1,13 @@
+{
+  "name": "Utility",
+  "hand": "left",
+  "path": [
+    "PlayerCharacter",
+    "UtilityComponent",
+    "ItemHolder"
+  ],
+  "permanent": false,
+  "location_offset": [0.0, 0.0, 0.0],
+  "rotation_offset_quat": [1.0, 0.0, 0.0, 0.0],
+  "notes": "Left controller temporarily attached to utility items for item usage and menu navigation. Path follows MT Framework component hierarchy: PlayerCharacter -> UtilityComponent -> ItemHolder. Temporary attachment allows for item switching and menu interactions."
+}

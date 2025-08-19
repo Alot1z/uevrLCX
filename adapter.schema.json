@@ -1,0 +1,499 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "UEVR Cross-Engine Adapter Schema",
+  "description": "Canonical schema for cross-engine VR adapter profiles supporting 500+ games",
+  "version": "2.0.0",
+  "type": "object",
+  "required": ["engine", "version", "render", "camera", "ui", "input", "performance"],
+  "properties": {
+    "engine": {
+      "type": "string",
+      "enum": [
+        "RE-Engine",
+        "REDengine4", 
+        "REDengine3",
+        "MT-Framework",
+        "Unreal-Engine-4",
+        "Unreal-Engine-5",
+        "Unity-Engine",
+        "CryEngine",
+        "id-Tech-6",
+        "id-Tech-7",
+        "Source-Engine",
+        "Source-2",
+        "Custom-Engine"
+      ],
+      "description": "Game engine type for automatic detection and adapter selection"
+    },
+    "version": {
+      "type": "integer",
+      "minimum": 1,
+      "description": "Schema version for compatibility tracking"
+    },
+    "engine_version": {
+      "type": "string",
+      "description": "Specific engine version (e.g., '4.27', '5.3', '2022.3.0f1')"
+    },
+    "game_info": {
+      "type": "object",
+      "properties": {
+        "executable": {
+          "type": "string",
+          "description": "Game executable name for process detection"
+        },
+        "display_name": {
+          "type": "string",
+          "description": "Human-readable game name"
+        },
+        "steam_app_id": {
+          "type": "string",
+          "description": "Steam App ID if applicable"
+        },
+        "epic_app_id": {
+          "type": "string",
+          "description": "Epic Games App ID if applicable"
+        }
+      }
+    },
+    "render": {
+      "type": "object",
+      "required": ["api", "matrix_sources"],
+      "properties": {
+        "api": {
+          "type": "string",
+          "enum": ["d3d11", "d3d12", "vulkan", "opengl"],
+          "description": "Primary rendering API"
+        },
+        "swapchain_hook": {
+          "type": "string",
+          "description": "Primary hook point(s) for swapchain operations"
+        },
+        "matrix_sources": {
+          "type": "object",
+          "required": ["view", "projection"],
+          "properties": {
+            "view": {
+              "type": "object",
+              "required": ["cb_slot", "offset", "rows", "cols"],
+              "properties": {
+                "cb_slot": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Constant buffer slot containing view matrix"
+                },
+                "offset": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Byte offset within constant buffer"
+                },
+                "rows": {
+                  "type": "integer",
+                  "enum": [4],
+                  "description": "Matrix rows (always 4 for 4x4 matrices)"
+                },
+                "cols": {
+                  "type": "integer",
+                  "enum": [4],
+                  "description": "Matrix columns (always 4 for 4x4 matrices)"
+                },
+                "layout": {
+                  "type": "string",
+                  "enum": ["row_major", "column_major"],
+                  "default": "row_major",
+                  "description": "Matrix memory layout"
+                },
+                "transpose": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Whether matrix needs transposition"
+                }
+              }
+            },
+            "projection": {
+              "type": "object",
+              "required": ["cb_slot", "offset", "rows", "cols"],
+              "properties": {
+                "cb_slot": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Constant buffer slot containing projection matrix"
+                },
+                "offset": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Byte offset within constant buffer"
+                },
+                "rows": {
+                  "type": "integer",
+                  "enum": [4],
+                  "description": "Matrix rows (always 4 for 4x4 matrices)"
+                },
+                "cols": {
+                  "type": "integer",
+                  "enum": [4],
+                  "description": "Matrix columns (always 4 for 4x4 matrices)"
+                },
+                "layout": {
+                  "type": "string",
+                  "enum": ["row_major", "column_major"],
+                  "default": "row_major",
+                  "description": "Matrix memory layout"
+                },
+                "transpose": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Whether matrix needs transposition"
+                }
+              }
+            },
+            "viewproj": {
+              "type": "object",
+              "required": ["cb_slot", "offset", "rows", "cols"],
+              "properties": {
+                "cb_slot": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Constant buffer slot containing view-projection matrix"
+                },
+                "offset": {
+                  "type": "integer",
+                  "minimum": 0,
+                  "description": "Byte offset within constant buffer"
+                },
+                "rows": {
+                  "type": "integer",
+                  "enum": [4],
+                  "description": "Matrix rows (always 4 for 4x4 matrices)"
+                },
+                "cols": {
+                  "type": "integer",
+                  "enum": [4],
+                  "description": "Matrix columns (always 4 for 4x4 matrices)"
+                },
+                "layout": {
+                  "type": "string",
+                  "enum": ["row_major", "column_major"],
+                  "default": "row_major",
+                  "description": "Matrix memory layout"
+                },
+                "transpose": {
+                  "type": "boolean",
+                  "default": false,
+                  "description": "Whether matrix needs transposition"
+                }
+              }
+            }
+          }
+        },
+        "fov_policy": {
+          "type": "string",
+          "enum": ["dynamic", "fixed"],
+          "default": "dynamic",
+          "description": "FOV handling policy"
+        },
+        "stereo_mode": {
+          "type": "string",
+          "enum": ["sequential", "multiview", "instanced"],
+          "default": "sequential",
+          "description": "Stereo rendering approach"
+        },
+        "depth_handling": {
+          "type": "string",
+          "enum": ["native", "override"],
+          "default": "native",
+          "description": "Depth buffer handling strategy"
+        },
+        "hook_points": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["function", "type"],
+            "properties": {
+              "function": {
+                "type": "string",
+                "description": "Function name to hook"
+              },
+              "type": {
+                "type": "string",
+                "enum": ["pre", "post", "replace"],
+                "description": "Hook type"
+              },
+              "description": {
+                "type": "string",
+                "description": "Purpose of this hook"
+              }
+            }
+          }
+        }
+      }
+    },
+    "camera": {
+      "type": "object",
+      "properties": {
+        "world_scale": {
+          "type": "number",
+          "default": 1.0,
+          "description": "World scale factor for VR comfort"
+        },
+        "hmd_offsets": {
+          "type": "object",
+          "properties": {
+            "x": {
+              "type": "number",
+              "default": 0.0,
+              "description": "X-axis HMD offset"
+            },
+            "y": {
+              "type": "number",
+              "default": 0.0,
+              "description": "Y-axis HMD offset"
+            },
+            "z": {
+              "type": "number",
+              "default": 0.0,
+              "description": "Z-axis HMD offset"
+            }
+          }
+        },
+        "decoupled_pitch": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable decoupled pitch for VR comfort"
+        },
+        "motion_compensation": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable motion compensation for smooth VR"
+        }
+      }
+    },
+    "ui": {
+      "type": "object",
+      "properties": {
+        "projection": {
+          "type": "object",
+          "properties": {
+            "technique": {
+              "type": "string",
+              "enum": ["billboard", "depth", "raycast"],
+              "default": "billboard",
+              "description": "UI projection technique"
+            },
+            "scale": {
+              "type": "number",
+              "default": 1.0,
+              "description": "UI scale factor"
+            }
+          }
+        },
+        "overrides": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["name", "mode"],
+            "properties": {
+              "name": {
+                "type": "string",
+                "description": "UI element name to override"
+              },
+              "mode": {
+                "type": "string",
+                "enum": ["world", "screen"],
+                "description": "UI rendering mode"
+              },
+              "scale": {
+                "type": "number",
+                "default": 1.0,
+                "description": "Scale factor for this UI element"
+              }
+            }
+          }
+        }
+      }
+    },
+    "input": {
+      "type": "object",
+      "properties": {
+        "aim_method": {
+          "type": "string",
+          "enum": ["right", "left", "head"],
+          "default": "right",
+          "description": "Primary aiming method"
+        },
+        "bindings": {
+          "type": "object",
+          "properties": {
+            "trigger": {
+              "type": "string",
+              "description": "Trigger button binding"
+            },
+            "grip": {
+              "type": "string",
+              "description": "Grip button binding"
+            },
+            "menu": {
+              "type": "string",
+              "description": "Menu button binding"
+            },
+            "system": {
+              "type": "string",
+              "description": "System button binding"
+            }
+          }
+        },
+        "haptic_feedback": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable haptic feedback"
+        }
+      }
+    },
+    "attachments": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["path", "controller"],
+        "properties": {
+          "path": {
+            "type": "string",
+            "description": "Object path for attachment (e.g., 'Acknowledged Pawn>Components>FP_Gun')"
+          },
+          "controller": {
+            "type": "string",
+            "enum": ["right", "left"],
+            "description": "Controller to attach to"
+          },
+          "permanent": {
+            "type": "boolean",
+            "default": false,
+            "description": "Whether attachment is permanent"
+          },
+          "rotation_quat": {
+            "type": "object",
+            "properties": {
+              "w": {
+                "type": "number",
+                "default": 1.0
+              },
+              "x": {
+                "type": "number",
+                "default": 0.0
+              },
+              "y": {
+                "type": "number",
+                "default": 0.0
+              },
+              "z": {
+                "type": "number",
+                "default": 0.0
+              }
+            }
+          },
+          "location_offset": {
+            "type": "object",
+            "properties": {
+              "x": {
+                "type": "number",
+                "default": 0.0
+              },
+              "y": {
+                "type": "number",
+                "default": 0.0
+              },
+              "z": {
+                "type": "number",
+                "default": 0.0
+              }
+            }
+          }
+        }
+      }
+    },
+    "performance": {
+      "type": "object",
+      "properties": {
+        "resolution_scale": {
+          "type": "number",
+          "minimum": 0.1,
+          "maximum": 2.0,
+          "default": 1.0,
+          "description": "Resolution scale factor for performance tuning"
+        },
+        "uncap_framerate": {
+          "type": "boolean",
+          "default": true,
+          "description": "Uncap framerate for VR"
+        },
+        "async_reprojection": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable async reprojection"
+        },
+        "motion_smoothing": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable motion smoothing"
+        }
+      }
+    },
+    "vr_features": {
+      "type": "object",
+      "properties": {
+        "stereo_rendering": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable stereo rendering"
+        },
+        "motion_controllers": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable motion controllers"
+        },
+        "haptic_feedback": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable haptic feedback"
+        },
+        "dynamic_fov": {
+          "type": "boolean",
+          "default": true,
+          "description": "Enable dynamic FOV adjustment"
+        },
+        "frame_interpolation": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable frame interpolation"
+        },
+        "neural_upscaling": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable neural upscaling"
+        },
+        "ray_tracing": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable ray tracing support"
+        },
+        "temporal_upsampling": {
+          "type": "boolean",
+          "default": false,
+          "description": "Enable temporal upsampling"
+        }
+      }
+    },
+    "compatibility_tier": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 5,
+      "default": 1,
+      "description": "VR compatibility tier (0=Not detected, 1=Basic, 2=Stereo, 3=Input, 4=Full VR, 5=Enhanced)"
+    },
+    "notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Free-form annotations and implementation notes"
+    }
+  }
+}

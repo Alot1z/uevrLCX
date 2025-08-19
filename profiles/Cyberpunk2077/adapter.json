@@ -1,0 +1,89 @@
+{
+  "adapter_info": {
+    "adapter_name": "REDengine4_CrossEngine_Adapter",
+    "adapter_version": "1.0.0",
+    "engine_type": "REDengine4",
+    "game_name": "Cyberpunk 2077",
+    "executable_name": "Cyberpunk2077.exe",
+    "adapter_status": "baseline_created"
+  },
+  "vr_configuration": {
+    "runtime": "OpenXR",
+    "controllers_enabled": true,
+    "roomscale_movement": true,
+    "aim_method": 2,
+    "uncap_framerate": true,
+    "resolution_scale": 1.0,
+    "use_custom_fov": false,
+    "custom_fov": 90.0
+  },
+  "camera_configuration": {
+    "world_scale": 100.0,
+    "camera_height": 1.7,
+    "decoupled_pitch": true,
+    "decoupled_yaw": false,
+    "camera_smoothing": true,
+    "camera_smoothing_strength": 0.5
+  },
+  "comfort_settings": {
+    "snap_turn": true,
+    "snap_turn_angle": 45.0,
+    "smooth_turn": false,
+    "comfort_mode": true,
+    "comfort_zone_size": 0.8
+  },
+  "uobject_hook_configuration": {
+    "enabled_at_startup": true,
+    "auto_scan": true,
+    "save_state_on_exit": true,
+    "attachments": {
+      "weapon_right": {
+        "status": "baseline",
+        "object_name": "Primary_Weapon",
+        "component_path": "WeaponMesh",
+        "controller_side": "right"
+      },
+      "utility_left": {
+        "status": "baseline",
+        "object_name": "Utility_Item",
+        "component_path": "UtilityMesh",
+        "controller_side": "left"
+      }
+    }
+  },
+  "redengine4_specific": {
+    "custom_hooks_enabled": true,
+    "ray_tracing_vr_enabled": true,
+    "neural_upscaling_enabled": true,
+    "vr_optimization_enabled": true,
+    "camera_matrix_extraction": true,
+    "camera_transform_override": true
+  },
+  "performance_optimization": {
+    "async_reprojection": true,
+    "motion_reprojection": false,
+    "fixed_foveated_rendering": false,
+    "dynamic_resolution": false
+  },
+  "validation_status": {
+    "baseline_profile": "created",
+    "camera_tuning": "pending",
+    "uobject_hook_attachments": "pending",
+    "validation_testing": "pending",
+    "performance_optimization": "pending",
+    "final_documentation": "pending"
+  },
+  "profile_metadata": {
+    "profile_name": "Cyberpunk2077_Baseline",
+    "profile_version": "1.0.0",
+    "created_date": "2024-01-01",
+    "modified_date": "2024-01-01",
+    "created_by": "UEVRInjector.exe",
+    "profile_description": "Baseline Cyberpunk 2077 VR profile for REDengine 4 cross-engine adapter"
+  },
+  "notes": {
+    "baseline_creation": "Profile created via UEVRInjector.exe baseline capture",
+    "next_steps": "Proceed with camera tuning and UObjectHook attachments",
+    "special_considerations": "REDengine 4 specific hooks and optimizations enabled"
+  }
+}

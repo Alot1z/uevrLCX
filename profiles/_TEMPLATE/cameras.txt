@@ -1,0 +1,5 @@
+world_scale0=1.000000
+decoupled_pitch0=true
+camera_forward_offset0=0.000000
+camera_right_offset0=0.000000
+camera_up_offset0=0.000000

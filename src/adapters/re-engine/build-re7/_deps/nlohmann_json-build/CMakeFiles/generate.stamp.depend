@@ -1,0 +1,10 @@
+# CMake generation dependency list for this directory.
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/CMakePackageConfigHelpers.cmake
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/ExternalProject.cmake
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/ExternalProject/shared_internal_commands.cmake
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/GNUInstallDirs.cmake
+<USERPROFILE>/AppData/Local/Programs/Python/Python313/Lib/site-packages/cmake/data/share/cmake-4.0/Modules/WriteBasicConfigVersionFile.cmake
+G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/nlohmann_json-src/CMakeLists.txt
+G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/nlohmann_json-src/cmake/config.cmake.in
+G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/nlohmann_json-src/cmake/nlohmann_jsonConfigVersion.cmake.in
+G:/GITHUB REPOs/uevr/adapters/RE-Engine/build-re7/_deps/nlohmann_json-src/cmake/pkg-config.pc.in

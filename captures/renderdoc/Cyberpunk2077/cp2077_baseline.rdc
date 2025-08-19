@@ -1,0 +1,28 @@
+# Cyberpunk 2077 Baseline RenderDoc Capture
+# 
+# This is a placeholder file for the actual .rdc capture
+# 
+# To generate the real capture:
+# 1. Launch Cyberpunk 2077 in flat screen mode
+# 2. Start RenderDoc and attach to the game process
+# 3. Navigate to main menu or early game scene
+# 4. Begin capture and let it run for 30-60 seconds
+# 5. Save capture as cp2077_baseline.rdc
+# 
+# The actual .rdc file will be a binary file containing:
+# - D3D12 command list data
+# - Rendering pipeline information
+# - Camera matrices and transforms
+# - Object rendering data
+# - Memory allocation patterns
+# 
+# This capture is essential for:
+# - Understanding REDengine 4's rendering pipeline
+# - Identifying hook points for VR integration
+# - Extracting camera matrices for VR transformation
+# - Analyzing performance characteristics
+# 
+# File size: Typically 50-200 MB depending on capture duration
+# Format: RenderDoc binary format (.rdc)
+# 
+# Status: Placeholder - requires actual game capture

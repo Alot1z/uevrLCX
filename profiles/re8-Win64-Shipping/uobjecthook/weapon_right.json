@@ -1,0 +1,84 @@
+{
+  "attachment_config": {
+    "name": "RE8_Weapon_Right_Controller",
+    "version": "1.1.0",
+    "game": "Resident Evil 8 BIOHAZARD VILLAGE",
+    "controller": "right",
+    "attachment_type": "weapon",
+    "permanent": true
+  },
+  
+  "weapon_components": {
+    "primary_weapon": {
+      "component_name": "RE8_Weapon_Mesh",
+      "attachment_point": "right_controller_grip",
+      "offset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "scale": 1.0
+    },
+    
+    "secondary_weapon": {
+      "component_name": "RE8_Secondary_Weapon",
+      "attachment_point": "right_controller_secondary",
+      "offset": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "rotation": {
+        "x": 0.0,
+        "y": 0.0,
+        "z": 0.0
+      },
+      "scale": 1.0
+    }
+  },
+  
+  "input_mapping": {
+    "trigger": "weapon_fire",
+    "grip": "weapon_reload",
+    "thumbstick": "weapon_aim",
+    "buttons": {
+      "a": "weapon_switch",
+      "b": "weapon_special"
+    }
+  },
+  
+  "haptic_feedback": {
+    "weapon_fire": {
+      "intensity": 0.8,
+      "duration": 0.1,
+      "pattern": "sharp_pulse"
+    },
+    "weapon_reload": {
+      "intensity": 0.6,
+      "duration": 0.2,
+      "pattern": "double_pulse"
+    }
+  },
+  
+  "re8_specific": {
+    "weapon_types": [
+      "Lemi_Handgun",
+      "M1911_Handgun", 
+      "V61_Custom_Handgun",
+      "M1897_Shotgun",
+      "W870_TAC_Shotgun",
+      "F2_Rifle",
+      "Dragoon_Sniper_Rifle",
+      "Rocket_Pistol",
+      "Grenade_Launcher"
+    ],
+    "attachment_priority": "primary_weapon_first",
+    "auto_detection": true,
+    "fallback_weapon": "Lemi_Handgun"
+  }
+}

@@ -1,0 +1,319 @@
+# Universal Cross-Engine Motion Controller Configuration
+# This file provides common motion controller settings for all cross-engine VR adapters
+
+## Universal Controller Settings
+
+### Controller Detection
+controller_detection = auto
+controller_override = none
+controller_adaptation_mode = engine_specific
+max_controllers = 2
+controller_timeout = 10.0
+
+### Input Processing
+input_update_rate = 90
+input_latency_target = 0.011
+input_deadzone_default = 0.1
+input_sensitivity_default = 1.0
+input_invert_default = false
+
+### Haptic Feedback
+haptic_enabled = true
+haptic_intensity_default = 0.8
+haptic_duration_default = 0.1
+haptic_pattern_default = standard
+haptic_frequency_default = 100.0
+
+## Cross-Engine Controller Settings
+
+### Engine Detection
+engine_detection = auto
+engine_override = none
+controller_adaptation_mode = engine_specific
+
+### Performance Settings
+controller_update_rate = 90
+input_processing_optimization = high
+haptic_optimization = true
+gesture_recognition = true
+adaptive_sensitivity = true
+
+### VR Comfort
+comfort_mode = standard
+motion_comfort = medium
+controller_deadzone = 0.1
+min_interaction_distance = 0.1
+max_interaction_distance = 2.0
+
+## Engine-Specific Controller Overrides
+
+### RE Engine (Resident Evil 7)
+[RE_Engine]
+controller_style = horror_atmospheric
+input_sensitivity = 0.8
+preserve_atmosphere = true
+minimal_interaction = true
+contextual_controls = true
+horror_game_sensitivity = 0.8
+jump_scare_haptics = true
+controller_actions = walk_forward,walk_backward,strafe_left,strafe_right,interact,inspect,use_item,reload,switch_weapon,open_inventory,pause_game
+
+### REDengine 4 (Cyberpunk 2077)
+[REDengine4]
+controller_style = cyberpunk_comprehensive
+input_sensitivity = 1.0
+comprehensive_controls = true
+open_world_interaction = true
+quest_integration = true
+cyberpunk_style = true
+real_time_updates = true
+controller_actions = walk_forward,walk_backward,strafe_left,strafe_right,sprint,crouch,jump,interact,hack,use_cyberware,switch_weapon,reload,open_inventory,open_skill_tree,open_map,open_quest_log,use_quick_item,activate_stealth,call_vehicle,pause_game
+
+### MT Framework (Monster Hunter World)
+[MT_Framework]
+controller_style = action_combat_focused
+input_sensitivity = 1.0
+combat_focused = true
+quick_access = true
+monster_interaction = true
+weapon_mastery = true
+party_coordination = true
+quest_progress = true
+controller_actions = walk_forward,walk_backward,strafe_left,strafe_right,sprint,dodge,jump,attack_primary,attack_secondary,block,parry,use_item,switch_weapon,sheath_weapon,mount_monster,use_slinger,open_inventory,open_map,open_quest_log,use_signal,pause_game
+
+## Universal Controller Mappings
+
+### Movement Controls
+movement_forward_controller = left_controller
+movement_forward_input = thumbstick
+movement_forward_value = y_positive
+movement_forward_sensitivity = 1.0
+movement_forward_deadzone = 0.1
+movement_forward_invert = false
+movement_forward_haptic = movement_confirm
+
+movement_backward_controller = left_controller
+movement_backward_input = thumbstick
+movement_backward_value = y_negative
+movement_backward_sensitivity = 1.0
+movement_backward_deadzone = 0.1
+movement_backward_invert = false
+movement_backward_haptic = movement_confirm
+
+movement_left_controller = left_controller
+movement_left_input = thumbstick
+movement_left_value = x_negative
+movement_left_sensitivity = 1.0
+movement_left_deadzone = 0.1
+movement_left_invert = false
+movement_left_haptic = movement_confirm
+
+movement_right_controller = left_controller
+movement_right_input = thumbstick
+movement_right_value = x_positive
+movement_right_sensitivity = 1.0
+movement_right_deadzone = 0.1
+movement_right_invert = false
+movement_right_haptic = movement_confirm
+
+### Interaction Controls
+interact_controller = right_controller
+interact_input = trigger
+interact_value = primary
+interact_sensitivity = 1.0
+interact_deadzone = 0.05
+interact_invert = false
+interact_haptic = interaction_confirm
+
+use_item_controller = left_controller
+use_item_input = button
+use_item_value = primary
+use_item_sensitivity = 1.0
+use_item_deadzone = 0.0
+use_item_invert = false
+use_item_haptic = item_use
+
+### Combat Controls
+attack_primary_controller = right_controller
+attack_primary_input = trigger
+attack_primary_value = primary
+attack_primary_sensitivity = 1.0
+attack_primary_deadzone = 0.05
+attack_primary_invert = false
+attack_primary_haptic = attack_impact
+
+attack_secondary_controller = right_controller
+attack_secondary_input = grip
+attack_secondary_value = primary
+attack_secondary_sensitivity = 1.0
+attack_secondary_deadzone = 0.1
+attack_secondary_invert = false
+attack_secondary_haptic = heavy_attack
+
+reload_controller = right_controller
+reload_input = button
+reload_value = secondary
+reload_sensitivity = 1.0
+reload_deadzone = 0.0
+reload_invert = false
+reload_haptic = reload_action
+
+### Menu Controls
+open_inventory_controller = left_controller
+open_inventory_input = button
+open_inventory_value = secondary
+open_inventory_sensitivity = 1.0
+open_inventory_deadzone = 0.0
+open_inventory_invert = false
+open_inventory_haptic = menu_open
+
+pause_game_controller = right_controller
+pause_game_input = button
+pause_game_value = menu
+pause_game_sensitivity = 1.0
+pause_game_deadzone = 0.0
+pause_game_invert = false
+pause_game_haptic = menu_open
+
+## Controller Sensitivity Profiles
+
+### Standard Profile
+[Standard_Profile]
+profile_name = standard
+base_sensitivity = 1.0
+movement_multiplier = 1.0
+combat_multiplier = 1.0
+exploration_multiplier = 1.0
+menu_multiplier = 1.0
+
+### High Sensitivity Profile
+[High_Sensitivity_Profile]
+profile_name = high_sensitivity
+base_sensitivity = 1.5
+movement_multiplier = 1.5
+combat_multiplier = 1.3
+exploration_multiplier = 1.5
+menu_multiplier = 1.2
+
+### Low Sensitivity Profile
+[Low_Sensitivity_Profile]
+profile_name = low_sensitivity
+base_sensitivity = 0.7
+movement_multiplier = 0.7
+combat_multiplier = 0.8
+exploration_multiplier = 0.7
+menu_multiplier = 0.9
+
+### Horror Game Profile
+[Horror_Game_Profile]
+profile_name = horror_game
+base_sensitivity = 0.8
+movement_multiplier = 0.8
+combat_multiplier = 0.9
+exploration_multiplier = 0.8
+menu_multiplier = 1.0
+
+### Combat Focused Profile
+[Combat_Focused_Profile]
+profile_name = combat_focused
+base_sensitivity = 1.2
+movement_multiplier = 1.1
+combat_multiplier = 1.3
+exploration_multiplier = 1.0
+menu_multiplier = 1.0
+
+## Haptic Feedback Patterns
+
+### Standard Patterns
+haptic_pattern_standard = 100,0.1,100
+haptic_pattern_light = 50,0.05,100
+haptic_pattern_medium = 150,0.15,100
+haptic_pattern_heavy = 200,0.2,100
+haptic_pattern_continuous = 100,1.0,50
+
+### Game-Specific Patterns
+haptic_pattern_movement = 80,0.1,100
+haptic_pattern_interaction = 120,0.15,100
+haptic_pattern_combat = 180,0.2,100
+haptic_pattern_menu = 60,0.05,100
+haptic_pattern_error = 250,0.3,200
+
+### Engine-Specific Patterns
+haptic_pattern_horror = 90,0.12,80
+haptic_pattern_cyberpunk = 130,0.18,120
+haptic_pattern_action = 160,0.22,100
+
+## Controller Validation Settings
+
+### Quality Assurance
+controller_validation_enabled = true
+input_boundary_check = true
+sensitivity_validation = true
+haptic_validation = true
+performance_monitoring = true
+accessibility_validation = true
+
+### Testing Parameters
+test_controller_connectivity = true
+test_input_responsiveness = true
+test_haptic_feedback = true
+test_controller_performance = true
+test_controller_accessibility = true
+test_controller_compatibility = true
+
+### Debug Information
+debug_controllers_enabled = false
+debug_input_info = false
+debug_haptic_info = false
+debug_performance_metrics = false
+debug_validation_results = false
+
+## Controller Configuration Validation
+
+### Required Settings
+required_controller_features = input_mapping,haptic_feedback,sensitivity_control
+required_input_methods = movement,interaction,combat,menu
+required_accessibility_features = sensitivity_adjustment,deadzone_configuration
+required_performance_targets = input_latency,update_rate
+
+### Optional Settings
+optional_controller_features = gesture_recognition,adaptive_sensitivity,advanced_haptics
+optional_input_methods = gesture_input,voice_input,eye_tracking
+optional_accessibility_features = haptic_intensity_adjustment,pattern_customization
+optional_performance_features = predictive_input,adaptive_processing
+
+### Validation Rules
+validation_strict_mode = false
+validation_warnings_as_errors = false
+validation_auto_fix = false
+validation_report_format = json
+validation_output_path = logs/controller_validation.log
+
+## Controller Performance Optimization
+
+### Input Processing
+input_batch_size = 64
+input_cache_size = 128
+input_priority_queue = true
+input_async_processing = true
+input_compression = false
+
+### Haptic Optimization
+haptic_batch_size = 32
+haptic_cache_size = 64
+haptic_priority_queue = true
+haptic_async_processing = true
+haptic_compression = false
+
+### Memory Management
+controller_pool_size = 256
+input_buffer_size = 512
+haptic_buffer_size = 256
+garbage_collection_interval = 120
+
+### Dynamic Quality
+adaptive_controller_quality = true
+quality_threshold_low = 45
+quality_threshold_medium = 60
+quality_threshold_high = 75
+quality_threshold_ultra = 90

@@ -1,0 +1,167 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://uevr.dev/schemas/adapter.schema.json",
+  "title": "UEVR Adapter Schema v1",
+  "type": "object",
+  "required": ["engine", "graphics_api", "hook_points", "matrices", "features"],
+  "properties": {
+    "engine": {
+      "type": "string",
+      "enum": [
+        "REDengine4",
+        "REEngine",
+        "MTFramework",
+        "Unreal",
+        "Unity",
+        "CryEngine",
+        "idTech",
+        "Source",
+        "Source2",
+        "Custom"
+      ]
+    },
+    "engine_version": {
+      "oneOf": [
+        {"type": "string"},
+        {
+          "type": "object",
+          "properties": {
+            "min": {"type": "string"},
+            "max": {"type": "string"}
+          },
+          "additionalProperties": false
+        }
+      ]
+    },
+    "graphics_api": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["D3D11", "D3D12", "Vulkan", "OpenGL"]
+      },
+      "minItems": 1
+    },
+    "detection": {
+      "type": "object",
+      "properties": {
+        "process_names": {"type": "array", "items": {"type": "string"}},
+        "module_names": {"type": "array", "items": {"type": "string"}},
+        "signatures": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "hook_points": {
+      "type": "object",
+      "properties": {
+        "dx11": {
+          "type": "object",
+          "properties": {
+            "present": {"$ref": "#/definitions/hook"},
+            "resize_buffers": {"$ref": "#/definitions/hook"}
+          },
+          "additionalProperties": false
+        },
+        "dx12": {
+          "type": "object",
+          "properties": {
+            "execute_command_lists": {"$ref": "#/definitions/hook"},
+            "present": {"$ref": "#/definitions/hook"}
+          },
+          "additionalProperties": false
+        },
+        "vulkan": {
+          "type": "object",
+          "properties": {
+            "queue_present": {"$ref": "#/definitions/hook"},
+            "acquire_next_image": {"$ref": "#/definitions/hook"}
+          },
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": true
+    },
+    "matrices": {
+      "type": "object",
+      "required": ["view", "projection"],
+      "properties": {
+        "view": {"$ref": "#/definitions/matrix_map"},
+        "projection": {"$ref": "#/definitions/matrix_map"}
+      },
+      "additionalProperties": false
+    },
+    "input": {
+      "type": "object",
+      "properties": {
+        "aim_method": {"type": "string", "enum": ["Right", "Left"]},
+        "bindings": {"type": "object", "additionalProperties": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "features": {
+      "type": "object",
+      "properties": {
+        "stereo": {"type": "boolean"},
+        "head_tracking": {"type": "boolean"},
+        "dynamic_fov": {"type": "boolean"},
+        "hud_reprojection": {"type": "boolean"},
+        "motion_controllers": {"type": "boolean"},
+        "haptics": {"type": "boolean"},
+        "neural_upsampling": {"type": "boolean"},
+        "frame_interpolation": {"type": "boolean"},
+        "ray_tracing": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    },
+    "safety": {
+      "type": "object",
+      "properties": {
+        "safe_mode": {"type": "boolean"},
+        "online_risk": {"type": "boolean"},
+        "blacklist": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "artifacts": {
+      "type": "object",
+      "properties": {
+        "renderdoc_capture": {"type": "string"},
+        "uobjecthook_state_dir": {"type": "string"},
+        "logs_dir": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "metadata": {
+      "type": "object",
+      "properties": {
+        "name": {"type": "string"},
+        "titles": {"type": "array", "items": {"type": "string"}},
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  },
+  "definitions": {
+    "hook": {
+      "type": "object",
+      "properties": {
+        "enabled": {"type": "boolean"},
+        "method": {"type": "string"},
+        "vtable_index": {"type": "integer"},
+        "signature": {"type": "string"},
+        "detour": {"type": "string"}
+      },
+      "additionalProperties": true
+    },
+    "matrix_map": {
+      "type": "object",
+      "required": ["cb_slot", "offset_bytes"],
+      "properties": {
+        "cb_slot": {"type": "integer", "minimum": 0},
+        "offset_bytes": {"type": "integer", "minimum": 0},
+        "transpose": {"type": "boolean"},
+        "row_major": {"type": "boolean"}
+      },
+      "additionalProperties": false
+    }
+  }
+}

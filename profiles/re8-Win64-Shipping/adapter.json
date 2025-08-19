@@ -1,0 +1,160 @@
+{
+  "adapter_info": {
+    "name": "RE Engine Cross-Engine VR Adapter - RE8 Village Edition",
+    "version": "1.1.0",
+    "target_game": "Resident Evil 8 BIOHAZARD VILLAGE",
+    "target_engine": "RE Engine",
+    "executable": "re8.exe",
+    "profile_path": "profiles/re8-Win64-Shipping/",
+    "engine_type": "D3D11",
+    "compatibility": "Cross-Engine VR Extension",
+    "game_specific": "re8_village_optimized"
+  },
+  
+  "vr_configuration": {
+    "enable_vr_mode": true,
+    "enable_stereo_rendering": true,
+    "enable_vr_overlays": true,
+    "enable_vr_controllers": true,
+    
+    "vr_target_framerate": 90,
+    "vr_resolution_scale": 0.9,
+    "enable_vr_async_reprojection": true,
+    
+    "vr_fov_limit": 110.0,
+    "enable_vr_comfort_mode": true,
+    "vr_motion_sickness_threshold": 0.6,
+    
+    "weapon_to_right_controller": true,
+    "utility_to_left_controller": true,
+    "enable_vr_haptic_feedback": true
+  },
+  
+  "camera_configuration": {
+    "world_scale": 1.0,
+    "decoupled_pitch": true,
+    "camera_forward_offset": 0.0,
+    "camera_right_offset": 0.0,
+    "camera_up_offset": 0.0,
+    
+    "vr_head_offset": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "vr_eye_offset": {
+      "x": 0.0,
+      "y": 0.0,
+      "z": 0.0
+    },
+    "vr_ipd_adjustment": 0.064,
+    
+    "camera_system": "RE_Engine_FirstPerson_RE8",
+    "camera_type": "first_person",
+    "enable_vr_head_tracking": true
+  },
+  
+  "rendering_configuration": {
+    "enable_d3d11_hooks": true,
+    "enable_swapchain_hooks": true,
+    "enable_device_hooks": true,
+    "enable_rendering_hooks": true,
+    
+    "stereo_rendering_mode": "UEVR_Integration",
+    "vr_overlay_mode": "In_Game_Projection",
+    "performance_optimization": "VR_Ultra_Optimized",
+    
+    "re_engine_specific": {
+      "enable_reframework": true,
+      "enable_native_hooks": true,
+      "pbr_lighting_optimization": true,
+      "horror_game_vr_optimization": true,
+      "re8_specific_optimizations": true
+    }
+  },
+
+  "camera_system": {
+    "hook_points": {
+      "view_matrix": "RE8_ViewMatrix_Pattern",
+      "projection_matrix": "RE8_ProjectionMatrix_Pattern",
+      "camera_position": "RE8_CameraPosition_Pattern",
+      "camera_rotation": "RE8_CameraRotation_Pattern"
+    },
+    "matrix_extraction": {
+      "method": "pattern_scanning",
+      "fallback": "memory_tracing",
+      "validation": "matrix_math_verification"
+    }
+  },
+
+  "performance_optimization": {
+    "target_fps": 90,
+    "adaptive_quality": true,
+    "dynamic_lod": true,
+    "shader_optimization": true,
+    "texture_streaming": true,
+    "memory_management": "aggressive"
+  },
+
+  "re8_specific_features": {
+    "enhanced_lighting": true,
+    "atmospheric_effects": true,
+    "particle_system_optimization": true,
+    "shadow_quality_optimization": true,
+    "audio_spatialization": true,
+    "horror_immersion_enhancement": true
+  },
+
+  "input_mapping": {
+    "motion_controllers": {
+      "right_controller": {
+        "primary_function": "weapon_aiming",
+        "secondary_function": "weapon_firing",
+        "haptic_feedback": "weapon_recoil"
+      },
+      "left_controller": {
+        "primary_function": "movement",
+        "secondary_function": "inventory",
+        "haptic_feedback": "environment_interaction"
+      }
+    },
+    "keyboard_mouse": {
+      "fallback_support": true,
+      "vr_optimized_mapping": true
+    }
+  },
+
+  "comfort_settings": {
+    "comfort_mode": "enhanced",
+    "fov_reduction": true,
+    "motion_blur_reduction": true,
+    "head_bob_reduction": true,
+    "smooth_turning": true,
+    "emergency_exit": true,
+    "comfort_safeguards": true
+  },
+
+  "audio_configuration": {
+    "spatial_audio": true,
+    "3d_positioning": true,
+    "reverb_optimization": true,
+    "occlusion_enabled": true,
+    "horror_audio_enhancement": true
+  },
+
+  "compatibility": {
+    "re_engine_version": "2.0+",
+    "directx_version": "11.0",
+    "windows_version": "10.0+",
+    "vr_runtime": "openxr",
+    "fallback_runtime": "openvr"
+  },
+
+  "validation": {
+    "auto_detection": true,
+    "pattern_validation": true,
+    "performance_monitoring": true,
+    "error_recovery": true,
+    "fallback_modes": true
+  }
+}

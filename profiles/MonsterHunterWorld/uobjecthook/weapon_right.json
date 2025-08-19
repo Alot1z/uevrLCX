@@ -1,0 +1,13 @@
+{
+  "name": "Weapon",
+  "hand": "right",
+  "path": [
+    "PlayerCharacter",
+    "WeaponComponent",
+    "WeaponMesh"
+  ],
+  "permanent": true,
+  "location_offset": [0.0, 0.0, 0.0],
+  "rotation_offset_quat": [1.0, 0.0, 0.0, 0.0],
+  "notes": "Right controller permanently attached to weapon for combat actions. Path follows MT Framework component hierarchy: PlayerCharacter -> WeaponComponent -> WeaponMesh. Permanent attachment ensures weapon follows controller movement during combat."
+}

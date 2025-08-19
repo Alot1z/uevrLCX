@@ -1,0 +1,64 @@
+Static Analysis Report 
+Generated: 19/08/2025  0.44.00,16 
+======================================== 
+ 
+File Structure Analysis 
+---------------------- 
+[OK] redengine_adapter.cpp found 
+[OK] redengine_adapter.hpp found 
+[OK] uobject_hook.cpp found 
+[OK] uobject_hook.hpp found 
+[OK] CMakeLists.txt found 
+ 
+TODO/FIXME Analysis 
+------------------- 
+[WARNING] TODO comments found: 
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:159:    // TODO: Implement camera matrix extraction from REDengine 4 command lists
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:172:    // TODO: Implement stereo rendering pipeline for D3D12
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:189:    // TODO: Implement D3D12 stereo rendering using uevr's framework
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:201:    // TODO: Implement D3D12 resource creation for stereo rendering
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:211:    // TODO: Implement D3D12 resource cleanup
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:427:        // TODO: Implement based on CP2077 RenderDoc captures
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:435:        // TODO: Implement based on CP2077 RenderDoc captures
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:450:        // TODO: Implement stereo rendering pipeline
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:462:        // TODO: Implement VR parameter adjustment
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:36:        // TODO: Implement hook cleanup
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:165:    // TODO: Implement actual REDengine 4 object scanning
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:177:    // TODO: Implement actual REDengine 4 object system hooks
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:212:    // TODO: Implement weapon scanning for Cyberpunk 2077
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:218:    // TODO: Implement utility scanning for Cyberpunk 2077
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:224:    // TODO: Implement UI element scanning for Cyberpunk 2077
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:230:    // TODO: Implement safe memory reading for REDengine 4
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:240:    // TODO: Implement safe memory writing for REDengine 4
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:250:    // TODO: Implement actual object transformation for REDengine 4
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:260:    // TODO: Implement object visibility updates for REDengine 4
+ 
+[OK] No FIXME comments found 
+ 
+Hardcoded Values Analysis 
+------------------------- 
+[OK] No hardcoded addresses found 
+[OK] No obvious magic numbers found 
+ 
+Memory Management Analysis 
+-------------------------- 
+[INFO] new operators found: 
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:250:    g_adapter = new REDengine4Adapter();
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:69:    typedef HRESULT(WINAPI* ResizeBuffers_t)(IDXGISwapChain3* pSwapChain, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags);
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:364:    static HRESULT WINAPI hooked_resize_buffers(IDXGISwapChain3* pSwapChain, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags) {
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:367:            adapter->on_redengine4_resize_buffers(pSwapChain, BufferCount, Width, Height, NewFormat, SwapChainFlags);
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:371:            return adapter->m_original_resize_buffers(pSwapChain, BufferCount, Width, Height, NewFormat, SwapChainFlags);
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine_adapter.cpp:407:    void on_redengine4_resize_buffers(IDXGISwapChain3* pSwapChain, UINT BufferCount, UINT Width, UINT Height, DXGI_FORMAT NewFormat, UINT SwapChainFlags) {
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:71:        // Create new attachment if it doesn't exist
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:72:        ObjectAttachment new_attachment;
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:73:        new_attachment.object_name = object_name;
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:74:        new_attachment.type = type;
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:75:        new_attachment.is_attached = true;
+G:\GITHUB REPOs\uevr\adapters\REDengine4\uobject_hook.cpp:77:        m_attachments[object_name] = new_attachment;
+ 
+[INFO] delete operators found: 
+G:\GITHUB REPOs\uevr\adapters\REDengine4\redengine4_adapter.cpp:270:                delete g_adapter;
+ 
+ 
+Null Pointer Analysis 
+--------------------- 

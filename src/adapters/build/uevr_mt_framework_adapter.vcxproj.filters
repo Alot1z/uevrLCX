@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\MTFrameworkAdapter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="G:\GITHUB REPOs\uevr\src\adapters\mt-framework\MTFrameworkAdapter.hpp">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <CustomBuild Include="G:\GITHUB REPOs\uevr\src\adapters\CMakeLists.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="G:\GITHUB REPOs\uevr\src\adapters\build\_deps\nlohmann_json-src\nlohmann_json.natvis" />
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{CA1DF4CD-9B81-3184-B42D-69271EC8DBBB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{FEDAC345-0577-328E-817C-B384663BE79B}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

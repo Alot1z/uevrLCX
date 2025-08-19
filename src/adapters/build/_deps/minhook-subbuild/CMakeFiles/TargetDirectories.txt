@@ -1,0 +1,3 @@
+G:/GITHUB REPOs/uevr/src/adapters/build/_deps/minhook-subbuild/CMakeFiles/minhook-populate.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/_deps/minhook-subbuild/CMakeFiles/ALL_BUILD.dir
+G:/GITHUB REPOs/uevr/src/adapters/build/_deps/minhook-subbuild/CMakeFiles/ZERO_CHECK.dir

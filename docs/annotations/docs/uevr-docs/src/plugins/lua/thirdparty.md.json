@@ -1,0 +1,29 @@
+{
+  "file": "G:\\GITHUB REPOs\\UEVR\\docs\\uevr-docs\\src\\plugins\\lua\\thirdparty.md",
+  "generated_at": "2025-08-18T19:58:36.957762",
+  "schema_version": 1,
+  "annotations": {
+    "1": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "5 Configuration System"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ],
+    "2": [
+      {
+        "source": "deepwiki",
+        "repo": "praydog/UEVR",
+        "page": "5 Configuration System"
+      },
+      {
+        "source": "context7",
+        "library": "/praydog/uevr"
+      }
+    ]
+  }
+}
