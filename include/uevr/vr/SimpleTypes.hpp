@@ -171,7 +171,7 @@ struct Quaternion {
         // Pitch (y-axis rotation)
         float sinp = 2.0f * (w * y - z * x);
         if (std::abs(sinp) >= 1.0f) {
-            euler.x = std::copysign(M_PI / 2.0f, sinp); // Use 90 degrees if out of range
+            euler.x = std::copysign(3.14159265359f / 2.0f, sinp); // Use 90 degrees if out of range
         } else {
             euler.x = std::asin(sinp);
         }

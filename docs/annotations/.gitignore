@@ -1,4 +1,4 @@
-# UEVR Scripts .gitignore
+# UEVR Annotations .gitignore
 # Ignore AI/ML content and all script files
 
 # Script files - ALWAYS IGNORE
@@ -22,11 +22,5 @@
 *_IMPLEMENTATION_*.md
 *_STATUS_*.md
 
-# Build outputs
-build/
-dist/
-*.exe
-*.dll
-*.lib
-*.obj
-*.pdb
+# JSON files (often contain AI/ML data)
+*.json

@@ -10,11 +10,11 @@
 
 #pragma once
 
-#include <vector>
+#include "uevr/vr/SimpleTypes.hpp"
 #include <memory>
-#include <unordered_map>
+#include <vector>
 #include <string>
-// GLM temporarily disabled - using basic types instead
+#include <cstdint>
 
 namespace uevr::vr {
 
