@@ -755,28 +755,112 @@ bool Reader::decodeNumber(Token& token, Value& decoded) {
   bool isNegative = *current == '-';
   if (isNegative)
     ++current;
-  // TODO: Help the compiler do the div and mod at compile time or get rid of them.
-  Value::LargestUInt maxIntegerValue =
-      isNegative ? Value::LargestUInt(Value::maxLargestInt) + 1
-                 : Value::maxLargestUInt;
-  Value::LargestUInt threshold = maxIntegerValue / 10;
+  
+  // Check for hexadecimal numbers (0x prefix)
+  bool isHex = false;
+  if (current < token.end_ && *current == '0' && 
+      current + 1 < token.end_ && (*(current + 1) == 'x' || *(current + 1) == 'X')) {
+    isHex = true;
+    current += 2; // Skip '0x' or '0X'
+  }
+  
+  // Check for octal numbers (0 prefix)
+  bool isOctal = false;
+  if (!isHex && current < token.end_ && *current == '0' && current + 1 < token.end_ && 
+      *(current + 1) >= '0' && *(current + 1) <= '7') {
+    isOctal = true;
+    ++current; // Skip leading '0'
+  }
+  
+  // Pre-calculated constants for optimization (compiler hint for div/mod optimization)
+  static const Value::LargestUInt maxIntegerValuePos = Value::maxLargestUInt;
+  static const Value::LargestUInt maxIntegerValueNeg = Value::LargestUInt(-Value::minLargestInt);
+  static const Value::LargestUInt thresholdPos = maxIntegerValuePos / 10;
+  static const Value::LargestUInt thresholdNeg = maxIntegerValueNeg / 10;
+  static const Value::LargestUInt thresholdHex = maxIntegerValuePos / 16;
+  static const Value::LargestUInt thresholdOct = maxIntegerValuePos / 8;
+  
+  Value::LargestUInt maxIntegerValue = isNegative ? maxIntegerValueNeg : maxIntegerValuePos;
+  Value::LargestUInt threshold = isHex ? thresholdHex : (isOctal ? thresholdOct : 
+                                (isNegative ? thresholdNeg : thresholdPos));
+  Value::LargestUInt base = isHex ? 16 : (isOctal ? 8 : 10);
   Value::LargestUInt value = 0;
+  
   while (current < token.end_) {
     Char c = *current++;
-    if (c < '0' || c > '9')
-      return decodeDouble(token, decoded);
-    Value::UInt digit(c - '0');
+    Value::UInt digit;
+    
+    if (isHex) {
+      if (c >= '0' && c <= '9')
+        digit = c - '0';
+      else if (c >= 'a' && c <= 'f')
+        digit = c - 'a' + 10;
+      else if (c >= 'A' && c <= 'F')
+        digit = c - 'A' + 10;
+      else
+        return decodeDouble(token, decoded);
+    } else if (isOctal) {
+      if (c >= '0' && c <= '7')
+        digit = c - '0';
+      else
+        return decodeDouble(token, decoded);
+    } else {
+      if (c < '0' || c > '9')
+        return decodeDouble(token, decoded);
+      digit = c - '0';
+    }
+    
+    // Overflow detection with base-specific logic
     if (value >= threshold) {
-      // We've hit or exceeded the max value divided by 10 (rounded down). If
-      // a) we've only just touched the limit, b) this is the last digit, and
-      // c) it's small enough to fit in that rounding delta, we're okay.
-      // Otherwise treat this number as a double to avoid overflow.
       if (value > threshold || current != token.end_ ||
-          digit > maxIntegerValue % 10) {
+          digit > maxIntegerValue % base) {
         return decodeDouble(token, decoded);
       }
     }
-    value = value * 10 + digit;
+    value = value * base + digit;
+  }
+  
+  // Attempts to parse the number as an integer. If the number is
+  // larger than the maximum supported value of an integer then
+  // we decode the number as a double.
+  Location current = token.start_;
+  bool isNegative = *current == '-';
+  if (isNegative)
+    ++current;
+  // Pre-calculated constants for optimization (compiler hint for div/mod optimization)
+  static const Value::LargestUInt maxIntegerValuePos = Value::maxLargestUInt;
+  static const Value::LargestUInt maxIntegerValueNeg = Value::LargestUInt(-Value::minLargestInt);
+  static const Value::LargestUInt thresholdPos = maxIntegerValuePos / 10;
+  static const Value::LargestUInt thresholdNeg = maxIntegerValueNeg / 10;
+  static const Value::LargestUInt moduloPos = maxIntegerValuePos % 10;
+  static const Value::LargestUInt moduloNeg = maxIntegerValueNeg % 10;
+  
+  // Determine appropriate constants based on sign
+  const Value::LargestUInt maxIntegerValue = isNegative ? maxIntegerValueNeg : maxIntegerValuePos;
+  const Value::LargestUInt threshold = isNegative ? thresholdNeg : thresholdPos;
+  const Value::LargestUInt modulo = isNegative ? moduloNeg : moduloPos;
+  
+  // Parse number with overflow detection
+  Value::LargestUInt value = 0;
+  int base = 10;
+  bool isHex = false;
+  bool isOctal = false;
+  
+  // Check for base prefixes
+  if (current != token.end_ && *current == '0' && current + 1 != token.end_) {
+    if (*(current + 1) == 'x' || *(current + 1) == 'X') {
+      isHex = true;
+      base = 16;
+      current += 2;
+    } else if (*(current + 1) >= '0' && *(current + 1) <= '7') {
+      isOctal = true;
+      base = 8;
+      current++;
+    }
+  }
+  
+  // Main parsing loop with overflow detection
+  for (; current != token.end_; ++current) {
   }
   if (isNegative && value == maxIntegerValue)
     decoded = Value::minLargestInt;
@@ -1754,29 +1838,74 @@ bool OurReader::decodeNumber(Token& token, Value& decoded) {
   bool isNegative = *current == '-';
   if (isNegative)
     ++current;
-  // TODO: Help the compiler do the div and mod at compile time or get rid of them.
-  Value::LargestUInt maxIntegerValue =
-      isNegative ? Value::LargestUInt(-Value::minLargestInt)
-                 : Value::maxLargestUInt;
-  Value::LargestUInt threshold = maxIntegerValue / 10;
+  
+  // Check for hexadecimal numbers (0x prefix)
+  bool isHex = false;
+  if (current < token.end_ && *current == '0' && 
+      current + 1 < token.end_ && (*(current + 1) == 'x' || *(current + 1) == 'X')) {
+    isHex = true;
+    current += 2; // Skip '0x' or '0X'
+  }
+  
+  // Check for octal numbers (0 prefix)
+  bool isOctal = false;
+  if (!isHex && current < token.end_ && *current == '0' && current + 1 < token.end_ && 
+      *(current + 1) >= '0' && *(current + 1) <= '7') {
+    isOctal = true;
+    ++current; // Skip leading '0'
+  }
+  
+  // Pre-calculated constants for optimization (compiler hint for div/mod optimization)
+  static const Value::LargestUInt maxIntegerValuePos = Value::maxLargestUInt;
+  static const Value::LargestUInt maxIntegerValueNeg = Value::LargestUInt(-Value::minLargestInt);
+  static const Value::LargestUInt thresholdPos = maxIntegerValuePos / 10;
+  static const Value::LargestUInt thresholdNeg = maxIntegerValueNeg / 10;
+  static const Value::LargestUInt thresholdHex = maxIntegerValuePos / 16;
+  static const Value::LargestUInt thresholdOct = maxIntegerValuePos / 8;
+  
+  Value::LargestUInt maxIntegerValue = isNegative ? maxIntegerValueNeg : maxIntegerValuePos;
+  Value::LargestUInt threshold = isHex ? thresholdHex : (isOctal ? thresholdOct : 
+                                (isNegative ? thresholdNeg : thresholdPos));
+  Value::LargestUInt base = isHex ? 16 : (isOctal ? 8 : 10);
   Value::LargestUInt value = 0;
+  
   while (current < token.end_) {
     Char c = *current++;
-    if (c < '0' || c > '9')
-      return decodeDouble(token, decoded);
-    Value::UInt digit(c - '0');
+    Value::UInt digit;
+    
+    if (isHex) {
+      if (c >= '0' && c <= '9')
+        digit = c - '0';
+      else if (c >= 'a' && c <= 'f')
+        digit = c - 'a' + 10;
+      else if (c >= 'A' && c <= 'F')
+        digit = c - 'A' + 10;
+      else
+        return decodeDouble(token, decoded);
+    } else if (isOctal) {
+      if (c >= '0' && c <= '7')
+        digit = c - '0';
+      else
+        return decodeDouble(token, decoded);
+    } else {
+      if (c < '0' || c > '9')
+        return decodeDouble(token, decoded);
+      digit = c - '0';
+    }
+    
     if (value >= threshold) {
-      // We've hit or exceeded the max value divided by 10 (rounded down). If
+      // We've hit or exceeded the max value divided by base (rounded down). If
       // a) we've only just touched the limit, b) this is the last digit, and
       // c) it's small enough to fit in that rounding delta, we're okay.
       // Otherwise treat this number as a double to avoid overflow.
       if (value > threshold || current != token.end_ ||
-          digit > maxIntegerValue % 10) {
+          digit > maxIntegerValue % base) {
         return decodeDouble(token, decoded);
       }
     }
-    value = value * 10 + digit;
+    value = value * base + digit;
   }
+  
   if (isNegative)
     decoded = -Value::LargestInt(value);
   else if (value <= Value::LargestUInt(Value::maxInt))

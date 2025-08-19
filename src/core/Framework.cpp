@@ -1595,6 +1595,29 @@ bool Framework::initialize() {
             return false;
         }
 
+        spdlog::info("Initializing AI and VR Systems");
+        
+        // Initialize Context7 AI Database
+        if (!m_context7_db->initialize()) {
+            spdlog::warn("Failed to initialize Context7 AI Database, continuing without AI features");
+        } else {
+            spdlog::info("Context7 AI Database initialized successfully");
+        }
+        
+        // Initialize Universal VR System
+        if (!m_vr_system->initialize()) {
+            spdlog::warn("Failed to initialize Universal VR System, continuing without VR features");
+        } else {
+            spdlog::info("Universal VR System initialized successfully");
+        }
+        
+        // Initialize AI Analysis Engine
+        if (!m_ai_engine->initialize()) {
+            spdlog::warn("Failed to initialize AI Analysis Engine, continuing without AI analysis");
+        } else {
+            spdlog::info("AI Analysis Engine initialized successfully");
+        }
+
         spdlog::info("Creating render target");
 
         if (!init_d3d11()) {

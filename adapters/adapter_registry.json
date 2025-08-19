@@ -1,92 +1,297 @@
 {
-  "version": "2.0.0",
-  "description": "Registry of all available engine adapters",
   "adapters": [
     {
-      "name": "common",
-      "path": "common/uevr_common_adapter.dll",
+      "name": "Common",
+      "path": "adapters/common/common_adapter.dll",
       "version": "2.0.0",
+      "engine_type": 12,
       "description": "Common VR functionality for all engines",
-      "priority": 0
-    },
-    {
-      "name": "RE-Engine",
-      "path": "re-engine/uevr_re_engine_adapter.dll",
-      "version": "2.0.0",
-      "description": "Capcom RE Engine adapter with PBR lighting integration",
+      "supported_games": ["All Games"],
+      "is_verified": true,
+      "features": [
+        "Basic VR Support",
+        "Motion Controller Input",
+        "Headset Tracking",
+        "Cross-Engine Compatibility"
+      ],
+      "dependencies": [],
       "priority": 1
     },
     {
-      "name": "REDengine4",
-      "path": "redengine4/uevr_redengine4_adapter.dll",
+      "name": "RE Engine",
+      "path": "adapters/re-engine/re_engine_adapter.dll",
       "version": "2.0.0",
-      "description": "CD Projekt RED engine adapter with ray tracing VR optimization",
-      "priority": 1
+      "engine_type": 3,
+      "description": "RE Engine VR adapter for Resident Evil 7/8 and other Capcom games",
+      "supported_games": [
+        "Resident Evil 7 BIOHAZARD",
+        "Resident Evil 8 BIOHAZARD VILLAGE",
+        "Monster Hunter Rise"
+      ],
+      "is_verified": true,
+      "features": [
+        "D3D11 Pipeline Integration",
+        "Horror Game VR Optimization",
+        "Audio Spatialization",
+        "Motion Controller Support",
+        "Camera Matrix Extraction"
+      ],
+      "dependencies": ["Common"],
+      "priority": 2,
+      "vr_optimizations": {
+        "motion_blur_reduction": true,
+        "horror_atmosphere_enhancement": true,
+        "audio_spatialization": true,
+        "comfort_settings": true
+      }
     },
     {
-      "name": "MT-Framework",
-      "path": "mt-framework/uevr_mt_framework_adapter.dll",
+      "name": "REDengine 4",
+      "path": "adapters/redengine4/redengine4_adapter.dll",
       "version": "2.0.0",
-      "description": "Capcom MT Framework adapter with animation system integration",
-      "priority": 1
+      "engine_type": 4,
+      "description": "REDengine 4 VR adapter for Cyberpunk 2077 and CD Projekt Red games",
+      "supported_games": [
+        "Cyberpunk 2077",
+        "The Witcher 3: Wild Hunt"
+      ],
+      "is_verified": true,
+      "features": [
+        "D3D12 Pipeline Integration",
+        "Ray Tracing VR Optimization",
+        "Open World Rendering",
+        "Cyberpunk Aesthetic VR",
+        "Advanced Shading Support"
+      ],
+      "dependencies": ["Common"],
+      "priority": 2,
+      "vr_optimizations": {
+        "ray_tracing_vr": true,
+        "open_world_optimization": true,
+        "cyberpunk_ui_adaptation": true,
+        "performance_scaling": true
+      }
     },
     {
-      "name": "Unreal-Engine-4",
-      "path": "unreal-engine/uevr_unreal4_adapter.dll",
+      "name": "MT Framework",
+      "path": "adapters/mt-framework/mt_framework_adapter.dll",
       "version": "2.0.0",
-      "description": "Unreal Engine 4 adapter with native VR support",
-      "priority": 1
+      "engine_type": 5,
+      "description": "MT Framework VR adapter for Monster Hunter World and other Capcom games",
+      "supported_games": [
+        "Monster Hunter: World",
+        "Devil May Cry 4",
+        "Devil May Cry 5"
+      ],
+      "is_verified": true,
+      "features": [
+        "Third-Person to First-Person Conversion",
+        "Animation System VR Integration",
+        "Motion Controller Combat",
+        "Action Game Optimization",
+        "Performance Scaling"
+      ],
+      "dependencies": ["Common"],
+      "priority": 2,
+      "vr_optimizations": {
+        "tpp_to_fpp_conversion": true,
+        "animation_vr_integration": true,
+        "combat_optimization": true,
+        "performance_scaling": true
+      }
     },
     {
-      "name": "Unreal-Engine-5",
-      "path": "unreal-engine/uevr_unreal5_adapter.dll",
+      "name": "Unreal Engine 4",
+      "path": "adapters/unreal-engine4/ue4_adapter.dll",
       "version": "2.0.0",
-      "description": "Unreal Engine 5 adapter with enhanced VR features",
-      "priority": 1
+      "engine_type": 0,
+      "description": "Unreal Engine 4 VR adapter for UE4 games",
+      "supported_games": ["Generic UE4 Games"],
+      "is_verified": true,
+      "features": [
+        "Native VR Support",
+        "Motion Controllers",
+        "Room Scale",
+        "Advanced Rendering",
+        "Blueprint Integration"
+      ],
+      "dependencies": ["Common"],
+      "priority": 3,
+      "vr_optimizations": {
+        "native_vr_support": true,
+        "blueprint_integration": true,
+        "performance_optimization": true
+      }
     },
     {
-      "name": "Unity-Engine",
-      "path": "unity/uevr_unity_adapter.dll",
+      "name": "Unreal Engine 5",
+      "path": "adapters/unreal-engine5/ue5_adapter.dll",
       "version": "2.0.0",
-      "description": "Unity Engine adapter with cross-platform VR support",
-      "priority": 1
+      "engine_type": 1,
+      "description": "Unreal Engine 5 VR adapter for UE5 games",
+      "supported_games": ["Generic UE5 Games"],
+      "is_verified": true,
+      "features": [
+        "Native VR Support",
+        "Motion Controllers",
+        "Room Scale",
+        "Advanced Rendering",
+        "Nanite Support",
+        "Lumen Support"
+      ],
+      "dependencies": ["Common"],
+      "priority": 3,
+      "vr_optimizations": {
+        "native_vr_support": true,
+        "nanite_vr_optimization": true,
+        "lumen_vr_optimization": true,
+        "performance_optimization": true
+      }
+    },
+    {
+      "name": "Unity Engine",
+      "path": "adapters/unity-engine/unity_adapter.dll",
+      "version": "2.0.0",
+      "engine_type": 2,
+      "description": "Unity Engine VR adapter for Unity games",
+      "supported_games": ["Generic Unity Games"],
+      "is_verified": true,
+      "features": [
+        "VR Support",
+        "Motion Controllers",
+        "Room Scale",
+        "Cross Platform",
+        "Asset Integration"
+      ],
+      "dependencies": ["Common"],
+      "priority": 3,
+      "vr_optimizations": {
+        "cross_platform_vr": true,
+        "asset_integration": true,
+        "performance_optimization": true
+      }
     },
     {
       "name": "CryEngine",
-      "path": "cryengine/uevr_cryengine_adapter.dll",
+      "path": "adapters/cryengine/cryengine_adapter.dll",
       "version": "2.0.0",
-      "description": "CryEngine adapter with advanced rendering features",
-      "priority": 1
+      "engine_type": 6,
+      "description": "CryEngine VR adapter for Crytek games",
+      "supported_games": ["Generic CryEngine Games"],
+      "is_verified": true,
+      "features": [
+        "VR Support",
+        "Motion Controllers",
+        "Advanced Graphics",
+        "Performance Optimization"
+      ],
+      "dependencies": ["Common"],
+      "priority": 4,
+      "vr_optimizations": {
+        "advanced_graphics_vr": true,
+        "performance_optimization": true
+      }
     },
     {
-      "name": "id-Tech-6",
-      "path": "idtech/uevr_idtech6_adapter.dll",
+      "name": "id Tech 6",
+      "path": "adapters/id-tech6/idtech6_adapter.dll",
       "version": "2.0.0",
-      "description": "id Tech 6 adapter with Vulkan optimization",
-      "priority": 1
+      "engine_type": 7,
+      "description": "id Tech 6 VR adapter for DOOM 2016",
+      "supported_games": ["DOOM (2016)"],
+      "is_verified": true,
+      "features": [
+        "VR Support",
+        "Motion Controllers",
+        "Fast Paced Action",
+        "Performance Optimization"
+      ],
+      "dependencies": ["Common"],
+      "priority": 4,
+      "vr_optimizations": {
+        "fast_paced_vr": true,
+        "performance_optimization": true
+      }
     },
     {
-      "name": "id-Tech-7",
-      "path": "idtech/uevr_idtech7_adapter.dll",
+      "name": "id Tech 7",
+      "path": "adapters/id-tech7/idtech7_adapter.dll",
       "version": "2.0.0",
-      "description": "id Tech 7 adapter with ray tracing support",
-      "priority": 1
+      "engine_type": 8,
+      "description": "id Tech 7 VR adapter for DOOM Eternal",
+      "supported_games": ["DOOM Eternal"],
+      "is_verified": true,
+      "features": [
+        "VR Support",
+        "Motion Controllers",
+        "Fast Paced Action",
+        "Performance Optimization"
+      ],
+      "dependencies": ["Common"],
+      "priority": 4,
+      "vr_optimizations": {
+        "fast_paced_vr": true,
+        "performance_optimization": true
+      }
     },
     {
-      "name": "Source-Engine",
-      "path": "source/uevr_source_adapter.dll",
+      "name": "Source Engine",
+      "path": "adapters/source-engine/source_adapter.dll",
       "version": "2.0.0",
-      "description": "Source Engine adapter with legacy VR support",
-      "priority": 1
+      "engine_type": 9,
+      "description": "Source Engine VR adapter for Valve games",
+      "supported_games": ["Generic Source Engine Games"],
+      "is_verified": true,
+      "features": [
+        "VR Support",
+        "Motion Controllers",
+        "Steam Integration",
+        "Performance Optimization"
+      ],
+      "dependencies": ["Common"],
+      "priority": 4,
+      "vr_optimizations": {
+        "steam_integration": true,
+        "performance_optimization": true
+      }
     },
     {
-      "name": "Source-2",
-      "path": "source/uevr_source2_adapter.dll",
+      "name": "Source 2",
+      "path": "adapters/source2/source2_adapter.dll",
       "version": "2.0.0",
-      "description": "Source 2 Engine adapter with modern VR features",
-      "priority": 1
+      "engine_type": 10,
+      "description": "Source 2 VR adapter for modern Valve games",
+      "supported_games": ["Generic Source 2 Games"],
+      "is_verified": true,
+      "features": [
+        "Native VR Support",
+        "Motion Controllers",
+        "Room Scale",
+        "Advanced Physics",
+        "Performance Optimization"
+      ],
+      "dependencies": ["Common"],
+      "priority": 3,
+      "vr_optimizations": {
+        "native_vr_support": true,
+        "advanced_physics_vr": true,
+        "performance_optimization": true
+      }
     }
-  ]
+  ],
+  "metadata": {
+    "version": "2.0.0",
+    "last_updated": "2024-01-01",
+    "total_adapters": 12,
+    "verified_adapters": 12,
+    "description": "Adapter registry for uevr cross-engine VR system",
+    "priority_levels": {
+      "1": "Critical (Common functionality)",
+      "2": "High (Primary target engines)",
+      "3": "Medium (Major engines)",
+      "4": "Low (Specialized engines)"
+    }
+  }
 }
 
 

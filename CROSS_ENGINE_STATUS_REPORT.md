@@ -6,9 +6,9 @@
 
 ## 🚀 **EXECUTIVE SUMMARY**
 
-**ALLE CROSS-ENGINE VR ADAPTERS VIRKER NU 100%!** 🎉
+**ALL CROSS-ENGINE VR ADAPTERS NOW WORKING 100%!** 🎉
 
-uevr's cross-engine VR system er nu komplet med fuld support for:
+uevr's cross-engine VR system is now complete with full support for:
 - ✅ **Resident Evil 7** (RE Engine) - 100% Working
 - ✅ **Resident Evil 8 Village** (RE Engine) - 100% Working  
 - ✅ **Cyberpunk 2077** (REDengine 4) - 100% Working

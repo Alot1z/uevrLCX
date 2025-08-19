@@ -3,9 +3,24 @@
 #include <array>
 #include <unordered_set>
 #include <filesystem>
+#include <memory>
+#include <vector>
+#include <chrono>
+#include <thread>
+#include <mutex>
 
 #include <spdlog/spdlog.h>
 #include <imgui.h>
+
+// DirectX includes
+#include <d3d11.h>
+#include <d3d12.h>
+
+// OpenGL includes
+#include <gl/GL.h>
+
+// Vulkan includes
+#include <vulkan/vulkan.h>
 
 #include <utility/Address.hpp>
 #include <sdk/Math.hpp>
@@ -13,6 +28,17 @@
 
 #include <sdk/threading/ThreadWorker.hpp>
 #include <mods/vr/d3d12/CommandContext.hpp>
+
+// Forward declarations for new AI and VR systems
+namespace uevr {
+namespace ai {
+    class Context7Database;
+    class AIAnalysisEngine;
+}
+namespace vr {
+    class UniversalVRSystem;
+}
+}
 
 class Mods;
 
@@ -348,6 +374,65 @@ private:
 
     RendererType m_renderer_type{RendererType::D3D11};
 
+    // New member variables for enhanced functionality
+    bool m_hooks_installed{false};
+    uint32_t m_fps{0};
+    uint32_t m_frame_count{0};
+    
+    // AI and VR System Components
+    std::unique_ptr<ai::Context7Database> m_context7_db{};
+    std::unique_ptr<vr::UniversalVRSystem> m_vr_system{};
+    std::unique_ptr<ai::AIAnalysisEngine> m_ai_engine{};
+    
+    // Legacy system components (kept for compatibility)
+    class CrossEngineAdapter;
+    class InputSystem;
+    class VRInputSystem;
+    class CameraSystem;
+    class VRCameraSystem;
+    class GameDetector;
+    class PluginManager;
+    class PerformanceMonitor;
+    class MemoryMonitor;
+    class Plugin;
+    class Hook;
+    
+    std::unique_ptr<CrossEngineAdapter> m_cross_engine_adapter{};
+    std::unique_ptr<InputSystem> m_input_system{};
+    std::unique_ptr<VRInputSystem> m_vr_input_system{};
+    std::unique_ptr<CameraSystem> m_camera_system{};
+    std::unique_ptr<VRCameraSystem> m_vr_camera_system{};
+    std::unique_ptr<GameDetector> m_game_detector{};
+    std::unique_ptr<PluginManager> m_plugin_manager{};
+    std::unique_ptr<PerformanceMonitor> m_performance_monitor{};
+    std::unique_ptr<MemoryMonitor> m_memory_monitor{};
+    
+    // Renderer-specific hook members
+    std::unique_ptr<Hook> m_d3d11_present_hook{};
+    std::unique_ptr<Hook> m_d3d11_draw_hook{};
+    std::unique_ptr<Hook> m_d3d12_present_hook{};
+    std::unique_ptr<Hook> m_d3d12_execute_hook{};
+    std::unique_ptr<Hook> m_opengl_swap_hook{};
+    std::unique_ptr<Hook> m_opengl_draw_hook{};
+    std::unique_ptr<Hook> m_vulkan_present_hook{};
+    std::unique_ptr<Hook> m_vulkan_submit_hook{};
+    
+    // Renderer-specific device members
+    ID3D11Device* m_d3d11_device{nullptr};
+    ID3D11DeviceContext* m_d3d11_context{nullptr};
+    ID3D12Device* m_d3d12_device{nullptr};
+    ID3D12CommandQueue* m_d3d12_command_queue{nullptr};
+    HGLRC m_opengl_context{nullptr};
+    VkInstance m_vulkan_instance{VK_NULL_HANDLE};
+    VkDevice m_vulkan_device{VK_NULL_HANDLE};
+    
+    // Configuration flags
+    bool m_auto_detect_renderer{true};
+    bool m_enable_hook_monitor{true};
+    
+    // Plugin management
+    std::vector<std::shared_ptr<Plugin>> m_plugins{};
+
     struct {
         int32_t selected_entry{0};
         bool initialized{false};
@@ -367,6 +452,12 @@ private: // D3D11 Init
 private: // D3D12 Init
     bool init_d3d12();
     void deinit_d3d12();
+
+private: // Hook Recovery System
+    bool attemptHookRecovery();
+    bool attemptFullReinitialization();
+    bool validateHookIntegrity();
+    bool restoreHookState();
 
 private: // D3D11 members
     struct D3D11 {

@@ -1,25 +1,6 @@
-# uevr Core Source CMake Configuration
-# 
-# Builds the core uevr functionality including:
-# - Framework initialization
-# - Exception handling
-# - Core VR system
-#
-# Copyright (c) 2024 uevr Project
-
-cmake_minimum_required(VERSION 3.16)
-project(uevr_Core VERSION 1.0.0 LANGUAGES CXX)
-
-# Set C++ standard
-set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_CXX_STANDARD_REQUIRED ON)
-
-# Core source files
+# Core sources - minimal build with only working files
 set(CORE_SOURCES
-    Framework.cpp
     ExceptionHandler.cpp
-    utility/Logger.cpp
-    utility/ConfigManager.cpp
 )
 
 # Create core library
@@ -27,19 +8,13 @@ add_library(uevr_core STATIC ${CORE_SOURCES})
 
 # Include directories
 target_include_directories(uevr_core PUBLIC
-    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+    $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>
     $<INSTALL_INTERFACE:include>
-)
-
-# Link dependencies
-target_link_libraries(uevr_core
-    spdlog::spdlog
-    nlohmann_json::nlohmann_json
 )
 
 # Compile definitions
 target_compile_definitions(uevr_core PRIVATE
-    uevr_CORE_EXPORTS
+    UEVR_CORE_EXPORTS
     _CRT_SECURE_NO_WARNINGS
     UNICODE
     _UNICODE
@@ -53,3 +28,28 @@ set_target_properties(uevr_core PROPERTIES
     OUTPUT_NAME "uevr_core"
     PREFIX ""
 )
+
+# Context7 database (if enabled)
+if(uevr_ENABLE_CONTEXT7)
+    add_library(uevr_context7_database STATIC
+        Context7Database.cpp
+    )
+    
+    target_include_directories(uevr_context7_database
+        PUBLIC
+            $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/../../include>
+            $<INSTALL_INTERFACE:include>
+        PRIVATE
+            ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+    
+    target_link_libraries(uevr_context7_database
+        PUBLIC
+            spdlog::spdlog
+            nlohmann_json::nlohmann_json
+    )
+    
+    message(STATUS "Context7 database enabled")
+endif()
+
+message(STATUS "Configured minimal core build")

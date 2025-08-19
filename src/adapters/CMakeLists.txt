@@ -63,24 +63,29 @@ if(NOT nlohmann_json_FOUND)
 endif()
 
 # Common adapter library
-add_library(uevr_common_adapters STATIC
+add_library(uevr_adapters_common STATIC
+    common/CrossEngineAdapter.cpp
+    common/UniversalEngineRegistry.cpp
     common/BaseCrossEngineAdapter.cpp
-    common/BaseCrossEngineAdapter.hpp
+    common/UniversalEngineDetector.cpp
+    common/UObjectHookSystem.cpp
     common/CrossEngineAdapterFactory.cpp
-    common/CrossEngineAdapterFactory.hpp
 )
 
-target_link_libraries(uevr_common_adapters
-    MinHook::MinHook
-    nlohmann_json::nlohmann_json
+target_link_libraries(uevr_adapters_common
+    PUBLIC
+        uevr_core
+        uevr_vr
+        MinHook::MinHook
+        nlohmann_json::nlohmann_json
 )
 
-target_include_directories(uevr_common_adapters PUBLIC
+target_include_directories(uevr_adapters_common PUBLIC
     $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
     $<INSTALL_INTERFACE:include>
 )
 
-target_compile_definitions(uevr_common_adapters PRIVATE
+target_compile_definitions(uevr_adapters_common PRIVATE
     _CRT_SECURE_NO_WARNINGS
     UNICODE
     _UNICODE
@@ -97,7 +102,7 @@ if(BUILD_RE_ENGINE_ADAPTER)
     )
     
     target_link_libraries(uevr_re_engine_adapter
-        uevr_common_adapters
+        uevr_adapters_common
         d3d11
         dxgi
         d3dcompiler
@@ -135,7 +140,7 @@ if(BUILD_REDENGINE4_ADAPTER)
     )
     
     target_link_libraries(uevr_redengine4_adapter
-        uevr_common_adapters
+        uevr_adapters_common
         MinHook::MinHook
         nlohmann_json::nlohmann_json
         d3d12
@@ -173,7 +178,7 @@ if(BUILD_MT_FRAMEWORK_ADAPTER)
     )
     
     target_link_libraries(uevr_mt_framework_adapter
-        uevr_common_adapters
+        uevr_adapters_common
         d3d11
         dxgi
     )
@@ -200,9 +205,121 @@ if(BUILD_MT_FRAMEWORK_ADAPTER)
     )
 endif()
 
+# Specific Game Adapters (Context7-powered)
+# Cyberpunk 2077 Adapter
+add_library(uevr_cyberpunk2077_adapter SHARED
+    cyberpunk2077/cyberpunk2077_adapter.cpp
+)
+
+target_link_libraries(uevr_cyberpunk2077_adapter
+    PRIVATE
+        uevr_adapters_common
+        d3d12
+        dxgi
+        dxguid
+)
+
+target_include_directories(uevr_cyberpunk2077_adapter PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
+target_compile_definitions(uevr_cyberpunk2077_adapter PRIVATE
+    _CRT_SECURE_NO_WARNINGS
+    UNICODE
+    _UNICODE
+    WIN32_LEAN_AND_MEAN
+    NOMINMAX
+    _WIN32_WINNT=0x0A00
+    CYBERPUNK2077_ADAPTER_EXPORTS
+)
+
+set_target_properties(uevr_cyberpunk2077_adapter PROPERTIES
+    OUTPUT_NAME "uevr_cyberpunk2077_adapter"
+    PREFIX ""
+    SUFFIX ".dll"
+)
+
+# Resident Evil 7 Adapter
+add_library(uevr_re7_adapter SHARED
+    re7/re7_adapter.cpp
+)
+
+target_link_libraries(uevr_re7_adapter
+    PRIVATE
+        uevr_adapters_common
+        d3d11
+        dxgi
+        d3dcompiler
+)
+
+target_include_directories(uevr_re7_adapter PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
+target_compile_definitions(uevr_re7_adapter PRIVATE
+    _CRT_SECURE_NO_WARNINGS
+    UNICODE
+    _UNICODE
+    WIN32_LEAN_AND_MEAN
+    NOMINMAX
+    _WIN32_WINNT=0x0A00
+    RE7_ADAPTER_EXPORTS
+)
+
+set_target_properties(uevr_re7_adapter PROPERTIES
+    OUTPUT_NAME "uevr_re7_adapter"
+    PREFIX ""
+    SUFFIX ".dll"
+)
+
+# Monster Hunter World Adapter
+add_library(uevr_mhw_adapter SHARED
+    mhw/mhw_adapter.cpp
+)
+
+target_link_libraries(uevr_mhw_adapter
+    PRIVATE
+        uevr_adapters_common
+        d3d11
+        dxgi
+        d3dcompiler
+)
+
+target_include_directories(uevr_mhw_adapter PRIVATE
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
+)
+
+target_compile_definitions(uevr_mhw_adapter PRIVATE
+    _CRT_SECURE_NO_WARNINGS
+    UNICODE
+    _UNICODE
+    WIN32_LEAN_AND_MEAN
+    NOMINMAX
+    _WIN32_WINNT=0x0A00
+    MHW_ADAPTER_EXPORTS
+)
+
+set_target_properties(uevr_mhw_adapter PROPERTIES
+    OUTPUT_NAME "uevr_mhw_adapter"
+    PREFIX ""
+    SUFFIX ".dll"
+)
+
 # Installation
-install(TARGETS uevr_common_adapters
+install(TARGETS uevr_adapters_common
     ARCHIVE DESTINATION lib
+)
+
+# Install specific game adapters
+install(TARGETS 
+    uevr_cyberpunk2077_adapter
+    uevr_re7_adapter
+    uevr_mhw_adapter
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
 )
 
 if(BUILD_RE_ENGINE_ADAPTER)

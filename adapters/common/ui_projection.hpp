@@ -113,6 +113,26 @@ private:
     // Internal rendering helpers
     void setup_ui_rendering_pipeline();
     void cleanup_ui_rendering_pipeline();
+    
+    // Advanced UI pipeline management
+    bool initialize_ui_shaders();
+    bool create_ui_vertex_buffers();
+    bool setup_ui_render_states();
+    bool create_ui_texture_samplers();
+    bool initialize_ui_constant_buffers();
+    bool load_ui_element_textures();
+    bool setup_imgui_integration();
+    bool initialize_vr_ui_components();
+    void setup_ui_performance_monitoring();
+    void initialize_ui_resource_manager();
+    void setup_ui_debugging_tools();
+    void cleanup_partial_ui_pipeline();
+    
+    // D3D11 specific pipeline setup
+    void setup_d3d11_ui_pipeline();
+    void setup_d3d12_ui_pipeline();
+    
+    // Matrix creation helpers
     DirectX::XMMATRIX create_billboard_matrix(const DirectX::XMFLOAT3& position,
                                              const DirectX::XMFLOAT3& camera_position) const;
     DirectX::XMMATRIX create_cylindrical_matrix(const DirectX::XMFLOAT3& position,

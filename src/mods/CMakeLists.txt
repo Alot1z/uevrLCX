@@ -4,14 +4,14 @@
 #
 # Copyright (c) 2024 uevr Project
 
-# Mod sources
+# Mod sources - using actual existing files
 set(MOD_SOURCES
-    VRModManager.cpp
-    CameraMod.cpp
-    ControllerMod.cpp
-    DisplayMod.cpp
-    AudioMod.cpp
-    PerformanceMod.cpp
+    VR.cpp
+    UObjectHook.cpp
+    PluginLoader.cpp
+    LuaLoader.cpp
+    FrameworkConfig.cpp
+    ImGuiThemeHelpers.cpp
 )
 
 # Create mods library

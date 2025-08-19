@@ -449,12 +449,14 @@ bool MTFrameworkAdapter::setFirstPersonMode(bool enabled) {
     return true;
 }
 
-void MTFrameworkAdapter::getCameraOffset(float offset[3]) const {
+bool MTFrameworkAdapter::getCameraOffset(float* offset) const {
     if (offset) {
         offset[0] = m_cameraOffset[0];
         offset[1] = m_cameraOffset[1];
         offset[2] = m_cameraOffset[2];
+        return true;
     }
+    return false;
 }
 
 void MTFrameworkAdapter::setCameraOffset(const float offset[3]) {

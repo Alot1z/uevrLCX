@@ -594,7 +594,6 @@ VRRuntime::Error OpenXR::update_input() {
 
     if (result != XR_SUCCESS) {
         spdlog::error("[VR] Failed to sync actions: {}", this->get_result_string(result));
-
         return (VRRuntime::Error)result;
     }
 
@@ -616,7 +615,6 @@ VRRuntime::Error OpenXR::update_input() {
 
             if (result != XR_SUCCESS) {
                 spdlog::error("[VR] Failed to get action state pose {}: {}", i, this->get_result_string(result));
-
                 return (VRRuntime::Error)result;
             }
 
@@ -634,7 +632,6 @@ VRRuntime::Error OpenXR::update_input() {
 
             if (result != XR_SUCCESS) {
                 spdlog::error("[VR] Failed to get action state pose {}: {}", i, this->get_result_string(result));
-
                 return (VRRuntime::Error)result;
             }
         }
@@ -658,7 +655,61 @@ VRRuntime::Error OpenXR::update_input() {
         }
     }
 
-    // TODO: Other non-hand specific inputs
+    // Handle non-hand specific inputs
+    // Update head tracking state
+    if (this->action_set.action_map.contains("head_pose")) {
+        XrActionStateGetInfo get_info{XR_TYPE_ACTION_STATE_GET_INFO};
+        get_info.action = this->action_set.action_map["head_pose"];
+        get_info.subactionPath = XR_NULL_PATH;
+
+        XrActionStatePose pose_state{XR_TYPE_ACTION_STATE_POSE};
+        result = xrGetActionStatePose(this->session, &get_info, &pose_state);
+
+        if (result == XR_SUCCESS) {
+            this->head_tracking_active = pose_state.isActive;
+        }
+    }
+
+    // Update global action states for system-level inputs
+    for (const auto& [action_name, action] : this->action_set.action_map) {
+        if (action_name.find("system_") == 0) {
+            XrActionStateGetInfo get_info{XR_TYPE_ACTION_STATE_GET_INFO};
+            get_info.action = action;
+            get_info.subactionPath = XR_NULL_PATH;
+
+            if (this->action_set.bool_actions.contains(action)) {
+                XrActionStateBoolean state{XR_TYPE_ACTION_STATE_BOOLEAN};
+                if (xrGetActionStateBoolean(this->session, &get_info, &state) == XR_SUCCESS) {
+                    this->system_actions[action_name] = state.currentState == XR_TRUE;
+                }
+            } else if (this->action_set.float_actions.contains(action)) {
+                XrActionStateFloat state{XR_TYPE_ACTION_STATE_FLOAT};
+                if (xrGetActionStateFloat(this->session, &get_info, &state) == XR_SUCCESS) {
+                    this->system_float_actions[action_name] = state.currentState;
+                }
+            }
+        }
+    }
+
+    // Handle haptic feedback processing
+    for (auto i = 0; i < 2; ++i) {
+        auto& hand = this->hands[i];
+        if (hand.pending_haptic_feedback.duration > 0.0f) {
+            XrHapticVibration vibration{XR_TYPE_HAPTIC_VIBRATION};
+            vibration.amplitude = hand.pending_haptic_feedback.amplitude;
+            vibration.duration = static_cast<XrDuration>(hand.pending_haptic_feedback.duration * 1000000000LL);
+            vibration.frequency = hand.pending_haptic_feedback.frequency;
+
+            XrHapticActionInfo haptic_info{XR_TYPE_HAPTIC_ACTION_INFO};
+            haptic_info.action = this->action_set.action_map["haptic"];
+            haptic_info.subactionPath = hand.path;
+
+            xrApplyHapticFeedback(this->session, &haptic_info, (XrHapticBaseHeader*)&vibration);
+            
+            hand.pending_haptic_feedback.duration = 0.0f;
+        }
+    }
+
     return VRRuntime::Error::SUCCESS;
 }
 

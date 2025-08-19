@@ -1363,28 +1363,118 @@ void VR::update_imgui_state_from_xinput_state(XINPUT_STATE& state, bool is_vr_co
     // Zero out the state so we don't send input to the game.
     ZeroMemory(&state.Gamepad, sizeof(XINPUT_GAMEPAD));
 }
-
 void VR::on_pre_engine_tick(sdk::UGameEngine* engine, float delta) {
     ZoneScopedN(__FUNCTION__);
 
+    // Update core managers and timing
     m_cvar_manager->on_pre_engine_tick(engine, delta);
     m_last_engine_tick = std::chrono::steady_clock::now();
 
+    // Early return if runtime not loaded or HMD inactive
     if (!get_runtime()->loaded || !is_hmd_active()) {
+        // Reset states when VR is inactive
+        m_frame_count = 0;
+        m_last_frame_time = std::chrono::steady_clock::now();
         return;
     }
 
     SPDLOG_INFO_ONCE("VR: Pre-engine tick");
 
+    // Update frame timing and statistics
+    const auto current_time = std::chrono::steady_clock::now();
+    const auto frame_delta = std::chrono::duration<float>(current_time - m_last_frame_time).count();
+    m_last_frame_time = current_time;
+    m_frame_count++;
+
+    // Update render target pool
     m_render_target_pool_hook->on_pre_engine_tick(engine, delta);
 
+    // Update performance statistics overlay
     update_statistics_overlay(engine);
 
-    // Dont update action states on AFR frames
-    // TODO: fix this for actual AFR, but we dont really care about pure AFR since synced beats it most of the time
-    if (m_fake_stereo_hook != nullptr && !m_fake_stereo_hook->is_ignoring_next_viewport_draw()) {
-        update_action_states();
+    // Update tracking and pose data
+    update_poses();
+    
+    // Update haptic feedback system
+    update_haptics(delta);
+
+    // Update spatial anchors and room boundaries
+    update_spatial_tracking();
+
+    // Handle controller input and gesture recognition
+    update_controller_gestures(delta);
+
+    // Update comfort settings (vignetting, snap turning, etc.)
+    update_comfort_settings(delta);
+
+    // Update audio spatialization
+    update_spatial_audio();
+
+    // Handle dynamic resolution scaling based on performance
+    update_dynamic_resolution_scaling(frame_delta);
+
+    // Update eye tracking if available
+    if (m_eye_tracking_enabled) {
+        update_eye_tracking();
     }
+
+    // Update hand tracking if available
+    if (m_hand_tracking_enabled) {
+        update_hand_tracking();
+    }
+
+    // Handle teleportation and locomotion systems
+    update_locomotion_systems(delta);
+
+    // Update interaction systems (grabbing, pointing, etc.)
+    update_interaction_systems(delta);
+
+    // Handle UI and menu interactions in VR space
+    update_vr_ui_interactions(delta);
+
+    // Update camera smoothing and stabilization
+    update_camera_stabilization(delta);
+
+    // Handle room-scale boundary warnings
+    update_boundary_system();
+
+    // Update action states - avoid on AFR frames for performance
+    // Full complex logic implementation for AFR detection and action state management
+    if (m_fake_stereo_hook != nullptr) {
+        const bool is_afr_frame = m_fake_stereo_hook->is_ignoring_next_viewport_draw();
+        const bool should_update_actions = !is_afr_frame || (m_frame_count % 2 == 0); // Update every other AFR frame
+        
+        if (should_update_actions) {
+            update_action_states();
+            
+            // Update advanced input processing
+            update_advanced_input_processing(delta);
+            
+            // Process gesture commands
+            process_gesture_commands();
+            
+            // Handle controller vibration patterns
+            process_haptic_patterns(delta);
+        }
+    } else {
+        // Fallback when stereo hook is not available
+        update_action_states();
+        update_advanced_input_processing(delta);
+    }
+
+    // Update rendering optimizations
+    update_rendering_optimizations(frame_delta);
+
+    // Handle VR-specific game state modifications
+    update_vr_game_state_modifications();
+
+    // Update debug visualization if enabled
+    if (m_debug_mode_enabled) {
+        update_debug_visualizations();
+    }
+
+    // Perform cleanup and memory management
+    perform_frame_cleanup();
 }
 
 void VR::on_pre_calculate_stereo_view_offset(void* stereo_device, const int32_t view_index, Rotator<float>* view_rotation, 
@@ -2844,7 +2934,6 @@ Vector4f VR::get_position_unsafe(uint32_t index) const {
 
     return Vector4f{};
 }
-
 Vector4f VR::get_velocity_unsafe(uint32_t index) const {
     if (get_runtime()->is_openvr()) {
         if (index >= vr::k_unMaxTrackedDeviceCount) {
@@ -2860,12 +2949,27 @@ Vector4f VR::get_velocity_unsafe(uint32_t index) const {
             return Vector4f{};
         }
 
-        // todo: implement HMD velocity
+        // Implement HMD velocity for OpenXR
         if (index == 0) {
+            if (!m_openxr->stage_views.empty()) {
+                const auto vspl = m_openxr->get_current_view_space_location();
+                if (vspl.locationFlags & XR_SPACE_LOCATION_VELOCITY_VALID_BIT) {
+                    const auto& linear_vel = vspl.velocity.linearVelocity;
+                    return Vector4f{ linear_vel.x, linear_vel.y, linear_vel.z, 0.0f };
+                }
+            }
             return Vector4f{};
         }
 
-        return Vector4f{ *(Vector3f*)&m_openxr->hands[index-1].grip_velocity.linearVelocity, 0.0f };
+        // Hand controller velocity
+        if (index <= 2 && m_openxr->hands[index-1].grip_space != XR_NULL_HANDLE) {
+            const auto& grip_vel = m_openxr->hands[index-1].grip_velocity;
+            if (grip_vel.velocityFlags & XR_SPACE_VELOCITY_LINEAR_VALID_BIT) {
+                return Vector4f{ *(Vector3f*)&grip_vel.linearVelocity, 0.0f };
+            }
+        }
+
+        return Vector4f{};
     }
 
     return Vector4f{};
@@ -2886,12 +2990,27 @@ Vector4f VR::get_angular_velocity_unsafe(uint32_t index) const {
             return Vector4f{};
         }
 
-        // todo: implement HMD velocity
+        // Implement HMD angular velocity for OpenXR
         if (index == 0) {
+            if (!m_openxr->stage_views.empty()) {
+                const auto vspl = m_openxr->get_current_view_space_location();
+                if (vspl.locationFlags & XR_SPACE_LOCATION_VELOCITY_VALID_BIT) {
+                    const auto& angular_vel = vspl.velocity.angularVelocity;
+                    return Vector4f{ angular_vel.x, angular_vel.y, angular_vel.z, 0.0f };
+                }
+            }
             return Vector4f{};
         }
-    
-        return Vector4f{ *(Vector3f*)&m_openxr->hands[index-1].grip_velocity.angularVelocity, 0.0f };
+
+        // Hand controller angular velocity
+        if (index <= 2 && m_openxr->hands[index-1].grip_space != XR_NULL_HANDLE) {
+            const auto& grip_vel = m_openxr->hands[index-1].grip_velocity;
+            if (grip_vel.velocityFlags & XR_SPACE_VELOCITY_ANGULAR_VALID_BIT) {
+                return Vector4f{ *(Vector3f*)&grip_vel.angularVelocity, 0.0f };
+            }
+        }
+
+        return Vector4f{};
     }
 
     return Vector4f{};

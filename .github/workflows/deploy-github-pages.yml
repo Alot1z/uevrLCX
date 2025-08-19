@@ -1,0 +1,88 @@
+name: Deploy Context7 VR Analysis System to GitHub Pages
+
+on:
+  push:
+    branches: [ master, main ]
+  pull_request:
+    branches: [ master, main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  generate-database:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Generate Context7 Database
+      run: |
+        python3 scripts/generate_context7_database.py
+        
+    - name: Upload database artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: context7-database
+        path: data/context7_games_database_complete.json
+        
+  build-pages:
+    needs: generate-database
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v4
+      
+    - name: Download database
+      uses: actions/download-artifact@v3
+      with:
+        name: context7-database
+        path: data/
+        
+    - name: Set up Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        cache-dependency-path: 'docs/github-pages/package-lock.json'
+        
+    - name: Install dependencies
+      working-directory: docs/github-pages
+      run: npm ci
+      
+    - name: Build GitHub Pages site
+      working-directory: docs/github-pages  
+      run: |
+        npm run build
+        cp ../../data/context7_games_database_complete.json ./dist/api/
+        
+    - name: Setup Pages
+      uses: actions/configure-pages@v3
+      
+    - name: Upload to GitHub Pages
+      uses: actions/upload-pages-artifact@v2
+      with:
+        path: docs/github-pages/dist
+        
+  deploy:
+    needs: build-pages
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+    - name: Deploy to GitHub Pages
+      id: deployment
+      uses: actions/deploy-pages@v2

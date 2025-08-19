@@ -49,6 +49,14 @@ public:
     // Camera Management
     bool convertCameraToVR() override;
     bool updateCameraMatrices(float* viewMatrix, float* projectionMatrix) override;
+    bool getCameraOffset(float* offset) override;
+    float getFOVMultiplier() const override;
+    bool isFirstPersonMode() const override;
+
+    // Engine-Specific Handles
+    void* getRenderer() const override;
+    void* getCamera() const override;
+    void* getInput() const override;
 
     // Input Handling
     bool processVRInput(const void* leftControllerData, const void* rightControllerData) override;
@@ -78,30 +86,6 @@ public:
     // ===== MT Framework Specific Features =====
     
     /**
-     * @brief Get MT Framework renderer handle
-     * @return Renderer handle or nullptr if not available
-     */
-    void* getRenderer() const;
-
-    /**
-     * @brief Get MT Framework camera handle
-     * @return Camera handle or nullptr if not available
-     */
-    void* getCamera() const;
-
-    /**
-     * @brief Get MT Framework input handle
-     * @return Input handle or nullptr if not available
-     */
-    void* getInput() const;
-
-    /**
-     * @brief Check if first-person mode is enabled
-     * @return true if first-person mode is active
-     */
-    bool isFirstPersonMode() const;
-
-    /**
      * @brief Enable/disable first-person mode
      * @param enabled true to enable, false to disable
      * @return true if mode change successful
@@ -109,22 +93,10 @@ public:
     bool setFirstPersonMode(bool enabled);
 
     /**
-     * @brief Get camera offset for VR positioning
-     * @param offset Output array for [x, y, z] offset values
-     */
-    void getCameraOffset(float offset[3]) const;
-
-    /**
      * @brief Set camera offset for VR positioning
      * @param offset Input array for [x, y, z] offset values
      */
     void setCameraOffset(const float offset[3]);
-
-    /**
-     * @brief Get FOV multiplier for VR
-     * @return FOV multiplier value
-     */
-    float getFOVMultiplier() const;
 
     /**
      * @brief Set FOV multiplier for VR

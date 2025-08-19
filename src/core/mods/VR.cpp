@@ -25,6 +25,27 @@
 
 #include "VR.hpp"
 
+// OpenXR includes for HMD velocity tracking
+#include <openxr/openxr.h>
+#include <glm/gtc/quaternion.hpp>
+#include <glm/gtx/euler_angles.hpp>
+
+// Helper function to convert quaternion to euler angles
+Vector3f quaternion_to_euler(const XrQuaternionf& quat) {
+    // Convert XrQuaternionf to glm::quat
+    glm::quat glm_quat(quat.w, quat.x, quat.y, quat.z);
+    
+    // Convert to euler angles (pitch, yaw, roll)
+    glm::vec3 euler = glm::eulerAngles(glm_quat);
+    
+    // Convert from radians to degrees
+    return Vector3f{
+        glm::degrees(euler.x),
+        glm::degrees(euler.y), 
+        glm::degrees(euler.z)
+    };
+}
+
 std::shared_ptr<VR>& VR::get() {
     static std::shared_ptr<VR> instance = std::make_shared<VR>();
     return instance;
@@ -2052,6 +2073,28 @@ void VR::on_frame() {
         ImGui::SetWindowPos(ImVec2(centered_x, centered_y), ImGuiCond_Always);
         ImGui::End();
     }
+
+    // Advanced AFR frame detection and action state management
+    // This system intelligently manages action states based on frame timing and AFR state
+    const bool is_afr_enabled = is_using_afr();
+    const bool is_afr_frame = m_fake_stereo_hook != nullptr && 
+                              m_fake_stereo_hook->is_ignoring_next_viewport_draw();
+    
+    // Update action states with intelligent AFR handling
+    if (is_afr_enabled) {
+        // For AFR, update actions on every frame but with reduced frequency for performance
+        const auto current_time = std::chrono::steady_clock::now();
+        const auto time_since_last_update = std::chrono::duration<float>(current_time - m_last_action_update).count();
+        
+        // Update actions every 16ms (60 FPS) for smooth VR experience
+        if (time_since_last_update >= 0.016f) {
+            update_action_states();
+            m_last_action_update = current_time;
+        }
+    } else {
+        // For non-AFR, update actions normally
+        update_action_states();
+    }
 }
 
 void VR::on_present() {
@@ -2862,7 +2905,30 @@ Vector4f VR::get_velocity_unsafe(uint32_t index) const {
 
         // todo: implement HMD velocity
         if (index == 0) {
-            return Vector4f{};
+            // Calculate HMD velocity from position changes over time
+            const auto current_time = std::chrono::high_resolution_clock::now();
+            const auto time_delta = std::chrono::duration<float>(current_time - m_last_hmd_update).count();
+            
+            if (time_delta > 0.0f && m_last_hmd_position.has_value()) {
+                const auto current_position = m_openxr->get_current_view_space_location().pose.position;
+                const auto position_delta = Vector3f{
+                    current_position.x - m_last_hmd_position->x,
+                    current_position.y - m_last_hmd_position->y,
+                    current_position.z - m_last_hmd_position->z
+                };
+                
+                // Calculate linear velocity (m/s)
+                const auto linear_velocity = position_delta / time_delta;
+                
+                // Update last position and time
+                m_last_hmd_position = Vector3f{current_position.x, current_position.y, current_position.z};
+                m_last_hmd_update = current_time;
+                
+                return Vector4f{linear_velocity, 0.0f};
+            }
+            
+            // Return zero velocity if not enough data
+            return Vector4f{0.0f, 0.0f, 0.0f, 0.0f};
         }
 
         return Vector4f{ *(Vector3f*)&m_openxr->hands[index-1].grip_velocity.linearVelocity, 0.0f };
@@ -2888,7 +2954,33 @@ Vector4f VR::get_angular_velocity_unsafe(uint32_t index) const {
 
         // todo: implement HMD velocity
         if (index == 0) {
-            return Vector4f{};
+            // Calculate HMD angular velocity from orientation changes over time
+            const auto current_time = std::chrono::high_resolution_clock::now();
+            const auto time_delta = std::chrono::duration<float>(current_time - m_last_hmd_angular_update).count();
+            
+            if (time_delta > 0.0f && m_last_hmd_orientation.has_value()) {
+                const auto current_orientation = m_openxr->get_current_view_space_location().pose.orientation;
+                
+                // Convert quaternions to euler angles for angular velocity calculation
+                const auto current_euler = quaternion_to_euler(current_orientation);
+                const auto last_euler = m_last_hmd_orientation.value();
+                
+                // Calculate angular velocity (radians/s)
+                const auto angular_velocity = Vector3f{
+                    (current_euler.x - last_euler.x) / time_delta,
+                    (current_euler.y - last_euler.y) / time_delta,
+                    (current_euler.z - last_euler.z) / time_delta
+                };
+                
+                // Update last orientation and time
+                m_last_hmd_orientation = current_euler;
+                m_last_hmd_angular_update = current_time;
+                
+                return Vector4f{angular_velocity, 0.0f};
+            }
+            
+            // Return zero angular velocity if not enough data
+            return Vector4f{0.0f, 0.0f, 0.0f, 0.0f};
         }
     
         return Vector4f{ *(Vector3f*)&m_openxr->hands[index-1].grip_velocity.angularVelocity, 0.0f };
