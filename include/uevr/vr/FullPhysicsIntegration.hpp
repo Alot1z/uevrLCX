@@ -10,22 +10,26 @@
 
 #pragma once
 
+#include <vector>
+#include <memory>
+#include <unordered_map>
+#include <string>
+#include <functional>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include <glm/gtc/quaternion.hpp>
-#include <memory>
-#include <vector>
-#include <string>
-#include <cstdint>
-#include <unordered_map>
-#include <functional>
-
 #include "FullAestheticCollisionEngine.hpp"
 
 namespace uevr::vr {
 
 // Forward declarations
 class FullAestheticCollisionEngine;
+
+// Use GLM types directly
+using Vector3 = glm::vec3;
+using Quaternion = glm::quat;
+using Matrix4x4 = glm::mat4;
+using Transform = glm::mat4;
 
 // Enums
 enum class ForceType {
@@ -35,97 +39,65 @@ enum class ForceType {
     TORQUE
 };
 
-enum class GravityType {
-    NONE = 0,
-    UNIFORM,
-    DIRECTIONAL,
-    RADIAL
-};
-
-enum class PhysicsQuality {
-    LOW = 0,
-    MEDIUM,
-    HIGH,
-    ULTRA
-};
-
-enum class PhysicsEngine {
+enum class PhysicsEngineType {
     BUILTIN = 0,
     BULLET,
     PHYSX,
     CUSTOM
 };
 
-// Structs (using basic types instead of GLM)
-struct Vector3 {
-    float x, y, z;
-    
-    Vector3() : x(0), y(0), z(0) {}
-    Vector3(float x, float y, float z) : x(x), y(y), z(z) {}
-    
-    // Conversion operators for compatibility
-    operator Vec3() const { return Vec3(x, y, z); }
-    Vector3(const Vec3& v) : x(v.x), y(v.y), z(v.z) {}
+enum class SimulationType {
+    RIGID_BODY = 0,
+    SOFT_BODY,
+    FLUID,
+    PARTICLE
 };
 
-struct Quaternion {
-    float x, y, z, w;
-    
-    Quaternion() : x(0), y(0), z(0), w(1) {}
-    Quaternion(float x, float y, float z, float w) : x(x), y(y), z(z), w(w) {}
-    
-    // Conversion operators for compatibility
-    operator Quat() const { return Quat(x, y, z, w); }
-    Quaternion(const Quat& q) : x(q.x), y(q.y), z(q.z), w(q.w) {}
-};
-
-struct Transform {
+// Physics object structure
+struct PhysicsObject {
+    ObjectID id;
     Vector3 position;
     Quaternion rotation;
-    Vector3 scale;
-    
-    Transform() : scale(1, 1, 1) {}
-};
-
-struct PhysicsProperties {
+    Vector3 velocity;
+    Vector3 angular_velocity;
+    Vector3 size;
     float mass;
     float friction;
     float restitution;
-    float linear_damping;
-    float angular_damping;
     bool is_static;
     bool is_kinematic;
-    bool is_trigger;
+    SimulationType simulation_type;
+    
+    PhysicsObject() : id(0), position(0.0f), rotation(1.0f, 0.0f, 0.0f, 0.0f),
+                      velocity(0.0f), angular_velocity(0.0f), size(1.0f),
+                      mass(1.0f), friction(0.5f), restitution(0.5f),
+                      is_static(false), is_kinematic(false), simulation_type(SimulationType::RIGID_BODY) {}
 };
 
-struct PhysicsState {
-    Vector3 position;
-    Quaternion rotation;
-    Vector3 linear_velocity;
-    Vector3 angular_velocity;
-    Vector3 linear_acceleration;
-    Vector3 angular_acceleration;
-    Vector3 force;
-    Vector3 torque;
+// Force structure
+struct Force {
+    ForceType type;
+    Vector3 direction;
+    float magnitude;
+    Vector3 point_of_application;
+    float duration;
+    
+    Force() : type(ForceType::LINEAR), direction(0.0f, 1.0f, 0.0f), magnitude(0.0f),
+              point_of_application(0.0f), duration(0.0f) {}
+};
+
+// Physics simulation settings
+struct PhysicsSettings {
     Vector3 gravity;
-};
-
-struct PhysicsPerformance {
-    float simulation_time;
-    float collision_time;
-    size_t active_objects;
-    size_t collision_checks;
-    size_t constraint_solves;
-    float memory_usage;
-};
-
-struct InteractionResult {
-    ObjectID object;
-    HandType hand;
-    bool success;
-    Vector3 position;
-    Vector3 normal;
-    float force;
+    float time_step;
+    int max_substeps;
+    bool enable_ccd;
+    float collision_tolerance;
+    bool enable_multithreading;
+    
+    PhysicsSettings() : gravity(0.0f, -9.81f, 0.0f), time_step(1.0f/60.0f),
+                       max_substeps(10), enable_ccd(true), collision_tolerance(0.001f),
+                       enable_multithreading(true) {}
 };
 
 // Main physics integration class
@@ -133,128 +105,97 @@ class FullPhysicsIntegration {
 public:
     FullPhysicsIntegration();
     virtual ~FullPhysicsIntegration();
-
+    
     // Initialization and shutdown
     bool initialize();
     void shutdown();
-
-    // Core physics simulation
-    virtual void updatePhysicsSimulation(float delta_time);
-    virtual void stepSimulation(float delta_time);
-    virtual void resetSimulation();
-
-    // Force application
-    virtual void applyForce(ObjectID object, const Vector3& force, ForceType type);
-    virtual void applyForceAtPoint(ObjectID object, const Vector3& force, const Vector3& point, ForceType type);
-    virtual void applyTorque(ObjectID object, const Vector3& torque);
-    virtual void applyImpulse(ObjectID object, const Vector3& impulse);
-    virtual void applyAngularImpulse(ObjectID object, const Vector3& impulse);
-
-    // Gravity
-    virtual void setGravity(const Vector3& gravity);
-    virtual void setGravityType(GravityType type);
-    virtual Vector3 getGravity() const;
-    virtual void enableGravity(ObjectID object, bool enable);
-
-    // Object management
-    virtual ObjectID createPhysicsObject(const PhysicsProperties& props, const Transform& transform);
-    virtual void destroyPhysicsObject(ObjectID id);
-    virtual void updateObjectTransform(ObjectID id, const Transform& transform);
-    virtual Transform getObjectTransform(ObjectID id) const;
-    virtual PhysicsState getObjectState(ObjectID id) const;
-
-    // Collision handling
-    virtual void setCollisionCallback(std::function<void(ObjectID, ObjectID, const Vector3&, const Vector3&)> callback);
-    virtual void enableCollisionDetection(ObjectID obj1, ObjectID obj2, bool enable);
-    virtual void setCollisionFilter(ObjectID object, uint32_t group, uint32_t mask);
-
-    // Constraints and joints
-    virtual void createConstraint(ObjectID obj1, ObjectID obj2, const Vector3& pivot, const Vector3& axis);
-    virtual void removeConstraint(ObjectID constraint_id);
-    virtual void setConstraintLimits(ObjectID constraint_id, float lower, float upper);
-
-    // Object interaction
-    virtual bool grabObject(ObjectID object, HandType hand);
-    virtual bool releaseObject(ObjectID object, HandType hand);
-    virtual bool throwObject(ObjectID object, const Vector3& velocity, const Vector3& angular_velocity);
-    virtual bool pushObject(ObjectID object, const Vector3& force);
-    virtual bool pullObject(ObjectID object, const Vector3& force);
-
-    // Physics queries
-    virtual Vector3 getObjectForce(ObjectID object) const;
-    virtual Vector3 getObjectGravity(ObjectID object) const;
-    virtual Vector3 getObjectPosition(ObjectID object) const;
-    virtual Quaternion getObjectRotation(ObjectID object) const;
-    virtual Vector3 getObjectScale(ObjectID object) const;
-    virtual Vector3 getObjectVelocity(ObjectID object) const;
-    virtual Vector3 getObjectAngularVelocity(ObjectID object) const;
-    virtual Vector3 getObjectMomentum(ObjectID object) const;
-    virtual Vector3 getObjectAngularMomentum(ObjectID object) const;
-
+    
     // Physics engine management
-    virtual void setPhysicsEngine(PhysicsEngine engine);
-    virtual void setPhysicsQuality(PhysicsQuality quality);
-    virtual void setMaxSubSteps(int max_steps);
-    virtual void setFixedTimeStep(float time_step);
+    bool setPhysicsEngine(PhysicsEngineType engine_type);
+    bool initializePhysicsEngine();
+    void shutdownPhysicsEngine();
+    
+    // Object management
+    bool addPhysicsObject(const PhysicsObject& obj);
+    void removePhysicsObject(ObjectID id);
+    void updatePhysicsObject(ObjectID id, const PhysicsObject& obj);
+    PhysicsObject getPhysicsObject(ObjectID id) const;
+    
+    // Force application
+    void applyForce(ObjectID id, const Force& force);
+    void applyForceAtPoint(ObjectID id, const Force& force, const Vector3& point);
+    void applyImpulse(ObjectID id, const Vector3& impulse);
+    void applyTorque(ObjectID id, const Vector3& torque);
+    
+    // Physics simulation
+    void updatePhysicsSimulation(float delta_time);
+    void stepSimulation(float time_step);
+    void setGravity(const Vector3& gravity);
+    void setTimeStep(float time_step);
+    
+    // Collision detection integration
+    void setCollisionEngine(FullAestheticCollisionEngine* collision_engine);
+    void processCollisionEvents();
+    void handleCollisionResponse(const CollisionResult& collision);
+    
+    // Advanced physics features
+    bool enableSoftBodySimulation(ObjectID id);
+    bool enableFluidSimulation(ObjectID id);
+    bool enableParticleSystem(ObjectID id);
+    
+    // Performance optimization
+    void setMultithreadingEnabled(bool enabled);
+    void setBroadPhaseEnabled(bool enabled);
+    void setSpatialPartitioningEnabled(bool enabled);
+    void setLODEnabled(bool enabled);
+    
+    // Configuration
+    void setPhysicsSettings(const PhysicsSettings& settings);
+    PhysicsSettings getPhysicsSettings() const;
+    void setMaxPhysicsObjects(int max_objects);
+    void setCollisionLayers(uint32_t layers);
+    
+    // Utility functions
+    Vector3 getObjectPosition(ObjectID id) const;
+    Quaternion getObjectRotation(ObjectID id) const;
+    Vector3 getObjectVelocity(ObjectID id) const;
+    bool isObjectStatic(ObjectID id) const;
+    
+    // Debug and profiling
+    int getActivePhysicsObjectCount() const;
+    float getLastSimulationTime() const;
+    void resetPerformanceMetrics();
+    void enableDebugRendering(bool enabled);
 
-    // Performance and debugging
-    virtual PhysicsPerformance getPerformanceMetrics() const;
-    virtual void resetPerformanceMetrics();
-    virtual void enableProfiling(bool enable);
-    virtual void setDebugDraw(bool enable);
-
-    // Integration with collision engine
-    virtual void setCollisionEngine(FullAestheticCollisionEngine* collision_engine);
-    virtual void syncWithCollisionEngine();
-
-protected:
+private:
     // Internal data structures
-    struct PhysicsObjectData {
-        ObjectID id;
-        PhysicsType type;
-        Transform transform;
-        PhysicsProperties properties;
-        PhysicsState state;
-        bool is_active;
-        bool gravity_enabled;
-    };
-
-    struct ConstraintData {
-        ObjectID id;
-        ObjectID object1;
-        ObjectID object2;
-        Vector3 pivot;
-        Vector3 axis;
-        float lower_limit;
-        float upper_limit;
-        bool is_active;
-    };
-
-    // Member variables
-    std::unordered_map<ObjectID, PhysicsObjectData> m_physics_objects;
-    std::vector<ConstraintData> m_constraints;
-    std::vector<std::function<void(ObjectID, ObjectID, const Vector3&, const Vector3&)>> m_collision_callbacks;
+    std::unordered_map<ObjectID, PhysicsObject> m_physics_objects;
+    std::vector<Force> m_force_queue;
+    PhysicsSettings m_settings;
     
+    // Engine references
     FullAestheticCollisionEngine* m_collision_engine;
-    PhysicsEngine m_current_engine;
-    PhysicsQuality m_quality;
+    PhysicsEngineType m_current_engine;
     
-    Vector3 m_global_gravity;
-    GravityType m_gravity_type;
-    int m_max_sub_steps;
-    float m_fixed_time_step;
+    // Performance settings
+    bool m_multithreading_enabled;
+    bool m_broad_phase_enabled;
+    bool m_spatial_partitioning_enabled;
+    bool m_lod_enabled;
+    bool m_debug_rendering_enabled;
     
-    ObjectID m_next_object_id;
-    ObjectID m_next_constraint_id;
+    // Performance metrics
+    float m_last_simulation_time;
+    int m_active_object_count;
+    int m_max_physics_objects;
     
-    // Performance tracking
-    PhysicsPerformance m_performance;
-    bool m_profiling_enabled;
-    bool m_debug_draw_enabled;
-    
-    // Simulation state
-    float m_accumulator;
-    bool m_simulation_running;
+    // Internal methods
+    void processForceQueue();
+    void updateSpatialPartitioning();
+    void applyPhysicsConstraints();
+    void handlePhysicsEvents();
+    bool validatePhysicsObject(const PhysicsObject& obj);
+    void cleanupPhysicsObjects();
 };
 
 } // namespace uevr::vr
