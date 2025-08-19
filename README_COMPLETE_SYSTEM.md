@@ -1,5 +1,10 @@
 # 🚀 uevr Complete System - Production Ready!
 
+> NOTE • ARCHIVE / ASPIRATIONAL
+> This document references advanced scripts and build targets that are not part of this repository.
+> For the real, working build/run flow, follow README → Quick Start (target: `uevr_test`).
+> Path: `README.md` → "Quick Start".
+
 **Unreal Engine VR (uevr) Cross-Engine VR Adapter System** - A comprehensive solution for adding VR support to non-Unreal Engine games.
 
 ## 🎯 **SYSTEM OVERVIEW**

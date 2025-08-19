@@ -34,6 +34,8 @@ RE7Adapter::RE7Adapter()
     , m_horror_optimizer(nullptr)
     , m_camera_extractor(nullptr)
     , m_ui_adapter(nullptr)
+    , m_collision_engine(nullptr)
+    , m_physics_engine(nullptr)
     , m_frame_count(0)
     , m_comfort_level(1.0f) {
     

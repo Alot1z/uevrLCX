@@ -28,8 +28,8 @@ target_link_libraries(uevr_vr
 )
 
 # VR runtime specific libraries
-if(uevr_ENABLE_OPENVR AND TARGET OpenVR::OpenVR)
-    target_link_libraries(uevr_vr PRIVATE OpenVR::OpenVR)
+if(uevr_ENABLE_OPENVR AND TARGET openvr_api)
+    target_link_libraries(uevr_vr PRIVATE openvr_api)
 endif()
 
 if(uevr_ENABLE_OPENXR AND TARGET OpenXR::OpenXR)
