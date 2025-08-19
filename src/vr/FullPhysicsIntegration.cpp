@@ -105,8 +105,12 @@ public:
             m_collisionDetectionEnabled[PhysicsType::STATIC] = true;
             m_collisionDetectionEnabled[PhysicsType::DYNAMIC] = true;
             m_collisionDetectionEnabled[PhysicsType::KINEMATIC] = true;
-            m_collisionDetectionEnabled[PhysicsType::RIGID_BODY] = true;
-            m_collisionDetectionEnabled[PhysicsType::SOFT_BODY] = true;
+            m_collisionDetectionEnabled[PhysicsType::RAGDOLL] = true;
+            m_collisionDetectionEnabled[PhysicsType::FLUID] = true;
+            m_collisionDetectionEnabled[PhysicsType::PARTICLE] = true;
+            m_collisionDetectionEnabled[PhysicsType::VEHICLE] = true;
+            m_collisionDetectionEnabled[PhysicsType::WEAPON] = true;
+            m_collisionDetectionEnabled[PhysicsType::ENVIRONMENTAL] = true;
             
             // Reset performance counters
             m_performance = PerformanceData{};
@@ -225,14 +229,24 @@ public:
                     // Movement will be controlled externally
                     break;
                     
-                case PhysicsType::RIGID_BODY:
-                    // Rigid body physics simulation
-                    // Full physics simulation will be applied
+                case PhysicsType::FLUID:
+                    // Fluid simulation placeholder
                     break;
-                    
-                case PhysicsType::SOFT_BODY:
-                    // Soft body physics simulation
-                    // Deformable physics simulation will be applied
+
+                case PhysicsType::PARTICLE:
+                    // Particle simulation placeholder
+                    break;
+
+                case PhysicsType::VEHICLE:
+                    // Vehicle dynamics placeholder
+                    break;
+
+                case PhysicsType::WEAPON:
+                    // Weapon physics placeholder
+                    break;
+
+                case PhysicsType::ENVIRONMENTAL:
+                    // Environmental object behavior placeholder
                     break;
                     
                 default:
@@ -263,7 +277,7 @@ public:
                         break;
                         
                     case PhysicsType::DYNAMIC:
-                    case PhysicsType::RIGID_BODY:
+                    case PhysicsType::RAGDOLL:
                         // Apply forces and update velocity
                         if (physics.mass > 0.0f) {
                             // F = ma, so a = F/m
@@ -287,9 +301,24 @@ public:
                         // Position updates should be handled externally
                         break;
                         
-                    case PhysicsType::SOFT_BODY:
-                        // Soft body physics simulation
-                        // This would involve more complex deformation calculations
+                    case PhysicsType::FLUID:
+                        // Fluid physics placeholder
+                        break;
+
+                    case PhysicsType::PARTICLE:
+                        // Particle physics placeholder
+                        break;
+
+                    case PhysicsType::VEHICLE:
+                        // Vehicle physics placeholder
+                        break;
+
+                    case PhysicsType::WEAPON:
+                        // Weapon physics placeholder
+                        break;
+
+                    case PhysicsType::ENVIRONMENTAL:
+                        // Environmental physics placeholder
                         break;
                 }
                 
@@ -473,50 +502,47 @@ public:
             return;
         }
         
-        // Handle collision response based on type
+        // Handle collision response based on type (mapped to supported enums)
         switch (type) {
-            case CollisionType::HAND_OBJECT:
-                // Handle hand-object collision
-                handleHandObjectCollision(collision);
+            case CollisionType::TOUCH:
+                spdlog::debug("Collision response: TOUCH at distance {}", collision.collision_distance);
                 break;
-                
-            case CollisionType::HAND_DOOR:
-                // Handle hand-door collision
-                handleHandDoorCollision(collision);
+
+            case CollisionType::GRAB:
+                spdlog::debug("Collision response: GRAB object {}", static_cast<int>(collision.colliding_object));
                 break;
-                
-            case CollisionType::HAND_WEAPON:
-                // Handle hand-weapon collision
-                handleHandWeaponCollision(collision);
+
+            case CollisionType::PUSH:
+                spdlog::debug("Collision response: PUSH with intensity {}", collision.collision_intensity);
                 break;
-                
-            case CollisionType::HAND_VEHICLE:
-                // Handle hand-vehicle collision
-                handleHandVehicleCollision(collision);
+
+            case CollisionType::PULL:
+                spdlog::debug("Collision response: PULL with intensity {}", collision.collision_intensity);
                 break;
-                
-            case CollisionType::HAND_NPC:
-                // Handle hand-NPC collision (visual feedback only!)
-                handleHandNPCCollision(collision);
+
+            case CollisionType::THROW:
+                spdlog::debug("Collision response: THROW");
                 break;
-                
-            case CollisionType::HAND_ENVIRONMENT:
-                // Handle hand-environment collision
-                handleHandEnvironmentCollision(collision);
+
+            case CollisionType::BREAK:
+                spdlog::debug("Collision response: BREAK");
                 break;
-                
-            case CollisionType::HAND_PUZZLE:
-                // Handle hand-puzzle collision
-                handleHandPuzzleCollision(collision);
+
+            case CollisionType::INTERACT:
+                spdlog::debug("Collision response: INTERACT");
                 break;
-                
-            case CollisionType::HAND_INVENTORY:
-                // Handle hand-inventory collision
-                handleHandInventoryCollision(collision);
+
+            case CollisionType::DAMAGE:
+                spdlog::debug("Collision response: DAMAGE");
                 break;
-                
+
+            case CollisionType::TRIGGER:
+                spdlog::debug("Collision response: TRIGGER");
+                break;
+
+            case CollisionType::NONE:
             default:
-                spdlog::warn("Unknown collision type for response: {}", static_cast<int>(type));
+                spdlog::warn("Unknown or NONE collision type for response: {}", static_cast<int>(type));
                 break;
         }
     }
