@@ -25,6 +25,41 @@ namespace uevr::vr {
 // Forward declarations
 class FullAestheticCollisionEngine;
 
+// Basic types
+using ObjectID = uint64_t;
+
+// Forward declarations for collision types
+enum class CollisionType {
+    NONE = 0,
+    TOUCH,
+    GRAB,
+    PUSH,
+    PULL,
+    COLLIDE
+};
+
+enum class HandType {
+    LEFT = 0,
+    RIGHT,
+    BOTH
+};
+
+// Collision result structure
+struct CollisionResult {
+    bool collision_detected;
+    CollisionType type;
+    Vector3 collision_point;
+    Vector3 collision_normal;
+    float collision_distance;
+    ObjectID object1;
+    ObjectID object2;
+    HandType hand;
+    
+    CollisionResult() : collision_detected(false), type(CollisionType::NONE), 
+                       collision_point(0.0f), collision_normal(0.0f, 1.0f, 0.0f),
+                       collision_distance(0.0f), object1(0), object2(0), hand(HandType::LEFT) {}
+};
+
 // Use GLM types directly
 using Vector3 = glm::vec3;
 using Quaternion = glm::quat;
@@ -56,11 +91,11 @@ enum class SimulationType {
 // Physics object structure
 struct PhysicsObject {
     ObjectID id;
-    Vector3 position;
-    Quaternion rotation;
-    Vector3 velocity;
-    Vector3 angular_velocity;
-    Vector3 size;
+    glm::vec3 position;
+    glm::quat rotation;
+    glm::vec3 velocity;
+    glm::vec3 angular_velocity;
+    glm::vec3 size;
     float mass;
     float friction;
     float restitution;

@@ -22,7 +22,12 @@
 *_IMPLEMENTATION_*.md
 *_STATUS_*.md
 
-# Build artifacts
-node_modules/
-dist/
+# Build outputs
 build/
+dist/
+node_modules/
+*.exe
+*.dll
+*.lib
+*.obj
+*.pdb

@@ -15,8 +15,8 @@
 #include <memory>
 
 // Forward declarations
-struct uevr_PluginVersion;
-struct uevr_PluginInitializeParam;
+struct UEVR_PluginVersion;
+struct UEVR_PluginInitializeParam;
 
 // RE Engine adapter class
 class REEngineAdapter {
@@ -114,6 +114,6 @@ private:
 
 // Plugin entry points
 extern "C" {
-    __declspec(dllexport) void uevr_plugin_required_version(uevr_PluginVersion* version);
-    __declspec(dllexport) bool uevr_plugin_initialize(const uevr_PluginInitializeParam* param);
+    __declspec(dllexport) void uevr_plugin_required_version(UEVR_PluginVersion* version);
+    __declspec(dllexport) bool uevr_plugin_initialize(const UEVR_PluginInitializeParam* param);
 }
