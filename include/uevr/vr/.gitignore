@@ -1,4 +1,4 @@
-# UEVR CI Tools .gitignore
+# UEVR VR Headers .gitignore
 # Ignore AI/ML content and all script files
 
 # Script files - ALWAYS IGNORE
@@ -21,9 +21,3 @@
 *_COMPLETE_*.md
 *_IMPLEMENTATION_*.md
 *_STATUS_*.md
-
-# CI outputs
-logs/
-artifacts/
-*.log
-*.tmp

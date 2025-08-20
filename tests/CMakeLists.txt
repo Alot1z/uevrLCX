@@ -1,5 +1,5 @@
 # Context7 VR Analysis System Tests
-cmake_minimum_required(VERSION 3.20)
+cmake_minimum_required(VERSION 3.16)
 
 # Enable testing
 enable_testing()

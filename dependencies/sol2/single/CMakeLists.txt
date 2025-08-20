@@ -22,7 +22,7 @@
 
 # # # # sol3, single
 # # # Required minimum version statement
-cmake_minimum_required(VERSION 3.15.0)
+cmake_minimum_required(VERSION 3.16)
 
 find_package(PythonInterp 3 REQUIRED)
 

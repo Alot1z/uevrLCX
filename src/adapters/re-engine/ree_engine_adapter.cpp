@@ -15,7 +15,7 @@
 #include <spdlog/spdlog.h>
 
 #include "ree_engine_adapter.hpp"
-#include "SOURCECODE/UEVR/include/uevr/API.h"
+#include "../../../SOURCECODE/UEVR/include/uevr/API.h"
 
 // Global adapter instance
 static REEngineAdapter* g_adapter = nullptr;
@@ -62,6 +62,8 @@ REEngineAdapter::REEngineAdapter()
     , m_display_width(0)
     , m_display_height(0)
     , m_vr_enabled(false)
+    , m_frame_count(0)
+    , m_last_frame_time(0.0)
 {
     // Initialize all stereo rendering resources to nullptr
     for (int i = 0; i < 2; ++i) {
@@ -75,6 +77,9 @@ REEngineAdapter::REEngineAdapter()
     memset(&m_camera_matrices, 0, sizeof(m_camera_matrices));
     m_camera_matrices.valid = false;
     m_vr_config = {1.0f, 0.063f, 0.1f, 1000.0f}; // Default values
+    
+    // Initialize performance monitor
+    m_performance_monitor = {0.0, 0.0f, 0.0f, 0.0f};
 
     spdlog::info("[RE Engine Adapter] Initializing...");
 }

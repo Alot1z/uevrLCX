@@ -1,4 +1,4 @@
-# UEVR CI Tools .gitignore
+# UEVR UEVR Adapter .gitignore
 # Ignore AI/ML content and all script files
 
 # Script files - ALWAYS IGNORE
@@ -22,8 +22,11 @@
 *_IMPLEMENTATION_*.md
 *_STATUS_*.md
 
-# CI outputs
-logs/
-artifacts/
-*.log
-*.tmp
+# Build outputs
+build/
+dist/
+*.exe
+*.dll
+*.lib
+*.obj
+*.pdb
