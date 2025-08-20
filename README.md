@@ -7,7 +7,7 @@
 
 [![Dev Build (PR)](https://github.com/Alot1z/uevrLCX/actions/workflows/dev-build-pr.yml/badge.svg)](https://github.com/Alot1z/uevrLCX/actions/workflows/dev-build-pr.yml)
 [![Dev Release](https://github.com/Alot1z/uevrLCX/actions/workflows/dev-release.yml/badge.svg)](https://github.com/Alot1z/uevrLCX/actions/workflows/dev-release.yml)
-[![Docs](https://github.com/Alot1z/uevrLCX/actions/workflows/pages.yml/badge.svg)](https://github.com/Alot1z/uevrLCX/actions/workflows/pages.yml)
+[![Docs](https://github.com/Alot1z/uevrLCX/actions/workflows/deploy-github-pages.yml/badge.svg)](https://github.com/Alot1z/uevrLCX/actions/workflows/deploy-github-pages.yml)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![C++17](https://img.shields.io/badge/C++-17-blue.svg)](https://isocpp.org/std/the-standard)
 [![Platform: Windows](https://img.shields.io/badge/Platform-Windows-green.svg)](https://www.microsoft.com/windows)
@@ -223,7 +223,7 @@ cmake --build build --config Release
 
 - Dev Build (PR): https://github.com/Alot1z/uevrLCX/actions/workflows/dev-build-pr.yml
 - Dev Release: https://github.com/Alot1z/uevrLCX/actions/workflows/dev-release.yml
-- Docs (Pages): https://github.com/Alot1z/uevrLCX/actions/workflows/pages.yml
+- Docs (Pages): https://github.com/Alot1z/uevrLCX/actions/workflows/deploy-github-pages.yml
 
 ## 🌐 **COMMUNITY**
 

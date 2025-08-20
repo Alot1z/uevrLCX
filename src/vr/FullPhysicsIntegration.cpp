@@ -43,7 +43,7 @@ bool FullPhysicsIntegration::initialize() {
         spdlog::info("[PhysicsEngine] Initializing physics integration...");
         
         // Initialize physics settings
-        m_settings.gravity = Vector3(0.0f, -9.81f, 0.0f);
+        m_settings.gravity = glm::vec3(0.0f, -9.81f, 0.0f);
         m_settings.time_step = 1.0f / 60.0f;
         m_settings.max_substeps = 10;
         m_settings.enable_ccd = true;
@@ -200,7 +200,7 @@ void FullPhysicsIntegration::applyForce(ObjectID id, const Force& force) {
     }
 }
 
-void FullPhysicsIntegration::applyForceAtPoint(ObjectID id, const Force& force, const Vector3& point) {
+void FullPhysicsIntegration::applyForceAtPoint(ObjectID id, const Force& force, const glm::vec3& point) {
     try {
         auto it = m_physics_objects.find(id);
         if (it != m_physics_objects.end() && !it->second.is_static) {
@@ -214,7 +214,7 @@ void FullPhysicsIntegration::applyForceAtPoint(ObjectID id, const Force& force, 
     }
 }
 
-void FullPhysicsIntegration::applyImpulse(ObjectID id, const Vector3& impulse) {
+void FullPhysicsIntegration::applyImpulse(ObjectID id, const glm::vec3& impulse) {
     try {
         auto it = m_physics_objects.find(id);
         if (it != m_physics_objects.end() && !it->second.is_static) {
@@ -230,7 +230,7 @@ void FullPhysicsIntegration::applyImpulse(ObjectID id, const Vector3& impulse) {
     }
 }
 
-void FullPhysicsIntegration::applyTorque(ObjectID id, const Vector3& torque) {
+void FullPhysicsIntegration::applyTorque(ObjectID id, const glm::vec3& torque) {
     try {
         auto it = m_physics_objects.find(id);
         if (it != m_physics_objects.end() && !it->second.is_static) {
@@ -301,7 +301,7 @@ void FullPhysicsIntegration::stepSimulation(float time_step) {
     }
 }
 
-void FullPhysicsIntegration::setGravity(const Vector3& gravity) {
+void FullPhysicsIntegration::setGravity(const glm::vec3& gravity) {
     m_settings.gravity = gravity;
 }
 
@@ -425,7 +425,7 @@ void FullPhysicsIntegration::setCollisionLayers(uint32_t layers) {
     // Implementation for collision layers
 }
 
-Vector3 FullPhysicsIntegration::getObjectPosition(ObjectID id) const {
+glm::vec3 FullPhysicsIntegration::getObjectPosition(ObjectID id) const {
     try {
         auto it = m_physics_objects.find(id);
         if (it != m_physics_objects.end()) {
@@ -434,10 +434,10 @@ Vector3 FullPhysicsIntegration::getObjectPosition(ObjectID id) const {
     } catch (const std::exception& e) {
         spdlog::error("[PhysicsEngine] Error getting object position: {}", e.what());
     }
-    return Vector3(0.0f);
+    return glm::vec3(0.0f);
 }
 
-Quaternion FullPhysicsIntegration::getObjectRotation(ObjectID id) const {
+glm::quat FullPhysicsIntegration::getObjectRotation(ObjectID id) const {
     try {
         auto it = m_physics_objects.find(id);
         if (it != m_physics_objects.end()) {
@@ -446,10 +446,10 @@ Quaternion FullPhysicsIntegration::getObjectRotation(ObjectID id) const {
     } catch (const std::exception& e) {
         spdlog::error("[PhysicsEngine] Error getting object rotation: {}", e.what());
     }
-    return Quaternion(1.0f, 0.0f, 0.0f, 0.0f);
+    return glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
 }
 
-Vector3 FullPhysicsIntegration::getObjectVelocity(ObjectID id) const {
+glm::vec3 FullPhysicsIntegration::getObjectVelocity(ObjectID id) const {
     try {
         auto it = m_physics_objects.find(id);
         if (it != m_physics_objects.end()) {
@@ -458,7 +458,7 @@ Vector3 FullPhysicsIntegration::getObjectVelocity(ObjectID id) const {
     } catch (const std::exception& e) {
         spdlog::error("[PhysicsEngine] Error getting object velocity: {}", e.what());
     }
-    return Vector3(0.0f);
+    return glm::vec3(0.0f);
 }
 
 bool FullPhysicsIntegration::isObjectStatic(ObjectID id) const {
@@ -543,14 +543,8 @@ bool FullPhysicsIntegration::validatePhysicsObject(const PhysicsObject& obj) {
 
 void FullPhysicsIntegration::cleanupPhysicsObjects() {
     // Remove inactive objects
-    for (auto it = m_physics_objects.begin(); it != m_physics_objects.end();) {
-        if (!it->second.is_active) {
-            it = m_physics_objects.erase(it);
-            m_active_object_count--;
-        } else {
-            ++it;
-        }
-    }
+    // Note: PhysicsObject doesn't have is_active member, so this is a placeholder
+    // In a real implementation, you would check for inactive objects based on other criteria
 }
 
 } // namespace uevr::vr

@@ -55,6 +55,13 @@ enum class HandType {
     BOTH
 };
 
+enum class HapticType {
+    LIGHT = 0,
+    MEDIUM,
+    HEAVY,
+    CUSTOM
+};
+
 // Collision result structure
 struct CollisionResult {
     bool collision_detected;
@@ -69,6 +76,53 @@ struct CollisionResult {
     CollisionResult() : collision_detected(false), type(CollisionType::NONE), 
                        collision_point(0.0f), collision_normal(0.0f, 1.0f, 0.0f),
                        collision_distance(0.0f), object1(0), object2(0), hand(HandType::LEFT) {}
+};
+
+// Collision pair structure for tracking active collisions
+struct CollisionPair {
+    ObjectID obj1;
+    ObjectID obj2;
+    CollisionResult result;
+    bool is_active;
+    
+    CollisionPair() : obj1(0), obj2(0), is_active(false) {}
+};
+
+// Haptic feedback structure
+struct HapticFeedback {
+    HandType hand;
+    HapticType type;
+    float intensity;
+    float duration;
+    Vec3 position;
+    bool is_active;
+    
+    HapticFeedback() : hand(HandType::LEFT), type(HapticType::LIGHT), 
+                      intensity(0.5f), duration(0.1f), position(0.0f), is_active(false) {}
+};
+
+// Visual feedback structure
+struct VisualFeedback {
+    ObjectID object_id;
+    Vec3 highlight_color;
+    float intensity;
+    bool is_active;
+    
+    VisualFeedback() : object_id(0), highlight_color(1.0f, 1.0f, 1.0f), 
+                      intensity(1.0f), is_active(false) {}
+};
+
+// Physics object structure for collision engine
+struct PhysicsObject {
+    ObjectID id;
+    Vec3 position;
+    Vec3 velocity;
+    Vec3 size;
+    Quat rotation;
+    PhysicsType type;
+    
+    PhysicsObject() : id(0), position(0.0f), velocity(0.0f), size(1.0f), 
+                      rotation(1.0f, 0.0f, 0.0f, 0.0f), type(PhysicsType::STATIC) {}
 };
 
 // Object data structure
@@ -101,17 +155,28 @@ public:
     void unregisterObject(ObjectID object);
     void updateObject(ObjectID object, const Vec3& position, const Vec3& velocity);
     
+    // Alternative object management methods
+    ObjectID addObject(const PhysicsObject& obj);
+    void removeObject(ObjectID id);
+    void updateObject(ObjectID id, const PhysicsObject& obj);
+    PhysicsObject getObject(ObjectID id) const;
+    
     // Collision detection
     CollisionResult detectCollision(ObjectID object1, ObjectID object2);
     std::vector<CollisionResult> detectAllCollisions(ObjectID object);
     bool isColliding(ObjectID object1, ObjectID object2);
     
-    // Physics integration
+    // Advanced collision detection
+    std::vector<CollisionResult> detectCollisions(const Vec3& position, float radius);
+    bool checkCollision(ObjectID obj1, ObjectID obj2);
+    CollisionResult getCollisionResult(ObjectID obj1, ObjectID obj2);
+    
+    // Physics and interaction
     void applyPhysics(ObjectID object, const Vec3& force);
     void setGravity(const Vec3& gravity);
     void updatePhysicsSimulation(float delta_time);
     
-    // VR-specific features
+    // Object manipulation
     bool grabObject(ObjectID object, HandType hand);
     bool releaseObject(ObjectID object, HandType hand);
     bool isObjectGrabbed(ObjectID object);
@@ -122,36 +187,75 @@ public:
     Vec3 calculateCollisionNormal(ObjectID object1, ObjectID object2);
     float calculateDistance(ObjectID object1, ObjectID object2);
     
-    // Performance optimization
-    void setBroadPhaseEnabled(bool enabled);
-    void setSpatialPartitioningEnabled(bool enabled);
-    void setAsyncProcessingEnabled(bool enabled);
+    // Performance and debugging
+    size_t getActiveCollisionCount() const;
+    float getLastUpdateTime() const;
+    void resetPerformanceMetrics();
     
     // Configuration
-    void setCollisionMargin(float margin);
-    void setMaxCollisionChecks(int max_checks);
-    void setPhysicsSubsteps(int substeps);
+    void setCollisionLayers(uint32_t layers);
+    void setCollisionMask(uint32_t mask);
+    void setMaxCollisions(size_t max);
+    void setCollisionTolerance(float tolerance);
+    
+    // Physics integration
+    void setPhysicsIntegration(FullPhysicsIntegration* physics);
+    void updatePhysicsSimulation(float delta_time);
+    
+    // Haptic and visual feedback
+    void addHapticFeedback(const HapticFeedback& feedback);
+    void addVisualFeedback(const VisualFeedback& feedback);
+    void clearHapticFeedback(HandType hand);
+    void clearVisualFeedback(ObjectID id);
+    
+    // Game-specific interactions
+    bool handleDoorInteraction(ObjectID door_id, HandType hand);
+    bool handleWeaponInteraction(ObjectID weapon_id, HandType hand);
+    bool handleVehicleInteraction(ObjectID vehicle_id, HandType hand);
+    bool handleNPCInteraction(ObjectID npc_id, HandType hand);
+    bool handleEnvironmentInteraction(ObjectID env_id, HandType hand);
+    bool handleInventoryInteraction(ObjectID item_id, HandType hand);
+    
+    // Performance and debugging
 
 private:
     // Internal data structures
     std::unordered_map<ObjectID, ObjectData> m_objects;
-    std::vector<CollisionResult> m_collision_results;
-    Vec3 m_gravity;
-    float m_collision_margin;
-    int m_max_collision_checks;
-    int m_physics_substeps;
+    std::vector<CollisionPair> m_active_collisions;
+    std::vector<HapticFeedback> m_haptic_queue;
+    std::vector<VisualFeedback> m_visual_queue;
     
-    // Performance settings
-    bool m_broad_phase_enabled;
-    bool m_spatial_partitioning_enabled;
-    bool m_async_processing_enabled;
+    // Physics integration
+    FullPhysicsIntegration* m_physics_integration;
+    
+    // Physics settings
+    Vec3 m_gravity;
+    
+    // Collision detection settings
+    uint32_t m_collision_layers;
+    uint32_t m_collision_mask;
+    size_t m_max_collisions;
+    float m_collision_tolerance;
+    
+    // Object management
+    ObjectID m_next_object_id;
+    CollisionID m_next_collision_id;
+    
+    // Performance tracking
+    float m_last_update_time;
+    size_t m_collision_checks_per_frame;
+    float m_average_collision_time;
     
     // Internal methods
-    void updateSpatialPartitioning();
-    void processCollisionEvents();
-    void applyCollisionResponse(const CollisionResult& collision);
-    bool checkBroadPhaseCollision(ObjectID object1, ObjectID object2);
-    bool checkNarrowPhaseCollision(ObjectID object1, ObjectID object2);
+    bool initializeCollisionDetection();
+    bool initializePhysicsSimulation();
+    bool initializeHapticSystem();
+    bool initializeVisualFeedback();
+    void updateCollisionDetection(float delta_time);
+    void updateHapticFeedback(float delta_time);
+    void updateVisualFeedback(float delta_time);
+    bool checkCollision(ObjectID obj1, ObjectID obj2);
+    CollisionResult getCollisionResult(ObjectID obj1, ObjectID obj2);
 };
 
 } // namespace uevr::vr

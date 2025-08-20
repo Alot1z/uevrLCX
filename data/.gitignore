@@ -1,4 +1,4 @@
-# UEVR Scripts .gitignore
+# UEVR Data .gitignore
 # Ignore AI/ML content and all script files
 
 # Script files - ALWAYS IGNORE
@@ -22,13 +22,10 @@
 *_IMPLEMENTATION_*.md
 *_STATUS_*.md
 
-# Python cache and outputs
-__pycache__/
-*.pyc
-*.pyo
-*.pyd
-.Python
-env/
-venv/
-.env
-.venv
+# Data files (often contain AI/ML data)
+*.json
+*.csv
+*.xml
+*.yaml
+*.yml
+
