@@ -9,542 +9,558 @@
  */
 
 #include "uevr/vr/FullPhysicsIntegration.hpp"
-#include "uevr/vr/FullAestheticCollisionEngine.hpp"
 #include <spdlog/spdlog.h>
 #include <algorithm>
-#include <glm/glm.hpp>
-#include <glm/gtc/matrix_transform.hpp>
-#include <glm/gtc/quaternion.hpp>
+#include <chrono>
+#include <fstream>
+#include <sstream>
+#include <json/json.hpp>
+#include <limits>
 
-namespace uevr::vr {
+namespace uevr {
 
-FullPhysicsIntegration::FullPhysicsIntegration()
-    : m_collision_engine(nullptr)
-    , m_current_engine(PhysicsEngineType::BUILTIN)
-    , m_multithreading_enabled(true)
-    , m_broad_phase_enabled(true)
-    , m_spatial_partitioning_enabled(true)
-    , m_lod_enabled(false)
-    , m_debug_rendering_enabled(false)
-    , m_last_simulation_time(0.0f)
-    , m_active_object_count(0)
-    , m_max_physics_objects(1000) {
-    
-    spdlog::info("[PhysicsEngine] FullPhysicsIntegration created");
-}
-
-FullPhysicsIntegration::~FullPhysicsIntegration() {
-    shutdown();
-    spdlog::info("[PhysicsEngine] FullPhysicsIntegration destroyed");
-}
-
-bool FullPhysicsIntegration::initialize() {
-    try {
-        spdlog::info("[PhysicsEngine] Initializing physics integration...");
+// Private implementation class
+class FullPhysicsIntegration::Impl {
+public:
+    Impl() : m_initialized(false), m_debug_mode(false), m_error_state(false),
+             m_physics_quality(PhysicsQuality::MEDIUM), m_simulation_type(PhysicsSimType::FIXED_STEP),
+             m_time_step(1.0f / 60.0f), m_max_sub_steps(10), m_solver_iterations(4),
+             m_gravity_magnitude(9.81f), m_gravity_direction(0.0f, -1.0f, 0.0f),
+             m_enable_ccd(true), m_enable_profiling(true), m_enable_multithreading(true),
+             m_num_threads(4), m_horror_intensity(0.5f), m_combat_intensity(0.5f),
+             m_cyberpunk_intensity(0.5f), m_current_game("") {
         
-        // Initialize physics settings
-        m_settings.gravity = glm::vec3(0.0f, -9.81f, 0.0f);
-        m_settings.time_step = 1.0f / 60.0f;
-        m_settings.max_substeps = 10;
-        m_settings.enable_ccd = true;
-        m_settings.collision_tolerance = 0.001f;
-        m_settings.enable_multithreading = true;
-        
-        // Initialize performance settings
-        m_multithreading_enabled = true;
-        m_broad_phase_enabled = true;
-        m_spatial_partitioning_enabled = true;
-        m_lod_enabled = false;
-        m_debug_rendering_enabled = false;
-        
-        spdlog::info("[PhysicsEngine] Physics integration initialized successfully");
-        return true;
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Failed to initialize: {}", e.what());
-        return false;
+        spdlog::info("[FullPhysicsIntegration] Initializing implementation");
+        initializeDefaultPhysicsSettings();
     }
-}
-
-void FullPhysicsIntegration::shutdown() {
-    try {
-        spdlog::info("[PhysicsEngine] Shutting down physics integration...");
+    
+    ~Impl() {
+        spdlog::info("[FullPhysicsIntegration] Shutting down implementation");
+        shutdown();
+    }
+    
+    // Core initialization
+    bool initialize() {
+        if (m_initialized) {
+            spdlog::warn("[FullPhysicsIntegration] Already initialized");
+            return true;
+        }
+        
+        try {
+            spdlog::info("[FullPhysicsIntegration] Starting initialization");
+            
+            // Initialize physics engine
+            if (!initializePhysicsEngine()) {
+                spdlog::error("[FullPhysicsIntegration] Failed to initialize physics engine");
+                return false;
+            }
+            
+            // Initialize collision system
+            if (!initializeCollisionSystem()) {
+                spdlog::error("[FullPhysicsIntegration] Failed to initialize collision system");
+                return false;
+            }
+            
+            // Initialize constraint solver
+            if (!initializeConstraintSolver()) {
+                spdlog::error("[FullPhysicsIntegration] Failed to initialize constraint solver");
+                return false;
+            }
+            
+            // Initialize force system
+            if (!initializeForceSystem()) {
+                spdlog::error("[FullPhysicsIntegration] Failed to initialize force system");
+                return false;
+            }
+            
+            // Set up physics settings
+            applyPhysicsSettings();
+            
+            m_initialized = true;
+            spdlog::info("[FullPhysicsIntegration] Initialization completed successfully");
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullPhysicsIntegration] Initialization failed: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    void shutdown() {
+        if (!m_initialized) return;
+        
+        spdlog::info("[FullPhysicsIntegration] Shutting down");
         
         // Clear all physics objects
         m_physics_objects.clear();
-        m_force_queue.clear();
+        m_forces.clear();
+        m_constraints.clear();
+        m_collision_pairs.clear();
         
-        spdlog::info("[PhysicsEngine] Physics integration shutdown complete");
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error during shutdown: {}", e.what());
-    }
-}
-
-bool FullPhysicsIntegration::setPhysicsEngine(PhysicsEngineType engine_type) {
-    try {
-        m_current_engine = engine_type;
-        spdlog::info("[PhysicsEngine] Physics engine set to type: {}", static_cast<int>(engine_type));
-        return true;
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Failed to set physics engine: {}", e.what());
-        return false;
-    }
-}
-
-bool FullPhysicsIntegration::initializePhysicsEngine() {
-    try {
-        spdlog::info("[PhysicsEngine] Initializing physics engine...");
+        // Reset performance metrics
+        resetPerformanceMetrics();
         
-        // Initialize based on current engine type
-        switch (m_current_engine) {
-            case PhysicsEngineType::BUILTIN:
-                spdlog::info("[PhysicsEngine] Using built-in physics engine");
-                break;
-            case PhysicsEngineType::BULLET:
-                spdlog::info("[PhysicsEngine] Using Bullet physics engine");
-                break;
-            case PhysicsEngineType::PHYSX:
-                spdlog::info("[PhysicsEngine] Using PhysX physics engine");
-                break;
-            case PhysicsEngineType::CUSTOM:
-                spdlog::info("[PhysicsEngine] Using custom physics engine");
-                break;
-        }
-        
-        spdlog::info("[PhysicsEngine] Physics engine initialized successfully");
-        return true;
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Failed to initialize physics engine: {}", e.what());
-        return false;
-    }
-}
-
-void FullPhysicsIntegration::shutdownPhysicsEngine() {
-    try {
-        spdlog::info("[PhysicsEngine] Shutting down physics engine...");
-        spdlog::info("[PhysicsEngine] Physics engine shutdown complete");
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error during physics engine shutdown: {}", e.what());
-    }
-}
-
-bool FullPhysicsIntegration::addPhysicsObject(const PhysicsObject& obj) {
-    try {
-        if (m_physics_objects.find(obj.id) != m_physics_objects.end()) {
-            spdlog::warn("[PhysicsEngine] Physics object {} already exists", obj.id);
-            return false;
-        }
-        
-        if (!validatePhysicsObject(obj)) {
-            spdlog::error("[PhysicsEngine] Invalid physics object {}", obj.id);
-            return false;
-        }
-        
-        m_physics_objects[obj.id] = obj;
-        m_active_object_count++;
-        
-        spdlog::debug("[PhysicsEngine] Added physics object {} at position ({}, {}, {})", 
-                     obj.id, obj.position.x, obj.position.y, obj.position.z);
-        return true;
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Failed to add physics object {}: {}", obj.id, e.what());
-        return false;
-    }
-}
-
-void FullPhysicsIntegration::removePhysicsObject(ObjectID id) {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end()) {
-            m_physics_objects.erase(it);
-            m_active_object_count--;
-            spdlog::debug("[PhysicsEngine] Removed physics object {}", id);
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error removing physics object {}: {}", id, e.what());
-    }
-}
-
-void FullPhysicsIntegration::updatePhysicsObject(ObjectID id, const PhysicsObject& obj) {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end()) {
-            it->second = obj;
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error updating physics object {}: {}", id, e.what());
-    }
-}
-
-PhysicsObject FullPhysicsIntegration::getPhysicsObject(ObjectID id) const {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end()) {
-            return it->second;
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error getting physics object {}: {}", id, e.what());
+        m_initialized = false;
+        spdlog::info("[FullPhysicsIntegration] Shutdown completed");
     }
     
-    return PhysicsObject{};
-}
-
-void FullPhysicsIntegration::applyForce(ObjectID id, const Force& force) {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end() && !it->second.is_static) {
-            m_force_queue.push_back(force);
-            spdlog::debug("[PhysicsEngine] Applied force to object {}", id);
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error applying force to object {}: {}", id, e.what());
+    bool isInitialized() const {
+        return m_initialized;
     }
-}
-
-void FullPhysicsIntegration::applyForceAtPoint(ObjectID id, const Force& force, const glm::vec3& point) {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end() && !it->second.is_static) {
-            Force point_force = force;
-            point_force.point_of_application = point;
-            m_force_queue.push_back(point_force);
-            spdlog::debug("[PhysicsEngine] Applied force at point to object {}", id);
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error applying force at point to object {}: {}", id, e.what());
-    }
-}
-
-void FullPhysicsIntegration::applyImpulse(ObjectID id, const glm::vec3& impulse) {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end() && !it->second.is_static) {
-            Force impulse_force;
-            impulse_force.type = ForceType::IMPULSE;
-            impulse_force.direction = glm::normalize(impulse);
-            impulse_force.magnitude = glm::length(impulse);
-            m_force_queue.push_back(impulse_force);
-            spdlog::debug("[PhysicsEngine] Applied impulse to object {}", id);
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error applying impulse to object {}: {}", id, e.what());
-    }
-}
-
-void FullPhysicsIntegration::applyTorque(ObjectID id, const glm::vec3& torque) {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end() && !it->second.is_static) {
-            Force torque_force;
-            torque_force.type = ForceType::TORQUE;
-            torque_force.direction = glm::normalize(torque);
-            torque_force.magnitude = glm::length(torque);
-            m_force_queue.push_back(torque_force);
-            spdlog::debug("[PhysicsEngine] Applied torque to object {}", id);
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error applying torque to object {}: {}", id, e.what());
-    }
-}
-
-void FullPhysicsIntegration::updatePhysicsSimulation(float delta_time) {
-    try {
-        // Process force queue
-        processForceQueue();
-        
-        // Step physics simulation
-        stepSimulation(delta_time);
-        
-        // Update spatial partitioning if enabled
-        if (m_spatial_partitioning_enabled) {
-            updateSpatialPartitioning();
+    
+    // Physics system management
+    bool setPhysicsQuality(PhysicsQuality quality) {
+        if (!m_initialized) {
+            spdlog::warn("[FullPhysicsIntegration] Not initialized, cannot set physics quality");
+            return false;
         }
         
-        // Process collision events
-        processCollisionEvents();
-        
-        // Update performance metrics
-        m_last_simulation_time = delta_time;
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error updating physics simulation: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::stepSimulation(float time_step) {
-    try {
-        // Apply physics substepping
-        int substeps = std::min(m_settings.max_substeps, static_cast<int>(time_step / m_settings.time_step));
-        
-        for (int i = 0; i < substeps; ++i) {
-            // Update object positions and velocities
-            for (auto& pair : m_physics_objects) {
-                PhysicsObject& obj = pair.second;
-                
-                if (obj.is_static || obj.is_kinematic) {
-                    continue;
-                }
-                
-                // Apply gravity
-                obj.velocity += m_settings.gravity * m_settings.time_step;
-                
-                // Update position
-                obj.position += obj.velocity * m_settings.time_step;
-                
-                // Apply damping
-                obj.velocity *= (1.0f - obj.friction * m_settings.time_step);
-                obj.angular_velocity *= (1.0f - obj.friction * m_settings.time_step);
+        try {
+            m_physics_quality = quality;
+            
+            // Apply quality-specific settings
+            switch (quality) {
+                case PhysicsQuality::LOW:
+                    m_solver_iterations = 2;
+                    m_max_sub_steps = 5;
+                    m_enable_ccd = false;
+                    break;
+                    
+                case PhysicsQuality::MEDIUM:
+                    m_solver_iterations = 4;
+                    m_max_sub_steps = 10;
+                    m_enable_ccd = true;
+                    break;
+                    
+                case PhysicsQuality::HIGH:
+                    m_solver_iterations = 6;
+                    m_max_sub_steps = 15;
+                    m_enable_ccd = true;
+                    break;
+                    
+                case PhysicsQuality::ULTRA:
+                    m_solver_iterations = 8;
+                    m_max_sub_steps = 20;
+                    m_enable_ccd = true;
+                    break;
             }
-        }
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error in physics simulation step: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::setGravity(const glm::vec3& gravity) {
-    m_settings.gravity = gravity;
-}
-
-void FullPhysicsIntegration::setTimeStep(float time_step) {
-    m_settings.time_step = time_step;
-}
-
-void FullPhysicsIntegration::setCollisionEngine(FullAestheticCollisionEngine* collision_engine) {
-    m_collision_engine = collision_engine;
-    spdlog::info("[PhysicsEngine] Collision engine set");
-}
-
-void FullPhysicsIntegration::processCollisionEvents() {
-    if (m_collision_engine) {
-        // Process collision events from collision engine
-        // This would integrate with the collision detection system
-    }
-}
-
-void FullPhysicsIntegration::handleCollisionResponse(const CollisionResult& collision) {
-    try {
-        // Handle collision response based on collision type
-        switch (collision.type) {
-            case CollisionType::TOUCH:
-                // Light collision response
-                break;
-            case CollisionType::GRAB:
-                // Grab collision response
-                break;
-            case CollisionType::PUSH:
-                // Push collision response
-                break;
-            case CollisionType::PULL:
-                // Pull collision response
-                break;
-            case CollisionType::COLLIDE:
-                // Full collision response
-                break;
-            default:
-                break;
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error handling collision response: {}", e.what());
-    }
-}
-
-bool FullPhysicsIntegration::enableSoftBodySimulation(ObjectID id) {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end()) {
-            it->second.simulation_type = SimulationType::SOFT_BODY;
-            spdlog::info("[PhysicsEngine] Enabled soft body simulation for object {}", id);
+            
+            applyPhysicsSettings();
+            spdlog::info("[FullPhysicsIntegration] Physics quality set to {}", static_cast<int>(quality));
             return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullPhysicsIntegration] Failed to set physics quality: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
         }
-        return false;
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error enabling soft body simulation: {}", e.what());
-        return false;
-    }
-}
-
-bool FullPhysicsIntegration::enableFluidSimulation(ObjectID id) {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end()) {
-            it->second.simulation_type = SimulationType::FLUID;
-            spdlog::info("[PhysicsEngine] Enabled fluid simulation for object {}", id);
-            return true;
-        }
-        return false;
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error enabling fluid simulation: {}", e.what());
-        return false;
-    }
-}
-
-bool FullPhysicsIntegration::enableParticleSystem(ObjectID id) {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end()) {
-            it->second.simulation_type = SimulationType::PARTICLE;
-            spdlog::info("[PhysicsEngine] Enabled particle system for object {}", id);
-            return true;
-        }
-        return false;
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error enabling particle system: {}", e.what());
-        return false;
-    }
-}
-
-void FullPhysicsIntegration::setMultithreadingEnabled(bool enabled) {
-    m_multithreading_enabled = enabled;
-}
-
-void FullPhysicsIntegration::setBroadPhaseEnabled(bool enabled) {
-    m_broad_phase_enabled = enabled;
-}
-
-void FullPhysicsIntegration::setSpatialPartitioningEnabled(bool enabled) {
-    m_spatial_partitioning_enabled = enabled;
-}
-
-void FullPhysicsIntegration::setLODEnabled(bool enabled) {
-    m_lod_enabled = enabled;
-}
-
-void FullPhysicsIntegration::setPhysicsSettings(const PhysicsSettings& settings) {
-    m_settings = settings;
-}
-
-PhysicsSettings FullPhysicsIntegration::getPhysicsSettings() const {
-    return m_settings;
-}
-
-void FullPhysicsIntegration::setMaxPhysicsObjects(int max_objects) {
-    m_max_physics_objects = max_objects;
-}
-
-void FullPhysicsIntegration::setCollisionLayers(uint32_t layers) {
-    // Implementation for collision layers
-}
-
-glm::vec3 FullPhysicsIntegration::getObjectPosition(ObjectID id) const {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end()) {
-            return it->second.position;
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error getting object position: {}", e.what());
-    }
-    return glm::vec3(0.0f);
-}
-
-glm::quat FullPhysicsIntegration::getObjectRotation(ObjectID id) const {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end()) {
-            return it->second.rotation;
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error getting object rotation: {}", e.what());
-    }
-    return glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
-}
-
-glm::vec3 FullPhysicsIntegration::getObjectVelocity(ObjectID id) const {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end()) {
-            return it->second.velocity;
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error getting object velocity: {}", e.what());
-    }
-    return glm::vec3(0.0f);
-}
-
-bool FullPhysicsIntegration::isObjectStatic(ObjectID id) const {
-    try {
-        auto it = m_physics_objects.find(id);
-        if (it != m_physics_objects.end()) {
-            return it->second.is_static;
-        }
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error checking if object is static: {}", e.what());
-    }
-    return false;
-}
-
-int FullPhysicsIntegration::getActivePhysicsObjectCount() const {
-    return m_active_object_count;
-}
-
-float FullPhysicsIntegration::getLastSimulationTime() const {
-    return m_last_simulation_time;
-}
-
-void FullPhysicsIntegration::resetPerformanceMetrics() {
-    m_last_simulation_time = 0.0f;
-    m_active_object_count = 0;
-}
-
-void FullPhysicsIntegration::enableDebugRendering(bool enabled) {
-    m_debug_rendering_enabled = enabled;
-}
-
-// Private methods
-void FullPhysicsIntegration::processForceQueue() {
-    try {
-        for (const Force& force : m_force_queue) {
-            // Process each force in the queue
-            // This would apply forces to physics objects
-        }
-        
-        // Clear the force queue
-        m_force_queue.clear();
-        
-    } catch (const std::exception& e) {
-        spdlog::error("[PhysicsEngine] Error processing force queue: {}", e.what());
-    }
-}
-
-void FullPhysicsIntegration::updateSpatialPartitioning() {
-    // Placeholder for spatial partitioning update
-    // In a real implementation, this would update octree/quadtree structures
-}
-
-void FullPhysicsIntegration::applyPhysicsConstraints() {
-    // Placeholder for physics constraints
-    // In a real implementation, this would apply joint constraints, etc.
-}
-
-void FullPhysicsIntegration::handlePhysicsEvents() {
-    // Placeholder for physics events
-    // In a real implementation, this would handle physics callbacks and events
-}
-
-bool FullPhysicsIntegration::validatePhysicsObject(const PhysicsObject& obj) {
-    // Basic validation
-    if (obj.mass <= 0.0f) {
-        spdlog::warn("[PhysicsEngine] Invalid mass for object {}", obj.id);
-        return false;
     }
     
-    if (obj.friction < 0.0f || obj.friction > 1.0f) {
-        spdlog::warn("[PhysicsEngine] Invalid friction for object {}", obj.id);
-        return false;
+    bool setSimulationType(PhysicsSimType sim_type) {
+        if (!m_initialized) {
+            spdlog::warn("[FullPhysicsIntegration] Not initialized, cannot set simulation type");
+            return false;
+        }
+        
+        try {
+            m_simulation_type = sim_type;
+            
+            // Apply simulation type-specific settings
+            switch (sim_type) {
+                case PhysicsSimType::REAL_TIME:
+                    m_time_step = 1.0f / 60.0f;
+                    m_max_sub_steps = 1;
+                    break;
+                    
+                case PhysicsSimType::FIXED_STEP:
+                    m_time_step = 1.0f / 60.0f;
+                    m_max_sub_steps = 10;
+                    break;
+                    
+                case PhysicsSimType::ADAPTIVE:
+                    m_time_step = 1.0f / 60.0f;
+                    m_max_sub_steps = 20;
+                    break;
+                    
+                case PhysicsSimType::HYBRID:
+                    m_time_step = 1.0f / 60.0f;
+                    m_max_sub_steps = 15;
+                    break;
+            }
+            
+            applyPhysicsSettings();
+            spdlog::info("[FullPhysicsIntegration] Simulation type set to {}", static_cast<int>(sim_type));
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullPhysicsIntegration] Failed to set simulation type: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
     }
     
-    if (obj.restitution < 0.0f || obj.restitution > 1.0f) {
-        spdlog::warn("[PhysicsEngine] Invalid restitution for object {}", obj.id);
-        return false;
+    bool setTimeStep(float time_step) {
+        if (!m_initialized) {
+            spdlog::warn("[FullPhysicsIntegration] Not initialized, cannot set time step");
+            return false;
+        }
+        
+        try {
+            if (time_step <= 0.0f) {
+                spdlog::error("[FullPhysicsIntegration] Invalid time step: {}", time_step);
+                return false;
+            }
+            
+            m_time_step = time_step;
+            applyPhysicsSettings();
+            spdlog::info("[FullPhysicsIntegration] Time step set to {}", time_step);
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullPhysicsIntegration] Failed to set time step: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
     }
     
+    bool setMaxSubSteps(uint32_t max_steps) {
+        if (!m_initialized) {
+            spdlog::warn("[FullPhysicsIntegration] Not initialized, cannot set max sub steps");
+            return false;
+        }
+        
+        try {
+            if (max_steps == 0) {
+                spdlog::error("[FullPhysicsIntegration] Invalid max sub steps: {}", max_steps);
+                return false;
+            }
+            
+            m_max_sub_steps = max_steps;
+            applyPhysicsSettings();
+            spdlog::info("[FullPhysicsIntegration] Max sub steps set to {}", max_steps);
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullPhysicsIntegration] Failed to set max sub steps: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    bool setSolverIterations(uint32_t iterations) {
+        if (!m_initialized) {
+            spdlog::warn("[FullPhysicsIntegration] Not initialized, cannot set solver iterations");
+            return false;
+        }
+        
+        try {
+            if (iterations == 0) {
+                spdlog::error("[FullPhysicsIntegration] Invalid solver iterations: {}", iterations);
+                return false;
+            }
+            
+            m_solver_iterations = iterations;
+            applyPhysicsSettings();
+            spdlog::info("[FullPhysicsIntegration] Solver iterations set to {}", iterations);
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullPhysicsIntegration] Failed to set solver iterations: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    bool setGravity(float magnitude, const glm::vec3& direction) {
+        if (!m_initialized) {
+            spdlog::warn("[FullPhysicsIntegration] Not initialized, cannot set gravity");
+            return false;
+        }
+        
+        try {
+            if (magnitude < 0.0f) {
+                spdlog::error("[FullPhysicsIntegration] Invalid gravity magnitude: {}", magnitude);
+                return false;
+            }
+            
+            m_gravity_magnitude = magnitude;
+            m_gravity_direction = glm::normalize(direction);
+            
+            // Apply gravity to all physics objects
+            for (auto& obj_pair : m_physics_objects) {
+                auto& obj_data = obj_pair.second;
+                if (!obj_data.is_static && obj_data.physics_enabled && !obj_data.use_custom_gravity) {
+                    obj_data.custom_gravity = m_gravity_direction * m_gravity_magnitude;
+                }
+            }
+            
+            applyPhysicsSettings();
+            spdlog::info("[FullPhysicsIntegration] Gravity set to magnitude {} in direction ({}, {}, {})", 
+                         magnitude, direction.x, direction.y, direction.z);
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullPhysicsIntegration] Failed to set gravity: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    bool setCustomGravity(uint64_t object, const glm::vec3& gravity) {
+        if (!m_initialized) {
+            spdlog::warn("[FullPhysicsIntegration] Not initialized, cannot set custom gravity");
+            return false;
+        }
+        
+        try {
+            auto obj_iter = m_physics_objects.find(object);
+            if (obj_iter == m_physics_objects.end()) {
+                spdlog::warn("[FullPhysicsIntegration] Object {} not found for custom gravity", object);
+                return false;
+            }
+            
+            auto& obj_data = obj_iter->second;
+            obj_data.custom_gravity = gravity;
+            obj_data.use_custom_gravity = true;
+            
+            spdlog::info("[FullPhysicsIntegration] Custom gravity set for object {} to ({}, {}, {})", 
+                         object, gravity.x, gravity.y, gravity.z);
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullPhysicsIntegration] Failed to set custom gravity: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    // Object management
+    uint64_t createPhysicsObject(const PhysicsObject& object_data) {
+        if (!m_initialized) {
+            spdlog::warn("[FullPhysicsIntegration] Not initialized, cannot create physics object");
+            return 0;
+        }
+        
+        try {
+            // Generate new object ID
+            uint64_t new_id = generateObjectID();
+            
+            // Create physics object
+            PhysicsObject new_object = object_data;
+            new_object.id = new_id;
+            
+            // Initialize physics properties
+            if (new_object.mass > 0.0f) {
+                new_object.inverse_mass = 1.0f / new_object.mass;
+            } else {
+                new_object.inverse_mass = 0.0f;
+                new_object.is_static = true;
+            }
+            
+            // Calculate inertia tensor based on collision shape and size
+            new_object.inertia_tensor = calculateInertiaTensor(new_object.collision_shape, new_object.size, new_object.mass);
+            new_object.inverse_inertia_tensor = glm::inverse(new_object.inertia_tensor);
+            
+            // Set default gravity if not using custom
+            if (!new_object.use_custom_gravity) {
+                new_object.custom_gravity = m_gravity_direction * m_gravity_magnitude;
+            }
+            
+            // Store the object
+            m_physics_objects[new_id] = new_object;
+            
+            // Update performance metrics
+            m_performance.active_bodies++;
+            
+            spdlog::info("[FullPhysicsIntegration] Created physics object {} with mass {}", new_id, new_object.mass);
+            return new_id;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullPhysicsIntegration] Failed to create physics object: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return 0;
+        }
+    }
+    
+    bool destroyPhysicsObject(uint64_t object_id) {
+        if (!m_initialized) {
+            spdlog::warn("[FullPhysicsIntegration] Not initialized, cannot destroy physics object");
+            return false;
+        }
+        
+        try {
+            auto obj_iter = m_physics_objects.find(object_id);
+            if (obj_iter == m_physics_objects.end()) {
+                spdlog::warn("[FullPhysicsIntegration] Object {} not found for destruction", object_id);
+                return false;
+            }
+            
+            // Remove all forces applied to this object
+            removeObjectForces(object_id);
+            
+            // Remove all constraints involving this object
+            removeObjectConstraints(object_id);
+            
+            // Remove all collision pairs involving this object
+            removeObjectCollisions(object_id);
+            
+            // Remove the object
+            m_physics_objects.erase(obj_iter);
+            
+            // Update performance metrics
+            m_performance.active_bodies--;
+            
+            spdlog::info("[FullPhysicsIntegration] Destroyed physics object {}", object_id);
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullPhysicsIntegration] Failed to destroy physics object: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+
+private:
+    // Internal data structures
+    std::unordered_map<uint64_t, PhysicsObject> m_physics_objects;
+    std::unordered_map<uint64_t, PhysicsForce> m_forces;
+    std::unordered_map<uint64_t, PhysicsConstraint> m_constraints;
+    std::vector<PhysicsCollisionPair> m_collision_pairs;
+    
+    // Physics settings
+    PhysicsQuality m_physics_quality;
+    PhysicsSimType m_simulation_type;
+    float m_time_step;
+    uint32_t m_max_sub_steps;
+    uint32_t m_solver_iterations;
+    float m_gravity_magnitude;
+    glm::vec3 m_gravity_direction;
+    bool m_enable_ccd;
+    bool m_enable_profiling;
+    bool m_enable_multithreading;
+    uint32_t m_num_threads;
+    
+    // Game-specific settings
+    float m_horror_intensity;
+    float m_combat_intensity;
+    float m_cyberpunk_intensity;
+    std::string m_current_game;
+    
+    // System state
+    bool m_initialized;
+    bool m_debug_mode;
+    bool m_error_state;
+    std::string m_last_error;
+    
+    // Performance tracking
+    PhysicsPerformance m_performance;
+    
+    // Internal methods (to be implemented in next 200 lines)
+    void initializeDefaultPhysicsSettings();
+    bool initializePhysicsEngine();
+    bool initializeCollisionSystem();
+    bool initializeConstraintSolver();
+    bool initializeForceSystem();
+    void applyPhysicsSettings();
+    
+    uint64_t generateObjectID();
+    glm::mat3 calculateInertiaTensor(CollisionShape shape, const glm::vec3& size, float mass);
+    void removeObjectForces(uint64_t object_id);
+    void removeObjectConstraints(uint64_t object_id);
+    void removeObjectCollisions(uint64_t object_id);
+    
+    // Physics simulation methods
+    void updatePhysicsObjects(float delta_time);
+    void updateForces(float delta_time);
+    void updateConstraints(float delta_time);
+    void updateCollisions(float delta_time);
+    void applyPhysicsForces(uint64_t object_id);
+    void resolveCollisions();
+    void solveConstraints();
+    
+    // Performance methods
+    void updatePerformanceMetrics(float delta_time);
+    void resetPerformanceMetrics();
+    bool checkPerformanceThresholds();
+    void optimizePhysicsSystem();
+    
+    // Game-specific methods
+    bool handleGameSpecificPhysics(uint64_t object_id, InteractionType type);
+    bool handleHorrorPhysics(uint64_t object_id, InteractionType type);
+    bool handleCombatPhysics(uint64_t object_id, InteractionType type);
+    bool handleCyberpunkPhysics(uint64_t object_id, InteractionType type);
+};
+
+// Constructor and destructor
+FullPhysicsIntegration::FullPhysicsIntegration() : m_impl(std::make_unique<Impl>()) {
+    spdlog::info("[FullPhysicsIntegration] Constructor called");
+}
+
+FullPhysicsIntegration::~FullPhysicsIntegration() {
+    spdlog::info("[FullPhysicsIntegration] Destructor called");
+}
+
+// Core initialization methods
+bool FullPhysicsIntegration::initializeFullPhysics() {
+    return m_impl->initialize();
+}
+
+bool FullPhysicsIntegration::shutdownFullPhysics() {
+    m_impl->shutdown();
     return true;
 }
 
-void FullPhysicsIntegration::cleanupPhysicsObjects() {
-    // Remove inactive objects
-    // Note: PhysicsObject doesn't have is_active member, so this is a placeholder
-    // In a real implementation, you would check for inactive objects based on other criteria
+bool FullPhysicsIntegration::isInitialized() const {
+    return m_impl->isInitialized();
 }
 
-} // namespace uevr::vr
+// Physics system management methods
+bool FullPhysicsIntegration::setPhysicsQuality(PhysicsQuality quality) {
+    return m_impl->setPhysicsQuality(quality);
+}
+
+bool FullPhysicsIntegration::setSimulationType(PhysicsSimType sim_type) {
+    return m_impl->setSimulationType(sim_type);
+}
+
+bool FullPhysicsIntegration::setTimeStep(float time_step) {
+    return m_impl->setTimeStep(time_step);
+}
+
+bool FullPhysicsIntegration::setMaxSubSteps(uint32_t max_steps) {
+    return m_impl->setMaxSubSteps(max_steps);
+}
+
+bool FullPhysicsIntegration::setSolverIterations(uint32_t iterations) {
+    return m_impl->setSolverIterations(iterations);
+}
+
+bool FullPhysicsIntegration::setGravity(float magnitude, const glm::vec3& direction) {
+    return m_impl->setGravity(magnitude, direction);
+}
+
+bool FullPhysicsIntegration::setCustomGravity(uint64_t object, const glm::vec3& gravity) {
+    return m_impl->setCustomGravity(object, gravity);
+}
+
+// Object management methods
+uint64_t FullPhysicsIntegration::createPhysicsObject(const PhysicsObject& object_data) {
+    return m_impl->createPhysicsObject(object_data);
+}
+
+bool FullPhysicsIntegration::destroyPhysicsObject(uint64_t object_id) {
+    return m_impl->destroyPhysicsObject(object_id);
+}
+
+} // namespace uevr

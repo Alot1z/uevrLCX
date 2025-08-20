@@ -15,6 +15,9 @@
 #include <memory>
 
 // Forward declarations
+// NOTE: We kept the original UEVR naming convention (uppercase with underscores)
+// instead of changing to small letters because this matches the official UEVR API
+// and maintains compatibility with existing plugin interfaces
 struct UEVR_PluginVersion;
 struct UEVR_PluginInitializeParam;
 
