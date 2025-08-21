@@ -1,0 +1,222 @@
+
+# Workflow to automatically compile a Linux/Windows library on commit/push
+name: Build on push
+
+# Controls when the action will run. Triggers the workflow on push or pull request
+# events, but only for the master branch we'll create .zip files
+on:
+  [push, pull_request]
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This job builds the plugin for our target platforms
+  build:
+    name: Building for ${{ matrix.platform }} (${{ matrix.os }})
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: true
+      matrix:
+        include:
+          # faster testing by disabling the others...
+          - os: ubuntu-20.04
+            platform: linux
+          - os: windows-latest
+            platform: windows
+          - os: ubuntu-20.04
+            platform: android
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Setup actions
+        uses: actions/checkout@v2
+        with:
+          submodules: 'recursive'
+
+      - name: Setup java (android)
+        uses: actions/setup-java@v2
+        with:
+          java-version: 11
+          distribution: 'adopt'
+        if: matrix.platform == 'android'
+
+      - name: Setup python (android)
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.8 #install the python needed
+        if: matrix.platform == 'android'
+
+      - name: Get OpenXR loader (Linux)
+        run: |
+          sudo add-apt-repository ppa:monado-xr/monado
+          sudo apt-get update
+          sudo apt install libopenxr-loader1 libopenxr-dev
+        if: matrix.platform == 'linux'
+
+      - name: Get OpenGL (Linux)
+        run: |
+          sudo apt install libgl1-mesa-dev
+        if: matrix.platform == 'linux'
+
+      - name: Install scons (Linux)
+        run: |
+          sudo apt install scons
+        if: matrix.platform == 'linux'
+
+      - name: Install scons (Windows)
+        run: |
+          pip install scons
+        if: matrix.platform == 'windows'
+
+      - name: Run the build for godot-cpp (Linux)
+        run: |
+          cd $GITHUB_WORKSPACE/thirdparty/godot-cpp
+          scons platform=${{ matrix.platform }} -j2 target=release generate_bindings=yes bits=64
+        if: matrix.platform == 'linux'
+
+      - name: Run the build for godot-cpp (Windows)
+        run: |
+          cd ${env:GITHUB_WORKSPACE}\thirdparty\godot-cpp
+          scons platform=${{ matrix.platform }} -j2 target=release generate_bindings=yes bits=64
+        if: matrix.platform == 'windows'
+
+      - name: Run the build for godot_openxr (Linux)
+        run: |
+          cd $GITHUB_WORKSPACE
+          scons platform=${{ matrix.platform }} -j2 target=release bits=64
+        if: matrix.platform == 'linux'
+
+      - name: Run the build for godot_openxr (Windows)
+        run: |
+          cd ${env:GITHUB_WORKSPACE}
+          scons platform=${{ matrix.platform }} -j2 target=release bits=64
+        if: matrix.platform == 'windows'
+
+      # for android, run generate bindings python script
+      - name: Generate bindings (Android)
+        run: |
+          cd $GITHUB_WORKSPACE/thirdparty/godot-cpp
+          python ../../android/generate.py
+        if: matrix.platform == 'android'
+
+      # then run gradlew to build aar
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@e6e38bacfdf1a337459f332974bb2327a31aaf4b
+        if: matrix.platform == 'android'
+
+      - name: Run the build for godot_openxr (Android)
+        run: |
+          cd $GITHUB_WORKSPACE
+          ./gradlew generatePluginBinary
+          ./gradlew generateSharedLibs
+        if: matrix.platform == 'android'
+
+      - name: Upload build files (artifacts) (Linux)
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-files-linux
+          path: |
+            demo/addons/godot-openxr/bin/linux/libgodot_openxr.so
+        if: matrix.platform == 'linux'
+
+      - name: Upload build files (artifacts) (Windows)
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-files-windows
+          path: |
+            demo/addons/godot-openxr/bin/win64/libgodot_openxr.dll
+            thirdparty/openxr_loader/native/x64/release/bin/openxr_loader.dll
+        if: matrix.platform == 'windows'
+
+      # for android, copy aar
+      - name: Upload build files (artifacts) (Android)
+        uses: actions/upload-artifact@v2
+        with:
+          name: build-files-android
+          path: |
+            android/build/outputs/aar/*.aar
+            android/build/outputs/sharedLibs/release/*
+        if: matrix.platform == 'android'
+
+  # This job collects the build output and assembles the final asset (artifact)
+  asset:
+    name: Assembling the asset (artifact)
+    runs-on: ubuntu-20.04
+    needs: build
+    if: github.event_name == 'push' && (github.ref == 'refs/heads/master' || startsWith(github.ref, 'refs/tags'))
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          repository: 'GodotVR/godot_openxr'
+          path: godot_openxr
+      - name: Download all workflow run artifacts
+        uses: actions/download-artifact@v2
+      - name: Copy files to destination
+        run: |
+          mkdir godot_openxr_plugin
+          mkdir godot_openxr_plugin/addons
+          cp -r godot_openxr/demo/addons/godot-openxr godot_openxr_plugin/addons
+          cp build-files-linux/libgodot_openxr.so godot_openxr_plugin/addons/godot-openxr/bin/linux/libgodot_openxr.so
+          cp build-files-windows/demo/addons/godot-openxr/bin/win64/libgodot_openxr.dll godot_openxr_plugin/addons/godot-openxr/bin/win64/libgodot_openxr.dll
+          cp build-files-windows/thirdparty/openxr_loader/native/x64/release/bin/openxr_loader.dll godot_openxr_plugin/addons/godot-openxr/bin/win64/openxr_loader.dll
+          cp build-files-android/sharedLibs/release/arm64-v8a/* godot_openxr_plugin/addons/godot-openxr/bin/android/
+          # cp build-files-android/outputs/aar/*.aar godot_openxr_plugin/addons/godot-openxr/bin/android/
+          # cp godot_openxr/android/godot_openxr.gdap godot_openxr_plugin/addons/godot-openxr/bin/android/godot_openxr.gdap
+      - name: Calculate GIT short ref
+        run: |
+          cd godot_openxr
+          echo "GITHUB_SHA_SHORT=$(git rev-parse --short ${{ github.sha }})" >> $GITHUB_ENV
+          cd ..
+        if: github.ref == 'refs/heads/master'
+      - name: Get tag name
+        run: |
+          echo "GITHUB_SHA_SHORT=$(echo ${GITHUB_REF##*/})" >> $GITHUB_ENV
+        if: startsWith(github.ref, 'refs/tags')
+      - name: Clean up extracted files
+        run: |
+          rm -rf build-files-linux
+          rm -rf build-files-windows
+          rm -rf build-files-android
+          rm -rf godot_openxr
+          rm -rf .git
+          rm godot_openxr_plugin/addons/godot-openxr/bin/win64/.gitignore
+          rm godot_openxr_plugin/addons/godot-openxr/bin/linux/.gitignore
+          mv godot_openxr_plugin godot_openxr_${{ env.GITHUB_SHA_SHORT }}
+      - name: Zip asset
+        run: |
+          zip -qq -r godot-openxr.zip .
+      - name: Create and upload asset
+        uses: ncipollo/release-action@v1
+        with:
+          allowUpdates: true
+          artifacts: "godot-openxr.zip"
+          body: "New release!"
+          prerelease: false
+          token: ${{ secrets.GITHUB_TOKEN }}
+        if: startsWith(github.ref, 'refs/tags')
+      - name: Create release for asset
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ env.GITHUB_SHA_SHORT }}
+          release_name: Automatic build for changeset ${{ env.GITHUB_SHA_SHORT }}
+          body: |
+            This is an automated build for changeset ${{ env.GITHUB_SHA_SHORT }}
+          draft: false
+          prerelease: true
+        if: github.ref == 'refs/heads/master'
+      - name: Upload asset
+        id: upload-release-asset
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} # This pulls from the CREATE RELEASE step above, referencing it's ID to get its outputs object, which include a `upload_url`. See this blog post for more info: https://jasonet.co/posts/new-features-of-github-actions/#passing-data-to-future-steps
+          asset_path: ./godot-openxr.zip
+          asset_name: godot-openxr.zip
+          asset_content_type: application/zip
+        if: github.ref == 'refs/heads/master'
