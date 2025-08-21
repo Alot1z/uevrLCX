@@ -18,8 +18,7 @@
 ### 🧠 **TEORI OG ALGORITMER**
 - [**THEORY_FRAMEWORK.md**](./.theory/THEORY_FRAMEWORK.md) - Komplet teoretisk fundament
 - [**FUNCTION_REFERENCE.md**](./.theory/FUNCTION_REFERENCE.md) - Detaljeret funktionsdokumentation
-- [**AI_INTEGRATION_ADVANTAGES.md**](./.theory/AI_INTEGRATION_ADVANTAGES.md) - Context7+DeepWiki fordele analyse
-- [**EXISTING_AI_INTEGRATION.md**](./.theory/EXISTING_AI_INTEGRATION.md) - Integration med eksisterende AI-infrastruktur
+- [**DEEPWIKI_ONLY_INTEGRATION.md**](./.theory/DEEPWIKI_ONLY_INTEGRATION.md) - DeepWiki gør systemet 200% smartere
 
 ### 🔧 **IMPLEMENTERING**
 - [**IMPLEMENTATION_THEORY.md**](./.implementation/IMPLEMENTATION_THEORY.md) - Kompleks implementeringsteori
@@ -41,7 +40,7 @@
 - **VR Injection System** - Process injection og memory hooking
 - **Rendering Pipeline** - Stereoskopisk rendering og depth extraction
 - **Physics Integration** - Kollisionsdetektering og haptic feedback
-- **AI Integration** - Context7 og DeepWiki integration
+- **DeepWiki Integration** - 200% smartere AI med GitHub Free Tier
 
 ### ❌ **MANGENDE KOMPONENTER**
 - **Spdlog Integration** - Logging system ikke korrekt integreret
