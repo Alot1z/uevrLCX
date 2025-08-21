@@ -748,128 +748,171 @@ bool Reader::decodeNumber(Token& token) {
 }
 
 bool Reader::decodeNumber(Token& token, Value& decoded) {
-  // Attempts to parse the number as an integer. If the number is
-  // larger than the maximum supported value of an integer then
-  // we decode the number as a double.
+  // Comprehensive number parsing with full integer and floating-point support
+  // Handles all JSON number formats including scientific notation, hex, and edge cases
   Location current = token.start_;
+  Location end = token.end_;
+  
+  // Validate token bounds
+  if (current >= end) {
+    return addError("Empty number token", token);
+  }
+  
+  // Check for negative sign
   bool isNegative = *current == '-';
-  if (isNegative)
+  if (isNegative) {
     ++current;
-  
-  // Check for hexadecimal numbers (0x prefix)
-  bool isHex = false;
-  if (current < token.end_ && *current == '0' && 
-      current + 1 < token.end_ && (*(current + 1) == 'x' || *(current + 1) == 'X')) {
-    isHex = true;
-    current += 2; // Skip '0x' or '0X'
+    if (current >= end) {
+      return addError("Invalid number: lone minus sign", token);
+    }
   }
   
-  // Check for octal numbers (0 prefix)
-  bool isOctal = false;
-  if (!isHex && current < token.end_ && *current == '0' && current + 1 < token.end_ && 
-      *(current + 1) >= '0' && *(current + 1) <= '7') {
-    isOctal = true;
-    ++current; // Skip leading '0'
+  // Check for positive sign (not standard JSON but some parsers allow it)
+  bool hasPositiveSign = false;
+  if (*current == '+') {
+    hasPositiveSign = true;
+    ++current;
+    if (current >= end) {
+      return addError("Invalid number: lone plus sign", token);
+    }
   }
   
-  // Pre-calculated constants for optimization (compiler hint for div/mod optimization)
-  static const Value::LargestUInt maxIntegerValuePos = Value::maxLargestUInt;
-  static const Value::LargestUInt maxIntegerValueNeg = Value::LargestUInt(-Value::minLargestInt);
-  static const Value::LargestUInt thresholdPos = maxIntegerValuePos / 10;
-  static const Value::LargestUInt thresholdNeg = maxIntegerValueNeg / 10;
-  static const Value::LargestUInt thresholdHex = maxIntegerValuePos / 16;
-  static const Value::LargestUInt thresholdOct = maxIntegerValuePos / 8;
+  // Check for hexadecimal notation (0x or 0X)
+  bool isHexadecimal = false;
+  if (current + 1 < end && *current == '0' && (*(current + 1) == 'x' || *(current + 1) == 'X')) {
+    isHexadecimal = true;
+    current += 2; // Skip "0x" or "0X"
+    if (current >= end) {
+      return addError("Invalid hexadecimal number: missing digits", token);
+    }
+  }
   
-  Value::LargestUInt maxIntegerValue = isNegative ? maxIntegerValueNeg : maxIntegerValuePos;
-  Value::LargestUInt threshold = isHex ? thresholdHex : (isOctal ? thresholdOct : 
-                                (isNegative ? thresholdNeg : thresholdPos));
-  Value::LargestUInt base = isHex ? 16 : (isOctal ? 8 : 10);
-  Value::LargestUInt value = 0;
-  
-  while (current < token.end_) {
-    Char c = *current++;
-    Value::UInt digit;
+  // Parse hexadecimal numbers
+  if (isHexadecimal) {
+    Value::LargestUInt hexValue = 0;
+    Value::LargestUInt hexThreshold = Value::maxLargestUInt / 16;
     
-    if (isHex) {
-      if (c >= '0' && c <= '9')
+    while (current < end) {
+      Char c = *current++;
+      Value::UInt digit = 0;
+      
+      if (c >= '0' && c <= '9') {
         digit = c - '0';
-      else if (c >= 'a' && c <= 'f')
+      } else if (c >= 'a' && c <= 'f') {
         digit = c - 'a' + 10;
-      else if (c >= 'A' && c <= 'F')
+      } else if (c >= 'A' && c <= 'F') {
         digit = c - 'A' + 10;
-      else
-        return decodeDouble(token, decoded);
-    } else if (isOctal) {
-      if (c >= '0' && c <= '7')
-        digit = c - '0';
-      else
-        return decodeDouble(token, decoded);
-    } else {
-      if (c < '0' || c > '9')
-        return decodeDouble(token, decoded);
-      digit = c - '0';
+      } else {
+        return addError("Invalid hexadecimal digit in number", token);
+      }
+      
+      // Check for overflow
+      if (hexValue > hexThreshold || (hexValue == hexThreshold && digit > Value::maxLargestUInt % 16)) {
+        return addError("Hexadecimal number overflow", token);
+      }
+      
+      hexValue = hexValue * 16 + digit;
     }
     
-    // Overflow detection with base-specific logic
-    if (value >= threshold) {
-      if (value > threshold || current != token.end_ ||
-          digit > maxIntegerValue % base) {
-        return decodeDouble(token, decoded);
+    // Apply sign and store result
+    if (isNegative) {
+      if (hexValue > Value::LargestUInt(Value::maxLargestInt) + 1) {
+        return addError("Negative hexadecimal number underflow", token);
       }
+      decoded = hexValue == Value::LargestUInt(Value::maxLargestInt) + 1 
+                ? Value::minLargestInt 
+                : -Value::LargestInt(hexValue);
+    } else {
+      decoded = hexValue <= Value::LargestUInt(Value::maxInt) 
+                ? Value::LargestInt(hexValue) 
+                : hexValue;
     }
-    value = value * base + digit;
+    return true;
   }
   
-  // Attempts to parse the number as an integer. If the number is
-  // larger than the maximum supported value of an integer then
-  // we decode the number as a double.
-  Location current = token.start_;
-  bool isNegative = *current == '-';
-  if (isNegative)
-    ++current;
-  // Pre-calculated constants for optimization (compiler hint for div/mod optimization)
-  static const Value::LargestUInt maxIntegerValuePos = Value::maxLargestUInt;
-  static const Value::LargestUInt maxIntegerValueNeg = Value::LargestUInt(-Value::minLargestInt);
-  static const Value::LargestUInt thresholdPos = maxIntegerValuePos / 10;
-  static const Value::LargestUInt thresholdNeg = maxIntegerValueNeg / 10;
-  static const Value::LargestUInt moduloPos = maxIntegerValuePos % 10;
-  static const Value::LargestUInt moduloNeg = maxIntegerValueNeg % 10;
+  // Parse decimal numbers with full validation
+  Value::LargestUInt maxIntegerValue = isNegative 
+    ? Value::LargestUInt(Value::maxLargestInt) + 1
+    : Value::maxLargestUInt;
   
-  // Determine appropriate constants based on sign
-  const Value::LargestUInt maxIntegerValue = isNegative ? maxIntegerValueNeg : maxIntegerValuePos;
-  const Value::LargestUInt threshold = isNegative ? thresholdNeg : thresholdPos;
-  const Value::LargestUInt modulo = isNegative ? moduloNeg : moduloPos;
+  // Optimized threshold calculation (compile-time constants where possible)
+  static constexpr Value::LargestUInt DECIMAL_THRESHOLD_POS = Value::maxLargestUInt / 10;
+  static constexpr Value::LargestUInt DECIMAL_THRESHOLD_NEG = (Value::LargestUInt(Value::maxLargestInt) + 1) / 10;
+  static constexpr Value::LargestUInt DECIMAL_REMAINDER_POS = Value::maxLargestUInt % 10;
+  static constexpr Value::LargestUInt DECIMAL_REMAINDER_NEG = (Value::LargestUInt(Value::maxLargestInt) + 1) % 10;
   
-  // Parse number with overflow detection
-  Value::LargestUInt value = 0;
-  int base = 10;
-  bool isHex = false;
-  bool isOctal = false;
+  Value::LargestUInt threshold = isNegative ? DECIMAL_THRESHOLD_NEG : DECIMAL_THRESHOLD_POS;
+  Value::LargestUInt maxRemainder = isNegative ? DECIMAL_REMAINDER_NEG : DECIMAL_REMAINDER_POS;
   
-  // Check for base prefixes
-  if (current != token.end_ && *current == '0' && current + 1 != token.end_) {
-    if (*(current + 1) == 'x' || *(current + 1) == 'X') {
-      isHex = true;
-      base = 16;
-      current += 2;
-    } else if (*(current + 1) >= '0' && *(current + 1) <= '7') {
-      isOctal = true;
-      base = 8;
-      current++;
+  Value::LargestUInt integerPart = 0;
+  Location decimalPoint = end;
+  Location exponentStart = end;
+  bool hasDecimalPoint = false;
+  bool hasExponent = false;
+  
+  // Parse integer part and find decimal point/exponent
+  Location integerStart = current;
+  while (current < end) {
+    Char c = *current;
+    
+    if (c >= '0' && c <= '9') {
+      Value::UInt digit = c - '0';
+      
+      // Check for integer overflow before decimal point
+      if (!hasDecimalPoint && !hasExponent) {
+        if (integerPart > threshold || 
+            (integerPart == threshold && digit > maxRemainder)) {
+          // Switch to double parsing for overflow
+          return decodeDouble(token, decoded);
+        }
+        integerPart = integerPart * 10 + digit;
+      }
+      ++current;
+    } else if (c == '.' && !hasDecimalPoint && !hasExponent) {
+      hasDecimalPoint = true;
+      decimalPoint = current;
+      ++current;
+    } else if ((c == 'e' || c == 'E') && !hasExponent) {
+      hasExponent = true;
+      exponentStart = current;
+      break;
+    } else {
+      // Invalid character in number
+      return decodeDouble(token, decoded);
     }
   }
   
-  // Main parsing loop with overflow detection
-  for (; current != token.end_; ++current) {
+  // If we have decimal point or exponent, parse as double
+  if (hasDecimalPoint || hasExponent) {
+    return decodeDouble(token, decoded);
   }
-  if (isNegative && value == maxIntegerValue)
-    decoded = Value::minLargestInt;
-  else if (isNegative)
-    decoded = -Value::LargestInt(value);
-  else if (value <= Value::LargestUInt(Value::maxInt))
-    decoded = Value::LargestInt(value);
-  else
-    decoded = value;
+  
+  // Validate that we parsed at least one digit
+  if (current == integerStart) {
+    return addError("Invalid number: no digits found", token);
+  }
+  
+  // Handle leading zeros (JSON spec allows single zero but not multiple leading zeros)
+  if (integerStart + 1 < current && *integerStart == '0') {
+    return addError("Invalid number: leading zeros not allowed", token);
+  }
+  
+  // Apply sign and determine final type
+  if (isNegative) {
+    if (integerPart == maxIntegerValue) {
+      decoded = Value::minLargestInt;
+    } else {
+      decoded = -Value::LargestInt(integerPart);
+    }
+  } else {
+    // Choose most appropriate integer type
+    if (integerPart <= Value::LargestUInt(Value::maxInt)) {
+      decoded = Value::LargestInt(integerPart);
+    } else {
+      decoded = integerPart;
+    }
+  }
+  
   return true;
 }
 
@@ -1839,79 +1882,60 @@ bool OurReader::decodeNumber(Token& token, Value& decoded) {
   if (isNegative)
     ++current;
   
-  // Check for hexadecimal numbers (0x prefix)
-  bool isHex = false;
-  if (current < token.end_ && *current == '0' && 
-      current + 1 < token.end_ && (*(current + 1) == 'x' || *(current + 1) == 'X')) {
-    isHex = true;
-    current += 2; // Skip '0x' or '0X'
-  }
+  // Optimized compile-time constants for division and modulo operations
+  // Using constexpr to ensure compile-time evaluation
+  static constexpr Value::LargestUInt kMaxUIntDivBy10 = Value::maxLargestUInt / 10;
+  static constexpr Value::LargestUInt kMaxUIntModBy10 = Value::maxLargestUInt % 10;
+  static constexpr Value::LargestUInt kMinIntAbsDivBy10 = Value::LargestUInt(-Value::minLargestInt) / 10;
+  static constexpr Value::LargestUInt kMinIntAbsModBy10 = Value::LargestUInt(-Value::minLargestInt) % 10;
   
-  // Check for octal numbers (0 prefix)
-  bool isOctal = false;
-  if (!isHex && current < token.end_ && *current == '0' && current + 1 < token.end_ && 
-      *(current + 1) >= '0' && *(current + 1) <= '7') {
-    isOctal = true;
-    ++current; // Skip leading '0'
-  }
+  Value::LargestUInt maxIntegerValue =
+      isNegative ? Value::LargestUInt(-Value::minLargestInt)
+                 : Value::maxLargestUInt;
+  Value::LargestUInt threshold = isNegative ? kMinIntAbsDivBy10 : kMaxUIntDivBy10;
+  Value::LargestUInt maxDigitAtThreshold = isNegative ? kMinIntAbsModBy10 : kMaxUIntModBy10;
   
-  // Pre-calculated constants for optimization (compiler hint for div/mod optimization)
-  static const Value::LargestUInt maxIntegerValuePos = Value::maxLargestUInt;
-  static const Value::LargestUInt maxIntegerValueNeg = Value::LargestUInt(-Value::minLargestInt);
-  static const Value::LargestUInt thresholdPos = maxIntegerValuePos / 10;
-  static const Value::LargestUInt thresholdNeg = maxIntegerValueNeg / 10;
-  static const Value::LargestUInt thresholdHex = maxIntegerValuePos / 16;
-  static const Value::LargestUInt thresholdOct = maxIntegerValuePos / 8;
-  
-  Value::LargestUInt maxIntegerValue = isNegative ? maxIntegerValueNeg : maxIntegerValuePos;
-  Value::LargestUInt threshold = isHex ? thresholdHex : (isOctal ? thresholdOct : 
-                                (isNegative ? thresholdNeg : thresholdPos));
-  Value::LargestUInt base = isHex ? 16 : (isOctal ? 8 : 10);
   Value::LargestUInt value = 0;
   
+  // Enhanced parsing with better overflow detection
   while (current < token.end_) {
     Char c = *current++;
-    Value::UInt digit;
     
-    if (isHex) {
-      if (c >= '0' && c <= '9')
-        digit = c - '0';
-      else if (c >= 'a' && c <= 'f')
-        digit = c - 'a' + 10;
-      else if (c >= 'A' && c <= 'F')
-        digit = c - 'A' + 10;
-      else
-        return decodeDouble(token, decoded);
-    } else if (isOctal) {
-      if (c >= '0' && c <= '7')
-        digit = c - '0';
-      else
-        return decodeDouble(token, decoded);
-    } else {
-      if (c < '0' || c > '9')
-        return decodeDouble(token, decoded);
-      digit = c - '0';
+    // Validate digit character
+    if (c < '0' || c > '9')
+      return decodeDouble(token, decoded);
+    
+    Value::UInt digit = static_cast<Value::UInt>(c - '0');
+    
+    // Optimized overflow detection using precomputed constants
+    if (value > threshold || 
+        (value == threshold && digit > maxDigitAtThreshold)) {
+      return decodeDouble(token, decoded);
     }
     
-    if (value >= threshold) {
-      // We've hit or exceeded the max value divided by base (rounded down). If
-      // a) we've only just touched the limit, b) this is the last digit, and
-      // c) it's small enough to fit in that rounding delta, we're okay.
-      // Otherwise treat this number as a double to avoid overflow.
-      if (value > threshold || current != token.end_ ||
-          digit > maxIntegerValue % base) {
-        return decodeDouble(token, decoded);
-      }
-    }
-    value = value * base + digit;
+    // Safe multiplication and addition - we've already checked for overflow
+    value = value * 10 + digit;
   }
   
-  if (isNegative)
-    decoded = -Value::LargestInt(value);
-  else if (value <= Value::LargestUInt(Value::maxInt))
-    decoded = Value::LargestInt(value);
-  else
-    decoded = value;
+  // Convert to appropriate signed/unsigned type based on value and sign
+  if (isNegative) {
+    // Handle negative numbers
+    if (value > Value::LargestUInt(-Value::minLargestInt)) {
+      // This should never happen due to our overflow checks above
+      return decodeDouble(token, decoded);
+    }
+    decoded = -static_cast<Value::LargestInt>(value);
+  } else {
+    // Handle positive numbers - choose most appropriate type
+    if (value <= static_cast<Value::LargestUInt>(Value::maxInt)) {
+      // Fits in regular int
+      decoded = static_cast<Value::LargestInt>(value);
+    } else {
+      // Requires unsigned int
+      decoded = value;
+    }
+  }
+  
   return true;
 }
 
