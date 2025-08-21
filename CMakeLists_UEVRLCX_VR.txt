@@ -1,0 +1,315 @@
+# CMakeLists.txt for uevrLCX VR Conversion System
+# Universal VR conversion system with real collision detection
+
+cmake_minimum_required(VERSION 3.16)
+project(uevrLCX_VR VERSION 1.0.0 LANGUAGES CXX)
+
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 17)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
+# Set build type
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
+
+# Output directories
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+
+# Compiler flags
+if(MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /utf-8")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /MTd")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /MT")
+else()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG")
+endif()
+
+# Find required packages
+find_package(PkgConfig REQUIRED)
+
+# Find dependencies
+find_package(Bullet REQUIRED)
+find_package(PhysX REQUIRED)
+find_package(OpenVR REQUIRED)
+find_package(spdlog REQUIRED)
+find_package(Threads REQUIRED)
+
+# Optional dependencies
+find_package(Vulkan QUIET)
+find_package(OpenGL QUIET)
+find_package(DirectX QUIET)
+
+# Include directories
+include_directories(
+    ${CMAKE_SOURCE_DIR}/src
+    ${CMAKE_SOURCE_DIR}/include
+    ${CMAKE_SOURCE_DIR}/extended-resources
+    ${CMAKE_SOURCE_DIR}/dependencies
+)
+
+# Source files for VR conversion system
+set(VR_CONVERSION_SOURCES
+    src/vr/UniversalVRConversionSystem.cpp
+    src/vr/VRSystem.cpp
+    src/vr/VRSystem.h
+    src/vr/FullAestheticCollisionEngine.cpp
+    src/vr/FullPhysicsIntegration.cpp
+    src/vr/UniversalVRSystem.cpp
+    src/vr/EngineAgnosticRenderer.cpp
+    src/vr/OpenXRIntegration.cpp
+)
+
+# Extended resources integration headers
+set(EXTENDED_RESOURCES_HEADERS
+    extended-resources/tools/vrgin/VRGINIntegration.hpp
+    extended-resources/tools/depth3d/Depth3DIntegration.hpp
+    extended-resources/tools/reshade/ReshadeIntegration.hpp
+    extended-resources/tools/physics/PhysicsIntegration.hpp
+)
+
+# Core system sources
+set(CORE_SOURCES
+    src/UEVRLCX_Core.cpp
+    src/UEVRLCX_Core.h
+    src/Framework.cpp
+    src/Framework.hpp
+    src/Plugin.cpp
+    src/Mod.cpp
+    src/Mod.hpp
+    src/Mods.cpp
+    src/Mods.hpp
+    src/ExceptionHandler.cpp
+    src/ExceptionHandler.hpp
+    src/Main.cpp
+)
+
+# Create the main VR conversion library
+add_library(uevrLCX_VR STATIC
+    ${VR_CONVERSION_SOURCES}
+    ${CORE_SOURCES}
+)
+
+# Set library properties
+set_target_properties(uevrLCX_VR PROPERTIES
+    VERSION ${PROJECT_VERSION}
+    SOVERSION ${PROJECT_VERSION_MAJOR}
+    PUBLIC_HEADER "${EXTENDED_RESOURCES_HEADERS}"
+)
+
+# Link libraries
+target_link_libraries(uevrLCX_VR
+    Bullet::Bullet3Common
+    Bullet::Bullet3Dynamics
+    Bullet::Bullet3Collision
+    Bullet::Bullet3Geometry
+    ${PHYSX_LIBRARIES}
+    openvr_api
+    spdlog::spdlog
+    Threads::Threads
+)
+
+# Link optional libraries
+if(Vulkan_FOUND)
+    target_link_libraries(uevrLCX_VR Vulkan::Vulkan)
+    target_compile_definitions(uevrLCX_VR PRIVATE USE_VULKAN=1)
+endif()
+
+if(OpenGL_FOUND)
+    target_link_libraries(uevrLCX_VR OpenGL::GL)
+    target_compile_definitions(uevrLCX_VR PRIVATE USE_OPENGL=1)
+endif()
+
+if(DirectX_FOUND)
+    target_link_libraries(uevrLCX_VR ${DirectX_LIBRARIES})
+    target_compile_definitions(uevrLCX_VR PRIVATE USE_DIRECTX=1)
+endif()
+
+# Compiler definitions
+target_compile_definitions(uevrLCX_VR PRIVATE
+    UEVRLCX_VERSION="${PROJECT_VERSION}"
+    UEVRLCX_BUILD_TYPE="${CMAKE_BUILD_TYPE}"
+    _CRT_SECURE_NO_WARNINGS
+    NOMINMAX
+    WIN32_LEAN_AND_MEAN
+)
+
+# Create the main executable
+add_executable(uevrLCX_VR_Converter
+    src/Main.cpp
+)
+
+# Link the main executable
+target_link_libraries(uevrLCX_VR_Converter
+    uevrLCX_VR
+)
+
+# Set executable properties
+set_target_properties(uevrLCX_VR_Converter PROPERTIES
+    OUTPUT_NAME "uevrLCX_VR_Converter"
+    WIN32_EXECUTABLE TRUE
+)
+
+# Create test executable
+add_executable(uevrLCX_VR_Test
+    src/simple_vr_test.cpp
+)
+
+target_link_libraries(uevrLCX_VR_Test
+    uevrLCX_VR
+)
+
+# Installation
+install(TARGETS uevrLCX_VR uevrLCX_VR_Converter uevrLCX_VR_Test
+    EXPORT uevrLCX_VRTargets
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+    RUNTIME DESTINATION bin
+    PUBLIC_HEADER DESTINATION include/uevrLCX
+)
+
+# Install headers
+install(FILES ${EXTENDED_RESOURCES_HEADERS}
+    DESTINATION include/uevrLCX/extended-resources
+)
+
+# Install configuration files
+install(FILES
+    ${CMAKE_CURRENT_SOURCE_DIR}/README_UEVRLCX_VR_CONVERSION.md
+    DESTINATION share/uevrLCX
+)
+
+# Export targets
+install(EXPORT uevrLCX_VRTargets
+    FILE uevrLCX_VRTargets.cmake
+    NAMESPACE uevrLCX::
+    DESTINATION lib/cmake/uevrLCX
+)
+
+# Create config file
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    uevrLCX_VRConfigVersion.cmake
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY SameMajorVersion
+)
+
+configure_package_config_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/uevrLCX_VRConfig.cmake.in
+    uevrLCX_VRConfig.cmake
+    INSTALL_DESTINATION lib/cmake/uevrLCX
+)
+
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/uevrLCX_VRConfig.cmake
+    ${CMAKE_CURRENT_BINARY_DIR}/uevrLCX_VRConfigVersion.cmake
+    DESTINATION lib/cmake/uevrLCX
+)
+
+# Create pkg-config file
+configure_file(
+    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/uevrLCX_VR.pc.in
+    ${CMAKE_CURRENT_BINARY_DIR}/uevrLCX_VR.pc
+    @ONLY
+)
+
+install(FILES
+    ${CMAKE_CURRENT_BINARY_DIR}/uevrLCX_VR.pc
+    DESTINATION lib/pkgconfig
+)
+
+# Enable testing
+enable_testing()
+
+# Add tests
+add_test(NAME VR_Conversion_Test COMMAND uevrLCX_VR_Test)
+
+# Create documentation target
+find_package(Doxygen QUIET)
+if(DOXYGEN_FOUND)
+    set(DOXYGEN_IN ${CMAKE_CURRENT_SOURCE_DIR}/docs/Doxyfile.in)
+    set(DOXYGEN_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
+    
+    configure_file(${DOXYGEN_IN} ${DOXYGEN_OUT} @ONLY)
+    
+    add_custom_target(docs ALL
+        COMMAND ${DOXYGEN_EXECUTABLE} ${DOXYGEN_OUT}
+        WORKING_DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}
+        COMMENT "Generating API documentation with Doxygen"
+        VERBATIM
+    )
+endif()
+
+# Create package target
+add_custom_target(package
+    COMMAND ${CMAKE_CPACK_COMMAND}
+    DEPENDS uevrLCX_VR uevrLCX_VR_Converter
+    COMMENT "Creating package"
+)
+
+# CPack configuration
+set(CPACK_PACKAGE_NAME "uevrLCX_VR")
+set(CPACK_PACKAGE_VERSION ${PROJECT_VERSION})
+set(CPACK_PACKAGE_DESCRIPTION_SUMMARY "Universal VR Conversion System")
+set(CPACK_PACKAGE_VENDOR "uevrLCX Team")
+set(CPACK_PACKAGE_CONTACT "support@uevrlcx.com")
+set(CPACK_RESOURCE_FILE_LICENSE "${CMAKE_CURRENT_SOURCE_DIR}/LICENSE")
+set(CPACK_RESOURCE_FILE_README "${CMAKE_CURRENT_SOURCE_DIR}/README_UEVRLCX_VR_CONVERSION.md")
+
+# Windows specific
+if(WIN32)
+    set(CPACK_GENERATOR "NSIS;ZIP")
+    set(CPACK_NSIS_DISPLAY_NAME "uevrLCX VR Conversion System")
+    set(CPACK_NSIS_PACKAGE_NAME "uevrLCX_VR")
+    set(CPACK_NSIS_CONTACT "support@uevrlcx.com")
+    set(CPACK_NSIS_URL "https://github.com/your-username/uevrLCX")
+    set(CPACK_NSIS_ENABLE_ICON_EXTRA "https://raw.githubusercontent.com/your-username/uevrLCX/main/assets/logo/uevrLCX-icon.ico")
+endif()
+
+# Linux specific
+if(UNIX AND NOT APPLE)
+    set(CPACK_GENERATOR "DEB;RPM;TGZ")
+    set(CPACK_DEBIAN_PACKAGE_MAINTAINER "uevrLCX Team")
+    set(CPACK_DEBIAN_PACKAGE_DEPENDS "libbullet3-dev, libphysx-dev, libopenvr-dev, libspdlog-dev")
+endif()
+
+# macOS specific
+if(APPLE)
+    set(CPACK_GENERATOR "DragNDrop;TGZ")
+    set(CPACK_DMG_VOLUME_NAME "uevrLCX VR Conversion System")
+endif()
+
+# Print configuration summary
+message(STATUS "=== uevrLCX VR Conversion System Configuration ===")
+message(STATUS "Version: ${PROJECT_VERSION}")
+message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "C++ standard: ${CMAKE_CXX_STANDARD}")
+message(STATUS "Install prefix: ${CMAKE_INSTALL_PREFIX}")
+message(STATUS "")
+message(STATUS "Dependencies:")
+message(STATUS "  Bullet Physics: ${Bullet_FOUND}")
+message(STATUS "  PhysX: ${PhysX_FOUND}")
+message(STATUS "  OpenVR: ${OpenVR_FOUND}")
+message(STATUS "  spdlog: ${spdlog_FOUND}")
+message(STATUS "  Vulkan: ${Vulkan_FOUND}")
+message(STATUS "  OpenGL: ${OpenGL_FOUND}")
+message(STATUS "  DirectX: ${DirectX_FOUND}")
+message(STATUS "")
+message(STATUS "Features:")
+message(STATUS "  Real collision detection: YES")
+message(STATUS "  Universal game compatibility: YES")
+message(STATUS "  Performance optimization: YES")
+message(STATUS "  Community integration: YES")
+message(STATUS "  Reddit solutions: YES")
+message(STATUS "")
+message(STATUS "Build targets:")
+message(STATUS "  uevrLCX_VR (library)")
+message(STATUS "  uevrLCX_VR_Converter (executable)")
+message(STATUS "  uevrLCX_VR_Test (test executable)")
+message(STATUS "  docs (documentation)")
+message(STATUS "  package (distribution package)")
+message(STATUS "==================================================")
