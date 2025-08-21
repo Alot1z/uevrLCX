@@ -3,306 +3,219 @@
 #include <memory>
 #include <vector>
 #include <string>
-#include <unordered_map>
-#include <chrono>
 #include <functional>
-#include "../core/SystemState.hpp"
+#include <chrono>
+#include <atomic>
+#include <mutex>
+#include <unordered_map>
 
-namespace UEVRLCX {
+namespace uevrLCX {
 
-// ============================================================================
-// Forward Declarations
-// ============================================================================
+enum class VRState {
+    DISCONNECTED,
+    CONNECTING,
+    CONNECTED,
+    CALIBRATING,
+    READY,
+    RUNNING,
+    PAUSED,
+    ERROR,
+    DISCONNECTING,
+    SHUTDOWN
+};
 
-class VRRenderer;
-class VRInput;
-class VRAudio;
-class VRComfort;
-class VRPlatform;
+enum class VRHeadsetType {
+    UNKNOWN,
+    OCULUS_QUEST,
+    OCULUS_QUEST_2,
+    OCULUS_QUEST_3,
+    OCULUS_RIFT,
+    OCULUS_RIFT_S,
+    HTC_VIVE,
+    HTC_VIVE_PRO,
+    HTC_VIVE_COSMOS,
+    VALVE_INDEX,
+    WINDOWS_MR,
+    PICO_4,
+    PICO_NEO_3,
+    CUSTOM
+};
 
-// ============================================================================
-// VR Data Structures
-// ============================================================================
+enum class VRControllerType {
+    UNKNOWN,
+    OCULUS_TOUCH,
+    HTC_VIVE_WAND,
+    VALVE_INDEX_CONTROLLER,
+    WINDOWS_MR_CONTROLLER,
+    PICO_CONTROLLER,
+    CUSTOM
+};
 
-struct VRMetrics {
-    // Display Metrics
-    double refreshRate;
-    double resolution;
-    double fieldOfView;
-    double pixelDensity;
-    
-    // Performance Metrics
+struct VRDisplayInfo {
+    uint32_t width;
+    uint32_t height;
+    float refreshRate;
+    float fieldOfView;
+    float ipd;
+    bool isConnected;
+};
+
+struct VRControllerInfo {
+    VRControllerType type;
+    bool isConnected;
+    bool hasHaptics;
+    bool hasTouchpad;
+    bool hasJoystick;
+    bool hasGrip;
+    bool hasTrigger;
+    bool hasMenu;
+    bool hasSystem;
+};
+
+struct VRTrackingInfo {
+    float position[3];
+    float rotation[4];
+    float velocity[3];
+    float angularVelocity[3];
+    bool isTracked;
+    float confidence;
+};
+
+struct VRPerformanceMetrics {
     double frameRate;
     double latency;
-    double reprojectionRate;
     double droppedFrames;
-    
-    // Comfort Metrics
-    VRComfortLevel comfortLevel;
-    bool motionSicknessDetected;
-    double comfortScore;
-    std::vector<double> trackingAccuracy;
-    
-    // Timestamps
-    std::chrono::steady_clock::time_point timestamp;
-    std::chrono::steady_clock::time_point lastComfortCheck;
-    
-    VRMetrics() : refreshRate(90.0), resolution(1.0), fieldOfView(110.0),
-                  pixelDensity(0.0), frameRate(0.0), latency(0.0),
-                  reprojectionRate(0.0), droppedFrames(0.0),
-                  comfortLevel(VRComfortLevel::COMFORTABLE), motionSicknessDetected(false),
-                  comfortScore(100.0) {
-        timestamp = std::chrono::steady_clock::now();
-        lastComfortCheck = std::chrono::steady_clock::now();
-    }
+    double reprojectionRate;
+    double gpuTime;
+    double cpuTime;
+    double totalTime;
 };
 
-struct VRDevice {
-    std::string name;
-    std::string type;
-    std::string platform;
-    bool isConnected;
-    bool isActive;
-    std::chrono::steady_clock::time_point lastSeen;
-    
-    VRDevice() : isConnected(false), isActive(false) {
-        lastSeen = std::chrono::steady_clock::now();
-    }
-    
-    VRDevice(const std::string& n, const std::string& t, const std::string& p)
-        : name(n), type(t), platform(p), isConnected(false), isActive(false) {
-        lastSeen = std::chrono::steady_clock::now();
-    }
-};
-
-struct VRComfortSettings {
-    VRComfortLevel targetLevel;
-    bool enableMotionSicknessPrevention;
-    bool enableComfortTunneling;
-    bool enableEyeTracking;
-    bool enableHandTracking;
-    double maxFieldOfView;
-    double maxMovementSpeed;
-    
-    VRComfortSettings() : targetLevel(VRComfortLevel::COMFORTABLE),
-                          enableMotionSicknessPrevention(true),
-                          enableComfortTunneling(true), enableEyeTracking(true),
-                          enableHandTracking(true), maxFieldOfView(120.0),
-                          maxMovementSpeed(10.0) {}
-};
-
-// ============================================================================
-// VR System Interface
-// ============================================================================
-
-class IVRSystem {
-public:
-    virtual ~IVRSystem() = default;
-    
-    // ========================================================================
-    // Initialization and Management
-    // ========================================================================
-    
-    virtual bool Initialize() = 0;
-    virtual void Shutdown() = 0;
-    virtual bool IsInitialized() const = 0;
-    
-    // ========================================================================
-    // VR Device Management
-    // ========================================================================
-    
-    virtual bool ConnectDevice(const std::string& deviceName) = 0;
-    virtual bool DisconnectDevice(const std::string& deviceName) = 0;
-    virtual bool IsDeviceConnected(const std::string& deviceName) const = 0;
-    virtual std::vector<VRDevice> GetConnectedDevices() const = 0;
-    virtual VRDevice* GetDevice(const std::string& deviceName) = 0;
-    
-    // ========================================================================
-    // VR Rendering
-    // ========================================================================
-    
-    virtual bool StartRendering() = 0;
-    virtual bool StopRendering() = 0;
-    virtual bool IsRendering() const = 0;
-    virtual bool SetRenderTarget(void* target) = 0;
-    virtual bool RenderFrame() = 0;
-    
-    // ========================================================================
-    // VR Input
-    // ========================================================================
-    
-    virtual bool EnableInput(bool enable) = 0;
-    virtual bool IsInputEnabled() const = 0;
-    virtual bool ProcessInput() = 0;
-    virtual std::vector<double> GetInputData() const = 0;
-    
-    // ========================================================================
-    // VR Audio
-    // ========================================================================
-    
-    virtual bool EnableAudio(bool enable) = 0;
-    virtual bool IsAudioEnabled() const = 0;
-    virtual bool ProcessAudio() = 0;
-    virtual bool SetAudioSource(const std::string& source) = 0;
-    
-    // ========================================================================
-    // VR Comfort and Safety
-    // ========================================================================
-    
-    virtual bool EnableComfortFeatures(bool enable) = 0;
-    virtual bool AreComfortFeaturesEnabled() const = 0;
-    virtual bool CheckComfortLevel() = 0;
-    virtual VRComfortLevel GetCurrentComfortLevel() const = 0;
-    virtual bool IsMotionSicknessDetected() const = 0;
-    
-    // ========================================================================
-    // Configuration and Settings
-    // ========================================================================
-    
-    virtual bool SetComfortSettings(const VRComfortSettings& settings) = 0;
-    virtual VRComfortSettings GetComfortSettings() const = 0;
-    virtual bool SetFieldOfView(double fov) = 0;
-    virtual double GetFieldOfView() const = 0;
-    
-    // ========================================================================
-    // Performance and Monitoring
-    // ========================================================================
-    
-    virtual const VRMetrics& GetVRMetrics() const = 0;
-    virtual bool UpdateMetrics() = 0;
-    virtual double GetFrameRate() const = 0;
-    virtual double GetLatency() const = 0;
-    virtual std::string GetSystemHealth() const = 0;
-};
-
-// ============================================================================
-// VR System Implementation
-// ============================================================================
-
-class VRSystem : public IVRSystem {
-private:
-    // Core Components
-    std::unique_ptr<VRRenderer> m_renderer;
-    std::unique_ptr<VRInput> m_input;
-    std::unique_ptr<VRAudio> m_audio;
-    std::unique_ptr<VRComfort> m_comfort;
-    std::unique_ptr<VRPlatform> m_platform;
-    
-    // Device Management
-    std::unordered_map<std::string, VRDevice> m_devices;
-    std::vector<std::string> m_connectedDevices;
-    
-    // System State
-    bool m_isInitialized;
-    bool m_isRendering;
-    bool m_inputEnabled;
-    bool m_audioEnabled;
-    bool m_comfortEnabled;
-    
-    // Configuration
-    VRComfortSettings m_comfortSettings;
-    double m_fieldOfView;
-    
-    // Metrics
-    VRMetrics m_metrics;
-    std::chrono::steady_clock::time_point m_lastMetricsUpdate;
-    
+class VRSystem {
 public:
     VRSystem();
     ~VRSystem();
+
+    // Core lifecycle
+    bool initialize();
+    void shutdown();
+    void update();
     
-    // ========================================================================
-    // IVRSystem Implementation
-    // ========================================================================
+    // State management
+    VRState getState() const;
+    void setState(VRState state);
+    bool isConnected() const;
+    bool isReady() const;
     
-    bool Initialize() override;
-    void Shutdown() override;
-    bool IsInitialized() const override { return m_isInitialized; }
+    // Headset management
+    VRHeadsetType getHeadsetType() const;
+    VRDisplayInfo getDisplayInfo() const;
+    bool setIPD(float ipd);
+    float getIPD() const;
+    bool setRefreshRate(float refreshRate);
+    float getRefreshRate() const;
     
-    bool ConnectDevice(const std::string& deviceName) override;
-    bool DisconnectDevice(const std::string& deviceName) override;
-    bool IsDeviceConnected(const std::string& deviceName) const override;
-    std::vector<VRDevice> GetConnectedDevices() const override;
-    VRDevice* GetDevice(const std::string& deviceName) override;
+    // Controller management
+    std::vector<VRControllerInfo> getControllers() const;
+    VRControllerInfo getControllerInfo(int controllerIndex) const;
+    VRTrackingInfo getControllerTracking(int controllerIndex) const;
+    bool setControllerHaptics(int controllerIndex, float frequency, float amplitude, float duration);
     
-    bool StartRendering() override;
-    bool StopRendering() override;
-    bool IsRendering() const override { return m_isRendering; }
-    bool SetRenderTarget(void* target) override;
-    bool RenderFrame() override;
+    // Tracking
+    VRTrackingInfo getHeadTracking() const;
+    VRTrackingInfo getEyeTracking() const;
+    bool isEyeTrackingAvailable() const;
+    bool isFullBodyTrackingAvailable() const;
     
-    bool EnableInput(bool enable) override;
-    bool IsInputEnabled() const override { return m_inputEnabled; }
-    bool ProcessInput() override;
-    std::vector<double> GetInputData() const override;
+    // Rendering
+    bool beginFrame();
+    bool endFrame();
+    bool submitFrame();
+    bool setRenderTarget(void* leftEye, void* rightEye);
+    bool setDepthBuffer(void* depthBuffer);
     
-    bool EnableAudio(bool enable) override;
-    bool IsAudioEnabled() const override { return m_audioEnabled; }
-    bool ProcessAudio() override;
-    bool SetAudioSource(const std::string& source) override;
+    // Performance
+    VRPerformanceMetrics getPerformanceMetrics() const;
+    void resetPerformanceMetrics();
+    bool setPerformanceLevel(int level);
+    int getPerformanceLevel() const;
     
-    bool EnableComfortFeatures(bool enable) override;
-    bool AreComfortFeaturesEnabled() const override { return m_comfortEnabled; }
-    bool CheckComfortLevel() override;
-    VRComfortLevel GetCurrentComfortLevel() const override;
-    bool IsMotionSicknessDetected() const override;
+    // Configuration
+    bool loadConfiguration(const std::string& filename);
+    bool saveConfiguration(const std::string& filename);
+    void setConfiguration(const std::string& key, const std::string& value);
+    std::string getConfiguration(const std::string& key, const std::string& defaultValue = "") const;
     
-    bool SetComfortSettings(const VRComfortSettings& settings) override;
-    VRComfortSettings GetComfortSettings() const override { return m_comfortSettings; }
-    bool SetFieldOfView(double fov) override;
-    double GetFieldOfView() const override { return m_fieldOfView; }
+    // Calibration
+    bool startCalibration();
+    bool stopCalibration();
+    bool isCalibrating() const;
+    float getCalibrationProgress() const;
     
-    const VRMetrics& GetVRMetrics() const override { return m_metrics; }
-    bool UpdateMetrics() override;
-    double GetFrameRate() const override;
-    double GetLatency() const override;
-    std::string GetSystemHealth() const override;
+    // Comfort features
+    bool enableComfortMode(bool enable);
+    bool isComfortModeEnabled() const;
+    bool setComfortSettings(float vignette, float fadeDistance);
     
+    // Event handling
+    using VREventCallback = std::function<void(const std::string&, const void*)>;
+    void registerEventCallback(const std::string& eventType, VREventCallback callback);
+    void unregisterEventCallback(const std::string& eventType);
+    
+    // Error handling
+    void setErrorHandler(std::function<void(const std::string&, const std::string&)> handler);
+    void reportError(const std::string& component, const std::string& error);
+    
+    // Logging
+    void setLogCallback(std::function<void(const std::string&, const std::string&)> callback);
+    void log(const std::string& level, const std::string& message);
+
 private:
-    // ========================================================================
-    // Private Helper Methods
-    // ========================================================================
+    // Core members
+    std::atomic<VRState> state;
+    VRHeadsetType headsetType;
+    VRDisplayInfo displayInfo;
+    std::vector<VRControllerInfo> controllers;
+    VRPerformanceMetrics performanceMetrics;
     
-    bool InitializeRenderer();
-    bool InitializeInput();
-    bool InitializeAudio();
-    bool InitializeComfort();
-    bool InitializePlatform();
+    // Configuration
+    std::unordered_map<std::string, std::string> configuration;
+    mutable std::mutex configMutex;
     
-    bool ValidateDevice(const std::string& deviceName);
-    bool AuthenticateDevice(VRDevice& device);
-    void UpdateDeviceStatus(const std::string& deviceName);
+    // Calibration
+    bool calibrating;
+    float calibrationProgress;
     
-    bool ValidateRenderTarget(void* target);
-    bool SetupRenderingPipeline();
-    void UpdateRenderingMetrics();
+    // Comfort
+    bool comfortModeEnabled;
+    float comfortVignette;
+    float comfortFadeDistance;
     
-    bool ValidateInputData(const std::vector<double>& data);
-    void ProcessInputEvents();
-    void UpdateInputMetrics();
+    // Performance
+    int performanceLevel;
     
-    bool ValidateAudioSource(const std::string& source);
-    void ProcessAudioStream();
-    void UpdateAudioMetrics();
+    // Callbacks
+    std::unordered_map<std::string, std::vector<VREventCallback>> eventCallbacks;
+    std::function<void(const std::string&, const std::string&)> errorHandler;
+    std::function<void(const std::string&, const std::string&)> logCallback;
     
-    bool ValidateComfortSettings(const VRComfortSettings& settings);
-    void ApplyComfortSettings();
-    void UpdateComfortMetrics();
+    // Thread safety
+    mutable std::mutex vrMutex;
     
-    void LogDeviceOperation(const std::string& operation, const std::string& deviceName);
-    void LogRenderingOperation(const std::string& operation);
-    void LogInputOperation(const std::string& operation);
-    void LogAudioOperation(const std::string& operation);
-    void LogComfortOperation(const std::string& operation);
+    // Internal methods
+    bool initializeOpenVR();
+    bool initializeOculus();
+    bool initializeSteamVR();
+    void updateTracking();
+    void updatePerformance();
+    void processEvents();
+    void notifyEvent(const std::string& eventType, const void* data);
+    
+    // Platform-specific implementations
+    class Impl;
+    std::unique_ptr<Impl> pImpl;
 };
 
-// ============================================================================
-// Factory Functions
-// ============================================================================
-
-std::unique_ptr<IVRSystem> CreateVRSystem();
-std::unique_ptr<IVRSystem> CreateVRSystemWithConfig(const std::string& configPath);
-
-} // namespace UEVRLCX
+} // namespace uevrLCX
 
 
