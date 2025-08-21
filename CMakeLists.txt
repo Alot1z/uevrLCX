@@ -1,290 +1,470 @@
-# uevr - Universal Engine VR Modding Framework
-# 
-# Main CMake configuration for the entire uevr project
-# 
-# Copyright (c) 2024 uevr Project
+cmake_minimum_required(VERSION 3.20)
 
-cmake_minimum_required(VERSION 3.16)
-project(uevr VERSION 1.0.0 LANGUAGES CXX)
+# Project information
+project(uevrLCX VERSION 2.0.0 LANGUAGES CXX)
 
-# Set C++ standard and policies
-set(CMAKE_CXX_STANDARD 17)
+# Set C++ standard
+set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-# Modern CMake policies
-cmake_policy(SET CMP0071 NEW)  # Use absolute paths in target_sources
-cmake_policy(SET CMP0072 NEW)  # Use absolute paths in target_include_directories
-cmake_policy(SET CMP0077 NEW)  # Use absolute paths in target_sources
+# Set build type if not specified
+if(NOT CMAKE_BUILD_TYPE)
+    set(CMAKE_BUILD_TYPE Release)
+endif()
 
-# Project options
-option(BUILD_TESTS "Build test suite" ON)
-option(BUILD_EXAMPLES "Build example implementations" ON)
-option(BUILD_DOCS "Build documentation" OFF)
-option(BUILD_SHARED_LIBS "Build shared libraries" ON)
-option(uevr_ENABLE_DEBUG "Enable debug features" OFF)
-option(uevr_ENABLE_PROFILING "Enable performance profiling" OFF)
-option(uevr_ENABLE_CONTEXT7 "Enable Context7 AI analysis system" ON)
-option(uevr_ENABLE_OPENVR "Enable OpenVR support" ON)
-option(uevr_ENABLE_OPENXR "Enable OpenXR support" ON)
-option(uevr_ENABLE_VULKAN "Enable Vulkan support" OFF)
-option(uevr_ENABLE_OPENGL "Enable OpenGL support" OFF)
-option(uevr_ENABLE_CUDA "Enable CUDA acceleration for AI" OFF)
-
-# Context7 Database Integration
-option(uevr_BUILD_CONTEXT7_DATABASE "Build Context7 Database System" ON)
-option(uevr_ENABLE_AI_ANALYSIS "Enable AI-powered VR Analysis" ON)
-option(uevr_ENABLE_DEEPWIKI_INTEGRATION "Enable DeepWiki Integration" ON)
-option(uevr_ENABLE_20X_PERFORMANCE "Enable 20x Performance Optimizations" ON)
-
-# Set output directories with proper organization
+# Set output directories
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 
+# Compiler-specific flags
+if(MSVC)
+    add_compile_options(/W4 /WX- /MP)
+    add_compile_definitions(_CRT_SECURE_NO_WARNINGS NOMINMAX)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2 /Oi /GL")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Od /Ob0 /RTC1")
+elseif(CMAKE_CXX_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(-Wall -Wextra -Wpedantic -Werror)
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -O0 -g -DDEBUG")
+endif()
+
 # Platform-specific settings
 if(WIN32)
-    set(CMAKE_WINDOWS_EXPORT_ALL_SYMBOLS ON)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4 /utf-8")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} /Zi /Od")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} /O2 /DNDEBUG")
+    add_compile_definitions(UNICODE _UNICODE WIN32_LEAN_AND_MEAN)
+    set(PLATFORM_LIBS d3d11 d3d12 dxgi d3dcompiler)
 elseif(UNIX AND NOT APPLE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Wpedantic")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG")
+    set(PLATFORM_LIBS dl pthread)
 elseif(APPLE)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra")
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS_DEBUG} -g -O0")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -O3 -DNDEBUG")
+    set(PLATFORM_LIBS "-framework Cocoa" "-framework IOKit" "-framework CoreVideo")
 endif()
 
-# Dependency setup with proper error handling
-include(FetchContent)
+# Find required packages
+find_package(PkgConfig REQUIRED)
 
-# MinHook - API hooking library (only on Windows)
-if(WIN32)
-    find_package(MinHook QUIET)
-    if(NOT MinHook_FOUND)
-        message(STATUS "MinHook not found, fetching from source...")
-        FetchContent_Declare(
-            minhook
-            GIT_REPOSITORY https://github.com/TsudaKageyu/minhook.git
-            GIT_TAG master
-            GIT_SHALLOW TRUE
-        )
-        FetchContent_MakeAvailable(minhook)
-        if(NOT TARGET MinHook::MinHook)
-            add_library(MinHook::MinHook ALIAS minhook)
-        endif()
-        message(STATUS "MinHook fetched successfully")
-    else()
-        message(STATUS "MinHook found: ${MinHook_DIR}")
-    endif()
-endif()
+# Find OpenXR
+find_package(OpenXR REQUIRED)
 
-# spdlog - Fast logging library
-find_package(spdlog QUIET)
-if(NOT spdlog_FOUND)
-    message(STATUS "spdlog not found, fetching from source...")
-    FetchContent_Declare(
-        spdlog
-        GIT_REPOSITORY https://github.com/gabime/spdlog.git
-        GIT_TAG v1.12.0
-        GIT_SHALLOW TRUE
-    )
-    FetchContent_MakeAvailable(spdlog)
-    message(STATUS "spdlog fetched successfully")
-else()
-    message(STATUS "spdlog found: ${spdlog_DIR}")
-endif()
+# Find GLM (OpenGL Mathematics)
+find_package(glm REQUIRED)
 
-# nlohmann_json - JSON library
-find_package(nlohmann_json QUIET)
-if(NOT nlohmann_json_FOUND)
-    message(STATUS "nlohmann_json not found, fetching from source...")
-    FetchContent_Declare(
-        nlohmann_json
-        GIT_REPOSITORY https://github.com/nlohmann/json
-        GIT_TAG v3.11.3
-        GIT_SHALLOW TRUE
-    )
-    FetchContent_MakeAvailable(nlohmann_json)
-    message(STATUS "nlohmann_json fetched successfully")
-else()
-    message(STATUS "nlohmann_json found: ${nlohmann_json_DIR}")
-endif()
+# Find MinHook
+find_package(MinHook REQUIRED)
 
-# GLM - Mathematics library
-FetchContent_Declare(
-    glm
-    GIT_REPOSITORY https://github.com/g-truc/glm.git
-    GIT_TAG 0.9.9.8
-    GIT_SHALLOW TRUE
-)
-FetchContent_MakeAvailable(glm)
-message(STATUS "GLM fetched successfully")
+# Find spdlog
+find_package(spdlog REQUIRED)
 
-# Google Test for testing (if enabled)
-if(BUILD_TESTS)
-    find_package(GTest QUIET)
-    if(NOT GTest_FOUND)
-        message(STATUS "Google Test not found, fetching from source...")
-        FetchContent_Declare(
-            googletest
-            GIT_REPOSITORY https://github.com/google/googletest.git
-            GIT_TAG release-1.12.1
-            GIT_SHALLOW TRUE
-        )
-        FetchContent_MakeAvailable(googletest)
-        message(STATUS "Google Test fetched successfully")
-    else()
-        message(STATUS "Google Test found: ${GTest_DIR}")
-    endif()
-endif()
+# Find OpenCV
+find_package(OpenCV REQUIRED)
 
-# VR Runtime Dependencies
-set(VR_LIBRARIES "")
+# Find PyTorch (LibTorch)
+find_package(Torch REQUIRED)
 
-# OpenVR (if enabled)
-if(uevr_ENABLE_OPENVR)
-    # Use local OpenVR from dependencies
-    add_subdirectory(dependencies/openvr)
-    list(APPEND VR_LIBRARIES openvr_api)
-    message(STATUS "OpenVR enabled from local dependencies")
-endif()
+# Find TensorFlow
+find_package(TensorFlow REQUIRED)
 
-# OpenXR (if enabled)
-if(uevr_ENABLE_OPENXR)
-    find_package(OpenXR QUIET)
-    if(OpenXR_FOUND)
-        message(STATUS "OpenXR found: ${OpenXR_DIR}")
-        list(APPEND VR_LIBRARIES OpenXR::OpenXR)
-    else()
-        message(STATUS "OpenXR not found, will use headers-only integration")
-        # OpenXR can be integrated as headers + dynamic loading
-    endif()
-endif()
-
-# Graphics API Dependencies
-if(WIN32)
-    # DirectX is available on Windows
-    set(GRAPHICS_APIS "DirectX11;DirectX12")
-    if(uevr_ENABLE_OPENGL)
-        list(APPEND GRAPHICS_APIS "OpenGL")
-    endif()
-    if(uevr_ENABLE_VULKAN)
-        find_package(Vulkan)
-        if(Vulkan_FOUND)
-            list(APPEND GRAPHICS_APIS "Vulkan")
-            list(APPEND VR_LIBRARIES Vulkan::Vulkan)
-            message(STATUS "Vulkan found: ${Vulkan_VERSION}")
-        else()
-            message(WARNING "Vulkan requested but not found")
-        endif()
-    endif()
-elseif(UNIX)
-    set(GRAPHICS_APIS "")
-    if(uevr_ENABLE_OPENGL)
-        find_package(OpenGL REQUIRED)
-        list(APPEND GRAPHICS_APIS "OpenGL")
-        list(APPEND VR_LIBRARIES OpenGL::GL)
-    endif()
-    if(uevr_ENABLE_VULKAN)
-        find_package(Vulkan)
-        if(Vulkan_FOUND)
-            list(APPEND GRAPHICS_APIS "Vulkan")
-            list(APPEND VR_LIBRARIES Vulkan::Vulkan)
-            message(STATUS "Vulkan found: ${Vulkan_VERSION}")
-        else()
-            message(WARNING "Vulkan requested but not found")
-        endif()
-    endif()
-endif()
-
-# AI/ML Dependencies (if Context7 enabled)
-if(uevr_ENABLE_CONTEXT7)
-    # CUDA (optional for AI acceleration)
-    if(uevr_ENABLE_CUDA)
-        find_package(CUDAToolkit QUIET)
-        if(CUDAToolkit_FOUND)
-            message(STATUS "CUDA found: ${CUDAToolkit_VERSION}")
-        else()
-            message(STATUS "CUDA not found, Context7 will use CPU-only mode")
-        endif()
-    endif()
-    
-    message(STATUS "Context7 AI system enabled")
-endif()
-
-# Add subdirectories in dependency order - only core for now
-message(STATUS "Configuring uevr components...")
-
-# Core framework (no dependencies)
-add_subdirectory(src/core)
-
-# VR system (depends on core)
-add_subdirectory(src/vr)
-
-# Create a simple test executable with basic VR functionality
-add_executable(uevr_test
-    src/simple_vr_test.cpp
+# Set include directories
+include_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+    ${CMAKE_CURRENT_SOURCE_DIR}/SOURCECODE/UEVR/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/include
 )
 
-# Set executable properties
-set_target_properties(uevr_test PROPERTIES
-    OUTPUT_NAME "uevr_test"
+# Set library directories
+link_directories(
+    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/lib
+    ${CMAKE_CURRENT_SOURCE_DIR}/dependencies/lib64
 )
 
-set(TEST_LIBS uevr_core spdlog::spdlog nlohmann_json::nlohmann_json)
-if(WIN32 AND TARGET MinHook::MinHook)
-    list(APPEND TEST_LIBS MinHook::MinHook)
-endif()
+# Source files
+set(SOURCES
+    src/Main.cpp
+    src/Framework.cpp
+    src/Plugin.cpp
+    src/Mod.cpp
+    src/Mods.cpp
+    src/WindowFilter.cpp
+    src/ExceptionHandler.cpp
+)
 
-target_link_libraries(uevr_test PRIVATE ${TEST_LIBS})
+# Core system source files
+set(CORE_SOURCES
+    src/core/Framework.cpp
+    src/core/PluginManager.cpp
+    src/core/HookManager.cpp
+    src/core/engine_detection.cpp
+    src/core/adapter_loader.cpp
+)
 
-# Include directories
-target_include_directories(uevr_test
-    PUBLIC
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
-        $<INSTALL_INTERFACE:include>
-    PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
+# VR system source files
+set(VR_SOURCES
+    src/vr/VRSystem.cpp
+    src/vr/OpenXRIntegration.cpp
+    src/vr/UniversalVRSystem.cpp
+    src/vr/EngineAgnosticRenderer.cpp
+    src/vr/FullPhysicsIntegration.cpp
+    src/vr/FullAestheticCollisionEngine.cpp
+)
+
+# Context7 AI system source files
+set(CONTEXT7_SOURCES
+    src/context7/Context7AISystem.cpp
+    src/context7/NeuralNetworkEngine.cpp
+    src/context7/DeepWikiAI.cpp
+    src/context7/Context7Database.cpp
+    src/context7/GameAnalyzer.cpp
+    src/context7/PerformanceOptimizer.cpp
+    src/context7/AITrainingManager.cpp
+)
+
+# Engine adapters source files
+set(ADAPTER_SOURCES
+    src/adapters/EngineAdapter.cpp
+    src/adapters/re-engine/ree_engine_adapter.cpp
+    src/adapters/unity/UnityAdapter.cpp
+    src/adapters/cryengine/CryEngineAdapter.cpp
+    src/adapters/godot/GodotAdapter.cpp
+)
+
+# Header files
+set(HEADERS
+    src/Framework.hpp
+    src/Plugin.hpp
+    src/Mod.hpp
+    src/Mods.hpp
+    src/WindowFilter.hpp
+    src/ExceptionHandler.hpp
+)
+
+# Core system headers
+set(CORE_HEADERS
+    src/core/Framework.hpp
+    src/core/PluginManager.hpp
+    src/core/HookManager.hpp
+    src/core/engine_detection.hpp
+    src/core/adapter_loader.hpp
+)
+
+# VR system headers
+set(VR_HEADERS
+    src/vr/VRSystem.hpp
+    src/vr/VRSystem.h
+    src/vr/OpenXRIntegration.hpp
+    src/vr/UniversalVRSystem.hpp
+    src/vr/EngineAgnosticRenderer.hpp
+    include/uevr/vr/FullPhysicsIntegration.hpp
+    include/uevr/vr/FullAestheticCollisionEngine.hpp
+)
+
+# Context7 AI system headers
+set(CONTEXT7_HEADERS
+    src/context7/Context7AISystem.hpp
+    src/context7/NeuralNetworkEngine.hpp
+    src/context7/DeepWikiAI.hpp
+    src/context7/Context7Database.hpp
+    src/context7/GameAnalyzer.hpp
+    src/context7/PerformanceOptimizer.hpp
+    src/context7/AITrainingManager.hpp
+)
+
+# Engine adapters headers
+set(ADAPTER_HEADERS
+    src/adapters/EngineAdapter.hpp
+    src/adapters/re-engine/ree_engine_adapter.hpp
+    src/adapters/unity/UnityAdapter.hpp
+    src/adapters/cryengine/CryEngineAdapter.hpp
+    src/adapters/godot/GodotAdapter.hpp
+)
+
+# Create core library
+add_library(uevr_core STATIC ${CORE_SOURCES} ${CORE_HEADERS})
+target_link_libraries(uevr_core 
+    ${PLATFORM_LIBS}
+    spdlog::spdlog
+    MinHook::MinHook
+)
+
+# Create VR system library
+add_library(uevr_vr STATIC ${VR_SOURCES} ${VR_HEADERS})
+target_link_libraries(uevr_vr 
+    uevr_core
+    OpenXR::openxr_loader
+    glm::glm
+    ${PLATFORM_LIBS}
+)
+
+# Create Context7 AI system library
+add_library(uevr_context7 STATIC ${CONTEXT7_SOURCES} ${CONTEXT7_HEADERS})
+target_link_libraries(uevr_context7 
+    uevr_core
+    ${OpenCV_LIBS}
+    ${TORCH_LIBRARIES}
+    ${TensorFlow_LIBRARIES}
+)
+
+# Create engine adapters library
+add_library(uevr_adapters STATIC ${ADAPTER_SOURCES} ${ADAPTER_HEADERS})
+target_link_libraries(uevr_adapters 
+    uevr_core
+    uevr_vr
+    ${PLATFORM_LIBS}
+)
+
+# Create main executable
+add_executable(uevrLCX ${SOURCES} ${HEADERS})
+target_link_libraries(uevrLCX 
+    uevr_core
+    uevr_vr
+    uevr_context7
+    uevr_adapters
+    ${PLATFORM_LIBS}
+)
+
+# Set target properties
+set_target_properties(uevrLCX PROPERTIES
+    OUTPUT_NAME "uevrLCX"
+    VERSION ${PROJECT_VERSION}
+    DEBUG_POSTFIX "_d"
+)
+
+# Set target properties for libraries
+set_target_properties(uevr_core PROPERTIES
+    OUTPUT_NAME "uevr_core"
+    VERSION ${PROJECT_VERSION}
+    DEBUG_POSTFIX "_d"
+)
+
+set_target_properties(uevr_vr PROPERTIES
+    OUTPUT_NAME "uevr_vr"
+    VERSION ${PROJECT_VERSION}
+    DEBUG_POSTFIX "_d"
+)
+
+set_target_properties(uevr_context7 PROPERTIES
+    OUTPUT_NAME "uevr_context7"
+    VERSION ${PROJECT_VERSION}
+    DEBUG_POSTFIX "_d"
+)
+
+set_target_properties(uevr_adapters PROPERTIES
+    OUTPUT_NAME "uevr_adapters"
+    VERSION ${PROJECT_VERSION}
+    DEBUG_POSTFIX "_d"
+)
+
+# Include directories for targets
+target_include_directories(uevr_core PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+target_include_directories(uevr_vr PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+target_include_directories(uevr_context7 PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
+)
+
+target_include_directories(uevr_adapters PUBLIC
+    ${CMAKE_CURRENT_SOURCE_DIR}/include
+    ${CMAKE_CURRENT_SOURCE_DIR}/src
 )
 
 # Compile definitions
-target_compile_definitions(uevr_test
-    PRIVATE
-        $<$<BOOL:${uevr_ENABLE_DEBUG}>:UEVR_DEBUG>
-        $<$<BOOL:${uevr_ENABLE_PROFILING}>:UEVR_PROFILING>
-        $<$<BOOL:${uevr_ENABLE_CONTEXT7}>:UEVR_ENABLE_CONTEXT7>
-        $<$<BOOL:${uevr_ENABLE_OPENVR}>:UEVR_ENABLE_OPENVR>
-        $<$<BOOL:${uevr_ENABLE_OPENXR}>:UEVR_ENABLE_OPENXR>
-        $<$<BOOL:${uevr_ENABLE_VULKAN}>:UEVR_ENABLE_VULKAN>
-        $<$<BOOL:${uevr_ENABLE_OPENGL}>:UEVR_ENABLE_OPENGL>
-        $<$<BOOL:${uevr_ENABLE_CUDA}>:UEVR_ENABLE_CUDA>
-        UEVR_VERSION_MAJOR=${PROJECT_VERSION_MAJOR}
-        UEVR_VERSION_MINOR=${PROJECT_VERSION_MINOR}
-        UEVR_VERSION_PATCH=${PROJECT_VERSION_PATCH}
+target_compile_definitions(uevr_core PUBLIC
+    UEVR_CORE_EXPORTS
+    $<$<CONFIG:Debug>:DEBUG>
+    $<$<CONFIG:Release>:NDEBUG>
 )
 
+target_compile_definitions(uevr_vr PUBLIC
+    UEVR_VR_EXPORTS
+    $<$<CONFIG:Debug>:DEBUG>
+    $<$<CONFIG:Release>:NDEBUG>
+)
+
+target_compile_definitions(uevr_context7 PUBLIC
+    UEVR_CONTEXT7_EXPORTS
+    $<$<CONFIG:Debug>:DEBUG>
+    $<$<CONFIG:Release>:NDEBUG>
+)
+
+target_compile_definitions(uevr_adapters PUBLIC
+    UEVR_ADAPTERS_EXPORTS
+    $<$<CONFIG:Debug>:DEBUG>
+    $<$<CONFIG:Release>:NDEBUG>
+)
+
+# Install targets
+install(TARGETS uevrLCX uevr_core uevr_vr uevr_context7 uevr_adapters
+    EXPORT uevrLCXTargets
+    RUNTIME DESTINATION bin
+    LIBRARY DESTINATION lib
+    ARCHIVE DESTINATION lib
+)
+
+# Install headers
+install(DIRECTORY include/ DESTINATION include)
+install(DIRECTORY src/ DESTINATION include FILES_MATCHING PATTERN "*.hpp" PATTERN "*.h")
+
+# Install configuration files
+install(FILES 
+    docs/roadmap/vr-implementation-roadmap.md
+    docs/roadmap/context7-roadmap.md
+    docs/roadmap/hooks-implementation-roadmap.md
+    docs/roadmap/COMPLETE_MVP_ROADMAP.md
+    DESTINATION share/uevrLCX/docs
+)
+
+# Install license and readme
+install(FILES 
+    LICENSE
+    README.md
+    DESTINATION share/uevrLCX
+)
+
+# Export targets
+install(EXPORT uevrLCXTargets
+    FILE uevrLCXTargets.cmake
+    NAMESPACE uevrLCX::
+    DESTINATION lib/cmake/uevrLCX
+)
+
+# Create config file
+include(CMakePackageConfigHelpers)
+write_basic_package_version_file(
+    "uevrLCXConfigVersion.cmake"
+    VERSION ${PROJECT_VERSION}
+    COMPATIBILITY AnyNewerVersion
+)
+
+# Install config files
+install(FILES
+    "uevrLCXConfigVersion.cmake"
+    DESTINATION lib/cmake/uevrLCX
+)
+
+# Create and install config file
+configure_file(
+    "${CMAKE_CURRENT_SOURCE_DIR}/cmake/uevrLCXConfig.cmake.in"
+    "${CMAKE_CURRENT_BINARY_DIR}/uevrLCXConfig.cmake"
+    @ONLY
+)
+
+install(FILES
+    "${CMAKE_CURRENT_BINARY_DIR}/uevrLCXConfig.cmake"
+    DESTINATION lib/cmake/uevrLCX
+)
+
+# Enable testing
+enable_testing()
+
+# Add test targets
+add_executable(uevr_tests
+    test/test_framework.cpp
+    test/test_vr_system.cpp
+    test/test_ai_system.cpp
+    test/test_adapters.cpp
+)
+
+target_link_libraries(uevr_tests
+    uevr_core
+    uevr_vr
+    uevr_context7
+    uevr_adapters
+    gtest
+    gtest_main
+)
+
+# Add tests
+add_test(NAME FrameworkTests COMMAND uevr_tests --gtest_filter="Framework*")
+add_test(NAME VRSystemTests COMMAND uevr_tests --gtest_filter="VRSystem*")
+add_test(NAME AISystemTests COMMAND uevr_tests --gtest_filter="AISystem*")
+add_test(NAME AdapterTests COMMAND uevr_tests --gtest_filter="Adapter*")
+
+# Set test properties
+set_tests_properties(FrameworkTests PROPERTIES
+    TIMEOUT 300
+    ENVIRONMENT "UEVR_TEST_MODE=1"
+)
+
+set_tests_properties(VRSystemTests PROPERTIES
+    TIMEOUT 300
+    ENVIRONMENT "UEVR_TEST_MODE=1"
+)
+
+set_tests_properties(AISystemTests PROPERTIES
+    TIMEOUT 300
+    ENVIRONMENT "UEVR_TEST_MODE=1"
+)
+
+set_tests_properties(AdapterTests PROPERTIES
+    TIMEOUT 300
+    ENVIRONMENT "UEVR_TEST_MODE=1"
+)
+
+# Custom targets
+add_custom_target(docs
+    COMMAND ${CMAKE_COMMAND} -E echo "Generating documentation..."
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${CMAKE_BINARY_DIR}/docs
+    COMMAND ${CMAKE_COMMAND} -E copy_directory ${CMAKE_SOURCE_DIR}/docs ${CMAKE_BINARY_DIR}/docs
+    COMMENT "Generating documentation"
+)
+
+add_custom_target(package
+    COMMAND ${CMAKE_COMMAND} --build ${CMAKE_BINARY_DIR} --target package
+    COMMENT "Creating package"
+)
+
+# Dependencies
+add_custom_target(download_deps
+    COMMAND ${CMAKE_COMMAND} -E echo "Downloading dependencies..."
+    COMMAND ${CMAKE_COMMAND} -P ${CMAKE_SOURCE_DIR}/cmake/DownloadDependencies.cmake
+    COMMENT "Downloading dependencies"
+)
+
+# Set dependency order
+add_dependencies(uevr_core download_deps)
+add_dependencies(uevr_vr uevr_core)
+add_dependencies(uevr_context7 uevr_core)
+add_dependencies(uevr_adapters uevr_core uevr_vr)
+add_dependencies(uevrLCX uevr_core uevr_vr uevr_context7 uevr_adapters)
+
 # Print configuration summary
-message(STATUS "")
-message(STATUS "=== uevr Configuration Summary ===")
-message(STATUS "Version: ${PROJECT_VERSION}")
-message(STATUS "Build type: ${CMAKE_BUILD_TYPE}")
-message(STATUS "C++ standard: ${CMAKE_CXX_STANDARD}")
-message(STATUS "Tests: ${BUILD_TESTS}")
-message(STATUS "Examples: ${BUILD_EXAMPLES}")
-message(STATUS "Documentation: ${BUILD_DOCS}")
-message(STATUS "Debug features: ${uevr_ENABLE_DEBUG}")
-message(STATUS "Profiling: ${uevr_ENABLE_PROFILING}")
-message(STATUS "Context7 AI: ${uevr_ENABLE_CONTEXT7}")
-message(STATUS "OpenVR: ${uevr_ENABLE_OPENVR}")
-message(STATUS "OpenXR: ${uevr_ENABLE_OPENXR}")
-message(STATUS "Vulkan: ${uevr_ENABLE_VULKAN}")
-message(STATUS "OpenGL: ${uevr_ENABLE_OPENGL}")
-message(STATUS "CUDA: ${uevr_ENABLE_CUDA}")
-message(STATUS "Graphics APIs: ${GRAPHICS_APIS}")
-message(STATUS "Install prefix: ${CMAKE_INSTALL_PREFIX}")
-message(STATUS "==================================")
-message(STATUS "")
+message(STATUS "uevrLCX Configuration Summary:")
+message(STATUS "  Version: ${PROJECT_VERSION}")
+message(STATUS "  Build Type: ${CMAKE_BUILD_TYPE}")
+message(STATUS "  C++ Standard: ${CMAKE_CXX_STANDARD}")
+message(STATUS "  Platform: ${CMAKE_SYSTEM_NAME}")
+message(STATUS "  Architecture: ${CMAKE_SYSTEM_PROCESSOR}")
+message(STATUS "  Install Prefix: ${CMAKE_INSTALL_PREFIX}")
+message(STATUS "  Build Directory: ${CMAKE_BINARY_DIR}")
+message(STATUS "  Source Directory: ${CMAKE_SOURCE_DIR}")
+message(STATUS "  Output Directory: ${CMAKE_RUNTIME_OUTPUT_DIRECTORY}")
+
+# Print found packages
+message(STATUS "Found Packages:")
+message(STATUS "  OpenXR: ${OpenXR_FOUND}")
+message(STATUS "  GLM: ${glm_FOUND}")
+message(STATUS "  MinHook: ${MinHook_FOUND}")
+message(STATUS "  spdlog: ${spdlog_FOUND}")
+message(STATUS "  OpenCV: ${OpenCV_FOUND}")
+message(STATUS "  PyTorch: ${Torch_FOUND}")
+message(STATUS "  TensorFlow: ${TensorFlow_FOUND}")
+
+# Print target information
+message(STATUS "Targets:")
+message(STATUS "  uevr_core: Core framework library")
+message(STATUS "  uevr_vr: VR system library")
+message(STATUS "  uevr_context7: Context7 AI system library")
+message(STATUS "  uevr_adapters: Engine adapters library")
+message(STATUS "  uevrLCX: Main executable")
+message(STATUS "  uevr_tests: Test suite")
+message(STATUS "  docs: Documentation generation")
+message(STATUS "  package: Package creation")
+message(STATUS "  download_deps: Dependency download")
