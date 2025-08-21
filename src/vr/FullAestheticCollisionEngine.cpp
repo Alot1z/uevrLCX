@@ -1107,7 +1107,7 @@ public:
             obj_data.enter_time = 0.0f;
             
             // Provide haptic feedback
-            provideFullHapticFeedback(hand, 0.3f, HapticType::RELEASE);
+            provideFullHapticFeedback(hand, 0.4f, HapticType::RELEASE);
             
             // Hide visual feedback
             hideVisualFeedback(vehicle);
@@ -1147,19 +1147,29 @@ public:
             // Handle different interaction types
             switch (interaction) {
                 case InteractionType::TOUCH:
-                    handleVehicleTouch(vehicle, hand);
+                    // Touch vehicle surface
+                    provideFullHapticFeedback(hand, 0.3f, HapticType::TOUCH);
+                    showFullCollisionHighlight(vehicle, CollisionType::HAND_VEHICLE);
                     break;
                     
                 case InteractionType::GRAB:
-                    handleVehicleGrab(vehicle, hand);
+                    // Grab vehicle part (door handle, steering wheel, etc.)
+                    provideFullHapticFeedback(hand, 0.6f, HapticType::GRAB);
+                    showFullCollisionHighlight(vehicle, CollisionType::HAND_VEHICLE);
+                    break;
+                    
+                case InteractionType::PUSH:
+                    // Push vehicle (for small objects)
+                    if (obj_data.mass < 1000.0f) { // Light vehicles only
+                        applyForceToVehicle(vehicle, hand, glm::vec3(0.0f, 0.0f, -1.0f), 100.0f);
+                        provideFullHapticFeedback(hand, 0.5f, HapticType::IMPACT);
+                    }
                     break;
                     
                 case InteractionType::ACTIVATE:
-                    handleVehicleActivate(vehicle, hand);
-                    break;
-                    
-                case InteractionType::TOGGLE:
-                    handleVehicleToggle(vehicle, hand);
+                    // Activate vehicle systems (lights, horn, etc.)
+                    activateVehicleSystem(vehicle, hand);
+                    provideFullHapticFeedback(hand, 0.4f, HapticType::SUCCESS);
                     break;
                     
                 default:
@@ -1167,7 +1177,11 @@ public:
                     return false;
             }
             
-            spdlog::info("[FullAestheticCollisionEngine] Interacted with vehicle {} using interaction {}", vehicle, static_cast<int>(interaction));
+            // Play audio feedback
+            playCollisionAudio(vehicle, CollisionType::HAND_VEHICLE, 0.5f);
+            
+            spdlog::debug("[FullAestheticCollisionEngine] Interacted with vehicle {} using hand {} and interaction {}", 
+                         vehicle, static_cast<int>(hand), static_cast<int>(interaction));
             return true;
             
         } catch (const std::exception& e) {
@@ -1200,11 +1214,12 @@ public:
                 return false;
             }
             
-            // Enable NPC interaction
+            // Enable NPC interaction (respectful, no overpowering)
             obj_data.is_interactable = true;
             obj_data.interaction_type = "npc";
+            obj_data.interaction_respect = true; // Enforce respectful interaction
             
-            spdlog::info("[FullAestheticCollisionEngine] Enabled NPC interaction for NPC {}", npc);
+            spdlog::info("[FullAestheticCollisionEngine] Enabled NPC interaction for NPC {} (respectful mode)", npc);
             return true;
             
         } catch (const std::exception& e) {
@@ -1236,20 +1251,27 @@ public:
                 return false;
             }
             
-            // Touch NPC (visual feedback only, no force manipulation)
-            obj_data.last_touched_time = getCurrentTime();
+            // Check if NPC allows touching
+            if (!obj_data.allows_touching) {
+                spdlog::warn("[FullAestheticCollisionEngine] NPC {} does not allow touching", npc);
+                provideFullHapticFeedback(hand, 0.8f, HapticType::ERROR);
+                return false;
+            }
+            
+            // Touch NPC (gentle, respectful)
+            obj_data.last_touch_time = getCurrentTime();
             obj_data.touching_hand = hand;
             
-            // Provide haptic feedback
-            provideFullHapticFeedback(hand, 0.4f, HapticType::TOUCH);
+            // Provide gentle haptic feedback
+            provideFullHapticFeedback(hand, 0.2f, HapticType::TOUCH);
             
             // Show visual feedback
             showFullCollisionHighlight(npc, CollisionType::HAND_NPC);
             
-            // Play audio feedback
-            playCollisionAudio(npc, CollisionType::HAND_NPC, 0.5f);
+            // Play gentle audio feedback
+            playCollisionAudio(npc, CollisionType::HAND_NPC, 0.3f);
             
-            spdlog::info("[FullAestheticCollisionEngine] Touched NPC {} with hand {}", npc, static_cast<int>(hand));
+            spdlog::info("[FullAestheticCollisionEngine] Gently touched NPC {} with hand {}", npc, static_cast<int>(hand));
             return true;
             
         } catch (const std::exception& e) {
@@ -1281,22 +1303,29 @@ public:
                 return false;
             }
             
+            // Enforce respectful interaction rules
+            if (!isRespectfulInteraction(interaction)) {
+                spdlog::warn("[FullAestheticCollisionEngine] Interaction type {} is not respectful for NPC {}", 
+                             static_cast<int>(interaction), npc);
+                provideFullHapticFeedback(hand, 0.9f, HapticType::ERROR);
+                return false;
+            }
+            
             // Handle different interaction types
             switch (interaction) {
                 case InteractionType::TOUCH:
-                    handleNPCTouch(npc, hand);
-                    break;
+                    return touchNPC(npc, hand);
                     
                 case InteractionType::SELECT:
-                    handleNPCSelect(npc, hand);
+                    // Select NPC for dialogue or interaction
+                    selectNPC(npc, hand);
+                    provideFullHapticFeedback(hand, 0.4f, HapticType::SUCCESS);
                     break;
                     
                 case InteractionType::ACTIVATE:
-                    handleNPCActivate(npc, hand);
-                    break;
-                    
-                case InteractionType::MENU:
-                    handleNPCMenu(npc, hand);
+                    // Activate NPC dialogue or action
+                    activateNPCAction(npc, hand);
+                    provideFullHapticFeedback(hand, 0.3f, HapticType::LIGHT);
                     break;
                     
                 default:
@@ -1304,7 +1333,11 @@ public:
                     return false;
             }
             
-            spdlog::info("[FullAestheticCollisionEngine] Interacted with NPC {} using interaction {}", npc, static_cast<int>(interaction));
+            // Play audio feedback
+            playCollisionAudio(npc, CollisionType::HAND_NPC, 0.4f);
+            
+            spdlog::debug("[FullAestheticCollisionEngine] Interacted with NPC {} using hand {} and interaction {}", 
+                         npc, static_cast<int>(hand), static_cast<int>(interaction));
             return true;
             
         } catch (const std::exception& e) {
@@ -1340,8 +1373,10 @@ public:
             // Enable environmental interaction
             obj_data.is_interactable = true;
             obj_data.interaction_type = "environment";
+            obj_data.is_movable = obj_data.mass < 50.0f; // Only light objects are movable
             
-            spdlog::info("[FullAestheticCollisionEngine] Enabled environmental interaction for object {}", env_object);
+            spdlog::info("[FullAestheticCollisionEngine] Enabled environmental interaction for object {} (movable: {})", 
+                         env_object, obj_data.is_movable);
             return true;
             
         } catch (const std::exception& e) {
@@ -1373,9 +1408,9 @@ public:
                 return false;
             }
             
-            // Check if object is grabbable
-            if (!obj_data.is_grabbable) {
-                spdlog::warn("[FullAestheticCollisionEngine] Environmental object {} is not grabbable", env_object);
+            // Check if object is already grabbed
+            if (obj_data.is_grabbed) {
+                spdlog::warn("[FullAestheticCollisionEngine] Environmental object {} is already grabbed", env_object);
                 return false;
             }
             
@@ -1383,15 +1418,18 @@ public:
             obj_data.is_grabbed = true;
             obj_data.grabbing_hand = hand;
             obj_data.grab_time = getCurrentTime();
+            obj_data.original_position = obj_data.position;
+            obj_data.original_rotation = obj_data.rotation;
             
-            // Provide haptic feedback
-            provideFullHapticFeedback(hand, 0.6f, HapticType::GRAB);
+            // Provide haptic feedback based on object mass
+            float haptic_intensity = std::clamp(1.0f - (obj_data.mass / 50.0f), 0.3f, 0.8f);
+            provideFullHapticFeedback(hand, haptic_intensity, HapticType::GRAB);
             
             // Show visual feedback
             showFullCollisionHighlight(env_object, CollisionType::HAND_ENVIRONMENT);
             
             // Play audio feedback
-            playCollisionAudio(env_object, CollisionType::HAND_ENVIRONMENT, 0.4f);
+            playCollisionAudio(env_object, CollisionType::HAND_ENVIRONMENT, 0.5f);
             
             spdlog::info("[FullAestheticCollisionEngine] Grabbed environmental object {} with hand {}", env_object, static_cast<int>(hand));
             return true;
@@ -1421,7 +1459,8 @@ public:
             
             // Check if object is grabbed by this hand
             if (!obj_data.is_grabbed || obj_data.grabbing_hand != hand) {
-                spdlog::warn("[FullAestheticCollisionEngine] Environmental object {} is not grabbed by hand {}", env_object, static_cast<int>(hand));
+                spdlog::warn("[FullAestheticCollisionEngine] Environmental object {} is not grabbed by hand {}", 
+                             env_object, static_cast<int>(hand));
                 return false;
             }
             
@@ -1431,20 +1470,24 @@ public:
                 return false;
             }
             
-            // Move object to new position
-            glm::vec3 old_position = obj_data.position;
-            obj_data.position = position;
-            
             // Calculate movement distance
-            float movement_distance = glm::distance(old_position, position);
+            glm::vec3 movement = position - obj_data.position;
+            float distance = glm::length(movement);
+            
+            // Check movement limits (prevent excessive movement)
+            if (distance > obj_data.max_movement_distance) {
+                spdlog::warn("[FullAestheticCollisionEngine] Movement distance {} exceeds limit {} for object {}", 
+                             distance, obj_data.max_movement_distance, env_object);
+                return false;
+            }
+            
+            // Move object
+            obj_data.position = position;
+            obj_data.velocity = movement / 0.016f; // Approximate velocity for 60 FPS
             
             // Provide haptic feedback based on movement
-            float haptic_intensity = std::clamp(movement_distance * 0.3f, 0.1f, 0.6f);
+            float haptic_intensity = std::clamp(distance * 2.0f, 0.1f, 0.6f);
             provideFullHapticFeedback(hand, haptic_intensity, HapticType::VIBRATION);
-            
-            // Update object state
-            obj_data.last_moved_time = getCurrentTime();
-            obj_data.movement_history.push_back({old_position, position, getCurrentTime()});
             
             spdlog::debug("[FullAestheticCollisionEngine] Moved environmental object {} to position ({}, {}, {})", 
                          env_object, position.x, position.y, position.z);
@@ -1475,7 +1518,8 @@ public:
             
             // Check if object is grabbed by this hand
             if (!obj_data.is_grabbed || obj_data.grabbing_hand != hand) {
-                spdlog::warn("[FullAestheticCollisionEngine] Environmental object {} is not grabbed by hand {}", env_object, static_cast<int>(hand));
+                spdlog::warn("[FullAestheticCollisionEngine] Environmental object {} is not grabbed by hand {}", 
+                             env_object, static_cast<int>(hand));
                 return false;
             }
             
@@ -1485,27 +1529,463 @@ public:
                 return false;
             }
             
-            // Apply rotation to object
-            glm::quat old_rotation = obj_data.rotation;
+            // Apply rotation
             obj_data.rotation = rotation;
             
-            // Calculate rotation difference
-            float rotation_angle = glm::angle(glm::inverse(old_rotation) * rotation);
+            // Provide haptic feedback
+            provideFullHapticFeedback(hand, 0.3f, HapticType::LIGHT);
             
-            // Provide haptic feedback based on rotation
-            float haptic_intensity = std::clamp(rotation_angle * 0.2f, 0.1f, 0.5f);
-            provideFullHapticFeedback(hand, haptic_intensity, HapticType::VIBRATION);
-            
-            // Update object state
-            obj_data.last_rotated_time = getCurrentTime();
-            obj_data.rotation_history.push_back({old_rotation, rotation, getCurrentTime()});
-            
-            spdlog::debug("[FullAestheticCollisionEngine] Rotated environmental object {} to rotation ({}, {}, {}, {})", 
-                         env_object, rotation.x, rotation.y, rotation.z, rotation.w);
+            spdlog::debug("[FullAestheticCollisionEngine] Rotated environmental object {} with hand {}", env_object, static_cast<int>(hand));
             return true;
             
         } catch (const std::exception& e) {
             spdlog::error("[FullAestheticCollisionEngine] Failed to rotate environmental object: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+
+    // VR Transformer features - Puzzle interaction
+    bool enablePuzzleInteraction(ObjectID puzzle, HandType hand) {
+        if (!m_initialized) {
+            spdlog::warn("[FullAestheticCollisionEngine] Not initialized, cannot enable puzzle interaction");
+            return false;
+        }
+        
+        try {
+            auto obj_iter = m_objects.find(puzzle);
+            if (obj_iter == m_objects.end()) {
+                spdlog::warn("[FullAestheticCollisionEngine] Puzzle {} not found", puzzle);
+                return false;
+            }
+            
+            auto& obj_data = obj_iter->second;
+            
+            // Check if object is a puzzle
+            if (obj_data.type != ObjectType::PUZZLE) {
+                spdlog::warn("[FullAestheticCollisionEngine] Object {} is not a puzzle", puzzle);
+                return false;
+            }
+            
+            // Enable puzzle interaction
+            obj_data.is_interactable = true;
+            obj_data.interaction_type = "puzzle";
+            obj_data.puzzle_state = "unsolved";
+            obj_data.solution_progress = 0.0f;
+            
+            spdlog::info("[FullAestheticCollisionEngine] Enabled puzzle interaction for puzzle {}", puzzle);
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullAestheticCollisionEngine] Failed to enable puzzle interaction: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    bool solvePuzzle(ObjectID puzzle, HandType hand, const std::string& solution) {
+        if (!m_initialized) {
+            spdlog::warn("[FullAestheticCollisionEngine] Not initialized, cannot solve puzzle");
+            return false;
+        }
+        
+        try {
+            auto obj_iter = m_objects.find(puzzle);
+            if (obj_iter == m_objects.end()) {
+                spdlog::warn("[FullAestheticCollisionEngine] Puzzle {} not found", puzzle);
+                return false;
+            }
+            
+            auto& obj_data = obj_iter->second;
+            
+            // Check if puzzle is interactable
+            if (!obj_data.is_interactable) {
+                spdlog::warn("[FullAestheticCollisionEngine] Puzzle {} is not interactable", puzzle);
+                return false;
+            }
+            
+            // Check if puzzle is already solved
+            if (obj_data.puzzle_state == "solved") {
+                spdlog::warn("[FullAestheticCollisionEngine] Puzzle {} is already solved", puzzle);
+                return false;
+            }
+            
+            // Validate solution
+            if (validatePuzzleSolution(puzzle, solution)) {
+                obj_data.puzzle_state = "solved";
+                obj_data.solution_progress = 100.0f;
+                obj_data.solved_time = getCurrentTime();
+                
+                // Provide success feedback
+                provideFullHapticFeedback(hand, 0.9f, HapticType::SUCCESS);
+                showPuzzleSolvedEffect(puzzle);
+                playPuzzleSolvedAudio(puzzle, 0.8f);
+                
+                spdlog::info("[FullAestheticCollisionEngine] Puzzle {} solved with solution: {}", puzzle, solution);
+                return true;
+            } else {
+                // Provide failure feedback
+                provideFullHapticFeedback(hand, 0.6f, HapticType::ERROR);
+                showPuzzleFailedEffect(puzzle);
+                playPuzzleFailedAudio(puzzle, 0.5f);
+                
+                spdlog::warn("[FullAestheticCollisionEngine] Puzzle {} solution failed: {}", puzzle, solution);
+                return false;
+            }
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullAestheticCollisionEngine] Failed to solve puzzle: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    bool interactWithPuzzle(ObjectID puzzle, HandType hand, InteractionType interaction) {
+        if (!m_initialized) {
+            spdlog::warn("[FullAestheticCollisionEngine] Not initialized, cannot interact with puzzle");
+            return false;
+        }
+        
+        try {
+            auto obj_iter = m_objects.find(puzzle);
+            if (obj_iter == m_objects.end()) {
+                spdlog::warn("[FullAestheticCollisionEngine] Puzzle {} not found", puzzle);
+                return false;
+            }
+            
+            auto& obj_data = obj_iter->second;
+            
+            // Check if puzzle is interactable
+            if (!obj_data.is_interactable) {
+                spdlog::warn("[FullAestheticCollisionEngine] Puzzle {} is not interactable", puzzle);
+                return false;
+            }
+            
+            // Handle different interaction types
+            switch (interaction) {
+                case InteractionType::TOUCH:
+                    // Touch puzzle surface
+                    provideFullHapticFeedback(hand, 0.3f, HapticType::TOUCH);
+                    showFullCollisionHighlight(puzzle, CollisionType::HAND_PUZZLE);
+                    break;
+                    
+                case InteractionType::ROTATE:
+                    // Rotate puzzle piece
+                    if (obj_data.puzzle_state != "solved") {
+                        rotatePuzzlePiece(puzzle, hand);
+                        provideFullHapticFeedback(hand, 0.5f, HapticType::VIBRATION);
+                    }
+                    break;
+                    
+                case InteractionType::MOVE:
+                    // Move puzzle piece
+                    if (obj_data.puzzle_state != "solved") {
+                        movePuzzlePiece(puzzle, hand);
+                        provideFullHapticFeedback(hand, 0.4f, HapticType::VIBRATION);
+                    }
+                    break;
+                    
+                case InteractionType::ACTIVATE:
+                    // Activate puzzle mechanism
+                    activatePuzzleMechanism(puzzle, hand);
+                    provideFullHapticFeedback(hand, 0.6f, HapticType::IMPACT);
+                    break;
+                    
+                default:
+                    spdlog::warn("[FullAestheticCollisionEngine] Unsupported puzzle interaction type: {}", static_cast<int>(interaction));
+                    return false;
+            }
+            
+            // Play audio feedback
+            playCollisionAudio(puzzle, CollisionType::HAND_PUZZLE, 0.4f);
+            
+            spdlog::debug("[FullAestheticCollisionEngine] Interacted with puzzle {} using hand {} and interaction {}", 
+                         puzzle, static_cast<int>(hand), static_cast<int>(interaction));
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullAestheticCollisionEngine] Failed to interact with puzzle: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    // VR Transformer features - Inventory manipulation
+    bool enableInventoryManipulation(ObjectID item, HandType hand) {
+        if (!m_initialized) {
+            spdlog::warn("[FullAestheticCollisionEngine] Not initialized, cannot enable inventory manipulation");
+            return false;
+        }
+        
+        try {
+            auto obj_iter = m_objects.find(item);
+            if (obj_iter == m_objects.end()) {
+                spdlog::warn("[FullAestheticCollisionEngine] Inventory item {} not found", item);
+                return false;
+            }
+            
+            auto& obj_data = obj_iter->second;
+            
+            // Check if object is an inventory item
+            if (obj_data.type != ObjectType::INVENTORY) {
+                spdlog::warn("[FullAestheticCollisionEngine] Object {} is not an inventory item", item);
+                return false;
+            }
+            
+            // Enable inventory manipulation
+            obj_data.is_interactable = true;
+            obj_data.interaction_type = "inventory";
+            obj_data.inventory_slot = -1; // Not assigned to slot yet
+            obj_data.is_equipped = false;
+            
+            spdlog::info("[FullAestheticCollisionEngine] Enabled inventory manipulation for item {}", item);
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullAestheticCollisionEngine] Failed to enable inventory manipulation: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    bool selectInventoryItem(ObjectID item, HandType hand) {
+        if (!m_initialized) {
+            spdlog::warn("[FullAestheticCollisionEngine] Not initialized, cannot select inventory item");
+            return false;
+        }
+        
+        try {
+            auto obj_iter = m_objects.find(item);
+            if (obj_iter == m_objects.end()) {
+                spdlog::warn("[FullAestheticCollisionEngine] Inventory item {} not found", item);
+                return false;
+            }
+            
+            auto& obj_data = obj_iter->second;
+            
+            // Check if item is interactable
+            if (!obj_data.is_interactable) {
+                spdlog::warn("[FullAestheticCollisionEngine] Inventory item {} is not interactable", item);
+                return false;
+            }
+            
+            // Select item
+            obj_data.is_selected = true;
+            obj_data.selecting_hand = hand;
+            obj_data.select_time = getCurrentTime();
+            
+            // Provide haptic feedback
+            provideFullHapticFeedback(hand, 0.4f, HapticType::TOUCH);
+            
+            // Show visual feedback
+            showFullCollisionHighlight(item, CollisionType::HAND_INVENTORY);
+            
+            // Play audio feedback
+            playCollisionAudio(item, CollisionType::HAND_INVENTORY, 0.3f);
+            
+            spdlog::info("[FullAestheticCollisionEngine] Selected inventory item {} with hand {}", item, static_cast<int>(hand));
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullAestheticCollisionEngine] Failed to select inventory item: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    bool useInventoryItem(ObjectID item, HandType hand) {
+        if (!m_initialized) {
+            spdlog::warn("[FullAestheticCollisionEngine] Not initialized, cannot use inventory item");
+            return false;
+        }
+        
+        try {
+            auto obj_iter = m_objects.find(item);
+            if (obj_iter == m_objects.end()) {
+                spdlog::warn("[FullAestheticCollisionEngine] Inventory item {} not found", item);
+                return false;
+            }
+            
+            auto& obj_data = obj_iter->second;
+            
+            // Check if item is selected
+            if (!obj_data.is_selected || obj_data.selecting_hand != hand) {
+                spdlog::warn("[FullAestheticCollisionEngine] Inventory item {} is not selected by hand {}", item, static_cast<int>(hand));
+                return false;
+            }
+            
+            // Use item
+            obj_data.is_used = true;
+            obj_data.use_time = getCurrentTime();
+            obj_data.use_count++;
+            
+            // Provide haptic feedback
+            provideFullHapticFeedback(hand, 0.7f, HapticType::IMPACT);
+            
+            // Show use effect
+            showItemUseEffect(item);
+            
+            // Play use audio
+            playItemUseAudio(item, 0.6f);
+            
+            spdlog::info("[FullAestheticCollisionEngine] Used inventory item {} with hand {}", item, static_cast<int>(hand));
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullAestheticCollisionEngine] Failed to use inventory item: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    bool dropInventoryItem(ObjectID item, HandType hand) {
+        if (!m_initialized) {
+            spdlog::warn("[FullAestheticCollisionEngine] Not initialized, cannot drop inventory item");
+            return false;
+        }
+        
+        try {
+            auto obj_iter = m_objects.find(item);
+            if (obj_iter == m_objects.end()) {
+                spdlog::warn("[FullAestheticCollisionEngine] Inventory item {} not found", item);
+                return false;
+            }
+            
+            auto& obj_data = obj_iter->second;
+            
+            // Check if item is selected
+            if (!obj_data.is_selected || obj_data.selecting_hand != hand) {
+                spdlog::warn("[FullAestheticCollisionEngine] Inventory item {} is not selected by hand {}", item, static_cast<int>(hand));
+                return false;
+            }
+            
+            // Drop item
+            obj_data.is_selected = false;
+            obj_data.selecting_hand = HandType::NEITHER;
+            obj_data.select_time = 0.0f;
+            obj_data.inventory_slot = -1;
+            obj_data.is_equipped = false;
+            
+            // Provide haptic feedback
+            provideFullHapticFeedback(hand, 0.3f, HapticType::RELEASE);
+            
+            // Hide visual feedback
+            hideVisualFeedback(item);
+            
+            // Play drop audio
+            playItemDropAudio(item, 0.4f);
+            
+            spdlog::info("[FullAestheticCollisionEngine] Dropped inventory item {} from hand {}", item, static_cast<int>(hand));
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullAestheticCollisionEngine] Failed to drop inventory item: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    // VR Transformer features - Crafting system
+    bool enableCraftingInteraction(ObjectID crafting_station, HandType hand) {
+        if (!m_initialized) {
+            spdlog::warn("[FullAestheticCollisionEngine] Not initialized, cannot enable crafting interaction");
+            return false;
+        }
+        
+        try {
+            auto obj_iter = m_objects.find(crafting_station);
+            if (obj_iter == m_objects.end()) {
+                spdlog::warn("[FullAestheticCollisionEngine] Crafting station {} not found", crafting_station);
+                return false;
+            }
+            
+            auto& obj_data = obj_iter->second;
+            
+            // Check if object is a crafting station
+            if (obj_data.type != ObjectType::CRAFTING) {
+                spdlog::warn("[FullAestheticCollisionEngine] Object {} is not a crafting station", crafting_station);
+                return false;
+            }
+            
+            // Enable crafting interaction
+            obj_data.is_interactable = true;
+            obj_data.interaction_type = "crafting";
+            obj_data.crafting_state = "idle";
+            obj_data.available_recipes = getAvailableRecipes(crafting_station);
+            
+            spdlog::info("[FullAestheticCollisionEngine] Enabled crafting interaction for station {}", crafting_station);
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullAestheticCollisionEngine] Failed to enable crafting interaction: {}", e.what());
+            m_error_state = true;
+            m_last_error = e.what();
+            return false;
+        }
+    }
+    
+    bool craftItem(ObjectID crafting_station, HandType hand, const std::string& recipe) {
+        if (!m_initialized) {
+            spdlog::warn("[FullAestheticCollisionEngine] Not initialized, cannot craft item");
+            return false;
+        }
+        
+        try {
+            auto obj_iter = m_objects.find(crafting_station);
+            if (obj_iter == m_objects.end()) {
+                spdlog::warn("[FullAestheticCollisionEngine] Crafting station {} not found", crafting_station);
+                return false;
+            }
+            
+            auto& obj_data = obj_iter->second;
+            
+            // Check if station is interactable
+            if (!obj_data.is_interactable) {
+                spdlog::warn("[FullAestheticCollisionEngine] Crafting station {} is not interactable", crafting_station);
+                return false;
+            }
+            
+            // Check if recipe is available
+            if (!isRecipeAvailable(crafting_station, recipe)) {
+                spdlog::warn("[FullAestheticCollisionEngine] Recipe {} not available at station {}", recipe, crafting_station);
+                return false;
+            }
+            
+            // Check if materials are available
+            if (!areMaterialsAvailable(recipe)) {
+                spdlog::warn("[FullAestheticCollisionEngine] Materials not available for recipe {}", recipe);
+                provideFullHapticFeedback(hand, 0.8f, HapticType::ERROR);
+                return false;
+            }
+            
+            // Start crafting
+            obj_data.crafting_state = "crafting";
+            obj_data.current_recipe = recipe;
+            obj_data.craft_start_time = getCurrentTime();
+            obj_data.craft_progress = 0.0f;
+            
+            // Provide haptic feedback
+            provideFullHapticFeedback(hand, 0.6f, HapticType::SUCCESS);
+            
+            // Show crafting effect
+            showCraftingEffect(crafting_station, recipe);
+            
+            // Play crafting audio
+            playCraftingAudio(crafting_station, 0.7f);
+            
+            spdlog::info("[FullAestheticCollisionEngine] Started crafting recipe {} at station {}", recipe, crafting_station);
+            return true;
+            
+        } catch (const std::exception& e) {
+            spdlog::error("[FullAestheticCollisionEngine] Failed to craft item: {}", e.what());
             m_error_state = true;
             m_last_error = e.what();
             return false;
@@ -1642,6 +2122,29 @@ private:
     
     // Additional data structures
     struct ExtendedObjectData : public ObjectData {
+        // Puzzle properties
+        std::string puzzle_state = "unsolved";
+        float solution_progress = 0.0f;
+        float solved_time = 0.0f;
+        
+        // Inventory properties
+        int32_t inventory_slot = -1;
+        bool is_equipped = false;
+        bool is_selected = false;
+        HandType selecting_hand = HandType::NEITHER;
+        float select_time = 0.0f;
+        bool is_used = false;
+        float use_time = 0.0f;
+        uint32_t use_count = 0;
+        
+        // Crafting properties
+        std::string crafting_state = "idle";
+        std::string current_recipe = "";
+        float craft_start_time = 0.0f;
+        float craft_progress = 0.0f;
+        std::vector<std::string> available_recipes;
+        
+        // General interaction properties
         bool is_grabbable = false;
         bool is_grabbed = false;
         HandType grabbing_hand = HandType::NEITHER;
@@ -1649,24 +2152,42 @@ private:
         std::string grab_type = "";
         bool is_interactable = false;
         std::string interaction_type = "";
+        
+        // Door properties
         std::string door_state = "closed";
         float rotation_progress = 0.0f;
+        
+        // Weapon properties
         std::string weapon_state = "idle";
         glm::vec3 aim_direction = glm::vec3(0.0f, 0.0f, -1.0f);
+        
+        // Vehicle properties
+        bool is_occupied = false;
+        HandType occupying_hand = HandType::NEITHER;
+        float enter_time = 0.0f;
+        
+        // NPC properties
+        bool allows_touching = false;
+        float last_touch_time = 0.0f;
+        HandType touching_hand = HandType::NEITHER;
+        bool interaction_respect = true;
+        
+        // Environmental properties
+        bool is_movable = false;
+        bool is_rotatable = false;
+        float max_movement_distance = 5.0f;
+        glm::vec3 original_position = glm::vec3(0.0f);
+        glm::quat original_rotation = glm::quat(1.0f, 0.0f, 0.0f, 0.0f);
     };
     
     std::unordered_map<ObjectID, ExtendedObjectData> m_extended_objects;
 
     // Additional private methods for the next 200 lines
-    void handleVehicleTouch(ObjectID vehicle, HandType hand);
-    void handleVehicleGrab(ObjectID vehicle, HandType hand);
-    void handleVehicleActivate(ObjectID vehicle, HandType hand);
-    void handleVehicleToggle(ObjectID vehicle, HandType hand);
-    
-    void handleNPCTouch(ObjectID npc, HandType hand);
-    void handleNPCSelect(ObjectID npc, HandType hand);
-    void handleNPCActivate(ObjectID npc, HandType hand);
-    void handleNPCMenu(ObjectID npc, HandType hand);
+    void applyForceToVehicle(ObjectID vehicle, HandType hand, const glm::vec3& direction, float force);
+    void activateVehicleSystem(ObjectID vehicle, HandType hand);
+    void selectNPC(ObjectID npc, HandType hand);
+    void activateNPCAction(ObjectID npc, HandType hand);
+    bool isRespectfulInteraction(InteractionType interaction);
     
     // Additional data structures for extended functionality
     struct VehicleData : public ExtendedObjectData {
@@ -1705,6 +2226,26 @@ private:
     std::unordered_map<ObjectID, VehicleData> m_vehicles;
     std::unordered_map<ObjectID, NPCData> m_npcs;
     std::unordered_map<ObjectID, EnvironmentData> m_environment_objects;
+
+    // Additional private methods for puzzle and crafting systems
+    bool validatePuzzleSolution(ObjectID puzzle, const std::string& solution);
+    void showPuzzleSolvedEffect(ObjectID puzzle);
+    void showPuzzleFailedEffect(ObjectID puzzle);
+    void playPuzzleSolvedAudio(ObjectID puzzle, float volume);
+    void playPuzzleFailedAudio(ObjectID puzzle, float volume);
+    void rotatePuzzlePiece(ObjectID puzzle, HandType hand);
+    void movePuzzlePiece(ObjectID puzzle, HandType hand);
+    void activatePuzzleMechanism(ObjectID puzzle, HandType hand);
+    
+    void showItemUseEffect(ObjectID item);
+    void playItemUseAudio(ObjectID item, float volume);
+    void playItemDropAudio(ObjectID item, float volume);
+    
+    std::vector<std::string> getAvailableRecipes(ObjectID crafting_station);
+    bool isRecipeAvailable(ObjectID crafting_station, const std::string& recipe);
+    bool areMaterialsAvailable(const std::string& recipe);
+    void showCraftingEffect(ObjectID crafting_station, const std::string& recipe);
+    void playCraftingAudio(ObjectID crafting_station, float volume);
 };
 
 // Constructor and destructor
@@ -1871,6 +2412,42 @@ bool FullAestheticCollisionEngine::moveEnvironmentalObject(ObjectID env_object, 
 
 bool FullAestheticCollisionEngine::rotateEnvironmentalObject(ObjectID env_object, HandType hand, const glm::quat& rotation) {
     return m_impl->rotateEnvironmentalObject(env_object, hand, rotation);
+}
+
+bool FullAestheticCollisionEngine::enablePuzzleInteraction(ObjectID puzzle, HandType hand) {
+    return m_impl->enablePuzzleInteraction(puzzle, hand);
+}
+
+bool FullAestheticCollisionEngine::solvePuzzle(ObjectID puzzle, HandType hand, const std::string& solution) {
+    return m_impl->solvePuzzle(puzzle, hand, solution);
+}
+
+bool FullAestheticCollisionEngine::interactWithPuzzle(ObjectID puzzle, HandType hand, InteractionType interaction) {
+    return m_impl->interactWithPuzzle(puzzle, hand, interaction);
+}
+
+bool FullAestheticCollisionEngine::enableInventoryManipulation(ObjectID item, HandType hand) {
+    return m_impl->enableInventoryManipulation(item, hand);
+}
+
+bool FullAestheticCollisionEngine::selectInventoryItem(ObjectID item, HandType hand) {
+    return m_impl->selectInventoryItem(item, hand);
+}
+
+bool FullAestheticCollisionEngine::useInventoryItem(ObjectID item, HandType hand) {
+    return m_impl->useInventoryItem(item, hand);
+}
+
+bool FullAestheticCollisionEngine::dropInventoryItem(ObjectID item, HandType hand) {
+    return m_impl->dropInventoryItem(item, hand);
+}
+
+bool FullAestheticCollisionEngine::enableCraftingInteraction(ObjectID crafting_station, HandType hand) {
+    return m_impl->enableCraftingInteraction(crafting_station, hand);
+}
+
+bool FullAestheticCollisionEngine::craftItem(ObjectID crafting_station, HandType hand, const std::string& recipe) {
+    return m_impl->craftItem(crafting_station, hand, recipe);
 }
 
 } // namespace uevr

@@ -1,0 +1,22 @@
+
+
+    Vorpx > https://www.vorpx.com/ (the site and product looks sketchy to me)
+
+    Tridef (Discontinued)
+
+    BlueSkyDefender Depth3D > https://github.com/BlueSkyDefender/Depth3D (Not sure if its really good)
+
+    Vireio Perception > https://www.mtbs3d.com/new-vireio-site (looks strange too haha)
+
+    VRGIN > https://github.com/Eusth/VRGIN
+
+    OpenTrack > https://github.com/opentrack/opentrack (I think this is only for tracking headset movement)
+
+    Reshade > https://reshade.me/ (i dont think the SBS can be turned into VR however)
+
+    3D Vision approach by tweaking it with NVidea controls.
+    https://www.reddit.com/r/oculus/comments/7zp9hx/3d_vision_sbs_3d_for_flatscreen_games_with_the/
+    https://forums.geforce.com/default/topic/912552/3d-vision/modifying-3d-vision-to-support-sbs/24/
+    config tool: http://helixmod.blogspot.com/2015/10/advanced-3d-vision-configuration.html
+
+    etc..?
