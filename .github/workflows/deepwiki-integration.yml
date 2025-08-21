@@ -1,0 +1,186 @@
+name: DeepWiki Integration & Deployment
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  deepwiki-integration:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '18'
+        cache: 'npm'
+        
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install DeepWiki AI
+      run: |
+        echo "Installing DeepWiki AI..."
+        git clone https://github.com/AsyncFuncAI/deepwiki-open
+        cd deepwiki-open
+        npm install
+        cd ..
+        
+    - name: Configure DeepWiki for uevrLCX
+      run: |
+        echo "Configuring DeepWiki for uevrLCX..."
+        cp .deepwiki-docs/config.yml deepwiki-open/uevrLCX_config.yml
+        cd deepwiki-open
+        npm run configure -- --config uevrLCX_config.yml
+        
+    - name: Run DeepWiki Analysis
+      run: |
+        echo "Running DeepWiki analysis..."
+        cd deepwiki-open
+        node analyze-games.js --config uevrLCX_config.yml
+        
+    - name: Update Wiki Data
+      run: |
+        echo "Updating wiki data..."
+        python scripts/update_wiki.py
+        
+    - name: Build Documentation
+      run: |
+        echo "Building documentation..."
+        mkdir -p docs
+        cp .deepwiki-docs/*.md docs/
+        cp .deepwiki-docs/config.yml docs/
+        
+    - name: Deploy to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      if: github.ref == 'refs/heads/main'
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./docs
+        publish_branch: gh-pages
+        
+    - name: Create Release
+      if: github.ref == 'refs/heads/main'
+      run: |
+        echo "Creating release..."
+        git tag -a v1.0.0 -m "DeepWiki Integration Release"
+        git push origin v1.0.0
+        
+  test-integration:
+    runs-on: ubuntu-latest
+    needs: deepwiki-integration
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+        
+    - name: Install dependencies
+      run: |
+        pip install pytest requests beautifulsoup4
+        
+    - name: Run DeepWiki tests
+      run: |
+        echo "Running DeepWiki integration tests..."
+        python -m pytest tests/test_deepwiki_integration.py -v
+        
+    - name: Test configuration
+      run: |
+        echo "Testing DeepWiki configuration..."
+        python scripts/test_config.py
+        
+  build-system:
+    runs-on: ubuntu-latest
+    needs: test-integration
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup CMake
+      uses: jwlawson/actions-setup-cmake@v1.13
+      with:
+        cmake-version: '3.24'
+        
+    - name: Build uevrLCX
+      run: |
+        echo "Building uevrLCX with DeepWiki integration..."
+        mkdir build
+        cd build
+        cmake .. -DCMAKE_BUILD_TYPE=Release -DDEEPWIKI_ENABLED=ON
+        make -j$(nproc)
+        
+    - name: Test build
+      run: |
+        echo "Testing uevrLCX build..."
+        cd build
+        ./uevrLCX --test
+        ./uevrLCX --analyze --deepwiki --help
+        
+    - name: Upload artifacts
+      uses: actions/upload-artifact@v3
+      with:
+        name: uevrLCX-build
+        path: build/uevrLCX
+        
+  deploy-wiki:
+    runs-on: ubuntu-latest
+    needs: build-system
+    if: github.ref == 'refs/heads/main'
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+      
+    - name: Setup Ruby
+      uses: ruby/setup-ruby@v1
+      with:
+        ruby-version: '3.0'
+        
+    - name: Install Jekyll
+      run: |
+        gem install jekyll bundler
+        bundle install
+        
+    - name: Build wiki site
+      run: |
+        echo "Building uevrLCX wiki site..."
+        mkdir -p uevrLCX-wiki
+        cd uevrLCX-wiki
+        jekyll new . --force
+        cp ../.deepwiki-docs/*.md _posts/
+        cp ../.deepwiki-docs/config.yml _data/
+        jekyll build
+        
+    - name: Deploy wiki to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v3
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: ./uevrLCX-wiki/_site
+        publish_branch: wiki-pages
+        
+  notify-completion:
+    runs-on: ubuntu-latest
+    needs: [deepwiki-integration, test-integration, build-system, deploy-wiki]
+    if: always()
+    
+    steps:
+    - name: Notify completion
+      run: |
+        echo "DeepWiki integration workflow completed!"
+        echo "Status: ${{ needs.deepwiki-integration.result }}"
+        echo "Tests: ${{ needs.test-integration.result }}"
+        echo "Build: ${{ needs.build-system.result }}"
+        echo "Deploy: ${{ needs.deploy-wiki.result }}"

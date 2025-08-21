@@ -1,0 +1,10 @@
+#
+# https://help.github.com/articles/dealing-with-line-endings/
+#
+# These are explicitly windows files and should use crlf
+*.bat           text eol=crlf
+*.gd            eol=lf
+*.tscn          eol=lf
+*.cfg           eol=lf
+*.godot         eol=lf
+*.tres          eol=lf

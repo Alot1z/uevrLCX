@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        package="org.godotengine.plugin.vr.openxr">
+
+    <uses-feature
+        android:name="android.hardware.vr.headtracking"
+        android:required="true"
+        android:version="1"
+        tools:node="replace"/>
+
+    <!--
+    Passthrough feature flag.
+    `required` should be `true` when passthrough is required for app functionality, `false` otherwise.
+    -->
+    <uses-feature android:name="com.oculus.feature.PASSTHROUGH"
+        android:required="false" />
+
+    <application>
+
+        <meta-data
+            android:name="org.godotengine.plugin.v1.OpenXR"
+            android:value="org.godotengine.plugin.vr.openxr.OpenXRPlugin" />
+
+        <meta-data
+                android:name="com.oculus.supportedDevices"
+                android:value="all"
+                tools:node="replace" />
+
+        <!-- Enable Android views rendering. -->
+        <meta-data
+                android:name="com.oculus.always_draw_view_root"
+                android:value="true"
+                tools:node="replace" />
+
+    </application>
+
+</manifest>

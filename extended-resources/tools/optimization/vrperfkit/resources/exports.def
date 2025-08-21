@@ -1,0 +1,23 @@
+EXPORTS
+	; exports for dxgi.dll
+	CompatString PRIVATE
+	CompatValue PRIVATE
+	CreateDXGIFactory PRIVATE
+	CreateDXGIFactory1 PRIVATE
+	CreateDXGIFactory2 PRIVATE
+	DXGID3D10CreateDevice PRIVATE
+	DXGID3D10CreateLayeredDevice PRIVATE
+	DXGID3D10ETWRundown PRIVATE
+	DXGID3D10GetLayeredDeviceSize PRIVATE
+	DXGID3D10RegisterLayers PRIVATE
+	DXGIDeclareAdapterRemovalSupport PRIVATE
+	DXGIDumpJournal PRIVATE
+	DXGIGetDebugInterface1 PRIVATE
+	DXGIReportAdapterConfiguration PRIVATE
+
+	; exports for d3d11.dll
+	D3D11CreateDevice PRIVATE
+	D3D11CreateDeviceAndSwapChain PRIVATE
+
+	; exports for vrclient.dll
+	VRClientCoreFactory PRIVATE
